@@ -1,0 +1,13 @@
+package com.edutie.edutiebackend;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class EdutieBackendApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(EdutieBackendApplication.class, args);
+    }
+
+}
