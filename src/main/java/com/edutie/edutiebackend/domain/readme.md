@@ -7,6 +7,8 @@ We can distinguish 2 domain models: anemic and rich
 
 # Rich domain model
 Rich domain model is, in short, a domain with application layer inside. 
+In some cases its structure differs from the anemic model because of aggregates.
+**Aggregates are multiple entities grouped together.**
 
 # Anemic domain model
 Anemic domain model is a domain consisting of plain classes with only fields. In
