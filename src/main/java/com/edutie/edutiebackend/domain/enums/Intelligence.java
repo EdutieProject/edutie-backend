@@ -5,12 +5,25 @@ package com.edutie.edutiebackend.domain.enums;
  */
 public enum Intelligence
 {
-    Visual,
-    Linguistic,
-    Interpersonal,
-    Intrapersonal,
-    Logical,
-    Musical,
-    Kinesthetic,
-    Naturalistic
+    Visual("Visual"),
+    Linguistic("Linguistic"),
+    Interpersonal("Interpersonal"),
+    Intrapersonal("Intrapersonal"),
+    Logical("Logical"),
+    Musical("Musical"),
+    Kinesthetic("Kinesthetic"),
+    Naturalistic("Naturalistic");
+
+
+    private final String code;
+
+    Intelligence(String code)
+    {
+        this.code = code;
+    }
+
+    public String getCode()
+    {
+        return code;
+    }
 }
