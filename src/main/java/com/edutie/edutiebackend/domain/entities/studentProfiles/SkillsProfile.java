@@ -1,11 +1,11 @@
-package com.edutie.edutiebackend.domain.entities.learningProfiles;
+package com.edutie.edutiebackend.domain.entities.studentProfiles;
 
-import com.edutie.edutiebackend.domain.entities.learningProfiles.interfaces.ILearningProfile;
+import com.edutie.edutiebackend.domain.entities.studentProfiles.interfaces.IStudentProfile;
 import com.edutie.edutiebackend.domain.enums.Skill;
 
 import java.util.HashMap;
 
-public class SkillsProfile implements ILearningProfile {
+public class SkillsProfile implements IStudentProfile {
     private final HashMap<Skill, Double> skillPoints = new HashMap<>();
 
     /**

@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.domain.entities.learningProfiles.interfaces;
+package com.edutie.edutiebackend.domain.entities.studentProfiles.interfaces;
 
-public interface ILearningProfile {
+public interface IStudentProfile {
     /**
      * Method which adjusts learning profile's parameters based on learning activity
      */
