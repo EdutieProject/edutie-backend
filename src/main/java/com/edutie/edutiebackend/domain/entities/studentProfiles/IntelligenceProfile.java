@@ -1,11 +1,14 @@
 package com.edutie.edutiebackend.domain.entities.studentProfiles;
 
+import com.edutie.edutiebackend.domain.entities.base.EntityBase;
 import com.edutie.edutiebackend.domain.entities.studentProfiles.interfaces.IStudentProfile;
 import com.edutie.edutiebackend.domain.enums.Intelligence;
+import jakarta.persistence.Entity;
 
 import java.util.HashMap;
 
-public class IntelligenceProfile implements IStudentProfile {
+@Entity
+public class IntelligenceProfile extends EntityBase<IntelligenceProfile> implements IStudentProfile {
     private final HashMap<Intelligence, Double> intelligencePoints = new HashMap<>();
 
     /**
