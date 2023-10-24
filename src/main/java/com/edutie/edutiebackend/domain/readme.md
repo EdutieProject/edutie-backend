@@ -5,10 +5,11 @@ at the naming of every class which lives here.
 
 We can distinguish 2 domain models: anemic and rich
 
-# Rich domain model
-Rich domain model is, in short, a domain with application layer inside. 
+**We will be using an anemic domain model.**
 
 # Anemic domain model
 Anemic domain model is a domain consisting of plain classes with only fields. In
 this model domain entities contain no logic and all the logic is handled by application
-layer
+layer.
+Focus should lie on keeping this layer as independent as possible from external dependencies.
+Thus, the only dependencies used here should be lombok and/or JPA.
