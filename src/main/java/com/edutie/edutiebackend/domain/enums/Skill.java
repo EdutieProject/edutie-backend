@@ -7,7 +7,6 @@ public enum Skill {
     Adaptability("Adaptability"),
     AnalitycalThinking("Analitycal Thinking"),
     CriticalThinking("Critical Thinking"),
-    Collaboration("Collaboration"),
     Creativity("Creativity"),
     GoalSetting("Goal Setting"),
     InformationSynthesis("Information Synthesis"),
