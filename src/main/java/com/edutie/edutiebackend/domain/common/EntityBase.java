@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.common;
+package com.edutie.edutiebackend.domain.common;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

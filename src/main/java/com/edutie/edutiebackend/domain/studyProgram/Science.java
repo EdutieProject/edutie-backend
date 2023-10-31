@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.domain.core.studyProgram;
+package com.edutie.edutiebackend.domain.studyProgram;
 
-import com.edutie.edutiebackend.domain.core.common.EntityBase;
+import com.edutie.edutiebackend.domain.common.EntityBase;
 import jakarta.persistence.Entity;
 
 /**

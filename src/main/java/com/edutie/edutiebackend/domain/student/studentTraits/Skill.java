@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.student.studentTraits;
+package com.edutie.edutiebackend.domain.student.studentTraits;
 
 /**
  * Skill enum describing skills that student can have

@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.domain.core.learningResource.learningResourceComponents.overview;
+package com.edutie.edutiebackend.domain.learningResource.learningResourceComponents.overview;
 
-import com.edutie.edutiebackend.domain.core.common.ValueObject;
+import com.edutie.edutiebackend.domain.common.ValueObject;
 
 import java.util.Enumeration;
 import java.util.Vector;

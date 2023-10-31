@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.domain.core.learningResource.learningResourceComponents.knowledgeSource;
+package com.edutie.edutiebackend.domain.learningResource.learningResourceComponents.knowledgeSource;
 
-import com.edutie.edutiebackend.domain.core.common.ValueObject;
+import com.edutie.edutiebackend.domain.common.ValueObject;
 
 import java.net.URL;
 import java.util.Enumeration;

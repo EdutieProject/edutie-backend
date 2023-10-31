@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.student.interfaces;
+package com.edutie.edutiebackend.domain.student.interfaces;
 
 public interface IStudentProfile {
     /**
