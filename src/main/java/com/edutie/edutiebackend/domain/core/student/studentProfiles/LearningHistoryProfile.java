@@ -1,7 +1,7 @@
-package com.edutie.edutiebackend.domain.entities.studentProfiles;
+package com.edutie.edutiebackend.domain.core.student.studentProfiles;
 
-import com.edutie.edutiebackend.domain.entities.base.EntityBase;
-import com.edutie.edutiebackend.domain.entities.studentProfiles.interfaces.IStudentProfile;
+import com.edutie.edutiebackend.domain.core.common.EntityBase;
+import com.edutie.edutiebackend.domain.core.student.interfaces.IStudentProfile;
 import jakarta.persistence.Entity;
 
 import java.util.ArrayList;

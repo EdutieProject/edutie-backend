@@ -1,8 +1,8 @@
-package com.edutie.edutiebackend.domain.entities.studentProfiles;
+package com.edutie.edutiebackend.domain.core.student.studentProfiles;
 
-import com.edutie.edutiebackend.domain.entities.base.EntityBase;
-import com.edutie.edutiebackend.domain.entities.studentProfiles.interfaces.IStudentProfile;
-import com.edutie.edutiebackend.domain.enums.Skill;
+import com.edutie.edutiebackend.domain.core.student.interfaces.IStudentProfile;
+import com.edutie.edutiebackend.domain.core.student.studentTraits.Skill;
+import com.edutie.edutiebackend.domain.core.common.EntityBase;
 import jakarta.persistence.Entity;
 
 import java.util.HashMap;
