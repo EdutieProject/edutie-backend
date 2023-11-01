@@ -2,7 +2,7 @@ package com.edutie.edutiebackend.domain.learningresource.valueobjects;
 
 import com.edutie.edutiebackend.domain.common.ValueObject;
 
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -32,9 +32,9 @@ public final class Overview extends ValueObject {
     }
 
     @Override
-    public Enumeration<Object> GetEqualityComponents() {
+    public Iterator<Object> GetEqualityComponents() {
         Vector<Object> components = new Vector<>();
         components.add(overview);
-        return components.elements();
+        return components.iterator();
     }
 }

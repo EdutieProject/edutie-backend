@@ -1,21 +1,35 @@
 package com.edutie.edutiebackend.domain.common;
 
-import java.util.Enumeration;
+import java.util.Iterator;
 
+/**
+ * ValueObject base class. All fields of the implementation must value-based (not by reference).
+ */
 public abstract class ValueObject {
     @Override
     public boolean equals(Object o) { // <5>
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ValueObject that = (ValueObject) o;
         return GetEqualityComponents().equals(((ValueObject) o).GetEqualityComponents());
     }
 
-    public abstract Enumeration<Object> GetEqualityComponents();
+    public abstract Iterator<Object> GetEqualityComponents();
 
-    //TODO!
+    /**
+     * A method returning hashcode inspired by Object.hashCode() base implementation.
+     * @return hashCode based on GetEqualityComponents
+     */
     @Override
     public int hashCode() {
-        return 1;
+        int hashCode = 17; // Start with a prime number to minimize collisions
+        Iterator<Object> components = GetEqualityComponents();
+
+        while (components.hasNext()) {
+            Object component = components.next();
+            int componentHashCode = (component != null) ? component.hashCode() : 0;
+            hashCode = 31 * hashCode + componentHashCode; // Use the same prime factor (31) as Java's Object.hashCode()
+        }
+
+        return hashCode;
     }
 }
