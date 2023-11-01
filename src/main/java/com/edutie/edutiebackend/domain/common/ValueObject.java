@@ -10,7 +10,7 @@ public abstract class ValueObject {
     public boolean equals(Object o) { // <5>
         if (o == null || getClass() != o.getClass()) return false;
         ValueObject that = (ValueObject) o;
-        return GetEqualityComponents().equals(((ValueObject) o).GetEqualityComponents());
+        return GetEqualityComponents().equals((that.GetEqualityComponents()));
     }
 
     public abstract Iterator<Object> GetEqualityComponents();
