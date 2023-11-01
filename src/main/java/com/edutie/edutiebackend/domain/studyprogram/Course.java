@@ -1,6 +1,7 @@
-package com.edutie.edutiebackend.domain.studyprogram.entites;
+package com.edutie.edutiebackend.domain.studyprogram;
 
-import com.edutie.edutiebackend.domain.common.EntityBase;
+import com.edutie.edutiebackend.domain.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.common.identities.CourseId;
 import jakarta.persistence.Entity;
 
 /**
@@ -9,5 +10,5 @@ import jakarta.persistence.Entity;
  * Technically a group of Lesson trees.
  */
 @Entity
-public class Course extends EntityBase<Course> {
+public class Course extends EntityBase<CourseId> {
 }

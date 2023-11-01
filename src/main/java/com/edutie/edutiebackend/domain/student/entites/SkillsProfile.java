@@ -2,7 +2,7 @@ package com.edutie.edutiebackend.domain.student.entites;
 
 import com.edutie.edutiebackend.domain.student.interfaces.IStudentProfile;
 import com.edutie.edutiebackend.domain.student.enums.Skill;
-import com.edutie.edutiebackend.domain.common.EntityBase;
+import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import jakarta.persistence.Entity;
 
 import java.util.HashMap;
