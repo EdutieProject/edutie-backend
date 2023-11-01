@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.student.studentTraits;
+package com.edutie.edutiebackend.domain.student.enums;
 
 /**
  * Intelligence enum describing intelligence types according to 8 intelligence theory

@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.student.studentProfiles;
+package com.edutie.edutiebackend.domain.student.entites;
 
 import com.edutie.edutiebackend.domain.common.EntityBase;
 import com.edutie.edutiebackend.domain.student.interfaces.IStudentProfile;

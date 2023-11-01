@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.learningResource.learningResourceComponents.overview;
+package com.edutie.edutiebackend.domain.learningresource.valueobjects;
 
 import com.edutie.edutiebackend.domain.common.ValueObject;
 

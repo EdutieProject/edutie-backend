@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.studyProgram;
+package com.edutie.edutiebackend.domain.studyprogram.entites;
 
 import com.edutie.edutiebackend.domain.common.EntityBase;
 import jakarta.persistence.Entity;

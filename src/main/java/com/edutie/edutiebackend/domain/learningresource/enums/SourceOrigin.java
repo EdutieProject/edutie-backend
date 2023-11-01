@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.learningResource.learningResourceComponents.knowledgeSource;
+package com.edutie.edutiebackend.domain.learningresource.enums;
 
 public enum SourceOrigin {
     YouTube("Youtube"),

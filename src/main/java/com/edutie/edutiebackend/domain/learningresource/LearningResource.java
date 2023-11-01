@@ -1,9 +1,9 @@
-package com.edutie.edutiebackend.domain.learningResource;
+package com.edutie.edutiebackend.domain.learningresource;
 
 import com.edutie.edutiebackend.domain.common.EntityBase;
-import com.edutie.edutiebackend.domain.learningResource.learningActivity.interfaces.ILearningActivity;
-import com.edutie.edutiebackend.domain.learningResource.learningResourceComponents.knowledgeSource.KnowledgeSource;
-import com.edutie.edutiebackend.domain.learningResource.learningResourceComponents.overview.Overview;
+import com.edutie.edutiebackend.domain.learningresource.interfaces.ILearningActivity;
+import com.edutie.edutiebackend.domain.learningresource.valueobjects.KnowledgeSource;
+import com.edutie.edutiebackend.domain.learningresource.valueobjects.Overview;
 import jakarta.persistence.Entity;
 
 import java.util.Set;
