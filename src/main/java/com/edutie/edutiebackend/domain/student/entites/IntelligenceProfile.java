@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.student.entites;
 
-import com.edutie.edutiebackend.domain.common.EntityBase;
+import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.student.interfaces.IStudentProfile;
 import com.edutie.edutiebackend.domain.student.enums.Intelligence;
 import jakarta.persistence.Entity;

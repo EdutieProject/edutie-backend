@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.learningresource.valueobjects;
 
-import com.edutie.edutiebackend.domain.common.ValueObject;
+import com.edutie.edutiebackend.domain.common.base.ValueObject;
 
 import java.util.Iterator;
 import java.util.Vector;
@@ -14,7 +14,7 @@ import java.util.Vector;
  *     <b>Text can be accessed via toString() method.</b>
  * </p>
  */
-public final class Overview extends ValueObject {
+public final class ResourceOverview extends ValueObject {
     private String overview;
 
     /**

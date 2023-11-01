@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.common;
+package com.edutie.edutiebackend.domain.common.base;
 
 import java.util.Iterator;
 
