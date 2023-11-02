@@ -13,4 +13,5 @@ import lombok.EqualsAndHashCode;
 public class Lesson extends EntityBase<LessonId> {
     private CourseId courseId;
     private String name;
+    private String description;
 }

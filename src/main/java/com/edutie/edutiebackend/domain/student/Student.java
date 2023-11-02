@@ -6,16 +6,21 @@ import com.edutie.edutiebackend.domain.student.entites.LearningHistory;
 import com.edutie.edutiebackend.domain.student.entites.SkillsProfile;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.student.valueobjects.SchoolStage;
+
 import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Student class concealing all the student characteristics of the user.
  * This is an aggregate root of the student.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Student extends EntityBase<StudentId> {
-    public SchoolStage schoolStage;
-    public LearningHistory learningHistory;
-    public IntelligenceProfile intelligenceProfile;
-    public SkillsProfile skillsProfile;
+    private SchoolStage schoolStage;
+    private LearningHistory learningHistory;
+    private IntelligenceProfile intelligenceProfile;
+    private SkillsProfile skillsProfile;
 }

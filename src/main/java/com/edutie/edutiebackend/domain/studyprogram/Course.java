@@ -17,5 +17,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Course extends EntityBase<CourseId> {
+    private String name;
+    private String description;
     private ScienceId scienceId;
 }

@@ -14,4 +14,5 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Science extends EntityBase<ScienceId> {
     private String name;
+    private String description;
 }

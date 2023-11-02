@@ -25,4 +25,12 @@ public class LessonSegment extends EntityBase<LessonSegmentId> {
     private LessonSegmentId previousSegmentId;
     private Set<ExternalSource> externalSources;
 
+    public void addExternalSource(ExternalSource source)
+    {
+        externalSources.add(source);
+    }
+    public void removeExternalSource(ExternalSource source)
+    {
+        externalSources.remove(source);
+    }
 }
