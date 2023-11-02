@@ -1,8 +1,5 @@
 package com.edutie.edutiebackend.domain.common.base;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 
@@ -31,7 +28,7 @@ public abstract class EntityBase<TId> {
 
     /**
      * Checks whether entity is same as the provided other.
-     * Same in terms of entities means their Ids are of same type
+     * Same in terms of entities means their Ids are of same type (!)
      * and value. This comparison does not check fields values
      * equalities.
      * @param object entity to compare

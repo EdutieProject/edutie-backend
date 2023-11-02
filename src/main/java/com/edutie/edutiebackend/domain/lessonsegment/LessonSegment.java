@@ -5,6 +5,8 @@ import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.GenerationPrompt;
 import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Set;
 
@@ -12,6 +14,8 @@ import java.util.Set;
  * A wrapper around the learning resource. It indicates whether the resource is given statically
  * or generated dynamically - via the IsDynamic field.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class LessonSegment extends EntityBase<LessonSegmentId> {
     private GenerationPrompt overviewGenerationPrompt;
@@ -19,6 +23,6 @@ public class LessonSegment extends EntityBase<LessonSegmentId> {
     private Boolean isDynamic;
     private LessonSegmentId nextSegmentId;
     private LessonSegmentId previousSegmentId;
-    public Set<ExternalSource> externalSources;
+    private Set<ExternalSource> externalSources;
 
 }

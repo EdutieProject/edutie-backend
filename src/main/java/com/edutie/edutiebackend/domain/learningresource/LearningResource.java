@@ -6,8 +6,8 @@ import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.learningresource.interfaces.ILearningActivity;
 import com.edutie.edutiebackend.domain.learningresource.valueobjects.ResourceOverview;
 import jakarta.persistence.Entity;
-
-import java.util.Set;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * A singular form of learning in the application.
@@ -16,9 +16,11 @@ import java.util.Set;
  * It may be fixed into the lesson segment or dynamically generated, depending
  * on lessonSegment's isDynamic field.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResource extends EntityBase<LearningResourceId> {
     private LessonSegmentId lessonSegmentId;
-    public ResourceOverview overview;
-    public ILearningActivity learningActivity;
+    private ResourceOverview overview;
+    private ILearningActivity learningActivity;
 }
