@@ -1,9 +1,11 @@
 package com.edutie.edutiebackend.domain.learningresource.valueobjects;
 
 import com.edutie.edutiebackend.domain.common.base.ValueObject;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * An overview of the learning resource providing
@@ -14,17 +16,10 @@ import java.util.Vector;
  *     <b>Text can be accessed via toString() method.</b>
  * </p>
  */
+@AllArgsConstructor
+@Getter
 public final class ResourceOverview extends ValueObject {
     private String overview;
-
-    /**
-     * Sets the overview text to provided string
-     * @param s string to be set as overview
-     */
-    public void set(String s)
-    {
-        overview = s;
-    }
 
     @Override
     public String toString() {
@@ -33,8 +28,6 @@ public final class ResourceOverview extends ValueObject {
 
     @Override
     public Iterator<Object> GetEqualityComponents() {
-        Vector<Object> components = new Vector<>();
-        components.add(overview);
-        return components.iterator();
+        return Arrays.stream(new Object[]{overview}).iterator();
     }
 }

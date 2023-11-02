@@ -3,14 +3,32 @@ package com.edutie.edutiebackend.domain.common.base;
 import java.util.Iterator;
 
 /**
- * ValueObject base class. All fields of the implementation must value-based (not by reference).
+ * ValueObject base class.
+ * Value objects should be immutable by default. If replacement is needed, replace it with a new one.
+ * @implNote  All fields of the implementation must value-based (not reference-based).
  */
 public abstract class ValueObject {
     @Override
     public boolean equals(Object o) { // <5>
         if (o == null || getClass() != o.getClass()) return false;
         ValueObject that = (ValueObject) o;
-        return GetEqualityComponents().equals((that.GetEqualityComponents()));
+        return checkEqualityComponents(GetEqualityComponents(), that.GetEqualityComponents());
+    }
+
+    private boolean checkEqualityComponents(Iterator<Object> iterator1, Iterator<Object> iterator2)
+    {
+        while (iterator1.hasNext() && iterator2.hasNext()) {
+            Object element1 = iterator1.next();
+            Object element2 = iterator2.next();
+
+            if (!element1.equals(element2)) {
+                // Elements are not equal, so the iterators are not equal
+                return false;
+            }
+        }
+
+        // If one iterator has more elements, they are not equal
+        return !iterator1.hasNext() && !iterator2.hasNext();
     }
 
     public abstract Iterator<Object> GetEqualityComponents();

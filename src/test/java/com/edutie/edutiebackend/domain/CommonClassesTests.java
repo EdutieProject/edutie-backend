@@ -3,6 +3,8 @@ package com.edutie.edutiebackend.domain;
 import com.edutie.edutiebackend.domain.common.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.learningresource.LearningResource;
 import com.edutie.edutiebackend.domain.learningresource.valueobjects.ResourceOverview;
+import com.edutie.edutiebackend.domain.student.enums.SchoolType;
+import com.edutie.edutiebackend.domain.student.valueobjects.SchoolStage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,22 +15,26 @@ import java.util.UUID;
 public class CommonClassesTests {
 
     @Test
-    public void ValueObjectEqualsTest()
+    public void ValueObjectEqualsTest1()
     {
-        ResourceOverview overview1 = new ResourceOverview();
-        overview1.set("Hello!");
-        ResourceOverview overview2 = new ResourceOverview();
-        overview2.set("Hello!");
+        ResourceOverview overview1 = new ResourceOverview("Hello");
+        ResourceOverview overview2 = new ResourceOverview("Hello");
         Assertions.assertEquals(overview1, overview2);
+    }
+
+    @Test
+    public void ValueObjectEqualsTest2()
+    {
+        SchoolStage schoolStage1 = new SchoolStage(SchoolType.HighSchool, 2);
+        SchoolStage schoolStage2 = new SchoolStage(SchoolType.HighSchool, 2);
+        Assertions.assertEquals(schoolStage1, schoolStage2);
     }
 
     @Test
     public void ValueObjectNotEqualsTest()
     {
-        ResourceOverview overview1 = new ResourceOverview();
-        overview1.set("Hello!");
-        ResourceOverview overview2 = new ResourceOverview();
-        overview2.set("World!");
+        ResourceOverview overview1 = new ResourceOverview("Hello");
+        ResourceOverview overview2 = new ResourceOverview("World!");
         Assertions.assertNotEquals(overview1, overview2);
     }
 
@@ -50,6 +56,6 @@ public class CommonClassesTests {
         LearningResource lr2 = new LearningResource();
         lr2.setId(new LearningResourceId(UUID.randomUUID()));
 
-        Assertions.assertEquals(lr1, lr2);
+        Assertions.assertNotEquals(lr1, lr2);
     }
 }
