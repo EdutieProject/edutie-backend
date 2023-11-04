@@ -3,7 +3,7 @@ package com.edutie.edutiebackend.domain.lesson;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.common.identities.CourseId;
 import com.edutie.edutiebackend.domain.common.identities.LessonId;
-import com.edutie.edutiebackend.domain.common.studynavigation.StudyNavigation;
+import com.edutie.edutiebackend.domain.common.studynavigation.LearningTreeNavigator;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,5 +19,5 @@ public class Lesson extends EntityBase<LessonId> {
     private CourseId courseId;
     private String name;
     private String description;
-    private StudyNavigation<LessonId> navigation;
+    private LearningTreeNavigator<LessonId> navigation;
 }

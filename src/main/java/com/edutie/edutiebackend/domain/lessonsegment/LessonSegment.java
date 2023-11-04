@@ -2,7 +2,7 @@ package com.edutie.edutiebackend.domain.lessonsegment;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.common.studynavigation.StudyNavigation;
+import com.edutie.edutiebackend.domain.common.studynavigation.LearningTreeNavigator;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.GenerationPrompt;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ import java.util.Set;
 @Entity
 public class LessonSegment extends EntityBase<LessonSegmentId> {
 
-    private StudyNavigation<LessonSegmentId> navigation;
+    private LearningTreeNavigator<LessonSegmentId> navigation;
 
     private GenerationPrompt overviewGenerationPrompt;
     private GenerationPrompt exerciseGenerationPrompt;
