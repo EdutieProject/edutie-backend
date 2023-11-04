@@ -1,6 +1,7 @@
 package com.edutie.edutiebackend.domain.common.identities;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public record LessonId(UUID Id) {
+public record LessonId(UUID Id) implements Serializable {
 }

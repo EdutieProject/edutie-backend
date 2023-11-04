@@ -1,28 +1,26 @@
 package com.edutie.edutiebackend.domain.student.entites;
 
-import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.studentTraits.Intelligence;
-
+import com.edutie.edutiebackend.domain.common.identities.IntelligenceProfileId;
+import com.edutie.edutiebackend.domain.common.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.student.entites.base.StudentTraitProfile;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 
+/**
+ * Profile for students made to track their intelligence adn cognitive abilites.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class IntelligenceProfile extends EntityBase<IntelligenceProfile>{
-    private HashMap<Intelligence, Double> intelligencePoints;
-
+public class IntelligenceProfile extends StudentTraitProfile<Intelligence, IntelligenceProfileId> {
     /**
-     * Default constructor. Should be changed in the future to utilize database values.
+     * Base constructor of intelligence profile, initializes mapping.
      */
-    public IntelligenceProfile() {
-        intelligencePoints = new HashMap<>();
-        for (Intelligence intelligence :
-                Intelligence.values()) {
-            intelligencePoints.put(intelligence, 0.0);
-        }
+    public IntelligenceProfile()
+    {
+        parameters = new EnumMap<>(Intelligence.class);
     }
 }

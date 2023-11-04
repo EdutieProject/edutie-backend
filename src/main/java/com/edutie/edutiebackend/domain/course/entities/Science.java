@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.studyprogram;
+package com.edutie.edutiebackend.domain.course.entities;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.common.identities.ScienceId;
@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Science entity - the category that each course should have
+ * Science entity - the category that each course is assigned to.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -1,8 +1,11 @@
-package com.edutie.edutiebackend.domain.common.studentTraits;
+package com.edutie.edutiebackend.domain.common.studenttraits;
+
+import lombok.Getter;
 
 /**
  * Intelligence enum describing intelligence types according to 8 intelligence theory
  */
+@Getter
 public enum Intelligence
 {
     Visual("Visual"),
@@ -22,8 +25,4 @@ public enum Intelligence
         this.code = code;
     }
 
-    public String getCode()
-    {
-        return code;
-    }
 }

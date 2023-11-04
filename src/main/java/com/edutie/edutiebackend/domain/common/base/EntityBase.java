@@ -1,30 +1,23 @@
 package com.edutie.edutiebackend.domain.common.base;
 
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
 
 
 /**
  * Base class for an entity.
  * @param <TId> Type of id. Example: Book entity has an id of type BookId
  */
+@Getter
+@Setter
 @MappedSuperclass
-public abstract class EntityBase<TId> {
-
+public abstract class EntityBase<TId extends Serializable> {
+    @Id
     private TId id;
-
-    /**
-     * Returns the identity of this entity object.
-     *
-     * @return the identity of this entity object
-     *
-     */
-    public TId getId() {
-        return id;
-    }
-    public void setId(TId id) {
-        this.id = id;
-    }
-
 
     /**
      * Checks whether entity is same as the provided other.

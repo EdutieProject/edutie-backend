@@ -1,29 +1,26 @@
 package com.edutie.edutiebackend.domain.student.entites;
 
-import com.edutie.edutiebackend.domain.common.studentTraits.Skill;
-import com.edutie.edutiebackend.domain.common.base.EntityBase;
-
+import com.edutie.edutiebackend.domain.common.identities.SkillsProfileId;
+import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
+import com.edutie.edutiebackend.domain.student.entites.base.StudentTraitProfile;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 
+/**
+ * Student's profile made for abilities and skill set tracking.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class SkillsProfile extends EntityBase<SkillsProfile> {
-    private HashMap<Skill, Double> skillPoints;
-
+public class SkillsProfile extends StudentTraitProfile<Skill, SkillsProfileId> {
     /**
-     * Default constructor. Should be changed in the future to utilize database values.
+     * Base constructor of skills profile, initializes mapping.
      */
-    public SkillsProfile() {
-        skillPoints = new HashMap<>();
-        for (Skill skill: Skill.values()) {
-            skillPoints.put(skill, 0.0);
-        }
+    public SkillsProfile()
+    {
+        parameters = new EnumMap<>(Skill.class);
     }
-
-
 }

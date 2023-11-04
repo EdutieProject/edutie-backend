@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.studyprogram;
+package com.edutie.edutiebackend.domain.course;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.common.identities.CourseId;

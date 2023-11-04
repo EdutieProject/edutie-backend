@@ -1,8 +1,11 @@
-package com.edutie.edutiebackend.domain.common.studentTraits;
+package com.edutie.edutiebackend.domain.common.studenttraits;
+
+import lombok.Getter;
 
 /**
  * Skill enum describing skills that student can have
  */
+@Getter
 public enum Skill {
     Adaptability("Adaptability"),
     AnalitycalThinking("Analitycal Thinking"),
@@ -25,8 +28,4 @@ public enum Skill {
         this.code = code;
     }
 
-    public String getCode()
-    {
-        return code;
-    }
 }
