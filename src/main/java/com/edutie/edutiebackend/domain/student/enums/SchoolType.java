@@ -1,5 +1,8 @@
 package com.edutie.edutiebackend.domain.student.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum SchoolType
 {
     HighSchool("High School"),
@@ -12,10 +15,5 @@ public enum SchoolType
     SchoolType(String code)
     {
         this.code = code;
-    }
-
-    public String getCode()
-    {
-        return code;
     }
 }

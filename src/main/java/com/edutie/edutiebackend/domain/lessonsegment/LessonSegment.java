@@ -3,12 +3,14 @@ package com.edutie.edutiebackend.domain.lessonsegment;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.lessonsegment.enums.ExerciseType;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.GenerationPrompt;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,9 +25,12 @@ public class LessonSegment extends EntityBase<LessonSegmentId> {
     private LearningTreeNavigator<LessonSegmentId> navigation;
 
     private GenerationPrompt overviewGenerationPrompt;
+
     private GenerationPrompt exerciseGenerationPrompt;
+    private ExerciseType exerciseType;
+
     private Boolean isDynamic;
-    private Set<ExternalSource> externalSources;
+    private Set<ExternalSource> externalSources = new HashSet<>();
 
     /**
      * Adds external source to the lesson segment

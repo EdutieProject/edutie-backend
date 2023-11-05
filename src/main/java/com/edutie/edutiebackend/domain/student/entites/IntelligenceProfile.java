@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import java.util.EnumMap;
 
 /**
- * Profile for students made to track their intelligence adn cognitive abilites.
+ * Profile for students made to track their intelligence and cognition.
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
