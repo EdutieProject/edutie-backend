@@ -6,7 +6,6 @@ import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
 import com.edutie.edutiebackend.domain.student.entites.IntelligenceProfile;
 import com.edutie.edutiebackend.domain.student.entites.SkillsProfile;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.student.entites.base.StudentTraitProfile;
 import com.edutie.edutiebackend.domain.student.validation.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.student.validation.SchoolStageValidator;
 import com.edutie.edutiebackend.domain.student.valueobjects.SchoolStage;
@@ -15,9 +14,7 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
 /**
  * Student class conceals all the student characteristics of the user.
@@ -28,6 +25,7 @@ import java.util.stream.Collectors;
 @Entity
 public class Student extends EntityBase<StudentId> {
     private SchoolStage schoolStage;
+    //TODO! Review: embed or entity?
     private IntelligenceProfile intelligenceProfile;
     private SkillsProfile skillsProfile;
 
@@ -58,7 +56,7 @@ public class Student extends EntityBase<StudentId> {
      */
     public <TTrait extends Enum<TTrait>> void adjustProfile(HashMap<TTrait, Double> traitPoints)
     {
-        //TODO!
+        //TODO! ^ implement regarding the todo above
     }
 
     /**
