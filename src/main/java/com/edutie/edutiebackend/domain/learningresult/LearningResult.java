@@ -18,9 +18,6 @@ import java.util.HashMap;
 public class LearningResult extends EntityBase<LearningResultId> {
     private LearningResourceId learningResourceId;
     private StudentId studentId;
-    // ? either an amount of points
-    private Integer assessmentPoints;
-    // ? or points mapped to common skills
+    // points mapped to common skills
     private HashMap<CommonSkillId, Integer> skillPoints;
-    //TODO! Review
 }

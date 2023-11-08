@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.lessonsegment.enums;
 
-//TODO: Review: entity or enum?
+//TODO: Add source origins
 
 public enum SourceOrigin {
     YouTube("Youtube"),

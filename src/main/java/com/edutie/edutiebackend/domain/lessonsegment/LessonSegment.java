@@ -1,9 +1,10 @@
 package com.edutie.edutiebackend.domain.lessonsegment;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.common.identities.CommonSkillId;
+import com.edutie.edutiebackend.domain.common.identities.ExerciseTypeId;
 import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.common.studynavigation.LearningTreeNavigator;
-import com.edutie.edutiebackend.domain.lessonsegment.enums.ExerciseType;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.GenerationPrompt;
 import jakarta.persistence.Entity;
@@ -27,10 +28,11 @@ public class LessonSegment extends EntityBase<LessonSegmentId> {
     private GenerationPrompt overviewGenerationPrompt;
 
     private GenerationPrompt exerciseGenerationPrompt;
-    private ExerciseType exerciseType;
+    private ExerciseTypeId exerciseType;
 
     private Boolean isDynamic;
     private Set<ExternalSource> externalSources = new HashSet<>();
+    private Set<CommonSkillId> commonSkills = new HashSet<>();
 
     /**
      * Adds external source to the lesson segment
@@ -48,5 +50,23 @@ public class LessonSegment extends EntityBase<LessonSegmentId> {
     public void removeExternalSource(ExternalSource source)
     {
         externalSources.remove(source);
+    }
+
+    /**
+     * Adds common skill to the common skills list
+     * @param commonSkillId common skill identifier
+     */
+    public void addCommonSkill(CommonSkillId commonSkillId)
+    {
+        commonSkills.add(commonSkillId);
+    }
+
+    /**
+     * Removes common skill from the common skills list
+     * @param commonSkillId common skill identifier
+     */
+    public void removeCommonSkill(CommonSkillId commonSkillId)
+    {
+        commonSkills.remove(commonSkillId);
     }
 }

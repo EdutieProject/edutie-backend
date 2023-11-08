@@ -25,7 +25,6 @@ import java.util.HashMap;
 @Entity
 public class Student extends EntityBase<StudentId> {
     private SchoolStage schoolStage;
-    //TODO! Review: embed or entity?
     private IntelligenceProfile intelligenceProfile;
     private SkillsProfile skillsProfile;
 
@@ -56,7 +55,7 @@ public class Student extends EntityBase<StudentId> {
      */
     public <TTrait extends Enum<TTrait>> void adjustProfile(HashMap<TTrait, Double> traitPoints)
     {
-        //TODO! ^ implement regarding the todo above
+        System.out.println("Domain method not implemented");
     }
 
     /**
