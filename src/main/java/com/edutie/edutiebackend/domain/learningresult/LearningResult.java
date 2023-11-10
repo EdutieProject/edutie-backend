@@ -18,6 +18,5 @@ import java.util.HashMap;
 public class LearningResult extends EntityBase<LearningResultId> {
     private LearningResourceId learningResourceId;
     private StudentId studentId;
-    // points mapped to common skills
     private HashMap<CommonSkillId, Integer> skillPoints;
 }

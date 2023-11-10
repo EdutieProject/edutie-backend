@@ -6,6 +6,7 @@ public enum SourceOrigin {
     YouTube("Youtube"),
     KhanAcademy("KhanAcademy"),
     Wikipedia("Wikipedia"),
+    Matemaks("Matemaks"),
     Other("Other");
 
     SourceOrigin(String code)

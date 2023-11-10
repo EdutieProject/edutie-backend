@@ -1,20 +1,16 @@
 package com.edutie.edutiebackend.domain.student;
 
 import com.edutie.edutiebackend.domain.common.identities.StudentId;
-import com.edutie.edutiebackend.domain.common.studenttraits.Intelligence;
-import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
-import com.edutie.edutiebackend.domain.student.entites.IntelligenceProfile;
-import com.edutie.edutiebackend.domain.student.entites.SkillsProfile;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.student.validation.exceptions.InvalidSchoolStageException;
+import com.edutie.edutiebackend.domain.student.entites.LearningParameters;
+import com.edutie.edutiebackend.domain.student.exceptions.InvalidSchoolStageException;
+import com.edutie.edutiebackend.domain.student.exceptions.TraitTrackerNotFoundException;
 import com.edutie.edutiebackend.domain.student.validation.SchoolStageValidator;
 import com.edutie.edutiebackend.domain.student.valueobjects.SchoolStage;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.HashMap;
 
 /**
  * Student class conceals all the student characteristics of the user.
@@ -25,54 +21,57 @@ import java.util.HashMap;
 @Entity
 public class Student extends EntityBase<StudentId> {
     private SchoolStage schoolStage;
-    private IntelligenceProfile intelligenceProfile;
-    private SkillsProfile skillsProfile;
+    private LearningParameters learningParameters;
 
     /**
-     * Adjusts intelligence profile with given amount of points
-     * @param intelligence intelligence to target
-     * @param points points amount
+     * Adapts learning parameters based on provided progress value
+     * @param traitClass class of trait
+     * @param trait concrete trait
+     * @param progressValue progress measured as double
+     * @param <T> type of trait
+     * @see LearningParameters
      */
-    public void adjustProfile(Intelligence intelligence, double points)
+    public <T extends Enum<T>> void adaptLearningParameters(Class<T> traitClass, T trait, double progressValue)
     {
-        intelligenceProfile.adjust(intelligence, points);
+        try {
+            learningParameters.adapt(traitClass, trait, progressValue);
+        } catch (TraitTrackerNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Adjusts skill profile with given amount of points
-     * @param skill skill to target
-     * @param points points amount
+     *  Retrieves value of tracked learning parameter.
+     * @param traitClass trait class
+     * @param trait concrete trait
+     * @return Value of given trait parameter. 0.0 if it's not tracked
+     * @param <T> type of trait
+     * @see LearningParameters
      */
-    public void adjustProfile(Skill skill, double points)
+    public <T extends Enum<T>> double getLearningParameter(Class<T> traitClass, T trait)
     {
-        skillsProfile.adjust(skill, points);
-    }
-
-    /**
-     * Generic method to adjust given TraitProfile chosen by specifying Trait Type
-     * @param traitPoints points to adjust
-     * @param <TTrait> type of trait
-     */
-    public <TTrait extends Enum<TTrait>> void adjustProfile(HashMap<TTrait, Double> traitPoints)
-    {
-        System.out.println("Domain method not implemented");
+        try {
+            var param =  learningParameters.getParameter(traitClass, trait);
+            return param.orElse(0.0);
+        } catch (TraitTrackerNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Progresses the student assigning them to the next grade
+     * @param progressValue numbers of grades to shift forward. May be negative
      * @throws InvalidSchoolStageException - thrown when student cannot progress bcs
-     * the next grade may not exist.
+     * the next grade is out of school type bonds.
      */
-    public void progressSchoolStage() throws InvalidSchoolStageException {
+    public void progressSchoolStage(int progressValue) throws InvalidSchoolStageException {
         var newSchoolStage = new SchoolStage(
                 schoolStage.schoolType(),
-                schoolStage.gradeNumber() + 1);
-        if (SchoolStageValidator.isValid(schoolStage))
-        {
+                schoolStage.gradeNumber() + progressValue);
+        if (SchoolStageValidator.isValid(schoolStage)) {
             schoolStage = newSchoolStage;
         }
-        else
-        {
+        else {
             throw new InvalidSchoolStageException("School stage is invalid");
         }
     }

@@ -22,6 +22,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResource extends EntityBase<LearningResourceId> {
+    //TODO!!!: remove studentId and replace it with optimization detail entities or vo.
     private StudentId studentId;
     private LessonSegmentId lessonSegmentId;
     private ResourceOverview overview;
