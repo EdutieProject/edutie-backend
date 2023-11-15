@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.lessonsegment.entities;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.CommonSkillId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.CommonSkillId;
 import com.edutie.edutiebackend.domain.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
 import jakarta.persistence.Entity;

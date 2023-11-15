@@ -1,9 +1,9 @@
 package com.edutie.edutiebackend.domain.learningresource;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.common.identities.OptimizationStrategyId;
+import com.edutie.edutiebackend.domain.learningresource.identities.LearningResourceId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.optimizationstrategies.identities.OptimizationStrategyId;
 import com.edutie.edutiebackend.domain.learningresource.valueobjects.Exercise;
 import com.edutie.edutiebackend.domain.learningresource.valueobjects.Flowchart;
 import com.edutie.edutiebackend.domain.learningresource.valueobjects.ResourceOverview;

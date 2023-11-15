@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.optimizationstrategies;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.OptimizationStrategyId;
+import com.edutie.edutiebackend.domain.optimizationstrategies.identities.OptimizationStrategyId;
 import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.GenerationPrompt;
 import jakarta.persistence.Entity;

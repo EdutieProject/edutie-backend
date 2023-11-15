@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.student;
 
-import com.edutie.edutiebackend.domain.common.identities.StudentId;
+import com.edutie.edutiebackend.domain.student.identities.StudentId;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.student.entites.LearningParameters;
 import com.edutie.edutiebackend.domain.student.exceptions.InvalidSchoolStageException;

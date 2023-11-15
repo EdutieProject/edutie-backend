@@ -1,11 +1,11 @@
 package com.edutie.edutiebackend.domain.learningresult;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.CommonSkillId;
-import com.edutie.edutiebackend.domain.common.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.common.identities.LearningResultId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.CommonSkillId;
+import com.edutie.edutiebackend.domain.learningresource.identities.LearningResourceId;
+import com.edutie.edutiebackend.domain.learningresult.identities.LearningResultId;
 
-import com.edutie.edutiebackend.domain.common.identities.StudentId;
+import com.edutie.edutiebackend.domain.student.identities.StudentId;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

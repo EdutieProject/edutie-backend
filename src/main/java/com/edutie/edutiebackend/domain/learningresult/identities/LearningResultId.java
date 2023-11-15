@@ -1,0 +1,10 @@
+package com.edutie.edutiebackend.domain.learningresult.identities;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+public record LearningResultId(UUID Id) implements Serializable {
+    public LearningResultId(){
+        this(UUID.randomUUID());
+    }
+}

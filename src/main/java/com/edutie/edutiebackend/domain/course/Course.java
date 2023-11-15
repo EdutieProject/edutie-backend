@@ -1,8 +1,8 @@
 package com.edutie.edutiebackend.domain.course;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.CourseId;
-import com.edutie.edutiebackend.domain.common.identities.ScienceId;
+import com.edutie.edutiebackend.domain.course.identities.CourseId;
+import com.edutie.edutiebackend.domain.course.identities.ScienceId;
 
 import jakarta.persistence.Entity;
 import lombok.Data;

@@ -1,9 +1,9 @@
 package com.edutie.edutiebackend.domain.lessonsegment;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.CommonSkillId;
-import com.edutie.edutiebackend.domain.common.identities.ExerciseTypeId;
-import com.edutie.edutiebackend.domain.common.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.CommonSkillId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.ExerciseTypeId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.common.studynavigation.LearningTreeNavigator;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.GenerationPrompt;

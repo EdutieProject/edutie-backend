@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.lessonsegment.entities;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.ExerciseTypeId;
+import com.edutie.edutiebackend.domain.lessonsegment.identities.ExerciseTypeId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

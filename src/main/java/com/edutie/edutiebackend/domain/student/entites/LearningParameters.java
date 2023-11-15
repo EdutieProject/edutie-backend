@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.student.entites;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.common.identities.LearningParametersId;
+import com.edutie.edutiebackend.domain.student.identities.LearningParametersId;
 import com.edutie.edutiebackend.domain.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
 import com.edutie.edutiebackend.domain.student.exceptions.TraitTrackerNotFoundException;

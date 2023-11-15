@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain;
 
-import com.edutie.edutiebackend.domain.common.identities.LearningResourceId;
+import com.edutie.edutiebackend.domain.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.learningresource.LearningResource;
 import com.edutie.edutiebackend.domain.learningresource.valueobjects.ResourceOverview;
 import org.junit.jupiter.api.Assertions;
