@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.learningresource.entities;
+package com.edutie.edutiebackend.domain.lessonsegment.entities;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.common.identities.CommonSkillId;
@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 
 /**
  * Common skill is a high-level indicator of Learning Resource's knowledge requirements.
@@ -20,6 +20,6 @@ import java.util.EnumMap;
 @Entity
 public class CommonSkill extends EntityBase<CommonSkillId> {
     private String name;
-    EnumMap<Skill, Double> skillMultipliers = new EnumMap<>(Skill.class);
-    EnumMap<Intelligence, Double> intelligenceMultipliers = new EnumMap<>(Intelligence.class);
+    HashMap<Skill, Double> skillMultipliers = new HashMap<>();
+    HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
 }
