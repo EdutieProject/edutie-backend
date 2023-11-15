@@ -3,7 +3,7 @@ package com.edutie.edutiebackend.domain.student.entites;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.student.identities.LearningParametersId;
 import com.edutie.edutiebackend.domain.common.studenttraits.Intelligence;
-import com.edutie.edutiebackend.domain.common.studenttraits.Skill;
+import com.edutie.edutiebackend.domain.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.student.exceptions.TraitTrackerNotFoundException;
 import com.edutie.edutiebackend.domain.student.valueobjects.TraitTracker;
 import jakarta.persistence.Entity;
@@ -22,9 +22,8 @@ import java.util.Optional;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-//TODO: Handle exceptions across functions!!!
 public class LearningParameters extends EntityBase<LearningParametersId> {
-    private TraitTracker<Skill> skillTraitTracker;
+    private TraitTracker<Ability> abilityTraitTracker;
     private TraitTracker<Intelligence> intelligenceTraitTracker;
 
     /**
@@ -102,9 +101,13 @@ public class LearningParameters extends EntityBase<LearningParametersId> {
                 if (typeArguments.length > 0 && typeArguments[0] == traitClass) {
                     try {
                         field.setAccessible(true);
-                        return Optional.ofNullable((TraitTracker<T>) field.get(this));
+                        return Optional.ofNullable(
+                                (TraitTracker<T>) field.get(this)
+                        );
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        // this should go into logger - there is no logger right now
+                        System.out.println(e.getMessage());
+//                        e.printStackTrace();
                     }
                 }
             }

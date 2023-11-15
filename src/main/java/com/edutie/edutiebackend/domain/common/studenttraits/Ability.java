@@ -3,10 +3,10 @@ package com.edutie.edutiebackend.domain.common.studenttraits;
 import lombok.Getter;
 
 /**
- * Skill enum describing skills that student can have
+ * Ability enum describing skills that student can have
  */
 @Getter
-public enum Skill {
+public enum Ability {
     Adaptability("Adaptability"),
     AnalitycalThinking("Analitycal Thinking"),
     CriticalThinking("Critical Thinking"),
@@ -23,7 +23,7 @@ public enum Skill {
 
     private final String code;
 
-    Skill(String code)
+    Ability(String code)
     {
         this.code = code;
     }

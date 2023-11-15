@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.learningresult;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.lessonsegment.identities.CommonSkillId;
+import com.edutie.edutiebackend.domain.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.learningresult.identities.LearningResultId;
 
@@ -18,5 +18,5 @@ import java.util.HashMap;
 public class LearningResult extends EntityBase<LearningResultId> {
     private LearningResourceId learningResourceId;
     private StudentId studentId;
-    private HashMap<CommonSkillId, Integer> skillPoints;
+    private HashMap<SkillId, Integer> skillPoints;
 }
