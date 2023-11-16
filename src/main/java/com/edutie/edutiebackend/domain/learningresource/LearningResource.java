@@ -29,4 +29,14 @@ public class LearningResource extends EntityBase<LearningResourceId> {
     private ResourceOverview overview;
     private Exercise exercise;
     private Flowchart flowchart;
+
+    public void addOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
+    {
+        optimizationStrategies.add(optimizationStrategyId);
+    }
+
+    public void removeOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
+    {
+        optimizationStrategies.remove(optimizationStrategyId);
+    }
 }

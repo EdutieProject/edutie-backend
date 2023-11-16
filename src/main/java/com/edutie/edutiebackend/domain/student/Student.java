@@ -12,6 +12,8 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 /**
  * Student class conceals all the student characteristics of the user.
  * This is an aggregate root of the student.
@@ -21,6 +23,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Student extends EntityBase<StudentId> {
     private SchoolStage schoolStage;
+    private Date birthDate;
     private LearningParameters learningParameters;
 
     /**
