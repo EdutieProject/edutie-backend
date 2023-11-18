@@ -1,18 +1,20 @@
 package com.edutie.edutiebackend.domain.student;
 
+import com.edutie.edutiebackend.domain.student.exceptions.InvalidBirthDateException;
 import com.edutie.edutiebackend.domain.student.identities.StudentId;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.student.entites.LearningParameters;
 import com.edutie.edutiebackend.domain.student.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.student.exceptions.TraitTrackerNotFoundException;
 import com.edutie.edutiebackend.domain.student.validation.SchoolStageValidator;
+import com.edutie.edutiebackend.domain.student.validation.StudentBirthdateValidator;
 import com.edutie.edutiebackend.domain.student.valueobjects.SchoolStage;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Student class conceals all the student characteristics of the user.
@@ -23,14 +25,14 @@ import java.util.Date;
 @Entity
 public class Student extends EntityBase<StudentId> {
     private SchoolStage schoolStage;
-    private Date birthDate;
+    private LocalDate birthdate;
     private LearningParameters learningParameters;
 
     /**
      * Adapts learning parameters based on provided progress value
      * @param traitClass class of trait
      * @param trait concrete trait
-     * @param progressValue progress measured as double
+     * @param progressValue progress measured as double. May be negative
      * @param <T> type of trait
      * @see LearningParameters
      */
@@ -44,7 +46,9 @@ public class Student extends EntityBase<StudentId> {
     }
 
     /**
-     *  Retrieves value of tracked learning parameter.
+     *  Retrieves value of tracked learning parameter. May throw a runtime
+     *  exception if the provided trait class is not valid - there is no
+     *  tracker associated with it.
      * @param traitClass trait class
      * @param trait concrete trait
      * @return Value of given trait parameter. 0.0 if it's not tracked
@@ -62,21 +66,40 @@ public class Student extends EntityBase<StudentId> {
     }
 
     /**
-     * Progresses the student assigning them to the next grade
-     * @param progressValue numbers of grades to shift forward. May be negative
-     * @throws InvalidSchoolStageException - thrown when student cannot progress bcs
-     * the next grade is out of school type bonds.
+     * Changes the student grade promoting him given amount of grades if it is possible.
+     * Throws an exception otherwise
+     * @param progressValue numbers of grades to shift forward. Goes backwards if negative.
+     * @throws InvalidSchoolStageException exception thrown if the school value would be invalid
+     * after using this method.
      */
-    public void progressSchoolStage(int progressValue) throws InvalidSchoolStageException {
+    public void changeSchoolStage(int progressValue) throws InvalidSchoolStageException {
         var newSchoolStage = new SchoolStage(
                 schoolStage.schoolType(),
                 schoolStage.gradeNumber() + progressValue);
         if (SchoolStageValidator.isValid(schoolStage)) {
             schoolStage = newSchoolStage;
         }
-        else {
-            throw new InvalidSchoolStageException("School stage is invalid");
-        }
+    }
+
+    /**
+     *
+     * @throws InvalidSchoolStageException exception thrown when schoolStage is invalid
+     * @see SchoolStageValidator School stage validation rules
+     */
+    public void setSchoolStage(SchoolStage schoolStage) throws InvalidSchoolStageException {
+        if(SchoolStageValidator.isValid(schoolStage))
+            this.schoolStage = schoolStage;
+    }
+
+
+    /**
+     *
+     * @throws InvalidBirthDateException exception thrown when given birthdate is invalid
+     * @see StudentBirthdateValidator Rules for validating student's birthdate
+     */
+    public void setBirthdate(LocalDate birthdate) throws InvalidBirthDateException {
+        if(StudentBirthdateValidator.isValid(birthdate))
+            this.birthdate = birthdate;
     }
 
 }

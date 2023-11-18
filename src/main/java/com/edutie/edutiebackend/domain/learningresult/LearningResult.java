@@ -1,6 +1,8 @@
 package com.edutie.edutiebackend.domain.learningresult;
 
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.learningresult.exceptions.InvalidSkillPointsValueException;
+import com.edutie.edutiebackend.domain.learningresult.validation.SkillPointsValidator;
 import com.edutie.edutiebackend.domain.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.learningresult.identities.LearningResultId;
@@ -28,10 +30,12 @@ public class LearningResult extends EntityBase<LearningResultId> {
      * Assigns skill points to given skill
      * @param skillId id of skill
      * @param points points to assign
+     * @throws InvalidSkillPointsValueException exception thrown when points value is invalid
+     * @see SkillPointsValidator Validating skill points value
      */
-    public void assignSkillPoints(SkillId skillId, int points)
-    {
-        skillPoints.put(skillId, points);
+    public void assignSkillPoints(SkillId skillId, int points) throws InvalidSkillPointsValueException {
+        if(SkillPointsValidator.isValid(points))
+            skillPoints.put(skillId, points);
     }
 
     /**

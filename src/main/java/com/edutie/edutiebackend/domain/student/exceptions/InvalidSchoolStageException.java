@@ -9,9 +9,4 @@ public class InvalidSchoolStageException extends Exception {
     {
         super();
     }
-
-    public InvalidSchoolStageException(String message)
-    {
-        super(message);
-    }
 }

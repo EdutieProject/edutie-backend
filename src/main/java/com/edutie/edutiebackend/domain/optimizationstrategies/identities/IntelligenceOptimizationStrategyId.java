@@ -3,8 +3,8 @@ package com.edutie.edutiebackend.domain.optimizationstrategies.identities;
 import java.io.Serializable;
 import java.util.UUID;
 
-public record OptimizationStrategyId(UUID Id) implements Serializable {
-    public OptimizationStrategyId(){
+public record IntelligenceOptimizationStrategyId(UUID Id) implements Serializable {
+    public IntelligenceOptimizationStrategyId(){
         this(UUID.randomUUID());
     }
 }

@@ -1,13 +1,21 @@
 package com.edutie.edutiebackend.domain.student.validation;
 
 import com.edutie.edutiebackend.domain.student.enums.SchoolType;
+import com.edutie.edutiebackend.domain.student.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.student.valueobjects.SchoolStage;
 
+/**
+ * Class responsible for validating school stage. Contains
+ * rules defining whether school stage is valid or not.
+ */
 public class SchoolStageValidator {
-    public static boolean isValid(SchoolStage schoolStage) {
-        return (
+    public static boolean isValid(SchoolStage schoolStage) throws InvalidSchoolStageException {
+        if(
                 HighSchoolValidation(schoolStage) || TechnicalHighSchoolValidation(schoolStage)  || TertiarySchoolValidation(schoolStage)
-        );
+        )
+            return true;
+        else
+            throw new InvalidSchoolStageException();
     }
 
     private static boolean HighSchoolValidation(SchoolStage schoolStage)

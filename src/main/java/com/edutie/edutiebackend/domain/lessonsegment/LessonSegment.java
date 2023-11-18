@@ -3,7 +3,6 @@ package com.edutie.edutiebackend.domain.lessonsegment;
 import com.edutie.edutiebackend.domain.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.lessonsegment.identities.ExerciseTypeId;
 import com.edutie.edutiebackend.domain.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.common.studynavigation.LearningTreeNavigator;
 import com.edutie.edutiebackend.domain.lessonsegment.valueobjects.ExternalSource;
