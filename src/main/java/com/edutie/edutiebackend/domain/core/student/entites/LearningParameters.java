@@ -1,5 +1,6 @@
 package com.edutie.edutiebackend.domain.core.student.entites;
 
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.TraitTracker;
 import com.edutie.edutiebackend.domain.core.student.identities.LearningParametersId;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LearningParameters extends EntityBase<LearningParametersId> {
+public class LearningParameters extends AuditableEntityBase<LearningParametersId> {
     private TraitTracker<Ability> abilityTraitTracker = new TraitTracker<>();
     private TraitTracker<Intelligence> intelligenceTraitTracker = new TraitTracker<>();
 

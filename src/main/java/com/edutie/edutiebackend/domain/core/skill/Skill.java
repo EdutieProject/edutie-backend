@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.skill;
 
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.skill.exceptions.InvalidTraitMultiplierValueException;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Skill extends EntityBase<SkillId> {
+public class Skill extends AuditableEntityBase<SkillId> {
     private String name;
     HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
     HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();

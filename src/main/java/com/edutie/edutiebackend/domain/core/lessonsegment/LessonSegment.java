@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment;
 
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.GenerationPrompt;
@@ -21,7 +21,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LessonSegment extends EntityBase<LessonSegmentId> {
+public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
 
     private LearningTreeNavigator<LessonSegmentId> navigation;
 

@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.course;
 
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.course.identities.ScienceId;
 
@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Course extends EntityBase<CourseId> {
+public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private ScienceId scienceId;

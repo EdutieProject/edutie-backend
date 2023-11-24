@@ -1,11 +1,11 @@
 package com.edutie.edutiebackend.domain.core.student;
 
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
-import com.edutie.edutiebackend.domain.core.student.identities.UserId;
+import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.domain.core.student.validation.StudentBirthdateValidator;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.student.entites.LearningParameters;
 import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
@@ -24,7 +24,7 @@ import java.time.LocalDate;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Student extends EntityBase<StudentId> {
+public class Student extends AuditableEntityBase<StudentId> {
     private SchoolStage schoolStage;
     private LocalDate birthdate;
     private LearningParameters learningParameters = new LearningParameters();

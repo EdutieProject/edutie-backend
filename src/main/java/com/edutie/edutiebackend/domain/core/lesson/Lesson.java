@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.lesson;
 
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Lesson extends EntityBase<LessonId> {
+public class Lesson extends AuditableEntityBase<LessonId> {
     private CourseId courseId;
     private String name;
     private String description;
