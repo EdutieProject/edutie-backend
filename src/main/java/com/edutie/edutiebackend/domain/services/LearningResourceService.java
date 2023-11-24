@@ -7,9 +7,9 @@ import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
 import com.edutie.edutiebackend.domain.core.student.Student;
 
 /**
- * Interface responsible for
+ * Interface responsible for creating learning resources
  */
-public interface LearningResourceService extends OptimizationStrategyService {
+public interface LearningResourceService{
 
 
     /**
