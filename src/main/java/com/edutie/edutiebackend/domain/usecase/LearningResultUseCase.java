@@ -1,15 +1,11 @@
-package com.edutie.edutiebackend.application.services;
+package com.edutie.edutiebackend.domain.usecase;
 
 import com.edutie.edutiebackend.domain.core.learningresult.LearningResult;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.LearningReport;
 import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
 import com.edutie.edutiebackend.domain.core.student.Student;
 
-/**
- * Interface responsible for
- * assessment.
- */
-public interface AssessmentService {
+public interface LearningResultUseCase {
     /**
      * Assesses exercise based on given Lesson Segment and a report
      * from the given exercise. The assessment omits the corresponding
@@ -20,15 +16,11 @@ public interface AssessmentService {
      * @return assessment as LearningResult
      */
     LearningResult createResult(LearningReport exerciseReport, final LessonSegment lessonSegment);
-
     /**
-     * Adapts student's learning parameters, applying the given learning Result.
-     * @param student student to adapt.
+     * Applies learning result to student entity
      * @param learningResult learning result to apply
-     * @return The total value of points that are changed. For example, if
-     * method causes +5.5 in one trait mapping and -2.5 in other trait mapping,
-     * the return value is 3.0
+     * @param student student to modify
+     * @return The difference made to all learning param trackers as double
      */
-    double adaptStudentParameters(Student student, final LearningResult learningResult);
-
+    double applyResult(final LearningResult learningResult, Student student);
 }

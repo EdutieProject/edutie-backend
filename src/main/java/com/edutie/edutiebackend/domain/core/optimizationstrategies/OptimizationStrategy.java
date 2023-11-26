@@ -1,9 +1,8 @@
 package com.edutie.edutiebackend.domain.core.optimizationstrategies;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
-import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.IntelligenceOptimizationStrategyId;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.GenerationPrompt;
+import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +14,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class IntelligenceOptimizationStrategy extends AuditableEntityBase<IntelligenceOptimizationStrategyId> {
+public class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
     GenerationPrompt prompt;
-    Intelligence intelligence;
+    TTrait trait;
     Double requiredValue;
 }

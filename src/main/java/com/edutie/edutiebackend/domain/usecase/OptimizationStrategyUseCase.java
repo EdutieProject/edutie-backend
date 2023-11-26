@@ -1,12 +1,11 @@
-package com.edutie.edutiebackend.application.services;
+package com.edutie.edutiebackend.domain.usecase;
 
-import com.edutie.edutiebackend.domain.core.optimizationstrategies.AbilityOptimizationStrategy;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.IntelligenceOptimizationStrategy;
 import com.edutie.edutiebackend.domain.core.student.Student;
 
 import java.util.Set;
 
-public interface OptimizationStrategyService {
+public interface OptimizationStrategyUseCase {
     /**
      * Selects ability optimization traits that best match given student
      *
