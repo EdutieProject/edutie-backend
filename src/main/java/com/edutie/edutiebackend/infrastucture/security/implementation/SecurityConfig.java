@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.infrastucture.security;
+package com.edutie.edutiebackend.infrastucture.security.implementation;
 
 
 import org.springframework.context.annotation.Bean;

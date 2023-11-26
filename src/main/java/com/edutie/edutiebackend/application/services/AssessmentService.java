@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.services;
+package com.edutie.edutiebackend.application.services;
 
 import com.edutie.edutiebackend.domain.core.learningresult.LearningResult;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.LearningReport;

@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.infrastucture.security;
+package com.edutie.edutiebackend.infrastucture.security.implementation;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.services;
+package com.edutie.edutiebackend.application.services;
 
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.AbilityOptimizationStrategy;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.IntelligenceOptimizationStrategy;

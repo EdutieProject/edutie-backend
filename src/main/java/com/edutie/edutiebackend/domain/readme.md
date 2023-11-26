@@ -13,7 +13,7 @@ Files are structured in a way that is easily conceivable.
    - **core** | folder containing aggregates
      - common - this is the folder which contains concepts shared across the whole domain
      - *learningresource, student, etc...* - folders containing aggregates
-   - **services** | folder containing domain services
+   - **usecases** | folder containing domain-specific logic as interfaces implemented as application services internals 
 
 ## Aggregate concept explanation
 Aggregate is basically an entity, which other entities are dependent on. All the

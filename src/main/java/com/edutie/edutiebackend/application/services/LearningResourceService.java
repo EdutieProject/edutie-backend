@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.services;
+package com.edutie.edutiebackend.application.services;
 
 
 
