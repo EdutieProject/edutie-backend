@@ -1,0 +1,9 @@
+package com.edutie.edutiebackend.application.services.ports.crud;
+
+import com.edutie.edutiebackend.application.services.ports.crud.base.BaseService;
+import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
+
+import java.util.UUID;
+
+public interface LearningResourceService extends BaseService<LearningResource, UUID> {
+}
