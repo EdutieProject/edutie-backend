@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.course.identities;
+package com.edutie.edutiebackend.domain.core.science.identities;
 
 import java.io.Serializable;
 import java.util.UUID;

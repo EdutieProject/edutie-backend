@@ -1,7 +1,7 @@
-package com.edutie.edutiebackend.domain.core.course.entities;
+package com.edutie.edutiebackend.domain.core.science;
 
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.core.course.identities.ScienceId;
+import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

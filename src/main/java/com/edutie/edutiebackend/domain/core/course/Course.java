@@ -2,7 +2,7 @@ package com.edutie.edutiebackend.domain.core.course;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
-import com.edutie.edutiebackend.domain.core.course.identities.ScienceId;
+import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -20,4 +20,5 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private ScienceId scienceId;
+    private Boolean accessible = false;
 }

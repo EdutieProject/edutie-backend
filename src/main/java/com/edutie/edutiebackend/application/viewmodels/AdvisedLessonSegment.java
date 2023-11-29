@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.application.models;
+package com.edutie.edutiebackend.application.viewmodels;
 
 import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
 
