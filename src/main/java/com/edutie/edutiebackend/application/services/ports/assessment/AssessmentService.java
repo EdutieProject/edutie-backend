@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.application.services.ports.assessment;
 
-import com.edutie.edutiebackend.application.viewmodels.LearningEffect;
+import com.edutie.edutiebackend.application.data.viewmodels.LearningEffect;
 
 import java.util.UUID;
 

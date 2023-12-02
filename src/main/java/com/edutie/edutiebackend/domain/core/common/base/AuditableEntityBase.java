@@ -21,6 +21,6 @@ import java.time.LocalDate;
 public abstract class AuditableEntityBase<TId extends Serializable> extends EntityBase<TId>{
     private LocalDate createdOn = LocalDate.now();
     private LocalDate updatedOn = LocalDate.now();
-    @Nullable
     private UserId updatedBy;
+    private UserId createdBy;
 }

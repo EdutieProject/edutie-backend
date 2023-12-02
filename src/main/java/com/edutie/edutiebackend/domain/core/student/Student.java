@@ -11,6 +11,7 @@ import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidSchoolStag
 import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
 import com.edutie.edutiebackend.domain.core.student.validation.SchoolStageValidator;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,8 +26,10 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Student extends AuditableEntityBase<StudentId> {
-    private SchoolStage schoolStage;
-    private LocalDate birthdate;
+    @Nullable
+    private SchoolStage schoolStage = null;
+    @Nullable
+    private LocalDate birthdate = null;
     private LearningParameters learningParameters = new LearningParameters();
     private UserId userId;
 
