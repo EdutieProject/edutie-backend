@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.application.services.ports.crud;
+package com.edutie.edutiebackend.application.services.ports.common;
 
 import java.util.Optional;
 import java.util.Set;

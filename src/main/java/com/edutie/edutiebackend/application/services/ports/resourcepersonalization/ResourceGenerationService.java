@@ -9,7 +9,7 @@ import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 /**
  * Interface responsible for creating learning resources
  */
-public interface LearningResourceGenerationService {
+public interface ResourceGenerationService {
 
 
     /**
@@ -19,5 +19,5 @@ public interface LearningResourceGenerationService {
      * @param lessonSegmentId lesson segment identifier
      * @return created Learning Resource object
      */
-    LearningResource create(final StudentId studentId, LessonSegmentId lessonSegmentId);
+    LearningResource createWithAI(StudentId studentId, LessonSegmentId lessonSegmentId);
 }

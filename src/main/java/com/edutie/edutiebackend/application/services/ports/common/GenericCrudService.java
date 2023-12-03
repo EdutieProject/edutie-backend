@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.application.services.ports.crud;
+package com.edutie.edutiebackend.application.services.ports.common;
 
 import java.util.Optional;
 
@@ -8,6 +8,7 @@ import java.util.Optional;
  * @param <TInnerId>
  */
 public interface GenericCrudService<TEntity, TInnerId> extends GenericRetrievalService<TEntity, TInnerId> {
+    TEntity create(TEntity entity);
     Optional<TEntity> overwrite(TEntity entity);
     boolean delete(TInnerId id);
 }

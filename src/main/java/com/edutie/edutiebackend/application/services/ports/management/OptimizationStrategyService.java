@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.application.services.ports.agreggates;
+package com.edutie.edutiebackend.application.services.ports.management;
 
-import com.edutie.edutiebackend.application.services.ports.crud.GenericCrudService;
+import com.edutie.edutiebackend.application.services.ports.common.GenericCrudService;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.OptimizationStrategy;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 

@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.application.services.ports.agreggates;
+package com.edutie.edutiebackend.application.services.ports.management;
 
-import com.edutie.edutiebackend.application.services.ports.crud.GenericRetrievalService;
+import com.edutie.edutiebackend.application.services.ports.common.GenericRetrievalService;
 import com.edutie.edutiebackend.domain.core.course.Course;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 
