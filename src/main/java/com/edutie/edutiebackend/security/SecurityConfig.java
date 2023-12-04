@@ -1,6 +1,5 @@
 package com.edutie.edutiebackend.security;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -8,10 +7,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
@@ -20,39 +18,31 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 class SecurityConfig {
-    private final KeyCloackLogoutHandler keycloakLogoutHandler;
-    SecurityConfig(KeyCloackLogoutHandler keycloakLogoutHandler) {
-        this.keycloakLogoutHandler = keycloakLogoutHandler;
-    }
+
+    private final String jwkSetUri = "http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs";
+
+
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
-    @Order(1)
+
     @Bean
-    public SecurityFilterChain clientFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        /*http
+                .authorizeHttpRequests((authorize) -> authorize
+                        .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
+        return http.build();
+        */
         http.authorizeRequests()
                 .requestMatchers(new AntPathRequestMatcher("/"))
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-        http.oauth2Login()
-                .and()
-                .logout()
-                .addLogoutHandler(keycloakLogoutHandler)
-                .logoutSuccessUrl("/");
-        return http.build();
-    }
-
-    @Order(2)
-    @Bean
-    public SecurityFilterChain resourceServerFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .requestMatchers(new AntPathRequestMatcher("/customers*"))
-                .hasRole("USER")
-                .anyRequest()
-                .authenticated();
-        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+        http.oauth2Login();
         return http.build();
     }
     @Bean
@@ -60,4 +50,27 @@ class SecurityConfig {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .build();
     }
+
+
+    /*private ServletPolicyEnforcerFilter createPolicyEnforcerFilter() {
+        PolicyEnforcerConfig config;
+
+        try {
+            config = JsonSerialization.readValue(getClass().getResourceAsStream("/policy-enforcer.json"), PolicyEnforcerConfig.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new ServletPolicyEnforcerFilter(new ConfigurationResolver() {
+            @Override
+            public PolicyEnforcerConfig resolve(HttpRequest request) {
+                return config;
+            }
+        });
+    }*/
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
+    }
+
 }
