@@ -4,6 +4,7 @@ server:
 
 
 spring:
+  cert: http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}

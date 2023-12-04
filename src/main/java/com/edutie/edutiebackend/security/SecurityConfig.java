@@ -1,5 +1,6 @@
 package com.edutie.edutiebackend.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -19,8 +20,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 class SecurityConfig {
 
-    private final String jwkSetUri = "http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs";
-
+    private final KeycloakLogoutHandler log = new KeycloakLogoutHandler();
+    @Value("${spring.cert}")
+    String jwkSetUri;
 
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
@@ -29,20 +31,18 @@ class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        /*http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated()
-                )
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
-        return http.build();
-        */
+
         http.authorizeRequests()
                 .requestMatchers(new AntPathRequestMatcher("/"))
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-        http.oauth2Login();
+        http.oauth2Login()
+                .and()
+                .logout()
+                .addLogoutHandler(log)
+                .logoutSuccessUrl("/")
+                .permitAll();
         return http.build();
     }
     @Bean
@@ -51,26 +51,9 @@ class SecurityConfig {
                 .build();
     }
 
-
-    /*private ServletPolicyEnforcerFilter createPolicyEnforcerFilter() {
-        PolicyEnforcerConfig config;
-
-        try {
-            config = JsonSerialization.readValue(getClass().getResourceAsStream("/policy-enforcer.json"), PolicyEnforcerConfig.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return new ServletPolicyEnforcerFilter(new ConfigurationResolver() {
-            @Override
-            public PolicyEnforcerConfig resolve(HttpRequest request) {
-                return config;
-            }
-        });
-    }*/
-
     @Bean
     JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
+        return NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
 }
