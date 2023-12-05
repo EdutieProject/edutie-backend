@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.application.services.management.course;
 
-import com.edutie.edutiebackend.application.services.common.GenericRetrievalService;
+import com.edutie.edutiebackend.application.services.common.servicebase.GenericRetrievalService;
 import com.edutie.edutiebackend.domain.core.course.Course;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 

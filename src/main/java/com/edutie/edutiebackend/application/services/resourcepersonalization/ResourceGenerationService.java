@@ -19,5 +19,5 @@ public interface ResourceGenerationService {
      * @param lessonSegmentId lesson segment identifier
      * @return created Learning Resource object
      */
-    LearningResource createWithAI(StudentId studentId, LessonSegmentId lessonSegmentId);
+    LearningResource generateForStudent(StudentId studentId, LessonSegmentId lessonSegmentId);
 }

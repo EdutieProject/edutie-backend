@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.application.services.management.lesson;
 
-import com.edutie.edutiebackend.application.services.common.GenericCrudService;
+import com.edutie.edutiebackend.application.services.common.servicebase.GenericCrudService;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;

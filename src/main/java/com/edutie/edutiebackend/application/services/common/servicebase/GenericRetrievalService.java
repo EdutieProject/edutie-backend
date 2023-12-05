@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.application.services.common;
+package com.edutie.edutiebackend.application.services.common.servicebase;
 
 import java.util.Optional;
 import java.util.Set;
