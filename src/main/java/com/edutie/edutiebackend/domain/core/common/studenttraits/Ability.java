@@ -7,18 +7,18 @@ import lombok.Getter;
  */
 @Getter
 public enum Ability {
-    Adaptability("Adaptability"),
-    AnalitycalThinking("Analitycal Thinking"),
-    CriticalThinking("Critical Thinking"),
-    Creativity("Creativity"),
-    GoalSetting("Goal Setting"),
-    InformationSynthesis("Information Synthesis"),
-    Metacognition("Metacognition"),
-    ProblemSolving("Problem Solving"),
-    ReadingComprehension("Reading Comprehension"),
-    Research("Research"),
-    SelfAssessment("Self Assessment"),
-    Visualization("Visualization");
+    ADAPTABILITY("Adaptability"),
+    ANALYTICAL_THINKING("Analytical Thinking"),
+    CRITICAL_THINKING("Critical Thinking"),
+    CREATIVITY("Creativity"),
+    GOAL_SETTING("Goal Setting"),
+    INFORMATION_SYNTHESIS("Information Synthesis"),
+    METACOGNITION("Metacognition"),
+    PROBLEM_SOLVING("Problem Solving"),
+    READING_COMPREHENSION("Reading Comprehension"),
+    RESEARCH("Research"),
+    SELF_ASSESSMENT("Self Assessment"),
+    VISUALIZATION("Visualization");
 
 
     private final String code;
@@ -28,4 +28,8 @@ public enum Ability {
         this.code = code;
     }
 
+    @Override
+    public String toString() {
+        return code;
+    }
 }

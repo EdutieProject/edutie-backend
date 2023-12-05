@@ -8,14 +8,14 @@ import lombok.Getter;
 @Getter
 public enum Intelligence
 {
-    Visual("Visual"),
-    Linguistic("Linguistic"),
-    Interpersonal("Interpersonal"),
-    Intrapersonal("Intrapersonal"),
-    Logical("Logical"),
-    Musical("Musical"),
-    Kinesthetic("Kinesthetic"),
-    Naturalistic("Naturalistic");
+    VISUAL("Visual"),
+    LINGUISTIC("Linguistic"),
+    INTERPERSONAL("Interpersonal"),
+    INTRAPERSONAL("Intrapersonal"),
+    LOGICAL("Logical"),
+    MUSICAL("Musical"),
+    KINESTHETIC("Kinesthetic"),
+    NATURALISTIC("Naturalistic");
 
 
     private final String code;
@@ -25,4 +25,8 @@ public enum Intelligence
         this.code = code;
     }
 
+    @Override
+    public String toString() {
+        return code;
+    }
 }
