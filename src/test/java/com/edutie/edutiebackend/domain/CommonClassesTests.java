@@ -1,8 +1,8 @@
 package com.edutie.edutiebackend.domain;
 
-import com.edutie.edutiebackend.domain.learningresource.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.learningresource.LearningResource;
-import com.edutie.edutiebackend.domain.learningresource.valueobjects.ResourceOverview;
+import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
+import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
+import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
