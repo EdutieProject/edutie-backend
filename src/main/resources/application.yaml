@@ -3,9 +3,8 @@ server:
 
 
 
-
-
 spring:
+  cert: http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
@@ -21,16 +20,18 @@ spring:
     show-sql: true
   security:
     oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://52.32.178.153:8080/realms/SpringBootKeycloak
       client:
         registration:
           keycloak:
             client-id: login-app
-            authorization-grant-type: client_credentials
+            authorization-grant-type: authorization_code
             scope: openid
+            client-name: keycloak
+            provider: keycloak
         provider:
           keycloak:
             issuer-uri: http://52.32.178.153:8080/realms/SpringBootKeycloak
             user-name-attribute: preferred_username
+      resource-server:
+        jwt:
+          issuer-uri: http://52.32.178.153:8080/realms/SpringBootKeycloak
