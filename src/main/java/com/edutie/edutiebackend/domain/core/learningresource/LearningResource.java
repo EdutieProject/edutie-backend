@@ -3,9 +3,9 @@ package com.edutie.edutiebackend.domain.core.learningresource;
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.Exercise;
 import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
-import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.AbilityOptimizationStrategyId;
 import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,17 +23,17 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResource extends EntityBase<LearningResourceId> {
-    private Set<AbilityOptimizationStrategyId> optimizationStrategies;
+    private Set<OptimizationStrategyId> optimizationStrategies;
     private LessonSegmentId lessonSegmentId;
     private ResourceOverview overview;
     private Exercise exercise;
 
-    public void addOptimizationStrategy(AbilityOptimizationStrategyId optimizationStrategyId)
+    public void addOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
     {
         optimizationStrategies.add(optimizationStrategyId);
     }
 
-    public void removeOptimizationStrategy(AbilityOptimizationStrategyId optimizationStrategyId)
+    public void removeOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
     {
         optimizationStrategies.remove(optimizationStrategyId);
     }
