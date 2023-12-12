@@ -79,11 +79,12 @@ public class Student extends AuditableEntityBase<StudentId> {
      * @throws InvalidSchoolStageException exception thrown if the school value would be invalid
      * after using this method.
      */
+    //TODO: this method may produce null pointer - fix that (PropertyNotSetException?)
     public void changeSchoolStage(int progressValue) throws InvalidSchoolStageException {
         var newSchoolStage = new SchoolStage(
                 schoolStage.schoolType(),
                 schoolStage.gradeNumber() + progressValue);
-        if (SchoolStageValidator.isValid(schoolStage)) {
+        if (SchoolStageValidator.isValid(newSchoolStage)) {
             schoolStage = newSchoolStage;
         }
     }
