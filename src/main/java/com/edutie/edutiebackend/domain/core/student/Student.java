@@ -13,8 +13,9 @@ import com.edutie.edutiebackend.domain.core.student.validation.SchoolStageValida
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -22,16 +23,32 @@ import java.time.LocalDate;
  * Student class conceals all the student characteristics of the user.
  * This is an aggregate root of the student.
  */
-@Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Student extends AuditableEntityBase<StudentId> {
     @Nullable
+    @Getter
     private SchoolStage schoolStage = null;
     @Nullable
+    @Getter
     private LocalDate birthdate = null;
-    private LearningParameters learningParameters = new LearningParameters();
+    // TODO: refactor learning parameters - perhaps to a <learning parameter> list ??
+    private final LearningParameters learningParameters = new LearningParameters();
+    @Getter
     private UserId userId;
+
+    /**
+     * Default constructor used for associating student's account with a user.
+     * Initializes all fields to default values. This constructor should be used
+     * by the application services instead of no-args constructor because there
+     * is no possibility to bond student entity to a user later.
+     * @param userId user's identity
+     */
+    public Student(UserId userId)
+    {
+        this.userId = userId;
+    }
 
     /**
      * Adapts learning parameters based on provided progress value. May throw a runtime
@@ -74,23 +91,26 @@ public class Student extends AuditableEntityBase<StudentId> {
 
     /**
      * Changes the student grade promoting him given amount of grades if it is possible.
-     * Throws an exception otherwise
+     * Throws an exception otherwise. Does nothing if there is no school stage set.
      * @param progressValue numbers of grades to shift forward. Goes backwards if negative.
      * @throws InvalidSchoolStageException exception thrown if the school value would be invalid
      * after using this method.
      */
-    //TODO: this method may produce null pointer - fix that (PropertyNotSetException?)
     public void changeSchoolStage(int progressValue) throws InvalidSchoolStageException {
+        if (schoolStage == null) return;
+
         var newSchoolStage = new SchoolStage(
                 schoolStage.schoolType(),
-                schoolStage.gradeNumber() + progressValue);
+                schoolStage.gradeNumber() + progressValue
+        );
+
         if (SchoolStageValidator.isValid(newSchoolStage)) {
             schoolStage = newSchoolStage;
         }
     }
 
     /**
-     *
+     * Sets student school stage
      * @throws InvalidSchoolStageException exception thrown when schoolStage is invalid
      * @see SchoolStageValidator School stage validation rules
      */
@@ -101,7 +121,7 @@ public class Student extends AuditableEntityBase<StudentId> {
 
 
     /**
-     *
+     * Sets student's birthdate
      * @throws InvalidBirthDateException exception thrown when given birthdate is invalid
      * @see StudentBirthdateValidator Rules for validating student's birthdate
      */

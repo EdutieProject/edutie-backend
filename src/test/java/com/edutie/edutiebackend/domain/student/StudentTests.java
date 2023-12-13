@@ -1,5 +1,8 @@
 package com.edutie.edutiebackend.domain.student;
 
+import com.edutie.edutiebackend.domain.core.common.identities.UserId;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.student.Student;
 import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
 import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
@@ -13,7 +16,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class StudentPropertiesTests {
+public class StudentTests {
 
     @Test
     public void studentPropertiesCreationTest()
@@ -91,4 +94,33 @@ public class StudentPropertiesTests {
                     () -> student.changeSchoolStage(1)
         );
     }
+
+    @Test
+    public void LearningParamsInitializationTests()
+    {
+        Student student = new Student();
+        var trackerInitValue = student.getLearningParameter(Intelligence.class, Intelligence.INTERPERSONAL);
+        assertEquals(0.0, trackerInitValue);
+    }
+
+    @Test
+    public void NoLearningParameterThrowTest()
+    {
+        Student student = new Student();
+        enum Hello { WORLD, UNIVERSE }
+        assertThrows(
+                RuntimeException.class,
+                ()->student.getLearningParameter(Hello.class, Hello.UNIVERSE)
+        );
+    }
+
+    @Test
+    public void learningParametersAdaptationTest()
+    {
+        Student student = new Student();
+        student.adaptLearningParameters(Ability.class, Ability.ADAPTABILITY, 10.0);
+        var parameterValue = student.getLearningParameter(Ability.class, Ability.ADAPTABILITY);
+        assertEquals(10.0, parameterValue);
+    }
+
 }
