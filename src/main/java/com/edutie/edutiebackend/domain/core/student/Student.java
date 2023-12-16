@@ -33,9 +33,9 @@ public class Student extends AuditableEntityBase<StudentId> {
     @Nullable
     @Getter
     private LocalDate birthdate = null;
-    // TODO: refactor learning parameters - perhaps to a <learning parameter> list ??
     private final LearningParameters learningParameters = new LearningParameters();
     @Getter
+    // one-to-one relationship with user
     private UserId userId;
 
     /**

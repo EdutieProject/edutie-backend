@@ -1,5 +1,7 @@
 package com.edutie.edutiebackend.domain.core.common.studynavigation;
 
+import jakarta.persistence.Embeddable;
+
 import java.util.Set;
 
 /**
@@ -9,6 +11,7 @@ import java.util.Set;
  * from navigation properties.
  * @param <TLearningElemId> id type of elements to navigate through
  */
+@Embeddable
 public class LearningTreeNavigator<TLearningElemId>{
     private Set<TLearningElemId> nextLearningElements;
     private TLearningElemId previousLearningElem;

@@ -3,9 +3,10 @@ package com.edutie.edutiebackend.domain.core.learningresult;
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresult.exceptions.InvalidSkillPointsValueException;
 import com.edutie.edutiebackend.domain.core.learningresult.validation.SkillPointsValidator;
+import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.Feedback;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.LearningReport;
+import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningResultId;
 
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
@@ -23,9 +24,14 @@ import java.util.HashMap;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResult extends EntityBase<LearningResultId> {
-    private LearningResourceId learningResourceId;
-    private LearningReport learningReport;
+    // many-to-one relationship
+    private LessonSegmentId lessonSegmentId;
+    // many-to-one relationship
     private StudentId studentId;
+    //TODO: is strong typing required?
+    private LearningReport learningReport;
+    private Feedback feedback;
+    // many-to-many relationship with additional field: pointsValue
     private HashMap<SkillId, Integer> skillPoints;
 
     /**

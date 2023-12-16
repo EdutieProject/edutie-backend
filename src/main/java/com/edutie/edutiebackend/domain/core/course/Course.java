@@ -19,6 +19,7 @@ import lombok.EqualsAndHashCode;
 public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
+    // many-to-one relationship
     private ScienceId scienceId;
-    private Boolean accessible = false;
+    private boolean accessible = false;
 }

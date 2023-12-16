@@ -23,8 +23,10 @@ import java.util.HashMap;
 @Entity
 public class Skill extends AuditableEntityBase<SkillId> {
     private String name;
-    HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
-    HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
+    // many-to-many with additional column - multiplierValue
+    private HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
+    // many-to-many with additional column - multiplierValue
+    private HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
 
     /**
      * Assigns a multiplier to given ability, where multiplier indicates the importance of given trait. Throws

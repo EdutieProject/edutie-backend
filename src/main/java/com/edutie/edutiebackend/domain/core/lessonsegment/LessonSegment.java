@@ -3,10 +3,12 @@ package com.edutie.edutiebackend.domain.core.lessonsegment;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
-import com.edutie.edutiebackend.domain.core.common.generationprompt.GenerationPrompt;
+import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
+import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.LearningRequirement;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,15 +25,31 @@ import java.util.Set;
 @Entity
 public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
 
+    // embed learning navigation
     private LearningTreeNavigator<LessonSegmentId> navigation;
+    // embed
+    private PromptFragment segmentDescription;
+    // embed
+    private PromptFragment exerciseDescription;
 
-    private GenerationPrompt overviewGenerationPrompt;
-
-    private GenerationPrompt exerciseGenerationPrompt;
+    // many-to-one relationship
     private ExerciseType exerciseType;
-
+    // one-to-many
+    private Set<LearningRequirement> learningRequirements = new HashSet<>();
+    // many-to-many
     private Set<ExternalSource> externalSources = new HashSet<>();
+    // many-to-many
     private Set<SkillId> skills = new HashSet<>();
+
+    public void addLearningRequirement(LearningRequirement learningRequirement)
+    {
+        learningRequirements.add(learningRequirement);
+    }
+
+    public void removeLearningRequirement(LearningRequirement learningRequirement)
+    {
+        learningRequirements.remove(learningRequirement);
+    }
 
     /**
      * Adds external source to the lesson segment
