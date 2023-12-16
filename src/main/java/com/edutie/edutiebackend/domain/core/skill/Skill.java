@@ -7,8 +7,9 @@ import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.validation.TraitMultiplierValueValidator;
 import jakarta.persistence.Entity;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 
@@ -18,22 +19,89 @@ import java.util.HashMap;
  * the task with given multiplier being an indicator of the importance of
  * given trait.
  */
-@Data
+@Getter
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Skill extends AuditableEntityBase<SkillId> {
     private String name;
     // many-to-many with additional column - multiplierValue
-    private HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
+    private final HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
     // many-to-many with additional column - multiplierValue
-    private HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
+    private final HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
+
+    public Skill(String name)
+    {
+        this.name = name;
+    }
+
+    /**
+     * Generic function returning the multiplier value for given trait.
+     * Returns null if there is no mapping associated.
+     * @param trait trait
+     * @return value of multiplier or null.
+     * @param <T> type of trait
+     */
+    public <T> Double getMultiplierValue(T trait)
+    {
+        if(trait instanceof Ability) return abilityMultipliers.get(trait);
+        if(trait instanceof Intelligence) return intelligenceMultipliers.get(trait);
+        return null;
+    }
+
+    /**
+     * Generic function assigning the multiplier value for given trait
+     * @param trait trait
+     * @param value value of multiplier
+     * @param <T> trait ty[e
+     * @throws InvalidTraitMultiplierValueException exception thrown when rules are omitted
+     * @see TraitMultiplierValueValidator
+     */
+    public <T> void assignMultiplier(T trait, double value)
+    {
+        if(!TraitMultiplierValueValidator.isValid(value)) throw new InvalidTraitMultiplierValueException();
+        if(trait instanceof Ability) abilityMultipliers.put((Ability) trait, value);
+        if(trait instanceof Intelligence) intelligenceMultipliers.put((Intelligence) trait, value);
+    }
+
+    /**
+     * Generic function removing multiplier from the skill
+     * @param trait trait of the multiplier
+     * @param <T> type of trait
+     */
+    public <T> void removeMultiplier(T trait)
+    {
+        if(trait instanceof Ability) abilityMultipliers.remove(trait);
+        if(trait instanceof Intelligence) intelligenceMultipliers.remove(trait);
+    }
+
+
+    /**
+     * Retrieves multiplier value of given trait.
+     * @param ability ability trait
+     * @return value if exists, null otherwise
+     */
+    public Double getMultiplierValue(Ability ability)
+    {
+        return abilityMultipliers.get(ability);
+    }
+
+    /**
+     * Retrieves multiplier value of given trait
+     * @param intelligence intelligence trait
+     * @return value if exists, null otherwise
+     */
+    public Double getMultiplierValue(Intelligence intelligence)
+    {
+        return intelligenceMultipliers.get(intelligence);
+    }
 
     /**
      * Assigns a multiplier to given ability, where multiplier indicates the importance of given trait. Throws
      * exception if value is invalid.
      * @param ability ability to assign to.
      * @param multiplier multiplier value
-     * @throws InvalidTraitMultiplierValueException exception thrown when value is improper
+     * @throws InvalidTraitMultiplierValueException runtime exception thrown when value is improper
      * @see TraitMultiplierValueValidator Rules of multiplier validation
      */
     public void assignAbilityMultiplier(Ability ability, double multiplier) throws InvalidTraitMultiplierValueException {

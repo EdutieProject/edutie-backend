@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.student;
+package com.edutie.edutiebackend.domain;
 
 import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
