@@ -1,7 +1,9 @@
 package com.edutie.edutiebackend.domain.core.common.studynavigation;
 
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.OneToMany;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,9 +15,8 @@ import java.util.Set;
  */
 @Embeddable
 public class LearningTreeNavigator<TLearningElemId>{
-    private Set<TLearningElemId> nextLearningElements;
+    private Set<TLearningElemId> nextLearningElements = new HashSet<>();
     private TLearningElemId previousLearningElem;
-
 
     /**
      * Adds a next element to the next elements set.
@@ -61,6 +62,7 @@ public class LearningTreeNavigator<TLearningElemId>{
      * Retrieve elements coming after this one.
      * @return Next elements set
      */
+    @OneToMany
     public Set<TLearningElemId> getNextElements() {
         return nextLearningElements;
     }

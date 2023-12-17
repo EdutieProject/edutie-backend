@@ -1,13 +1,20 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects;
 
+import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.lessonsegment.enums.SourceOrigin;
+import lombok.*;
 
 import java.net.URL;
 
 /**
  * Source to the external knowledge resource.
- * @param url url to the source
- * @param origin the origin of the source
  */
-public record ExternalSource(URL url, SourceOrigin origin) {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class ExternalSource extends EntityBase<ExternalSourceId> {
+    URL url;
+    SourceOrigin origin;
 }
+

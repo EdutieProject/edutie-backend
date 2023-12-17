@@ -10,8 +10,7 @@ import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegme
 import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,24 +19,30 @@ import java.util.Set;
  * A wrapper around the learning resource. It can manage navigation through navigation property.
  * It has all necessities to provide learning resource by generation or by selection.
  */
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
 
     // embed learning navigation
-    private LearningTreeNavigator<LessonSegmentId> navigation;
+    private LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
     // embed
+    @Setter
     private PromptFragment segmentDescription;
     // embed
+    @Setter
     private PromptFragment exerciseDescription;
 
-    // many-to-one relationship
+    // many-to-many relationship
+    @Setter
     private ExerciseType exerciseType;
     // one-to-many
     private Set<LearningRequirement> learningRequirements = new HashSet<>();
-    // many-to-many
+    // one-to-many
     private Set<ExternalSource> externalSources = new HashSet<>();
+
     // many-to-many
     private Set<SkillId> skills = new HashSet<>();
 

@@ -13,4 +13,8 @@ public record PromptFragment(String text) {
     {
         this("DEFAULT");
     }
+    public static PromptFragment of(String text)
+    {
+        return new PromptFragment(text);
+    }
 }
