@@ -3,21 +3,17 @@ package com.edutie.edutiebackend.domain.core.student.enums;
 import lombok.Getter;
 
 @Getter
-public enum SchoolType //Jeśli zakładasz typy szkoły to lepiej założyć PrimarySchool,SecondarySchool i HighSchool oraz NoSchool(bo zawsze można założyć edukację domową, lub kogoś, kto będzie sięchciał uczyć ale już skończył edukację szkolną)
+public enum SchoolType
 {
-    PrimarySchool("Primary School")
-    SecondarySchool("Secondary School")
-    HighSchool("High School")
-    NoSchool("No School")
+    HighSchool("High School"),
+    TechnicalHighSchool("Technical High School"),
+    TertiarySchool("Tertiary School");
 
-    private final String schoolTypeCode;
+
+    private final String code;
 
     SchoolType(String code)
     {
-        this.schoolTypeCode = code;
-    }
-    public String getSchoolType()
-    {
-        return schoolTypeCode;
+        this.code = code;
     }
 }
