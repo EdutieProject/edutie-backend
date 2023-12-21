@@ -62,3 +62,5 @@ public class LearningTreeNavigator<TLearningElemId>{
         return nextLearningElements;
     }
 }
+
+//Weźto jakoś inaczej w sensie te metody, bo podczas czytania kodu nic nie można zrozumieć.

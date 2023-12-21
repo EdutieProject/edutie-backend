@@ -1,16 +1,17 @@
 package com.edutie.edutiebackend.domain.core.learningresource;
 
+import java.util.Set;
+
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.Exercise;
 import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
-import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
+
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Set;
 
 /**
  * A singular form of learning in the application.
@@ -28,11 +29,18 @@ public class LearningResource extends EntityBase<LearningResourceId> {
     private ResourceOverview overview;
     private Exercise exercise;
 
+
+    /**
+     * @param optimizationStrategyId
+     */
     public void addOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
     {
         optimizationStrategies.add(optimizationStrategyId);
     }
 
+    /**
+     * @param optimizationStrategyId
+     */
     public void removeOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
     {
         optimizationStrategies.remove(optimizationStrategyId);

@@ -1,19 +1,21 @@
 package com.edutie.edutiebackend.domain.core.student.entites;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.core.student.valueobjects.TraitTracker;
-import com.edutie.edutiebackend.domain.core.student.identities.LearningParametersId;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
-import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
+
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
+import com.edutie.edutiebackend.domain.core.student.identities.LearningParametersId;
+import com.edutie.edutiebackend.domain.core.student.valueobjects.TraitTracker;
+
+import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.var;
 
 /**
  * Class responsible for handling all parameters of student's
@@ -27,6 +29,11 @@ public class LearningParameters extends AuditableEntityBase<LearningParametersId
     private TraitTracker<Ability> abilityTraitTracker = new TraitTracker<>();
     private TraitTracker<Intelligence> intelligenceTraitTracker = new TraitTracker<>();
 
+    private Object getTracker(Class<T> traitClass)
+    {
+       Object tracker = findTrackerByTraitClass(traitClass).orElseThrow(TraitTrackerNotFoundException::new);
+       return tracker;
+    }
     /**
      * Adds progress indicator to the current tracking parameter. If no tracking
      * exists, initializes it with provided progress value.
@@ -37,8 +44,7 @@ public class LearningParameters extends AuditableEntityBase<LearningParametersId
      * @throws TraitTrackerNotFoundException Exception thrown when provided arguments cannot find any trait tracker
      */
     public <T extends Enum<T>> void adapt(Class<T> traitClass, T trait, double progressIndicator) throws TraitTrackerNotFoundException {
-        var tracker = findTrackerByTraitClass(traitClass)
-                .orElseThrow(TraitTrackerNotFoundException::new);
+        final var tracker = this.getTracker(traitClass);
         tracker.params().merge(trait, progressIndicator, Double::sum);
     }
 
@@ -51,9 +57,9 @@ public class LearningParameters extends AuditableEntityBase<LearningParametersId
      * @throws TraitTrackerNotFoundException Exception thrown when provided arguments cannot find any trait tracker
      */
     public <T extends Enum<T>> Optional<Double> getParameter(Class<T> traitClass, T trait) throws TraitTrackerNotFoundException {
-        var tracker = findTrackerByTraitClass(traitClass)
-                .orElseThrow(TraitTrackerNotFoundException::new);
-        return Optional.ofNullable(tracker.params().get(trait));
+        final var tracker = this.getTracker(traitClass);
+        Optional<Double> ifNull = Optional.ofNullable(tracker.params().get(trait));
+        return ifNull;
     }
 
     /**
@@ -64,9 +70,9 @@ public class LearningParameters extends AuditableEntityBase<LearningParametersId
      * @throws TraitTrackerNotFoundException Exception thrown when provided arguments cannot find any trait tracker
      */
     public <T extends Enum<T>> void resetTracking(Class<T> traitClass, T trait) throws TraitTrackerNotFoundException {
-        var tracker = findTrackerByTraitClass(traitClass)
-                .orElseThrow(TraitTrackerNotFoundException::new);
-        if(tracker.params().containsKey(trait))
+        final var tracker = this.getTracker(traitClass);
+        Boolean checkIfContainsTrait=tracker.params().containsKey(trait);
+        if(checkIfContainsTrait)
             tracker.params().put(trait, 0.0);
     }
 
@@ -79,8 +85,7 @@ public class LearningParameters extends AuditableEntityBase<LearningParametersId
      * @throws TraitTrackerNotFoundException Exception thrown when provided arguments cannot find any trait tracker
      */
     public <T extends Enum<T>> void setTracking(Class<T> traitClass, T trait, double value) throws TraitTrackerNotFoundException {
-        var tracker = findTrackerByTraitClass(traitClass)
-                .orElseThrow(TraitTrackerNotFoundException::new);
+        final var tracker = this.getTracker(traitClass);
         tracker.params().put(trait, value);
     }
 
@@ -102,9 +107,8 @@ public class LearningParameters extends AuditableEntityBase<LearningParametersId
                 if (typeArguments.length > 0 && typeArguments[0] == traitClass) {
                     try {
                         field.setAccessible(true);
-                        return Optional.ofNullable(
-                                (TraitTracker<T>) field.get(this)
-                        );
+                        Optional<TraitTracker<T>> ifNull = Optional.ofNullable((TraitTracker<T>) field.get(this));
+                        return ifNull;
                     } catch (IllegalAccessException e) {
                         // this should go into logger - there is no logger right now
                         System.out.println(e.getMessage());

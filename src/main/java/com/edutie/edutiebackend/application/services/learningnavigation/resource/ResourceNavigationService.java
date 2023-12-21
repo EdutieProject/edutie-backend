@@ -7,6 +7,10 @@ import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 import java.util.Set;
 
 public interface ResourceNavigationService {
+    /**
+     * @param lessonSegmentId
+     * @param studentId
+     * @return
+     */
     Set<LearningResourceId> getBestOfLessonSegment(LessonSegmentId lessonSegmentId, StudentId studentId);
-
 }

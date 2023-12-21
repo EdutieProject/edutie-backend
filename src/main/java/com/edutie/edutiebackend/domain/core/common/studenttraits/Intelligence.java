@@ -3,7 +3,7 @@ package com.edutie.edutiebackend.domain.core.common.studenttraits;
 import lombok.Getter;
 
 /**
- * Intelligence enum describing intelligence types according to 8 intelligence theory
+ * Intelligence enum describing intelligence types according to 8 intelligence theory https://pl.wikipedia.org/wiki/Inteligencja_wieloraka
  */
 @Getter
 public enum Intelligence
@@ -16,7 +16,6 @@ public enum Intelligence
     MUSICAL("Musical"),
     KINESTHETIC("Kinesthetic"),
     NATURALISTIC("Naturalistic");
-
 
     private final String code;
 

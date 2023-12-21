@@ -8,7 +8,19 @@ import java.util.Optional;
  * @param <TInnerId>
  */
 public interface GenericCrudService<TEntity, TInnerId> extends GenericRetrievalService<TEntity, TInnerId> {
+    /**
+     * @param entity
+     * @return
+     */
     TEntity create(TEntity entity);
+    /**
+     * @param entity
+     * @return
+     */
     Optional<TEntity> overwrite(TEntity entity);
+    /**
+     * @param id
+     * @return
+     */
     boolean delete(TInnerId id);
 }

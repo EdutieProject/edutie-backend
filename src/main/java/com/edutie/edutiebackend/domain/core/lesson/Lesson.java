@@ -1,9 +1,10 @@
 package com.edutie.edutiebackend.domain.core.lesson;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
-import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

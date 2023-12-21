@@ -1,13 +1,14 @@
 package com.edutie.edutiebackend.application.services.management.lesson.implementation;
 
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.stereotype.Service;
+
 import com.edutie.edutiebackend.application.services.management.lesson.LessonService;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class DefaultLessonService implements LessonService {
@@ -25,7 +26,7 @@ public class DefaultLessonService implements LessonService {
      * @return
      */
     @Override
-    public Optional<Lesson> overwrite(Lesson lesson) {
+    public Optional<Lesson> overwrite(Lesson lesson) { //Czy to ma tak działać, że jeśli nadpisujesz lekcje to wywala wszystkei z segmentu, czy czegoś nie rozumiem
         return Optional.empty();
     }
 

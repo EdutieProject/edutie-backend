@@ -33,3 +33,6 @@ public enum Ability {
         return code;
     }
 }
+
+//Po mojemu ta klasa jest zbędna. Mianowicie pod kątem oprogramowania i tworzenia może być przydatna jako całość, jednak w odniesieniu do tego co chcesz zrobić może okazać się, 
+//że przynosi ona dodatkowe informacje, które są zbędne i przez to wszystko dodatkowo się komplikuje.

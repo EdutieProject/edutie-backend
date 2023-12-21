@@ -10,12 +10,20 @@ public interface StudentService extends GenericRetrievalService<Student, Student
     /**
      * Creates a blank student account for a given user.
      * @param request Authenticated request, containing corresponding userId
-     * @return Created student account
+     * @return Student object representing account
      * @see Student
      * @see AuthenticatedServiceRequest
      */
     Student createStudentAccount(AuthenticatedServiceRequest request);
-
+        
+    /**
+     * Remove user account
+     * @param request Authenticated request, containing corresponding userId
+     * @return Whether the operation is successful as a boolean
+     * @see Student
+     * @see AuthenticatedServiceRequest
+     */
+    boolean removeStudentAccount(AuthenticatedServiceRequest request);
     /**
      *  Resets the given student account to the blank state.
      * @param request Authenticated request, containing corresponding userId
@@ -34,4 +42,6 @@ public interface StudentService extends GenericRetrievalService<Student, Student
      * @see StudentUpdateCommand
      */
     boolean updateStudentProperties(StudentUpdateCommand command);
+
+    
 }

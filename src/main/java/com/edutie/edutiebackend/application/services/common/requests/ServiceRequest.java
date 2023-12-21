@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 
 @Data
 public abstract class ServiceRequest {
-    LocalDateTime createdOn = LocalDateTime.now();
+    LocalDateTime createdOn = LocalDateTime.now(); //Pobiera obecny czas z zegara systemowego użytkownika na którym uruchomi się aplikacja. To ma tak być?
 }

@@ -1,16 +1,17 @@
 package com.edutie.edutiebackend.domain.core.skill;
 
+import java.util.HashMap;
+
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.exceptions.InvalidTraitMultiplierValueException;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.validation.TraitMultiplierValueValidator;
+
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.HashMap;
 
 /**
  * Skill is a high-level indicator of Learning Resource's knowledge requirements.
@@ -43,8 +44,7 @@ public class Skill extends AuditableEntityBase<SkillId> {
      * Removes given ability from the multiplier mapping
      * @param ability ability to remove
      */
-    public void removeAbilityMultiplier(Ability ability)
-    {
+    public void removeAbilityMultiplier(Ability ability){
         abilityMultipliers.remove(ability);
     }
 
@@ -66,8 +66,7 @@ public class Skill extends AuditableEntityBase<SkillId> {
      * Removes intelligence multiplier from the mapping
      * @param intelligence intelligence to remove
      */
-    public void removeIntelligenceMultiplier(Intelligence intelligence)
-    {
+    public void removeIntelligenceMultiplier(Intelligence intelligence){
         intelligenceMultipliers.remove(intelligence);
     }
 }

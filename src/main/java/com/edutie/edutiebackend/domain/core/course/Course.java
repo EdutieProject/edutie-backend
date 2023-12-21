@@ -22,3 +22,5 @@ public class Course extends AuditableEntityBase<CourseId> {
     private ScienceId scienceId;
     private Boolean accessible = false;
 }
+//Tutaj kurs powinien zawierać jakiś Set z informacją jakie inne elementy zawiera. np. kurs zawiera wiele zadań, albo filmów albo jeszcze czegoś
+
