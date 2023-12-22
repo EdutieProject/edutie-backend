@@ -4,6 +4,7 @@ import lombok.Getter;
 
 /**
  * Intelligence enum describing intelligence types according to 8 intelligence theory
+ * @see <a href="https://en.wikipedia.org/wiki/Theory_of_multiple_intelligences">Theory of multiple intelligences</a>
  */
 @Getter
 public enum Intelligence
