@@ -1,23 +1,23 @@
 package com.edutie.edutiebackend.domain.core.student;
 
+import java.time.LocalDate;
+
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
 import com.edutie.edutiebackend.domain.core.common.identities.UserId;
-import com.edutie.edutiebackend.domain.core.student.validation.StudentBirthdateValidator;
-import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
-import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 import com.edutie.edutiebackend.domain.core.student.entites.LearningParameters;
+import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
 import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
+import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 import com.edutie.edutiebackend.domain.core.student.validation.SchoolStageValidator;
+import com.edutie.edutiebackend.domain.core.student.validation.StudentBirthdateValidator;
+import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 /**
  * Student class conceals all the student characteristics of the user.

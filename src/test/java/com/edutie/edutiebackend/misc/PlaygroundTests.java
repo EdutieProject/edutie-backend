@@ -1,12 +1,13 @@
 package com.edutie.edutiebackend.misc;
 
-import com.edutie.edutiebackend.misc.definitions.Bar;
-import com.edutie.edutiebackend.misc.definitions.Foo;
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashSet;
+import com.edutie.edutiebackend.misc.definitions.Bar;
+import com.edutie.edutiebackend.misc.definitions.Foo;
 
 @SpringBootTest
 public class PlaygroundTests {

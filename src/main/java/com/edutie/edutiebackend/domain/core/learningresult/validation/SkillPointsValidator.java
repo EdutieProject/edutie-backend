@@ -9,11 +9,14 @@ import com.edutie.edutiebackend.domain.core.learningresult.exceptions.InvalidSki
  */
 public class SkillPointsValidator {
     public static boolean isValid(double skillPointsAmount) throws InvalidSkillPointsValueException {
-        if (
-                // The bonds of Skill Points available for single skill in Learning Result
-                skillPointsAmount > 0 && skillPointsAmount < 100
-        ) return true;
+        if (skillPointsAmount > 0 && skillPointsAmount < 100) // The bonds of Skill Points available for single skill in Learning Result
+        {
+            return true;
+        }
         else
-            throw new InvalidSkillPointsValueException();
+        {
+            throw new InvalidSkillPointsValueException(); 
+        }
     }
 }
+// Po co tutaj zwracać wyjątek i go potem obsługiwać. Skoro skill point nigdy nie bedzie poza tym zakresem zdefiniowanym w IF?

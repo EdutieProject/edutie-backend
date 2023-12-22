@@ -7,5 +7,8 @@ import java.util.UUID;
  * Meant to be extensible by concrete command and query classes.
  */
 public class AuthenticatedServiceRequest extends ServiceRequest {
+    /**
+     *
+     */
     UUID userId = null;
 }

@@ -1,19 +1,19 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
-import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
+import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
+import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
 import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.LearningRequirement;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+
 
 /**
  * A wrapper around the learning resource. It can manage navigation through navigation property.

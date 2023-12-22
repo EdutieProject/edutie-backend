@@ -2,13 +2,12 @@ package com.edutie.edutiebackend.domain.core.learningresult;
 
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresult.exceptions.InvalidSkillPointsValueException;
+import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningResultId;
 import com.edutie.edutiebackend.domain.core.learningresult.validation.SkillPointsValidator;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.Feedback;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.LearningReport;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningResultId;
-
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 import jakarta.persistence.Entity;
 import lombok.Data;

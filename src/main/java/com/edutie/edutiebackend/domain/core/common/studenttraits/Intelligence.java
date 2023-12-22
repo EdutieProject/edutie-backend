@@ -17,7 +17,6 @@ public enum Intelligence
     KINESTHETIC("Kinesthetic"),
     NATURALISTIC("Naturalistic");
 
-
     private final String code;
 
     Intelligence(String code)

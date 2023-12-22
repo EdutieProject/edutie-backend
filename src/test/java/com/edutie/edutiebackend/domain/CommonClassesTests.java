@@ -1,13 +1,14 @@
 package com.edutie.edutiebackend.domain;
 
-import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
-import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
+import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
+import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
+import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
 
 @SpringBootTest
 public class CommonClassesTests {

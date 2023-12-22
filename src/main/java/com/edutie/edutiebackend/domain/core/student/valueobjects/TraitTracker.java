@@ -8,9 +8,8 @@ import java.util.HashMap;
  * @param params Traits mapped with their assessment parameters
  * @param <TTrait> Trait to track
  */
-public record TraitTracker<TTrait extends Enum<TTrait>>(
-        HashMap<TTrait, Double> params
-) {
+public record TraitTracker<TTrait extends Enum<TTrait>>(HashMap<TTrait, Double> params) 
+{
     public TraitTracker()
     {
         this(new HashMap<>());
