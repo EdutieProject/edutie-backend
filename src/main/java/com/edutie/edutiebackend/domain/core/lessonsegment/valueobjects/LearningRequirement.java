@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
+// TODO: reevalute LearningRequirement's cognitive meaning | consider referring it to learning History or learning params
 public class LearningRequirement extends EntityBase<LearningRequirementId> {
     PromptFragment description;
     Priority priority;

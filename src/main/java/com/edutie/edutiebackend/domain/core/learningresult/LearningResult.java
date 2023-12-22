@@ -22,6 +22,7 @@ import java.util.HashMap;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
+//TODO: reevaluate responsibilities of LearningResult: think whether it is necessary to carry feedbackText and ReportText
 public class LearningResult extends EntityBase<LearningResultId> {
     // many-to-one relationship
     private LessonSegmentId lessonSegmentId;

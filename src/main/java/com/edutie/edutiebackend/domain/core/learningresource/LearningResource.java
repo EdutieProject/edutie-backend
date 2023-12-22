@@ -24,11 +24,12 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResource extends EntityBase<LearningResourceId> {
-    private Set<OptimizationStrategyId> optimizationStrategies;
-    private LessonSegmentId lessonSegmentId;
+    //TODO: Is strong typing required?
     private ResourceOverview overview;
     private Exercise exercise;
-
+    // many-to-many relationship
+    private Set<OptimizationStrategyId> optimizationStrategies;
+    private LessonSegmentId lessonSegmentId;
 
     /**
      * @param optimizationStrategyId

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
  * each of those have a number of lessons assigned as next.
- * Technically a group of Lesson trees.
+ * Technically a Lesson tree
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,9 +19,8 @@ import lombok.EqualsAndHashCode;
 public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
+    private boolean accessible = false;
     // many-to-one relationship
     private ScienceId scienceId;
-    private boolean accessible = false;
 }
-//Tutaj kurs powinien zawierać jakiś Set z informacją jakie inne elementy zawiera. np. kurs zawiera wiele zadań, albo filmów albo jeszcze czegoś
 

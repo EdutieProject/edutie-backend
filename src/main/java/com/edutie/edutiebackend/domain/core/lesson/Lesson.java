@@ -17,10 +17,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Lesson extends AuditableEntityBase<LessonId> {
-    // one-to-many relationship
-    private CourseId courseId;
     private String name;
     private String description;
+    // one-to-many relationship
+    private CourseId courseId;
     // Embed learning navigation
     private LearningTreeNavigator<LessonId> navigation;
 }
