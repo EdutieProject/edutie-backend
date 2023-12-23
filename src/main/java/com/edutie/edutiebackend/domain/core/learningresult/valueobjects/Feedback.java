@@ -1,4 +1,9 @@
 package com.edutie.edutiebackend.domain.core.learningresult.valueobjects;
 
-public record Feedback(String text) {
+import com.edutie.edutiebackend.domain.core.learningresult.FeedbackType;
+
+public record Feedback(
+        String text,
+        FeedbackType type
+) {
 }

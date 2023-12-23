@@ -5,7 +5,6 @@ import com.edutie.edutiebackend.domain.core.learningresult.exceptions.InvalidSki
 import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningResultId;
 import com.edutie.edutiebackend.domain.core.learningresult.validation.SkillPointsValidator;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.Feedback;
-import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.LearningReport;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
@@ -23,13 +22,14 @@ import java.util.HashMap;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 //TODO: reevaluate responsibilities of LearningResult: think whether it is necessary to carry feedbackText and ReportText
+//TODO: add factory to ensure learningResult stays the same & limit its mutation
 public class LearningResult extends EntityBase<LearningResultId> {
     // many-to-one relationship
     private LessonSegmentId lessonSegmentId;
     // many-to-one relationship
     private StudentId studentId;
-    //TODO: is strong typing required?
-    private LearningReport learningReport;
+    private String learningReportText;
+    // embed
     private Feedback feedback;
     // many-to-many relationship with additional field: pointsValue
     private HashMap<SkillId, Integer> skillPoints;

@@ -7,6 +7,7 @@ import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 
@@ -19,7 +20,8 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class AuditableEntityBase<TId extends Serializable> extends EntityBase<TId>{
     private LocalDate createdOn = LocalDate.now();
-    private LocalDate updatedOn = LocalDate.now(); //UWAGA: Tutaj jest wyjątkowa sytuacja, że zmienione=utworzone w jednej sytuacji
+    private LocalDate updatedOn;
     private UserId updatedBy;
+    @NonNull
     private UserId createdBy;
 }

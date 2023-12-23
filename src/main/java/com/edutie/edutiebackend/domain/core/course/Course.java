@@ -5,15 +5,17 @@ import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
  * each of those have a number of lessons assigned as next.
  * Technically a Lesson tree
  */
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Course extends AuditableEntityBase<CourseId> {

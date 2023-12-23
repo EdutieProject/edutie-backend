@@ -62,8 +62,11 @@ public class LessonSegmentTests {
         );
     }
 
+    /**
+     * Demonstration of navigation encapsulated API
+     */
     @Test
-    public void lessonNavigationTest()
+    public void lessonPrivateNavigationTest()
     {
         LessonSegment lessonSegment = new LessonSegment();
         var id = new LessonSegmentId();
@@ -71,6 +74,22 @@ public class LessonSegmentTests {
 
         assertEquals(
                 lessonSegment.getNavigation().getPreviousElement(),
+                id
+        );
+    }
+
+    /**
+     * Demonstration of navigation public API
+     */
+    @Test
+    public void lessonPublicNavigationApiTest()
+    {
+        LessonSegment lessonSegment = new LessonSegment();
+        var id = new LessonSegmentId();
+        lessonSegment.navigation.setPreviousElement(id);
+
+        assertEquals(
+                lessonSegment.navigation.getPreviousElement(),
                 id
         );
     }

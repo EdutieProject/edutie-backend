@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.domain.core.student.entites.LearningParameters;
+import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
 import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
 import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
@@ -117,6 +118,16 @@ public class Student extends AuditableEntityBase<StudentId> {
     public void setSchoolStage(SchoolStage schoolStage) throws InvalidSchoolStageException {
         if(SchoolStageValidator.isValid(schoolStage))
             this.schoolStage = schoolStage;
+    }
+
+    /**
+     * Sets student school stage
+     * @param schoolType type of student's school
+     * @param gradeNumber number of the grade
+     */
+    public void setSchoolStage(SchoolType schoolType, int gradeNumber) throws InvalidSchoolStageException {
+        SchoolStage schoolStage = new SchoolStage(schoolType, gradeNumber);
+        this.setSchoolStage(schoolStage);
     }
 
 

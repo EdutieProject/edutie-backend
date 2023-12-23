@@ -22,5 +22,5 @@ public class Lesson extends AuditableEntityBase<LessonId> {
     // one-to-many relationship
     private CourseId courseId;
     // Embed learning navigation
-    private LearningTreeNavigator<LessonId> navigation;
+    public LearningTreeNavigator<LessonId> navigation;
 }

@@ -27,7 +27,7 @@ import java.util.Set;
 public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
 
     // embed learning navigation
-    private LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
+    public LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
     // embed
     @Setter
     private PromptFragment segmentDescription;

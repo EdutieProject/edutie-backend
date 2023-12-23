@@ -6,6 +6,7 @@ import lombok.Getter;
  * Ability enum describing skills that student can have according to CHC theory
  * @see <a href="https://en.wikipedia.org/wiki/Cattell%E2%80%93Horn%E2%80%93Carroll_theory">Cattell-Horn-Carroll theory</a>
  */
+//TODO: broaden/adjust Ability traits types
 @Getter
 public enum Ability {
     ADAPTABILITY("Adaptability"),
