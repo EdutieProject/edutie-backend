@@ -34,6 +34,7 @@ public class Student extends AuditableEntityBase<StudentId> {
     @Nullable
     @Getter
     private LocalDate birthdate = null;
+    // one-to-one relationship
     private final LearningParameters learningParameters = new LearningParameters();
     @Getter
     // one-to-one relationship with user
@@ -53,7 +54,7 @@ public class Student extends AuditableEntityBase<StudentId> {
 
     /**
      * Adapts learning parameters based on provided progress value. May throw a runtime
-     * exception if the provided trait class is not valid - there is no
+     * exception if the provided trait class is not valid - there is no tracker
      * associated with it.
      * @param traitClass class of trait
      * @param trait concrete trait

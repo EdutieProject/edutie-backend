@@ -9,6 +9,11 @@ import jakarta.persistence.Embeddable;
  */
 @Embeddable
 public record PromptFragment(String text) {
+    /**
+     * Default constructor should not be used and is
+     * added because of persistence purposes. Recommended way of creating
+     * PromptFragments is by static factory method named 'of'.
+     */
     public PromptFragment()
     {
         this("DEFAULT");

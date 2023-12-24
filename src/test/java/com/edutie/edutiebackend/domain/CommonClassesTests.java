@@ -2,31 +2,32 @@ package com.edutie.edutiebackend.domain;
 
 import java.util.UUID;
 
-import org.junit.jupiter.api.Assertions;
+import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
+import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
 import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
 
+import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class CommonClassesTests {
 
     @Test
     public void ValueObjectEqualsTest()
     {
-        var overview1 = new ResourceOverview("Hello");
-        var overview2 = new ResourceOverview("Hello");
-        Assertions.assertEquals(overview1, overview2);
+        var stage1 = new SchoolStage(SchoolType.HighSchool, 2);
+        var stage2 = new SchoolStage(SchoolType.HighSchool, 2);
+        assertEquals(stage1, stage2);
     }
 
     @Test
     public void ValueObjectNotEqualsTest()
     {
-        ResourceOverview overview1 = new ResourceOverview("Hello");
-        ResourceOverview overview2 = new ResourceOverview("World!");
-        Assertions.assertNotEquals(overview1, overview2);
+        var stage1 = new SchoolStage(SchoolType.HighSchool, 2);
+        var stage2 = new SchoolStage(SchoolType.TechnicalHighSchool, 5);
+        assertNotEquals(stage1, stage2);
     }
 
     @Test
@@ -37,7 +38,7 @@ public class CommonClassesTests {
         lr1.setId(identity);
         LearningResource lr2 = new LearningResource();
         lr2.setId(identity);
-        Assertions.assertEquals(lr1, lr2);
+        assertEquals(lr1, lr2);
     }
     @Test
     public void EntityNotEqualsTest()
@@ -47,6 +48,6 @@ public class CommonClassesTests {
         LearningResource lr2 = new LearningResource();
         lr2.setId(new LearningResourceId(UUID.randomUUID()));
 
-        Assertions.assertNotEquals(lr1, lr2);
+        assertNotEquals(lr1, lr2);
     }
 }
