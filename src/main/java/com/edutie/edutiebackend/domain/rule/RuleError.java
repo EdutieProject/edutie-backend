@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.common.rule;
+package com.edutie.edutiebackend.domain.rule;
 
 import lombok.Getter;
 
@@ -7,13 +7,11 @@ import lombok.Getter;
  */
 @Getter
 public class RuleError {
-    Rule<?> brokenRule;
     String message;
     String code;
 
     public RuleError(Rule<?> brokenRule, String message)
     {
-        this.brokenRule = brokenRule;
         this.message = message;
         this.code = brokenRule.getClass().getSimpleName();
     }

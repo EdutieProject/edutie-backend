@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.student.errors;
 
-import com.edutie.edutiebackend.domain.core.common.rule.RuleError;
+import com.edutie.edutiebackend.domain.rule.RuleError;
 
 public class StudentErrors {
     public static RuleError schoolStageAlternationError()

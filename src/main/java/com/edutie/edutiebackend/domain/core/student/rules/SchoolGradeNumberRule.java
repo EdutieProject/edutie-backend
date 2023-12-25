@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.core.student.rules;
 
-import com.edutie.edutiebackend.domain.core.common.rule.RuleError;
-import com.edutie.edutiebackend.domain.core.common.rule.Rule;
+import com.edutie.edutiebackend.domain.rule.RuleError;
+import com.edutie.edutiebackend.domain.rule.Rule;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
 import java.util.Collections;

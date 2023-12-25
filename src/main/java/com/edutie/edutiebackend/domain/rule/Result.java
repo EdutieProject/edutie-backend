@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.common.rule;
+package com.edutie.edutiebackend.domain.rule;
 
 import lombok.Getter;
 
@@ -37,7 +37,7 @@ public class Result<T> {
         this.ruleErrors = ruleErrors;
     }
 
-    public static <T> Result<T> fromErrors(T value, List<RuleError> ruleErrors)
+    public static <T> Result<T> fromErrorList(List<RuleError> ruleErrors, T value)
     {
         return new Result<>(value, ruleErrors);
     }
@@ -52,11 +52,6 @@ public class Result<T> {
         return new Result<>(null,false, ruleError);
     }
 
-    public static <T> Result<T> failure(List<RuleError> ruleErrors)
-    {
-        return new Result<>(null,false, ruleErrors);
-    }
-
     public T getValue()
     {
         if (!success)
@@ -64,4 +59,10 @@ public class Result<T> {
 
         return value;
     }
+
+    public boolean isFailure()
+    {
+        return !success;
+    }
+    //TODO: firstError()
 }

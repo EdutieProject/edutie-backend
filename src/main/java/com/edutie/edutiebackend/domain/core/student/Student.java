@@ -4,12 +4,11 @@ import java.time.LocalDate;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.identities.UserId;
-import com.edutie.edutiebackend.domain.core.common.rule.Result;
-import com.edutie.edutiebackend.domain.core.common.rule.Rule;
+import com.edutie.edutiebackend.domain.rule.Result;
+import com.edutie.edutiebackend.domain.rule.Rule;
 import com.edutie.edutiebackend.domain.core.student.entites.LearningParameters;
 import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
 import com.edutie.edutiebackend.domain.core.student.errors.StudentErrors;
-import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 import com.edutie.edutiebackend.domain.core.student.rules.StudentAgeBoundsRule;
 import com.edutie.edutiebackend.domain.core.student.rules.SchoolGradeNumberRule;

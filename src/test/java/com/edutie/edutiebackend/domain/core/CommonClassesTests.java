@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain;
+package com.edutie.edutiebackend.domain.core;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain;
+package com.edutie.edutiebackend.domain.core;
 
 import com.edutie.edutiebackend.domain.core.science.Science;
 import org.junit.jupiter.api.Test;
