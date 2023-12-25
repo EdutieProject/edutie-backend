@@ -80,12 +80,8 @@ public class Student extends AuditableEntityBase<StudentId> {
      */
     public <T extends Enum<T>> double getLearningParameter(Class<T> traitClass, T trait)
     {
-        try {
-            var param =  learningParameters.getParameter(traitClass, trait);
-            return param.orElse(0.0);
-        } catch (TraitTrackerNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        var param =  learningParameters.getParameter(traitClass, trait);
+        return param.orElse(0.0);
     }
 
 

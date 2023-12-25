@@ -15,7 +15,7 @@ public class RuleError {
     {
         this.brokenRule = brokenRule;
         this.message = message;
-        this.code = brokenRule.getClass().getName();
+        this.code = brokenRule.getClass().getSimpleName();
     }
 
     public RuleError(String code, String message)
