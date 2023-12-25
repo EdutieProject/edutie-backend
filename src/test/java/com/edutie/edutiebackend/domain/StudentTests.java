@@ -1,12 +1,9 @@
 package com.edutie.edutiebackend.domain;
 
-import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.student.Student;
 import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
-import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
-import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidSchoolStageException;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

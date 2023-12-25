@@ -12,34 +12,34 @@ import static java.util.Collections.*;
  */
 @Getter
 public class Result<T> {
-    List<Error> errors;
+    List<RuleError> ruleErrors;
     boolean success;
     T value;
 
-    public Result(T value, List<Error> errorList)
+    public Result(T value, List<RuleError> ruleErrorList)
     {
         this.value = value;
-        errors = errorList;
-        success = errorList.isEmpty();
+        ruleErrors = ruleErrorList;
+        success = ruleErrorList.isEmpty();
     }
 
-    public Result(T value, boolean success, Error error)
-    {
-        this.value = value;
-        this.success = success;
-        this.errors = singletonList(error);
-    }
-
-    public Result(T value, boolean success, List<Error> errors)
+    public Result(T value, boolean success, RuleError ruleError)
     {
         this.value = value;
         this.success = success;
-        this.errors = errors;
+        this.ruleErrors = singletonList(ruleError);
     }
 
-    public static <T> Result<T> fromErrors(T value, List<Error> errors)
+    public Result(T value, boolean success, List<RuleError> ruleErrors)
     {
-        return new Result<>(value, errors);
+        this.value = value;
+        this.success = success;
+        this.ruleErrors = ruleErrors;
+    }
+
+    public static <T> Result<T> fromErrors(T value, List<RuleError> ruleErrors)
+    {
+        return new Result<>(value, ruleErrors);
     }
 
     public static <T> Result<T> success(T value)
@@ -47,14 +47,14 @@ public class Result<T> {
         return new Result<>(value,true, emptyList());
     }
 
-    public static <T> Result<T> failure(Error error)
+    public static <T> Result<T> failure(RuleError ruleError)
     {
-        return new Result<>(null,false, error);
+        return new Result<>(null,false, ruleError);
     }
 
-    public static <T> Result<T> failure(List<Error> errors)
+    public static <T> Result<T> failure(List<RuleError> ruleErrors)
     {
-        return new Result<>(null,false, errors);
+        return new Result<>(null,false, ruleErrors);
     }
 
     public T getValue()
