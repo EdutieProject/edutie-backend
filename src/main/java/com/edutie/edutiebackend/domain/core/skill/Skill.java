@@ -1,14 +1,19 @@
 package com.edutie.edutiebackend.domain.core.skill;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
-import com.edutie.edutiebackend.domain.core.skill.exceptions.InvalidTraitMultiplierValueException;
+import com.edutie.edutiebackend.domain.core.skill.errors.SkillErrors;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.core.skill.validation.TraitMultiplierValueValidator;
+import com.edutie.edutiebackend.domain.core.skill.rules.TraitMultiplierValueBoundsRule;
 
+import com.edutie.edutiebackend.domain.rule.Result;
+import com.edutie.edutiebackend.domain.rule.Rule;
+import com.edutie.edutiebackend.domain.rule.RuleError;
+import com.edutie.edutiebackend.domain.rule.Validation;
 import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -54,15 +59,21 @@ public class Skill extends AuditableEntityBase<SkillId> {
      * Generic function assigning the multiplier value for given trait
      * @param trait trait
      * @param value value of multiplier
-     * @param <T> trait ty[e
-     * @throws InvalidTraitMultiplierValueException exception thrown when rules are omitted
-     * @see TraitMultiplierValueValidator
+     * @param <T> trait type
      */
-    public <T> void assignMultiplier(T trait, double value)
+    public <T> Result assignMultiplier(T trait, double value)
     {
-        if(!TraitMultiplierValueValidator.isValid(value)) throw new InvalidTraitMultiplierValueException();
-        if(trait instanceof Ability) abilityMultipliers.put((Ability) trait, value);
-        if(trait instanceof Intelligence) intelligenceMultipliers.put((Intelligence) trait, value);
+        var validationResult = Rule.validate(TraitMultiplierValueBoundsRule.class, value);
+        if (validationResult.isFailure()) return validationResult;
+
+        switch (trait) {
+            case Ability a -> abilityMultipliers.put(a, value);
+            case Intelligence i -> intelligenceMultipliers.put(i, value);
+            default -> {
+                return Result.failure(SkillErrors.unhandledTraitError());
+            }
+        }
+        return Result.success();
     }
 
     /**
@@ -72,8 +83,11 @@ public class Skill extends AuditableEntityBase<SkillId> {
      */
     public <T> void removeMultiplier(T trait)
     {
-        if(trait instanceof Ability) abilityMultipliers.remove(trait);
-        if(trait instanceof Intelligence) intelligenceMultipliers.remove(trait);
+        switch (trait) {
+            case Ability a -> abilityMultipliers.remove(a);
+            case Intelligence i -> intelligenceMultipliers.remove(i);
+            default -> {}
+        }
     }
 
 
@@ -102,12 +116,12 @@ public class Skill extends AuditableEntityBase<SkillId> {
      * exception if value is invalid.
      * @param ability ability to assign to.
      * @param multiplier multiplier value
-     * @throws InvalidTraitMultiplierValueException runtime exception thrown when value is improper
-     * @see TraitMultiplierValueValidator Rules of multiplier validation
      */
-    public void assignAbilityMultiplier(Ability ability, double multiplier) throws InvalidTraitMultiplierValueException {
-        if(TraitMultiplierValueValidator.isValid(multiplier))
+    public Result assignAbilityMultiplier(Ability ability, double multiplier){
+        var validationResult = Rule.validate(TraitMultiplierValueBoundsRule.class, multiplier);
+        if(validationResult.isSuccess())
             abilityMultipliers.put(ability, multiplier);
+        return validationResult;
     }
 
     /**
@@ -124,12 +138,12 @@ public class Skill extends AuditableEntityBase<SkillId> {
      * exception if value is invalid.
      * @param intelligence intelligence to assign to
      * @param multiplier multiplier value
-     * @throws InvalidTraitMultiplierValueException exception thrown when multiplier value is invalid
-     * @see TraitMultiplierValueValidator Rules of multiplier validation
      */
-    public void assignIntelligenceMultiplier(Intelligence intelligence, double multiplier) throws InvalidTraitMultiplierValueException {
-        if(TraitMultiplierValueValidator.isValid(multiplier))
+    public Result assignIntelligenceMultiplier(Intelligence intelligence, double multiplier) {
+        var validationResult = Rule.validate(TraitMultiplierValueBoundsRule.class, multiplier);
+        if(validationResult.isSuccess())
             intelligenceMultipliers.put(intelligence, multiplier);
+        return validationResult;
     }
 
     /**

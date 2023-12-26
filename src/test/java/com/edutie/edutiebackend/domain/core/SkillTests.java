@@ -3,7 +3,6 @@ package com.edutie.edutiebackend.domain.core;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
-import com.edutie.edutiebackend.domain.core.skill.exceptions.InvalidTraitMultiplierValueException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +24,7 @@ public class SkillTests {
     {
         Skill skill = new Skill();
         skill.assignIntelligenceMultiplier(Intelligence.LOGICAL, 2.0);
-        skill.assignAbilityMultiplier(Ability.ADAPTABILITY, 3.0);
+        skill.assignAbilityMultiplier(Ability.ADAPTABILITY, 2.5);
         var logicalMultiplier = skill.getMultiplierValue(Intelligence.LOGICAL);
         var adaptabilityMultiplier = skill.getMultiplierValue(Ability.ADAPTABILITY);
         assertEquals(
@@ -34,8 +33,15 @@ public class SkillTests {
         );
         assertEquals(
                 adaptabilityMultiplier,
-                3.0
+                2.5
         );
+    }
+
+    @Test
+    public void multiplierAssignmentGenericTest()
+    {
+        Skill skill = new Skill();
+        assertTrue(skill.assignMultiplier(Intelligence.VISUAL, 2.0).isSuccess());
     }
 
     @Test
@@ -60,21 +66,18 @@ public class SkillTests {
     }
 
     @Test
-    public void multiplierValueValidationThrowsTest()
+    public void unsupportedTraitTest()
     {
         Skill skill = new Skill();
-        assertThrows(
-                InvalidTraitMultiplierValueException.class,
-                ()->skill.assignAbilityMultiplier(Ability.CREATIVITY, 99.99)
-        );
-        assertThrows(
-                InvalidTraitMultiplierValueException.class,
-                ()->skill.assignMultiplier(Ability.CREATIVITY, 80.0)
-        );
-        assertThrows(
-                InvalidTraitMultiplierValueException.class,
-                ()->skill.assignMultiplier(Intelligence.LOGICAL, 127.0)
-        );
+        enum Hello { WORLD, UNIVERSE }
+        assertFalse(skill.assignMultiplier(Hello.WORLD, 1.0).isSuccess());
+    }
+
+    @Test
+    public void outOfBoundsMultiplierValueTest()
+    {
+        Skill skill = new Skill();
+        assertFalse(skill.assignMultiplier(Intelligence.LOGICAL, 55.99).isSuccess());
     }
 
 }
