@@ -84,7 +84,7 @@ public class Student extends AuditableEntityBase<StudentId> {
     }
 
 
-    public Result<SchoolStage> changeSchoolStage(int progressValue){
+    public Result changeSchoolStage(int progressValue){
         if (schoolStage == null) return Result.failure(
                 StudentErrors.schoolStageAlternationError()
         );
@@ -98,10 +98,10 @@ public class Student extends AuditableEntityBase<StudentId> {
     }
 
 
-    public Result<SchoolStage> setSchoolStage(SchoolStage providedSchoolStage){
+    public Result setSchoolStage(SchoolStage providedSchoolStage){
         var validationResult = Rule.validate(SchoolGradeNumberRule.class, providedSchoolStage);
         if (validationResult.isSuccess())
-            schoolStage = validationResult.getValue();
+            schoolStage = providedSchoolStage;
         return validationResult;
     }
 
@@ -110,9 +110,9 @@ public class Student extends AuditableEntityBase<StudentId> {
      * @param schoolType type of student's school
      * @param gradeNumber number of the grade
      */
-    public void setSchoolStage(SchoolType schoolType, int gradeNumber){
+    public Result setSchoolStage(SchoolType schoolType, int gradeNumber){
         SchoolStage schoolStage = new SchoolStage(schoolType, gradeNumber);
-        this.setSchoolStage(schoolStage);
+        return setSchoolStage(schoolStage);
     }
 
 
@@ -121,10 +121,10 @@ public class Student extends AuditableEntityBase<StudentId> {
      * @param providedBirthdate a birthdate to be set
      * @return Rule validation result
      */
-    public Result<LocalDate> setBirthdate(LocalDate providedBirthdate){
+    public Result setBirthdate(LocalDate providedBirthdate){
         var validationResult = Rule.validate(StudentAgeBoundsRule.class, providedBirthdate);
         if(validationResult.isSuccess())
-            birthdate = validationResult.getValue();
+            birthdate = providedBirthdate;
         return validationResult;
     }
 

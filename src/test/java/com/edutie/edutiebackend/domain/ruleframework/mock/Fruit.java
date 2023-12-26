@@ -16,25 +16,25 @@ public class Fruit {
     int sourness;
     int sweetness;
 
-    public Result<Color> setColor(Color providedColor) {
+    public Result setColor(Color providedColor) {
         var result = switch(name){
             case "Orange" -> Rule.validate(OrangeColorRule.class, providedColor);
             case "Strawberry" -> Rule.validate(StrawberryColorRule.class, providedColor);
-            default -> Result.success(color);
+            default -> Result.success();
         };
         if (result.isSuccess())
             color = providedColor;
         return result;
     }
 
-    public Result<Integer> setSourness(int sourness) {
+    public Result setSourness(int sourness) {
         var validationResult = Rule.validate(FruitTasteBoundsRule.class, sourness);
         if (validationResult.isSuccess())
             this.sourness = sourness;
         return validationResult;
     }
 
-    public Result<Integer> setSweetness(int sweetness) {
+    public Result setSweetness(int sweetness) {
         var validationResult = Rule.validate(FruitTasteBoundsRule.class, sourness);
         if (validationResult.isSuccess())
             this.sweetness = sweetness;

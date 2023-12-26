@@ -6,63 +6,47 @@ import java.util.List;
 
 import static java.util.Collections.*;
 
-/**
- *
- * @param <T>
- */
+
 @Getter
-public class Result<T> {
+public class Result {
     List<RuleError> ruleErrors;
     boolean success;
-    T value;
 
-    public Result(T value, List<RuleError> ruleErrorList)
+    public Result(List<RuleError> ruleErrorList)
     {
-        this.value = value;
         ruleErrors = ruleErrorList;
         success = ruleErrorList.isEmpty();
     }
 
-    public Result(T value, boolean success, RuleError ruleError)
+    public Result(boolean success, RuleError ruleError)
     {
-        this.value = value;
         this.success = success;
         this.ruleErrors = singletonList(ruleError);
     }
 
-    public Result(T value, boolean success, List<RuleError> ruleErrors)
+    public Result(boolean success, List<RuleError> ruleErrors)
     {
-        this.value = value;
         this.success = success;
         this.ruleErrors = ruleErrors;
     }
 
-    public static <T> Result<T> fromErrorList(List<RuleError> ruleErrors, T value)
+    public static Result fromErrorList(List<RuleError> ruleErrors)
     {
-        return new Result<>(value, ruleErrors);
+        return new Result(ruleErrors);
     }
 
-    public static <T> Result<T> success(T value)
+    public static  Result success()
     {
-        return new Result<>(value,true, emptyList());
+        return new Result(true, emptyList());
     }
 
-    public static <T> Result<T> failure(RuleError ruleError)
+    public static Result failure(RuleError ruleError)
     {
-        return new Result<>(null,false, ruleError);
-    }
-
-    public T getValue()
-    {
-        if (!success)
-            throw new RuleViolationException("Objects violating domain rules cannot be retrieved");
-
-        return value;
+        return new Result(false, ruleError);
     }
 
     public boolean isFailure()
     {
         return !success;
     }
-    //TODO: firstError()
 }

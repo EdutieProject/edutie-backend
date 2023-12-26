@@ -1,7 +1,6 @@
 package com.edutie.edutiebackend.domain.ruleframework.tests;
 
 import com.edutie.edutiebackend.domain.rule.RuleError;
-import com.edutie.edutiebackend.domain.rule.RuleViolationException;
 import com.edutie.edutiebackend.domain.ruleframework.mock.Color;
 import com.edutie.edutiebackend.domain.ruleframework.mock.Fruit;
 import com.edutie.edutiebackend.domain.ruleframework.rules.StrawberryColorRule;
@@ -34,16 +33,6 @@ public class RuleFrameworkTests {
         Fruit banana = Fruit.strawberry();
         banana.setColor(Color.RED);
         assertEquals(banana.getColor(), Color.RED);
-    }
-
-    public void violationExceptionThrowTest()
-    {
-        Fruit orange = Fruit.orange();
-        var result = orange.setColor(Color.BLUE);
-        assertThrows(
-                RuleViolationException.class,
-                result::getValue
-        );
     }
 
     @Test

@@ -19,7 +19,7 @@ public interface Rule<T> {
      * @param <U> type of rule class
      * @param <T> type of object to validate
      */
-    static <U extends Rule<T>, T> Result<T> validate(Class<U> ruleClass, T ruleObject) {
+    static <U extends Rule<T>, T> Result validate(Class<U> ruleClass, T ruleObject) {
         List<RuleError> ruleErrors;
         try {
             U rule = ruleClass.getConstructor().newInstance();
@@ -27,7 +27,7 @@ public interface Rule<T> {
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
-        return Result.fromErrorList(ruleErrors, ruleObject);
+        return Result.fromErrorList(ruleErrors);
     }
 
     /**
@@ -38,7 +38,7 @@ public interface Rule<T> {
      * @param <U> type of rule class
      * @param <T> type of object to validate
      */
-    static <U extends Rule<T>, T> Result<T> validateAll(List<Class<U>> ruleClasses, T ruleObject)
+    static <U extends Rule<T>, T> Result validateAll(List<Class<U>> ruleClasses, T ruleObject)
     {
         List<RuleError> ruleErrors = new ArrayList<>();
         for (var ruleClass : ruleClasses)
@@ -50,6 +50,6 @@ public interface Rule<T> {
                 throw new RuntimeException(ex);
             }
         }
-        return Result.fromErrorList(ruleErrors, ruleObject);
+        return Result.fromErrorList(ruleErrors);
     }
 }
