@@ -11,10 +11,10 @@ import java.util.function.Function;
 public class SchoolGradeNumberRule implements Rule<SchoolStage> {
 
     Function<SchoolStage, Boolean> gradeNumberCondition = schoolStage -> switch (schoolStage.schoolType()){
-        case HighSchool -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <= 4;
-        case TechnicalHighSchool -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <= 5;
-        case TertiarySchool -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <=3 ;
-        case Homeschooling, NoSchool -> true;
+        case HIGH_SCHOOL -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <= 4;
+        case TECHNICAL_HIGH_SCHOOL -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <= 5;
+        case TERTIARY_SCHOOL -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <=3 ;
+        case HOMESCHOOLING, NO_SCHOOL -> true;
     };
 
 

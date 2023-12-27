@@ -4,8 +4,10 @@ import com.edutie.edutiebackend.domain.rule.Rule;
 import com.edutie.edutiebackend.domain.rule.RuleError;
 import com.edutie.edutiebackend.domain.ruleframework.mock.Color;
 
-import static java.util.Collections.*;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
 public class OrangeColorRule implements Rule<Color> {
 

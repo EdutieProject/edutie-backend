@@ -49,7 +49,7 @@ public class StudentTests {
     public void studentSetSchoolStageFailureTest()
     {
         Student student = new Student();
-        SchoolStage invalidSchoolStage = new SchoolStage(SchoolType.HighSchool, 10);
+        SchoolStage invalidSchoolStage = new SchoolStage(SchoolType.HIGH_SCHOOL, 10);
 
         assertFalse(student.setSchoolStage(invalidSchoolStage).isSuccess());
     }
@@ -58,7 +58,7 @@ public class StudentTests {
     public void studentSetSchoolStageSuccessTest()
     {
         Student student = new Student();
-        SchoolStage validSchoolStage = new SchoolStage(SchoolType.TechnicalHighSchool, 5);
+        SchoolStage validSchoolStage = new SchoolStage(SchoolType.TECHNICAL_HIGH_SCHOOL, 5);
 
         assertTrue(student.setSchoolStage(validSchoolStage).isSuccess());
     }
@@ -67,7 +67,7 @@ public class StudentTests {
     public void changeSchoolStageFailureTest() {
         Student student = new Student();
         student.setSchoolStage(
-                new SchoolStage(SchoolType.HighSchool, 3)
+                new SchoolStage(SchoolType.HIGH_SCHOOL, 3)
         );
         assertFalse(student.changeSchoolStage(10).isSuccess());
     }
@@ -76,7 +76,7 @@ public class StudentTests {
     public void changeSchoolStagePassValidationTest() {
         Student student = new Student();
         student.setSchoolStage(
-                new SchoolStage(SchoolType.HighSchool, 1)
+                new SchoolStage(SchoolType.HIGH_SCHOOL, 1)
         );
         assertTrue(student.changeSchoolStage(3).isSuccess());
     }

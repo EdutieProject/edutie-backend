@@ -1,32 +1,32 @@
 package com.edutie.edutiebackend.domain.core;
 
-import java.util.UUID;
-
+import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
+import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
-import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @SpringBootTest
 public class CommonClassesTests {
 
     @Test
     public void ValueObjectEqualsTest()
     {
-        var stage1 = new SchoolStage(SchoolType.HighSchool, 2);
-        var stage2 = new SchoolStage(SchoolType.HighSchool, 2);
+        var stage1 = new SchoolStage(SchoolType.HIGH_SCHOOL, 2);
+        var stage2 = new SchoolStage(SchoolType.HIGH_SCHOOL, 2);
         assertEquals(stage1, stage2);
     }
 
     @Test
     public void ValueObjectNotEqualsTest()
     {
-        var stage1 = new SchoolStage(SchoolType.HighSchool, 2);
-        var stage2 = new SchoolStage(SchoolType.TechnicalHighSchool, 5);
+        var stage1 = new SchoolStage(SchoolType.HIGH_SCHOOL, 2);
+        var stage2 = new SchoolStage(SchoolType.TECHNICAL_HIGH_SCHOOL, 5);
         assertNotEquals(stage1, stage2);
     }
 

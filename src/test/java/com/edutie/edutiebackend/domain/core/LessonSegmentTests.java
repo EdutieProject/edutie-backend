@@ -8,9 +8,9 @@ import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalS
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.net.URL;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class LessonSegmentTests {

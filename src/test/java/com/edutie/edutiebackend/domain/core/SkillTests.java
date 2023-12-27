@@ -5,6 +5,7 @@ import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

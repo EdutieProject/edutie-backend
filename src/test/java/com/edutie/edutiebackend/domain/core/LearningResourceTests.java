@@ -1,6 +1,5 @@
 package com.edutie.edutiebackend.domain.core;
 
-import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.learningresource.LearningResource;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;

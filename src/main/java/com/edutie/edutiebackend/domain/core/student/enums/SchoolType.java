@@ -8,11 +8,11 @@ import lombok.Getter;
 @Getter
 public enum SchoolType
 {
-    HighSchool("High School"),
-    TechnicalHighSchool("Technical High School"),
-    TertiarySchool("Tertiary School"),
-    Homeschooling("Homeschooling"),
-    NoSchool("No school");
+    HIGH_SCHOOL("High School"),
+    TECHNICAL_HIGH_SCHOOL("Technical High School"),
+    TERTIARY_SCHOOL("Tertiary School"),
+    HOMESCHOOLING("Homeschooling"),
+    NO_SCHOOL("No School");
 
 
     private final String code;
