@@ -23,7 +23,7 @@ import java.util.Optional;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LearningParameters extends AuditableEntityBase<LearningParametersId> {
+public class LearningParameters extends EntityBase<LearningParametersId> {
     private TraitTracker<Ability> abilityTraitTracker = new TraitTracker<>();
     private TraitTracker<Intelligence> intelligenceTraitTracker = new TraitTracker<>();
 

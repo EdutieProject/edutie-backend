@@ -1,37 +1,47 @@
 package com.edutie.edutiebackend.domain.core.learningresource;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.Exercise;
-import com.edutie.edutiebackend.domain.core.learningresource.valueobjects.ResourceOverview;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * A singular form of learning in the application.
  * This is the resource which is used by the learner to exercise
- * his knowledge. It is generated for each student exclusively.
- * It may be fixed into the lesson segment or dynamically generated, depending
- * on lessonSegment's isDynamic field.
+ * his knowledge. It may be exclusively generated for a given student.
  */
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LearningResource extends EntityBase<LearningResourceId> {
-    private Set<OptimizationStrategyId> optimizationStrategies;
+public final class LearningResource extends EntityBase<LearningResourceId> {
+    private String overviewText;
+    private String exerciseText;
+    // many-to-many relationship
+    private final Set<OptimizationStrategyId> optimizationStrategies = new HashSet<>();
+    // many-to-one relationship
     private LessonSegmentId lessonSegmentId;
-    private ResourceOverview overview;
-    private Exercise exercise;
-
 
     /**
-     * @param optimizationStrategyId
+     * Recommended constructor which associates the resource with concrete
+     * lesson segment.
+     * @param lessonSegmentId lesson segment id
+     */
+    public LearningResource(LessonSegmentId lessonSegmentId)
+    {
+        this.lessonSegmentId = lessonSegmentId;
+    }
+
+    /**
+     * Adds optimization strategy
+     * @param optimizationStrategyId optimization strategy identifier
      */
     public void addOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
     {
@@ -39,7 +49,8 @@ public class LearningResource extends EntityBase<LearningResourceId> {
     }
 
     /**
-     * @param optimizationStrategyId
+     * Removes optimization strategy
+     * @param optimizationStrategyId optimization strategy identifier
      */
     public void removeOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
     {

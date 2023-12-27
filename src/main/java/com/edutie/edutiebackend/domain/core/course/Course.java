@@ -5,22 +5,33 @@ import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
  * each of those have a number of lessons assigned as next.
- * Technically a group of Lesson trees.
+ * Technically a Lesson tree
  */
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
+    private boolean accessible = false;
+    // many-to-one relationship
     private ScienceId scienceId;
-    private Boolean accessible = false;
+
+    /**
+     * Recommended constructor for course associating it
+     * with given science.
+     * @param scienceId science id
+     */
+    public Course(ScienceId scienceId)
+    {
+        this.scienceId = scienceId;
+    }
 }
-//Tutaj kurs powinien zawierać jakiś Set z informacją jakie inne elementy zawiera. np. kurs zawiera wiele zadań, albo filmów albo jeszcze czegoś
 

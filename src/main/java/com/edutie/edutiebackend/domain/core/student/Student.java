@@ -4,38 +4,57 @@ import java.time.LocalDate;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.identities.UserId;
+import com.edutie.edutiebackend.domain.rule.Result;
+import com.edutie.edutiebackend.domain.rule.Rule;
 import com.edutie.edutiebackend.domain.core.student.entites.LearningParameters;
-import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidBirthDateException;
-import com.edutie.edutiebackend.domain.core.student.exceptions.InvalidSchoolStageException;
-import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
+import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
+import com.edutie.edutiebackend.domain.core.student.errors.StudentErrors;
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
-import com.edutie.edutiebackend.domain.core.student.validation.SchoolStageValidator;
-import com.edutie.edutiebackend.domain.core.student.validation.StudentBirthdateValidator;
+import com.edutie.edutiebackend.domain.core.student.rules.StudentAgeBoundsRule;
+import com.edutie.edutiebackend.domain.core.student.rules.SchoolGradeNumberRule;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Student class conceals all the student characteristics of the user.
  * This is an aggregate root of the student.
  */
-@Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Student extends AuditableEntityBase<StudentId> {
     @Nullable
+    @Getter
     private SchoolStage schoolStage = null;
     @Nullable
+    @Getter
     private LocalDate birthdate = null;
-    private LearningParameters learningParameters = new LearningParameters();
+    // one-to-one relationship
+    private final LearningParameters learningParameters = new LearningParameters();
+    @Getter
+    // one-to-one relationship with user
     private UserId userId;
 
     /**
+     * Default constructor used for associating student's account with a user.
+     * Initializes all fields to default values. This constructor should be used
+     * by the application services instead of no-args constructor because there
+     * is no possibility to bond student entity to a user later.
+     * @param userId user's identity
+     */
+    public Student(UserId userId)
+    {
+        this.userId = userId;
+    }
+
+    /**
      * Adapts learning parameters based on provided progress value. May throw a runtime
-     * exception if the provided trait class is not valid - there is no
+     * exception if the provided trait class is not valid - there is no tracker
      * associated with it.
      * @param traitClass class of trait
      * @param trait concrete trait
@@ -45,11 +64,7 @@ public class Student extends AuditableEntityBase<StudentId> {
      */
     public <T extends Enum<T>> void adaptLearningParameters(Class<T> traitClass, T trait, double progressValue)
     {
-        try {
-            learningParameters.adapt(traitClass, trait, progressValue);
-        } catch (TraitTrackerNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        learningParameters.adapt(traitClass, trait, progressValue);
     }
 
     /**
@@ -64,48 +79,53 @@ public class Student extends AuditableEntityBase<StudentId> {
      */
     public <T extends Enum<T>> double getLearningParameter(Class<T> traitClass, T trait)
     {
-        try {
-            var param =  learningParameters.getParameter(traitClass, trait);
-            return param.orElse(0.0);
-        } catch (TraitTrackerNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Changes the student grade promoting him given amount of grades if it is possible.
-     * Throws an exception otherwise
-     * @param progressValue numbers of grades to shift forward. Goes backwards if negative.
-     * @throws InvalidSchoolStageException exception thrown if the school value would be invalid
-     * after using this method.
-     */
-    public void changeSchoolStage(int progressValue) throws InvalidSchoolStageException {
-        final int progressValueIndicator=schoolStage.gradeNumber() + progressValue; //Zobacz czy tutaj jest dobry typ danych i zmien nazwe zmiennej
-        SchoolStage newSchoolStage = new SchoolStage(schoolStage.schoolType(),progressValueIndicator);
-        if (SchoolStageValidator.isValid(schoolStage)) {
-            this.schoolStage = newSchoolStage;
-        }
-    }
-
-    /**
-     *
-     * @throws InvalidSchoolStageException exception thrown when schoolStage is invalid
-     * @see SchoolStageValidator School stage validation rules
-     */
-    public void setSchoolStage(SchoolStage schoolStage) throws InvalidSchoolStageException {
-        if(SchoolStageValidator.isValid(schoolStage))
-            this.schoolStage = schoolStage;
+        var param =  learningParameters.getParameter(traitClass, trait);
+        return param.orElse(0.0);
     }
 
 
+    public Result changeSchoolStage(int progressValue){
+        if (schoolStage == null) return Result.failure(
+                StudentErrors.schoolStageAlternationError()
+        );
+
+        var newSchoolStage = new SchoolStage(
+                schoolStage.schoolType(),
+                schoolStage.gradeNumber() + progressValue
+        );
+
+        return setSchoolStage(newSchoolStage);
+    }
+
+
+    public Result setSchoolStage(SchoolStage providedSchoolStage){
+        var validationResult = Rule.validate(SchoolGradeNumberRule.class, providedSchoolStage);
+        if (validationResult.isSuccess())
+            schoolStage = providedSchoolStage;
+        return validationResult;
+    }
+
     /**
-     *
-     * @throws InvalidBirthDateException exception thrown when given birthdate is invalid
-     * @see StudentBirthdateValidator Rules for validating student's birthdate
+     * Sets student school stage based on verbose School Type and grade Number parameters
+     * @param schoolType type of student's school
+     * @param gradeNumber number of the grade
      */
-    public void setBirthdate(LocalDate birthdate) throws InvalidBirthDateException {
-        if(StudentBirthdateValidator.isValid(birthdate))
-            this.birthdate = birthdate;
+    public Result setSchoolStage(SchoolType schoolType, int gradeNumber){
+        SchoolStage schoolStage = new SchoolStage(schoolType, gradeNumber);
+        return setSchoolStage(schoolStage);
+    }
+
+
+    /**
+     * Sets student birthdate
+     * @param providedBirthdate a birthdate to be set
+     * @return Rule validation result
+     */
+    public Result setBirthdate(LocalDate providedBirthdate){
+        var validationResult = Rule.validate(StudentAgeBoundsRule.class, providedBirthdate);
+        if(validationResult.isSuccess())
+            birthdate = providedBirthdate;
+        return validationResult;
     }
 
 }

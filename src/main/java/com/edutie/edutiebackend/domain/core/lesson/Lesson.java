@@ -6,19 +6,33 @@ import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * A group of lesson segments with a tree-like structure. All lessons are part
  * of a course referenced by CourseId.
  */
-@Data
+@NoArgsConstructor
+@Getter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Lesson extends AuditableEntityBase<LessonId> {
-    private CourseId courseId;
+    @Setter
     private String name;
+    @Setter
     private String description;
-    private LearningTreeNavigator<LessonId> navigation;
+    // many-to-one relationship
+    private CourseId courseId;
+    // Embed learning navigation
+    public final LearningTreeNavigator<LessonId> navigation = new LearningTreeNavigator<>();
+
+    /**
+     * Recommended constructor assigning lesson to
+     * the provided Course.
+     * @param courseId course id
+     */
+    public Lesson(CourseId courseId)
+    {
+        this.courseId = courseId;
+    }
 }

@@ -58,8 +58,3 @@ class SecurityConfig {
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
 }
-
-//Jest taka zasada, że dla czytelności kodu powinno się robić max 3 kropki w linii a później przypisywać do zmiennych itd.
-//np. metoda().metoda().metoda()
-//zmienna=metoda().metoda().metoda()
-//weź tego springa jakoś popraw
