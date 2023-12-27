@@ -18,6 +18,7 @@ import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Skill is a high-level indicator of Learning Resource's knowledge requirements.
@@ -30,6 +31,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Skill extends AuditableEntityBase<SkillId> {
+    @Setter
     private String name;
     // many-to-many with additional column - multiplierValue
     private final HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
@@ -69,9 +71,7 @@ public class Skill extends AuditableEntityBase<SkillId> {
         switch (trait) {
             case Ability a -> abilityMultipliers.put(a, value);
             case Intelligence i -> intelligenceMultipliers.put(i, value);
-            default -> {
-                return Result.failure(SkillErrors.unhandledTraitError());
-            }
+            default -> { return Result.failure(SkillErrors.unhandledTraitError()); }
         }
         return Result.success();
     }

@@ -3,10 +3,10 @@ package com.edutie.edutiebackend.domain.core.lessonsegment;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
-import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.LearningRequirement;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -20,17 +20,17 @@ import java.util.Set;
  * It has all necessities to provide learning resource by generation or by selection.
  */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
-
+    @Setter
+    private String name;
     // embed learning navigation
-    public LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
+    public final LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
     // embed
     @Setter
-    private PromptFragment segmentDescription;
+    private PromptFragment overviewDescription;
     // embed
     @Setter
     private PromptFragment exerciseDescription;
@@ -39,21 +39,21 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @Setter
     private ExerciseType exerciseType;
     // one-to-many
-    private Set<LearningRequirement> learningRequirements = new HashSet<>();
-    // one-to-many
-    private Set<ExternalSource> externalSources = new HashSet<>();
+    private final Set<ExternalSource> externalSources = new HashSet<>();
 
     // many-to-many
-    private Set<SkillId> skills = new HashSet<>();
+    private final Set<SkillId> skills = new HashSet<>();
+    // many-to-one
+    private LessonId lessonId;
 
-    public void addLearningRequirement(LearningRequirement learningRequirement)
+    /**
+     * Recommended constructor assigning the segment
+     * to the given lesson
+     * @param lessonId lesson id
+     */
+    public LessonSegment(LessonId lessonId)
     {
-        learningRequirements.add(learningRequirement);
-    }
-
-    public void removeLearningRequirement(LearningRequirement learningRequirement)
-    {
-        learningRequirements.remove(learningRequirement);
+        this.lessonId = lessonId;
     }
 
     /**

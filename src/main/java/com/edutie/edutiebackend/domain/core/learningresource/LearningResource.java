@@ -8,15 +8,16 @@ import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegme
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * A singular form of learning in the application.
  * This is the resource which is used by the learner to exercise
  * his knowledge. It may be exclusively generated for a given student.
  */
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public final class LearningResource extends EntityBase<LearningResourceId> {
@@ -26,6 +27,16 @@ public final class LearningResource extends EntityBase<LearningResourceId> {
     private Set<OptimizationStrategyId> optimizationStrategies;
     // many-to-one relationship
     private LessonSegmentId lessonSegmentId;
+
+    /**
+     * Recommended constructor which associates the resource with concrete
+     * lesson segment.
+     * @param lessonSegmentId lesson segment id
+     */
+    public LearningResource(LessonSegmentId lessonSegmentId)
+    {
+        this.lessonSegmentId = lessonSegmentId;
+    }
 
     /**
      * Adds optimization strategy

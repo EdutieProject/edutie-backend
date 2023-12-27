@@ -6,19 +6,20 @@ import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.Op
 import jakarta.persistence.Embedded;
 
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * Class responsible for optimizing learning resources based
  * on required intelligence parameter
  */
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
     @Embedded
-    PromptFragment optimizationDescription;
-    TTrait trait;
-    double requiredValue;
+    private PromptFragment optimizationDescription;
+    private TTrait trait;
+    private double requiredValue;
 }

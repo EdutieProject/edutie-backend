@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.learningresult;
+package com.edutie.edutiebackend.domain.core.learningresult.enums;
 
 import lombok.Getter;
 

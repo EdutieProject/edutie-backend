@@ -13,7 +13,6 @@ import lombok.*;
  * Technically a Lesson tree
  */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -24,5 +23,15 @@ public class Course extends AuditableEntityBase<CourseId> {
     private boolean accessible = false;
     // many-to-one relationship
     private ScienceId scienceId;
+
+    /**
+     * Recommended constructor for course associating it
+     * with given science.
+     * @param scienceId science id
+     */
+    public Course(ScienceId scienceId)
+    {
+        this.scienceId = scienceId;
+    }
 }
 
