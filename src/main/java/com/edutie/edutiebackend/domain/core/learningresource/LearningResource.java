@@ -1,5 +1,6 @@
 package com.edutie.edutiebackend.domain.core.learningresource;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
@@ -24,7 +25,7 @@ public final class LearningResource extends EntityBase<LearningResourceId> {
     private String overviewText;
     private String exerciseText;
     // many-to-many relationship
-    private Set<OptimizationStrategyId> optimizationStrategies;
+    private final Set<OptimizationStrategyId> optimizationStrategies = new HashSet<>();
     // many-to-one relationship
     private LessonSegmentId lessonSegmentId;
 
