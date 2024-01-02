@@ -3,12 +3,15 @@ package com.edutie.edutiebackend.domain.core.lessonsegment;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
+import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExternalSource;
+import com.edutie.edutiebackend.domain.core.skill.Skill;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import jakarta.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
@@ -26,24 +29,30 @@ import java.util.Set;
 public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @Setter
     private String name;
-    // embed learning navigation
+    @Embedded
     public final LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
-    // embed
+    @Embedded
     @Setter
     private PromptFragment overviewDescription;
-    // embed
+    @Embedded
     @Setter
     private PromptFragment exerciseDescription;
 
-    // many-to-many relationship
+    @ManyToOne
     @Setter
     private ExerciseType exerciseType;
-    // one-to-many
+    @OneToMany
     private final Set<ExternalSource> externalSources = new HashSet<>();
 
-    // many-to-many
-    private final Set<SkillId> skills = new HashSet<>();
-    // many-to-one
+    @ManyToMany
+    @JsonIgnore
+    private final Set<Skill> skills = new HashSet<>();
+
+    @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id", updatable = false, insertable = false)
+    @JsonIgnore
+    private Lesson lesson;
+    @Column(name = "lesson_id")
     private LessonId lessonId;
 
     /**
@@ -76,19 +85,19 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
 
     /**
      * Adds common skill to the common skills list
-     * @param skillId skill identifier
+     * @param skill skill entity
      */
-    public void addSkill(SkillId skillId)
+    public void addSkill(Skill skill)
     {
-        skills.add(skillId);
+        skills.add(skill);
     }
 
     /**
      * Removes common skill from the common skills list
-     * @param skillId skill identifier
+     * @param skill skill entity
      */
-    public void removeSkill(SkillId skillId)
+    public void removeSkill(Skill skill)
     {
-        skills.remove(skillId);
+        skills.remove(skill);
     }
 }

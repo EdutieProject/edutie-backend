@@ -4,7 +4,7 @@ import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragme
 import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
 import com.edutie.edutiebackend.domain.core.lessonsegment.enums.SourceOrigin;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
+import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExternalSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
