@@ -23,7 +23,7 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private boolean accessible = false;
-    @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Science.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "science_id", insertable = false, updatable = false)
     @JsonIgnore
     private Science science;
