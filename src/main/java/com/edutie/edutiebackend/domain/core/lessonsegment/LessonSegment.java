@@ -7,9 +7,7 @@ import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExternalSource;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
-import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,8 +39,6 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @ManyToOne
     @Setter
     private ExerciseType exerciseType;
-    @OneToMany
-    private final Set<ExternalSource> externalSources = new HashSet<>();
 
     @ManyToMany
     @JsonIgnore
@@ -65,23 +61,6 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
         this.lessonId = lessonId;
     }
 
-    /**
-     * Adds external source to the lesson segment
-     * @param source source to be added
-     */
-    public void addExternalSource(ExternalSource source)
-    {
-        externalSources.add(source);
-    }
-
-    /**
-     * Removes external source from the set of external sources.
-     * @param source source to be removed
-     */
-    public void removeExternalSource(ExternalSource source)
-    {
-        externalSources.remove(source);
-    }
 
     /**
      * Adds common skill to the common skills list
