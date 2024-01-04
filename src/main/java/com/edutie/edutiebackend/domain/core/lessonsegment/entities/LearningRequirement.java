@@ -1,0 +1,19 @@
+package com.edutie.edutiebackend.domain.core.lessonsegment.entities;
+
+import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
+import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LearningRequirementId;
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class LearningRequirement extends EntityBase<LearningRequirementId> {
+    String name;
+    PromptFragment description;
+
+}
