@@ -32,6 +32,7 @@ public class LearningResult extends EntityBase<LearningResultId> {
     // embed
     private Feedback feedback;
     // many-to-many relationship with additional field: pointsValue
+    //TODO: decide whether we need hashmap here
     private HashMap<SkillId, Integer> skillPoints;
 
     /**

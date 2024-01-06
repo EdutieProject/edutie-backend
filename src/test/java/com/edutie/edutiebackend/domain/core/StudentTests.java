@@ -3,8 +3,9 @@ package com.edutie.edutiebackend.domain.core;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.student.Student;
+import com.edutie.edutiebackend.domain.core.student.entites.AbilityLearningParameter;
+import com.edutie.edutiebackend.domain.core.student.entites.IntelligenceLearningParameter;
 import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
-import com.edutie.edutiebackend.domain.core.student.exceptions.TraitTrackerNotFoundException;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,18 +32,14 @@ public class StudentTests {
         Student student = new Student();
         var result = student.setBirthdate(LocalDate.of(1410, 7, 15));
         System.out.println("CODE:" + result.getRuleErrors().get(0).getCode());
-        assertFalse(
-                result.isSuccess()
-        );
+        assertFalse(result.isSuccess());
     }
 
     @Test
     public void studentSetBirthDateFailureTest()
     {
         Student student = new Student();
-        assertTrue(
-                student.setBirthdate(LocalDate.of(2004, 7,18)).isSuccess()
-        );
+        assertTrue(student.setBirthdate(LocalDate.of(2004, 7,18)).isSuccess());
     }
 
     @Test
@@ -82,31 +79,36 @@ public class StudentTests {
     }
 
     @Test
-    public void LearningParamsInitializationTests()
+    public void learningParamsInitializationTests()
     {
         Student student = new Student();
-        var trackerInitValue = student.getLearningParameter(Intelligence.class, Intelligence.INTERPERSONAL);
-        assertEquals(0.0, trackerInitValue);
+        assertTrue(student.getLearningParameters(AbilityLearningParameter.class).isEmpty());
+        assertTrue(student.getLearningParameters(IntelligenceLearningParameter.class).isEmpty());
     }
 
     @Test
-    public void NoLearningParameterThrowTest()
+    public void noLearningParameterTest()
     {
         Student student = new Student();
-        enum Hello { WORLD, UNIVERSE }
-        assertThrows(
-                TraitTrackerNotFoundException.class,
-                ()->student.getLearningParameter(Hello.class, Hello.UNIVERSE)
-        );
+        assertFalse(student.getLearningParameter(AbilityLearningParameter.class, Ability.ADAPTABILITY).isPresent());
     }
 
     @Test
     public void learningParametersAdaptationTest()
     {
         Student student = new Student();
-        student.adaptLearningParameters(Ability.class, Ability.ADAPTABILITY, 10.0);
-        var parameterValue = student.getLearningParameter(Ability.class, Ability.ADAPTABILITY);
-        assertEquals(10.0, parameterValue);
+        student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
+        assertFalse(student.getLearningParameters(AbilityLearningParameter.class).isEmpty());
+        assertTrue(student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).isPresent());
     }
+
+    @Test
+    public void getLearningParameterValueTest()
+    {
+        Student student = new Student();
+        student.adaptLearningParameters(IntelligenceLearningParameter.class, Intelligence.LOGICAL, 55.0);
+        assertEquals(55.0, student.getLearningParameterValue(IntelligenceLearningParameter.class, Intelligence.LOGICAL));
+    }
+
 
 }
