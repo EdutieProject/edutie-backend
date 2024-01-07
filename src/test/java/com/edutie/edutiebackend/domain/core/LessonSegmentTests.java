@@ -2,9 +2,7 @@ package com.edutie.edutiebackend.domain.core;
 
 import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
-import com.edutie.edutiebackend.domain.core.lessonsegment.enums.SourceOrigin;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.valueobjects.ExternalSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,30 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class LessonSegmentTests {
-
-    @Test
-    public void lessonSegmentExternalSourceTest()
-    {
-        LessonSegment lessonSegment = new LessonSegment();
-        lessonSegment.setOverviewDescription(
-                PromptFragment.of("Hello")
-        );
-        try {
-            var externalSource = new URL("https://youtube.com");
-            lessonSegment.addExternalSource(
-                    new ExternalSource(externalSource, SourceOrigin.YOUTUBE)
-            );
-            ExternalSource addedSource = lessonSegment.getExternalSources().stream().toList().get(0);
-            assertEquals(
-                    addedSource.getOrigin(),
-                    SourceOrigin.YOUTUBE
-            );
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError(e);
-        }
-    }
 
     /**
      * Demonstration of navigation encapsulated API

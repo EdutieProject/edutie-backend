@@ -11,9 +11,10 @@ import lombok.Getter;
 @Getter
 public enum FeedbackType {
     POSITIVE("Positive"),
+    NEUTRAL("Neutral"),
     NEGATIVE("Negative");
 
-    private String code;
+    private final String code;
     FeedbackType(String code)
     {
         this.code = code;

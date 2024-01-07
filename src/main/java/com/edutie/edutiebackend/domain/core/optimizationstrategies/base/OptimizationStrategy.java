@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.optimizationstrategies;
+package com.edutie.edutiebackend.domain.core.optimizationstrategies.base;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
@@ -6,17 +6,16 @@ import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.Op
 import jakarta.persistence.Embedded;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
 /**
  * Class responsible for optimizing learning resources based
  * on required intelligence parameter
  */
-@NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-@Entity
+@MappedSuperclass
 public class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
     @Embedded
     private PromptFragment optimizationDescription;
