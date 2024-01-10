@@ -1,9 +1,11 @@
 package com.edutie.edutiebackend.domain.core.optimizationstrategies.identities;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.io.Serializable;
 import java.util.UUID;
 
-public record OptimizationStrategyId(UUID value) implements Serializable {
+public record OptimizationStrategyId(@JsonValue UUID value) implements Serializable {
     public OptimizationStrategyId(){
         this(UUID.randomUUID());
     }

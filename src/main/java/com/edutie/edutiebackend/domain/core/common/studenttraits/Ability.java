@@ -1,5 +1,7 @@
 package com.edutie.edutiebackend.domain.core.common.studenttraits;
 
+import com.edutie.edutiebackend.domain.repository.converter.enums.AbstractEnumConverter;
+import com.edutie.edutiebackend.domain.repository.converter.enums.PersistableEnum;
 import lombok.Getter;
 
 /**
@@ -8,7 +10,7 @@ import lombok.Getter;
  */
 //TODO: broaden/adjust Ability traits types
 @Getter
-public enum Ability {
+public enum Ability implements PersistableEnum<String> {
     ADAPTABILITY("Adaptability"),
     ANALYTICAL_THINKING("Analytical Thinking"),
     CRITICAL_THINKING("Critical Thinking"),
@@ -34,4 +36,10 @@ public enum Ability {
     public String toString() {
         return code;
     }
+    public static class Converter extends AbstractEnumConverter<Ability, String> {
+        public Converter() {
+            super(Ability.class);
+        }
+    }
 }
+

@@ -1,12 +1,14 @@
 package com.edutie.edutiebackend.domain.core.student.enums;
 
+import com.edutie.edutiebackend.domain.repository.converter.enums.AbstractEnumConverter;
+import com.edutie.edutiebackend.domain.repository.converter.enums.PersistableEnum;
 import lombok.Getter;
 
 /**
  * Enum describing student's school type.
  */
 @Getter
-public enum SchoolType
+public enum SchoolType implements PersistableEnum<String>
 {
     HIGH_SCHOOL("High School"),
     TECHNICAL_HIGH_SCHOOL("Technical High School"),
@@ -20,5 +22,10 @@ public enum SchoolType
     SchoolType(String code)
     {
         this.code = code;
+    }
+    public static class Converter extends AbstractEnumConverter<SchoolType, String> {
+        public Converter() {
+            super(SchoolType.class);
+        }
     }
 }
