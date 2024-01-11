@@ -15,6 +15,7 @@ import com.edutie.edutiebackend.domain.rule.Rule;
 import com.edutie.edutiebackend.domain.rule.RuleError;
 import com.edutie.edutiebackend.domain.rule.Validation;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,8 +35,10 @@ public class Skill extends AuditableEntityBase<SkillId> {
     @Setter
     private String name;
     // many-to-many with additional column - multiplierValue
+    @Transient
     private final HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
     // many-to-many with additional column - multiplierValue
+    @Transient
     private final HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
 
     public Skill(String name)

@@ -6,6 +6,7 @@ import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.*;
 
 /**
@@ -22,8 +23,9 @@ public class Lesson extends AuditableEntityBase<LessonId> {
     @Setter
     private String description;
     // many-to-one relationship
+    @Transient
     private CourseId courseId;
-    // Embed learning navigation
+    @Transient
     public final LearningTreeNavigator<LessonId> navigation = new LearningTreeNavigator<>();
 
     /**

@@ -9,6 +9,7 @@ import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegme
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.*;
 
 /**
@@ -25,8 +26,10 @@ public final class LearningResource extends EntityBase<LearningResourceId> {
     private String overviewText;
     private String exerciseText;
     // many-to-many relationship
+    @Transient
     private final Set<OptimizationStrategyId> optimizationStrategies = new HashSet<>();
     // many-to-one relationship
+    @Transient
     private LessonSegmentId lessonSegmentId;
 
     /**
