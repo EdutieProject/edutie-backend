@@ -1,5 +1,7 @@
 package com.edutie.edutiebackend.domain.core.learningresult.enums;
 
+import com.edutie.edutiebackend.domain.repository.converter.enums.AbstractEnumConverter;
+import com.edutie.edutiebackend.domain.repository.converter.enums.PersistableEnum;
 import lombok.Getter;
 
 /**
@@ -9,7 +11,7 @@ import lombok.Getter;
  */
 //TODO: broaden feedback types
 @Getter
-public enum FeedbackType {
+public enum FeedbackType implements PersistableEnum<String> {
     POSITIVE("Positive"),
     NEUTRAL("Neutral"),
     NEGATIVE("Negative");
@@ -19,4 +21,11 @@ public enum FeedbackType {
     {
         this.code = code;
     }
+
+    public static class Converter extends AbstractEnumConverter<FeedbackType, String> {
+        public Converter() {
+            super(FeedbackType.class);
+        }
+    }
 }
+

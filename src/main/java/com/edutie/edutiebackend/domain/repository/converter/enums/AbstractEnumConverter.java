@@ -13,7 +13,7 @@ public abstract class AbstractEnumConverter<T extends Enum<T> & PersistableEnum<
 
     @Override
     public E convertToDatabaseColumn(T attribute) {
-        return attribute != null ? attribute.getValue() : null;
+        return attribute != null ? attribute.getCode() : null;
     }
 
     @Override
@@ -21,7 +21,7 @@ public abstract class AbstractEnumConverter<T extends Enum<T> & PersistableEnum<
         T[] enums = clazz.getEnumConstants();
 
         for (T e : enums) {
-            if (e.getValue().equals(dbData)) {
+            if (e.getCode().equals(dbData)) {
                 return e;
             }
         }

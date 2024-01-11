@@ -1,5 +1,8 @@
 package com.edutie.edutiebackend.domain.core.common.studenttraits;
 
+import com.edutie.edutiebackend.domain.repository.converter.enums.AbstractEnumConverter;
+import com.edutie.edutiebackend.domain.repository.converter.enums.PersistableEnum;
+import jakarta.persistence.Convert;
 import lombok.Getter;
 
 /**
@@ -7,8 +10,7 @@ import lombok.Getter;
  * @see <a href="https://en.wikipedia.org/wiki/Theory_of_multiple_intelligences">Theory of multiple intelligences</a>
  */
 @Getter
-public enum Intelligence
-{
+public enum Intelligence implements PersistableEnum<String> {
     VISUAL("Visual"),
     LINGUISTIC("Linguistic"),
     INTERPERSONAL("Interpersonal"),
@@ -20,13 +22,20 @@ public enum Intelligence
 
     private final String code;
 
-    Intelligence(String code)
-    {
+    Intelligence(String code) {
         this.code = code;
     }
 
     @Override
     public String toString() {
         return code;
+    }
+
+
+    public static class Converter extends AbstractEnumConverter<Intelligence, String> {
+        public Converter() {
+            super(Intelligence.class);
+        }
+
     }
 }
