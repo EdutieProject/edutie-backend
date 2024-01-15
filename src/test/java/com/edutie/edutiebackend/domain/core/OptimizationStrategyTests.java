@@ -48,9 +48,9 @@ public class OptimizationStrategyTests {
         intelligenceOptimizationStrategy.setTrait(Intelligence.LOGICAL);
         intelligenceOptimizationStrategy.setOptimizationDescription(PromptFragment.of("Sample fragment"));
         intelligenceOptimizationStrategy.setRequiredValue(1.0);
-        intelligenceOptimizationStrategy.setEntityId(new OptimizationStrategyId());
+        intelligenceOptimizationStrategy.setId(new OptimizationStrategyId());
 
-        assertNotNull(intelligenceOptimizationStrategy.getEntityId());
+        assertNotNull(intelligenceOptimizationStrategy.getId());
         assertEquals(intelligenceOptimizationStrategy.getOptimizationDescription().text(), "Sample fragment");
         assertEquals(intelligenceOptimizationStrategy.getTrait(), Intelligence.LOGICAL);
     }

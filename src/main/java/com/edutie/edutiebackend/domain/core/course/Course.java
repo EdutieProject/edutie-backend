@@ -23,11 +23,13 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private boolean accessible = false;
+    @MapsId("id")
     @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "science_id", insertable = false, updatable = false)
     @JsonIgnore
     private Science science;
-    @Column(name = "science_id")
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "science_id"))
     private ScienceId scienceId;
 
     /**

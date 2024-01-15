@@ -35,18 +35,18 @@ public class CommonClassesTests {
     {
         var identity = new LearningResourceId(UUID.randomUUID());
         LearningResource lr1 = new LearningResource();
-        lr1.setEntityId(identity);
+        lr1.setId(identity);
         LearningResource lr2 = new LearningResource();
-        lr2.setEntityId(identity);
+        lr2.setId(identity);
         assertEquals(lr1, lr2);
     }
     @Test
     public void EntityNotEqualsTest()
     {
         LearningResource lr1 = new LearningResource();
-        lr1.setEntityId(new LearningResourceId(UUID.randomUUID()));
+        lr1.setId(new LearningResourceId(UUID.randomUUID()));
         LearningResource lr2 = new LearningResource();
-        lr2.setEntityId(new LearningResourceId(UUID.randomUUID()));
+        lr2.setId(new LearningResourceId(UUID.randomUUID()));
 
         assertNotEquals(lr1, lr2);
     }

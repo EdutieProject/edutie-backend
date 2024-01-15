@@ -25,7 +25,6 @@ import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -84,7 +83,7 @@ public class Student extends AuditableEntityBase<StudentId> {
         if (searchedLearningParam.isPresent()) searchedLearningParam.get().adapt(progressValue);
         else {
             var newLearningParam = learningParamClass.getConstructor().newInstance();
-            newLearningParam.setEntityId(new LearningParameterId());
+            newLearningParam.setId(new LearningParameterId());
             newLearningParam.setTrait(trait);
             newLearningParam.setValue(progressValue);
             learningParameters.add(newLearningParam);

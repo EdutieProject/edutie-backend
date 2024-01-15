@@ -19,5 +19,5 @@ import lombok.Setter;
 public abstract class EntityBase<TId extends Serializable> {
     @EmbeddedId
     @AttributeOverride(name = "identifierValue", column = @Column(name = "id"))
-    private TId entityId;
+    private TId id;
 }
