@@ -23,18 +23,17 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @Setter
     private String name;
     @Embedded
     public final LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
-    @Embedded
+//    @Embedded
     @Setter
-    private PromptFragment overviewDescription;
-    @Embedded
+    private String overviewDescription;
+//    @Embedded
     @Setter
-    private PromptFragment exerciseDescription;
+    private String exerciseDescription;
 
     @ManyToOne
     @Setter
@@ -44,8 +43,8 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @JsonIgnore
     private final Set<Skill> skills = new HashSet<>();
 
-    @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id", updatable = false, insertable = false)
+    @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
     @JsonIgnore
     private Lesson lesson;
     @Column(name = "lesson_id")

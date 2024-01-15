@@ -16,7 +16,6 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class Lesson extends AuditableEntityBase<LessonId> {
     @Setter
     private String name;

@@ -30,16 +30,15 @@ import java.util.Set;
  */
 @Getter
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class LearningResult extends AuditableEntityBase<LearningResultId> {
-    @ManyToOne(targetEntity = LessonSegment.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = LessonSegment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "lesson_segment_id", updatable = false, insertable = false)
     @JsonIgnore
     private LessonSegment lessonSegment;
     @Setter
     @Column(name = "lesson_segment_id")
     private LessonSegmentId lessonSegmentId;
-    @ManyToOne(targetEntity = Student.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", updatable = false, insertable = false)
     @JsonIgnore
     private Student student;

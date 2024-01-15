@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@Entity
 public class AbilityOptimizationStrategy extends OptimizationStrategy<Ability> {
 }

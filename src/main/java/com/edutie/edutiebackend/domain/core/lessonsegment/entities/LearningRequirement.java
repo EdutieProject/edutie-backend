@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
 public class LearningRequirement extends EntityBase<LearningRequirementId> {
     String name;
     PromptFragment description;

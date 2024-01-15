@@ -21,7 +21,6 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public final class LearningResource extends EntityBase<LearningResourceId> {
     private String overviewText;
     private String exerciseText;

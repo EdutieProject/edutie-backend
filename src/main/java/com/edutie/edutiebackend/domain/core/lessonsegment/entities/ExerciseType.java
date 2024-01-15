@@ -16,7 +16,6 @@ import java.util.Set;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class ExerciseType extends EntityBase<ExerciseTypeId> {
     private String name;
     Set<Ability> abilitySet;

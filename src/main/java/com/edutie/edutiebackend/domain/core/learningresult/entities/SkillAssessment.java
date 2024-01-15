@@ -12,11 +12,10 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
-@Entity
 public class SkillAssessment extends EntityBase<LearningAssessmentId> {
     @Setter
     private int points;
-    @ManyToOne(targetEntity = Skill.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Skill.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "skill_id", insertable = false, updatable = false)
     @JsonIgnore
     private Skill skill;

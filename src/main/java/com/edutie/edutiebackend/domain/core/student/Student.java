@@ -24,7 +24,9 @@ import com.edutie.edutiebackend.domain.core.student.rules.SchoolGradeNumberRule;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
 import jakarta.annotation.Nullable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,15 +38,17 @@ import lombok.SneakyThrows;
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class Student extends AuditableEntityBase<StudentId> {
     @Nullable
     @Getter
+    @Embedded
     private SchoolStage schoolStage = null;
     @Nullable
     @Getter
     private LocalDate birthdate = null;
+    @Transient
     Set<AbilityLearningParameter> abilityLearningParameters = new HashSet<>();
+    @Transient
     Set<IntelligenceLearningParameter> intelligenceLearningParameters = new HashSet<>();
 
     @Getter
@@ -80,7 +84,7 @@ public class Student extends AuditableEntityBase<StudentId> {
         if (searchedLearningParam.isPresent()) searchedLearningParam.get().adapt(progressValue);
         else {
             var newLearningParam = learningParamClass.getConstructor().newInstance();
-            newLearningParam.setId(new LearningParameterId());
+            newLearningParam.setEntityId(new LearningParameterId());
             newLearningParam.setTrait(trait);
             newLearningParam.setValue(progressValue);
             learningParameters.add(newLearningParam);

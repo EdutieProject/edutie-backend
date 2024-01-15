@@ -8,6 +8,5 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class AbilityLearningParameter extends LearningParameter<Ability> {
 }

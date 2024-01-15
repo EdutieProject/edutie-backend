@@ -12,7 +12,6 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
-@Entity
 public class LearningAssessment extends EntityBase<LearningAssessmentId> {
     @Setter
     private int points;

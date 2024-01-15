@@ -6,9 +6,9 @@ services:
       - .env
     ports:
       - '5435:5432'
-    volumes:
-      - ./pg_data:/var/lib/postgresql/data
-      - ./init:/docker-entrypoint-initdb.d/
+#    volumes:
+#      - ./pg_data:/var/lib/postgresql/data
+#      - ./init:/docker-entrypoint-initdb.d/
     container_name: db
 
   service:

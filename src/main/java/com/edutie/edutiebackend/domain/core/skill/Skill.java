@@ -30,7 +30,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class Skill extends AuditableEntityBase<SkillId> {
     @Setter
     private String name;

@@ -3,7 +3,6 @@ package com.edutie.edutiebackend.domain.core.common.base;
 import java.io.Serializable;
 
 import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,5 +19,5 @@ import lombok.Setter;
 @EqualsAndHashCode
 public abstract class EntityBase<TId extends Serializable> {
     @EmbeddedId
-    private TId id;
+    private TId entityId;
 }
