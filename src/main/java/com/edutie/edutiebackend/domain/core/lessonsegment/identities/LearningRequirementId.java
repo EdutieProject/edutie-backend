@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
-public record LearningRequirementId(@JsonValue UUID value) implements Serializable {
+public record LearningRequirementId(@JsonValue UUID identifierValue) implements Serializable {
     public LearningRequirementId(){
         this(UUID.randomUUID());
     }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.io.Serializable;
 import java.util.UUID;
 
-public record LearningParameterId(@JsonValue UUID id) implements Serializable {
+public record LearningParameterId(@JsonValue UUID identifierValue) implements Serializable {
     public LearningParameterId(){
         this(UUID.randomUUID());
     }

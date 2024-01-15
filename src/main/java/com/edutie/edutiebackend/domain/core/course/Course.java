@@ -18,6 +18,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;

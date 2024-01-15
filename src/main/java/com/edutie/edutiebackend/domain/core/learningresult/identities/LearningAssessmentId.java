@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import java.io.Serializable;
 import java.util.UUID;
 
-public record LearningAssessmentId(@JsonValue @Column(name = "learning_assessment_id") UUID id) implements Serializable {
+public record LearningAssessmentId(@JsonValue UUID identifierValue) implements Serializable {
     public LearningAssessmentId(){
         this(UUID.randomUUID());
     }
