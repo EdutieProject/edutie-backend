@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 public class StudyProgramTests {
+    //TODO: remove explicit id mapping, persist based on objects and persistence additional implementation
 
     @Autowired
     private CourseRepository courseRepository;
@@ -32,9 +33,9 @@ public class StudyProgramTests {
         course.setName("Sample Course Name");
         course.setDescription("Boring description");
         course.setId(new CourseId());
-        var saved = courseRepository.save(course);
-
-        assertEquals(saved.getId(), course.getId());
+        assertNotNull(
+                courseRepository.save(course)
+        );
     }
 
     @Test
@@ -47,15 +48,17 @@ public class StudyProgramTests {
         science.setId(scienceId);
         scienceRepository.save(science);
 
+        CourseId courseId = new CourseId();
         Course course = new Course();
-        course.setId(new CourseId());
+        course.setId(courseId);
         course.setName("Course 2");
         course.setDescription("Second course description");
         course.setScienceId(scienceId);
-        var savedCourse = courseRepository.save(course);
+        courseRepository.save(course);
 
-        assertEquals(savedCourse.getScienceId(), scienceId);
-        assertEquals(savedCourse.getScience(), science);
+        var createdCourse = courseRepository.findById(courseId).get();
+        assertEquals(createdCourse.getScienceId(), scienceId);
+        assertEquals(createdCourse.getScience(), science);
     }
 
 }

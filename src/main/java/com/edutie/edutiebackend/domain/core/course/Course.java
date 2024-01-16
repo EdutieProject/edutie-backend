@@ -27,6 +27,7 @@ public class Course extends AuditableEntityBase<CourseId> {
     @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "science_id", insertable = false, updatable = false)
     @JsonIgnore
+    @Setter(AccessLevel.PRIVATE)
     private Science science;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "science_id"))
