@@ -27,7 +27,7 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @Setter
     private String name;
     @Embedded
-    public final LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
+    public final LearningTreeNavigator<LessonSegment, LessonSegmentId> navigation = new LearningTreeNavigator<>();
 //    @Embedded
     @Setter
     private String overviewDescription;

@@ -1,8 +1,11 @@
 package com.edutie.edutiebackend.domain.core.common.studynavigation;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.OneToMany;
+import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,9 +17,19 @@ import java.util.Set;
  * @param <TLearningElemId> id type of elements to navigate through
  */
 @Embeddable
-public class LearningTreeNavigator<TLearningElemId>{
+public class LearningTreeNavigator<TLearningElem extends EntityBase<TLearningElemId>, TLearningElemId extends Serializable>{
+    @Transient
     private Set<TLearningElemId> nextLearningElements = new HashSet<>();
-    private TLearningElemId previousLearningElem;
+
+    @MapsId("id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "previous_element_id", updatable = false, insertable = false)
+    @Nullable
+    @JsonIgnore
+    TLearningElem previousLearningElem;
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "previous_element_id"))
+    private TLearningElemId previousLearningElemId;
 
     /**
      * Adds a next element to the next elements set.
@@ -39,7 +52,7 @@ public class LearningTreeNavigator<TLearningElemId>{
      * @param learningElemId id to be set as previous
      */
     public void setPreviousElement(TLearningElemId learningElemId) {
-        previousLearningElem = learningElemId;
+        previousLearningElemId = learningElemId;
     }
 
     /**
@@ -55,7 +68,7 @@ public class LearningTreeNavigator<TLearningElemId>{
      * @return previous Element identifier.
      */
     public TLearningElemId getPreviousElement() {
-        return previousLearningElem;
+        return previousLearningElemId;
     }
 
     /**
