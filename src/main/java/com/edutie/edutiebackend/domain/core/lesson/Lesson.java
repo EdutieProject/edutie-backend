@@ -23,15 +23,10 @@ import lombok.*;
 public class Lesson extends AuditableEntityBase<LessonId> {
     private String name;
     private String description;
-    @MapsId("id")
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", insertable = false, updatable = false)
+    @JoinColumn(name = "course_id")
     @JsonIgnore
-    @Setter(AccessLevel.PRIVATE)
     private Course course;
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "course_id"))
-    private CourseId courseId;
     @Transient
     public final LearningTreeNavigator<Lesson, LessonId> navigation = new LearningTreeNavigator<>();
 
@@ -46,10 +41,10 @@ public class Lesson extends AuditableEntityBase<LessonId> {
     /**
      * Recommended constructor assigning lesson to
      * the provided Course.
-     * @param courseId course id
+     * @param course course entity
      */
-    public Lesson(CourseId courseId)
+    public Lesson(Course course)
     {
-        this.courseId = courseId;
+        this.course = course;
     }
 }

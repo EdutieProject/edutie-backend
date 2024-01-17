@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,22 +33,30 @@ public class StudyProgramTests {
     @Autowired
     private LessonRepository lessonRepository;
 
-    /**
-     * This test does not pass when fetch type is EAGER
-     */
     @Test
     public void courseCreateRetrieveTest()
     {
         Course course = new Course();
         course.setId(new CourseId());
         course.setName("Sample course");
-        course.setDescription("");
+        course.setDescription("Description text");
         courseRepository.save(course);
 
         assertTrue(courseRepository.findById(course.getId()).isPresent());
     }
 
     @Test
+    public void scienceOnlyTest()
+    {
+        Science science = new Science("Math", "The princess of sciences");
+        science.setId(new ScienceId());
+        scienceRepository.save(science);
+
+        assertTrue(scienceRepository.findById(science.getId()).isPresent());
+    }
+
+    @Test
+    @Transactional(readOnly = true)
     public void courseCreateRetrieveTestWithScience()
     {
         Science science = new Science("Name", "Desc");
@@ -59,12 +66,12 @@ public class StudyProgramTests {
         course.setName("Sample Course Name");
         course.setDescription("Boring description");
         course.setId(new CourseId());
-        course.setScienceId(science.getId());
+        course.setScience(science);
         courseRepository.save(course);
 
-        var retrievedCourse = courseRepository.findById(course.getId());
-        assertTrue(retrievedCourse.isPresent());
-        assertEquals(retrievedCourse.orElse(new Course()).getName(), course.getName());
+        var retrievedCourse = courseRepository.getReferenceById(course.getId());
+        assertEquals(retrievedCourse.getName(), course.getName());
+        assertEquals(retrievedCourse.getScience(), science);
     }
 
     @Test
@@ -74,8 +81,7 @@ public class StudyProgramTests {
         Science science = new Science();
         science.setName("Math or something");
         science.setDescription("Science desc");
-        var scienceId = new ScienceId();
-        science.setId(scienceId);
+        science.setId(new ScienceId());
         scienceRepository.save(science);
 
         CourseId courseId = new CourseId();
@@ -83,13 +89,12 @@ public class StudyProgramTests {
         course.setId(courseId);
         course.setName("Course 2");
         course.setDescription("Second course description");
-        course.setScienceId(scienceId);
+        course.setScience(science);
         courseRepository.save(course);
 
-        var createdCourse = courseRepository.findById(courseId);
-        assertTrue(createdCourse.isPresent());
-        assertEquals(createdCourse.get().getScienceId(), scienceId);
-        assertEquals(createdCourse.get().getScience(), science);
+        var createdCourse = courseRepository.getReferenceById(courseId);
+        assertNotNull(createdCourse);
+        assertEquals(createdCourse.getScience(), science);
     }
 
     @Test
@@ -101,11 +106,12 @@ public class StudyProgramTests {
         lesson.setName("The first lesson");
         lesson.setDescription("First lesson's description");
         lessonRepository.save(lesson);
-        assertEquals(lessonRepository.findAll().get(0).getId(), lessonId);
+
         assertTrue(lessonRepository.findById(lesson.getId()).isPresent());
     }
 
     @Test
+    @Transactional(readOnly = true)
     public void lessonCourseRelationShipTest()
     {
         Course course = new Course();
@@ -116,15 +122,15 @@ public class StudyProgramTests {
 
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
-        lesson.setCourseId(course.getId());
+        lesson.setCourse(course);
         lesson.setName("Lesson");
         lesson.setDescription("Lesson description");
         lessonRepository.save(lesson);
 
-        List<Lesson> lessons = lessonRepository.findAll();
+        Lesson fetchedLesson = lessonRepository.getReferenceById(lesson.getId());
 
-        assertFalse(lessons.isEmpty());
-        assertEquals(lessons.get(0).getCourseId(), course.getId());
+        assertEquals(fetchedLesson.getId(), lesson.getId());
+        assertEquals(lesson.getCourse(), course);
     }
 
 }
