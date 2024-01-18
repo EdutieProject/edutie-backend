@@ -27,6 +27,9 @@ public class Course extends AuditableEntityBase<CourseId> {
     @JoinColumn(name = "science_id")
     @JsonIgnore
     private Science science;
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "science_id", insertable = false, updatable = false))
+    private ScienceId scienceId;
 
     /**
      * Recommended constructor for course associating it

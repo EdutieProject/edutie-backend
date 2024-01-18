@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -76,6 +74,26 @@ public class StudyProgramTests {
 
     @Test
     @Transactional(readOnly = true)
+    public void courseScienceRelationshipByIdTest()
+    {
+        Science science = new Science("Math", "Desc");
+        science.setId(new ScienceId());
+        scienceRepository.save(science);
+
+        Course course = new Course();
+        course.setId(new CourseId());
+        course.setName("ABC");
+        course.setDescription("DEF");
+        course.setScienceId(science.getId());
+        courseRepository.save(course);
+
+        var fetchedCourse = courseRepository.getReferenceById(course.getId());
+        assertEquals(fetchedCourse.getScienceId(), science.getId());
+//        assertEquals(fetchedCourse.getScience(), science);
+    }
+
+    @Test
+    @Transactional(readOnly = true)
     public void courseScienceRelationShipTest()
     {
         Science science = new Science();
@@ -131,6 +149,30 @@ public class StudyProgramTests {
 
         assertEquals(fetchedLesson.getId(), lesson.getId());
         assertEquals(lesson.getCourse(), course);
+    }
+
+    @Test
+    @Transactional(readOnly = true)
+    public void lessonNavigationTest()
+    {
+        Lesson lesson1 = new Lesson();
+        lesson1.setId(new LessonId());
+        lesson1.setName("Lesson One");
+        lesson1.setDescription("Haha");
+
+        Lesson lesson2 = new Lesson();
+        lesson2.setId(new LessonId());
+        lesson2.setName("Lesson Two");
+        lesson2.setDescription("Alright");
+        lesson2.setPreviousElementId(lesson1.getId());
+
+        lessonRepository.save(lesson1);
+        lessonRepository.save(lesson2);
+
+        var fetchedLesson = lessonRepository.findById(lesson2.getId());
+
+        assertTrue(fetchedLesson.isPresent());
+        assertEquals(fetchedLesson.get().getPreviousElement(), lesson1);
     }
 
 }
