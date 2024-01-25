@@ -74,4 +74,14 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     {
         skills.remove(skill);
     }
+
+    /**
+     * @param lessonSegment
+     */
+    //TODO: introduce a rule?
+    @Override
+    public void addNextElement(LessonSegment lessonSegment) {
+        if(lessonSegment.getLesson() != lesson) return;
+        nextElements.add(lessonSegment);
+    }
 }

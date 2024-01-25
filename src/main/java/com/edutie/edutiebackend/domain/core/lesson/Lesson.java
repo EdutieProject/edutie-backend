@@ -34,4 +34,19 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     {
         this.course = course;
     }
+
+
+    /**
+     * Adds next element. Does nothing if element is not encompassed within
+     * same course.
+     * @param lesson
+     */
+    //TODO: introduce rule ?
+    @Override
+    public void addNextElement(Lesson lesson) {
+        if (lesson.getCourse() != course) return;
+        nextElements.add(lesson);
+    }
+
+
 }

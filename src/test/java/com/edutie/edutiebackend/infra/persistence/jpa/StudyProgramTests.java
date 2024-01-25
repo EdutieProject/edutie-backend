@@ -129,7 +129,6 @@ public class StudyProgramTests {
     }
 
     @Test
-    @Transactional(readOnly = true)
     public void lessonCourseRelationShipTest()
     {
         Course course = new Course();
@@ -152,27 +151,36 @@ public class StudyProgramTests {
     }
 
     @Test
-    @Transactional(readOnly = true)
+    @Transactional
     public void lessonNavigationTest()
     {
+        Course course = new Course();
+        course.setId(new CourseId());
+        course.setName("Course");
+        course.setDescription("Course description");
+        courseRepository.save(course);
+
         Lesson lesson1 = new Lesson();
         lesson1.setId(new LessonId());
         lesson1.setName("Lesson One");
+        lesson1.setCourse(course);
         lesson1.setDescription("Haha");
 
         Lesson lesson2 = new Lesson();
         lesson2.setId(new LessonId());
         lesson2.setName("Lesson Two");
         lesson2.setDescription("Alright");
-        lesson2.setPreviousElementId(lesson1.getId());
+
+        lesson1.addNextElement(lesson2);
 
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
-        var fetchedLesson = lessonRepository.findById(lesson2.getId());
+        var fetchedLesson1 = lessonRepository.findById(lesson1.getId()).get();
+        var fetchedLesson2 = lessonRepository.findById(lesson2.getId()).get();
 
-        assertTrue(fetchedLesson.isPresent());
-        assertEquals(fetchedLesson.get().getPreviousElement(), lesson1);
+        assertTrue(fetchedLesson1.getNextElements().contains(lesson2));
+        assertEquals(fetchedLesson2.getPreviousElement(), fetchedLesson1);
     }
 
 }

@@ -10,25 +10,22 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @MappedSuperclass
-public class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<?, ?>, TId extends Serializable> extends AuditableEntityBase<TId> {
+public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<?, ?>, TId extends Serializable> extends AuditableEntityBase<TId> {
 
-    @MapsId("id")
+//    @MapsId("id")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "previous_element_id")
     @Nullable
     @JsonIgnore
-    @Getter
     @Setter
     private TNavigationEntity previousElement = null;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "previousElement")
-    @JoinColumn(name = "previous_element_id")
-    private final Set<TNavigationEntity> nextElements = new HashSet<>();
+    protected final Set<TNavigationEntity> nextElements = new HashSet<>();
 
-    public void addNextElement(TNavigationEntity navigationEntity) {
-        nextElements.add(navigationEntity);
-    }
+    public abstract void addNextElement(TNavigationEntity navigationEntity);
 
     public void removeNextElement(TNavigationEntity navigationEntity) {
         nextElements.remove(navigationEntity);
