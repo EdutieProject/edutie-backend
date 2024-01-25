@@ -1,8 +1,7 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment;
 
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
@@ -23,11 +22,9 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
+public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
     @Setter
     private String name;
-    @Embedded
-    public final LearningTreeNavigator<LessonSegment, LessonSegmentId> navigation = new LearningTreeNavigator<>();
 //    @Embedded
     @Setter
     private String overviewDescription;
@@ -43,21 +40,20 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @JsonIgnore
     private final Set<Skill> skills = new HashSet<>();
 
-    @JoinColumn(name = "lesson_id", updatable = false, insertable = false)
+    @JoinColumn(name = "lesson_id")
     @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
     @JsonIgnore
+    @Setter
     private Lesson lesson;
-    @Column(name = "lesson_id")
-    private LessonId lessonId;
 
     /**
      * Recommended constructor assigning the segment
      * to the given lesson
-     * @param lessonId lesson id
+     * @param lesson lesson
      */
-    public LessonSegment(LessonId lessonId)
+    public LessonSegment(Lesson lesson)
     {
-        this.lessonId = lessonId;
+        this.lesson = lesson;
     }
 
 

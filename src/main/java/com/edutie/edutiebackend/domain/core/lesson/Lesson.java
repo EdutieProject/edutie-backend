@@ -1,13 +1,10 @@
 package com.edutie.edutiebackend.domain.core.lesson;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.core.course.Course;
-import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,23 +17,13 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Lesson extends AuditableEntityBase<LessonId> {
+public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @JsonIgnore
     private Course course;
-    @Transient
-    public final LearningTreeNavigator<Lesson, LessonId> navigation = new LearningTreeNavigator<>();
-
-    @MapsId("id")
-    @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "previous_element_id", updatable = false, insertable = false)
-    private Lesson previousElement;
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "previous_element_id"))
-    private LessonId previousElementId;
 
     /**
      * Recommended constructor assigning lesson to
