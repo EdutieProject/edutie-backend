@@ -1,5 +1,6 @@
 package com.edutie.edutiebackend.infra.persistence.jpa;
 
+import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.domain.core.course.Course;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
@@ -12,7 +13,6 @@ import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.rep
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 public class StudyProgramTests {
+
+    UserId mockUser = new UserId();
 
     @Autowired
     private CourseRepository courseRepository;
@@ -38,6 +40,7 @@ public class StudyProgramTests {
         course.setId(new CourseId());
         course.setName("Sample course");
         course.setDescription("Description text");
+        course.setCreatedBy(mockUser);
         courseRepository.save(course);
 
         assertTrue(courseRepository.findById(course.getId()).isPresent());
@@ -54,8 +57,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    @Transactional(readOnly = true)
-    public void courseCreateRetrieveTestWithScience()
+    public void courseCreateRetrieveWithScienceTest()
     {
         Science science = new Science("Name", "Desc");
         science.setId(new ScienceId());
@@ -65,15 +67,15 @@ public class StudyProgramTests {
         course.setDescription("Boring description");
         course.setId(new CourseId());
         course.setScience(science);
+        course.setCreatedBy(mockUser);
         courseRepository.save(course);
 
-        var retrievedCourse = courseRepository.getReferenceById(course.getId());
+        var retrievedCourse = courseRepository.findById(course.getId()).orElse(new Course());
         assertEquals(retrievedCourse.getName(), course.getName());
         assertEquals(retrievedCourse.getScience(), science);
     }
 
     @Test
-    @Transactional(readOnly = true)
     public void courseScienceRelationshipByIdTest()
     {
         Science science = new Science("Math", "Desc");
@@ -82,18 +84,17 @@ public class StudyProgramTests {
 
         Course course = new Course();
         course.setId(new CourseId());
+        course.setCreatedBy(mockUser);
         course.setName("ABC");
         course.setDescription("DEF");
-        course.setScienceId(science.getId());
+        course.setScience(science);
         courseRepository.save(course);
 
-        var fetchedCourse = courseRepository.getReferenceById(course.getId());
-        assertEquals(fetchedCourse.getScienceId(), science.getId());
-//        assertEquals(fetchedCourse.getScience(), science);
+        var fetchedCourse = courseRepository.findById(course.getId()).orElse(new Course());
+        assertEquals(fetchedCourse.getScience(), science);
     }
 
     @Test
-    @Transactional(readOnly = true)
     public void courseScienceRelationShipTest()
     {
         Science science = new Science();
@@ -105,12 +106,13 @@ public class StudyProgramTests {
         CourseId courseId = new CourseId();
         Course course = new Course();
         course.setId(courseId);
+        course.setCreatedBy(mockUser);
         course.setName("Course 2");
         course.setDescription("Second course description");
         course.setScience(science);
         courseRepository.save(course);
 
-        var createdCourse = courseRepository.getReferenceById(courseId);
+        var createdCourse = courseRepository.findById(courseId).orElse(new Course());
         assertNotNull(createdCourse);
         assertEquals(createdCourse.getScience(), science);
     }
@@ -121,6 +123,7 @@ public class StudyProgramTests {
         Lesson lesson = new Lesson();
         var lessonId = new LessonId();
         lesson.setId(lessonId);
+        lesson.setCreatedBy(mockUser);
         lesson.setName("The first lesson");
         lesson.setDescription("First lesson's description");
         lessonRepository.save(lesson);
@@ -133,12 +136,14 @@ public class StudyProgramTests {
     {
         Course course = new Course();
         course.setId(new CourseId());
+        course.setCreatedBy(mockUser);
         course.setName("Course");
         course.setDescription("Course description");
         courseRepository.save(course);
 
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
+        lesson.setCreatedBy(mockUser);
         lesson.setCourse(course);
         lesson.setName("Lesson");
         lesson.setDescription("Lesson description");
@@ -151,33 +156,37 @@ public class StudyProgramTests {
     }
 
     @Test
-    @Transactional
     public void lessonNavigationTest()
     {
         Course course = new Course();
         course.setId(new CourseId());
         course.setName("Course");
         course.setDescription("Course description");
+        course.setCreatedBy(mockUser);
         courseRepository.save(course);
 
         Lesson lesson1 = new Lesson();
         lesson1.setId(new LessonId());
+        lesson1.setCreatedBy(mockUser);
         lesson1.setName("Lesson One");
         lesson1.setCourse(course);
         lesson1.setDescription("Haha");
 
         Lesson lesson2 = new Lesson();
+        lesson2.setCreatedBy(mockUser);
         lesson2.setId(new LessonId());
+        lesson2.setCourse(course);
         lesson2.setName("Lesson Two");
         lesson2.setDescription("Alright");
 
-        lesson1.addNextElement(lesson2);
+        // NOTE: this is the only way of performing this without transactions.
+        lesson2.setPreviousElement(lesson1);
 
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
-        var fetchedLesson1 = lessonRepository.findById(lesson1.getId()).get();
-        var fetchedLesson2 = lessonRepository.findById(lesson2.getId()).get();
+        var fetchedLesson1 = lessonRepository.findById(lesson1.getId()).orElseThrow();
+        var fetchedLesson2 = lessonRepository.findById(lesson2.getId()).orElseThrow();
 
         assertTrue(fetchedLesson1.getNextElements().contains(lesson2));
         assertEquals(fetchedLesson2.getPreviousElement(), fetchedLesson1);

@@ -24,13 +24,13 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class AuditableEntityBase<TId extends Serializable> extends EntityBase<TId>{
     @Setter(AccessLevel.PRIVATE)
+    @Column(name = "created_on", nullable = false)
     private LocalDate createdOn = LocalDate.now();
     private LocalDate updatedOn;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "update_user_id"))
     private UserId updatedBy;
-    @NonNull
     @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id"))
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id", nullable = false))
     private UserId createdBy;
 }

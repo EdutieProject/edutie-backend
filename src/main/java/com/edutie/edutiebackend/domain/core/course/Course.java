@@ -23,13 +23,10 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private boolean accessible = false;
-    @ManyToOne(targetEntity = Science.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Science.class)
     @JoinColumn(name = "science_id")
     @JsonIgnore
     private Science science;
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "science_id", insertable = false, updatable = false))
-    private ScienceId scienceId;
 
     /**
      * Recommended constructor for course associating it

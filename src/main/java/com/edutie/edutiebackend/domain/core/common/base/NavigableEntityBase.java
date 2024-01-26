@@ -16,13 +16,12 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
 
 //    @MapsId("id")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "previous_element_id")
-    @Nullable
+    @JoinColumn(name = "previous_element_id", nullable = true)
     @JsonIgnore
     @Setter
     private TNavigationEntity previousElement = null;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "previousElement")
+    @OneToMany(mappedBy = "previousElement", fetch = FetchType.EAGER)
     protected final Set<TNavigationEntity> nextElements = new HashSet<>();
 
     public abstract void addNextElement(TNavigationEntity navigationEntity);
