@@ -1,12 +1,12 @@
 package com.edutie.edutiebackend.infra.persistence.jpa;
 
-import com.edutie.edutiebackend.domain.core.shared.identities.UserId;
 import com.edutie.edutiebackend.domain.core.course.Course;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.science.Science;
 import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
+import com.edutie.edutiebackend.domain.core.shared.identities.UserId;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
@@ -34,8 +34,7 @@ public class StudyProgramTests {
     private LessonRepository lessonRepository;
 
     @Test
-    public void courseCreateRetrieveTest()
-    {
+    public void courseCreateRetrieveTest() {
         Course course = new Course();
         course.setId(new CourseId());
         course.setName("Sample course");
@@ -47,8 +46,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void scienceOnlyTest()
-    {
+    public void scienceOnlyTest() {
         Science science = new Science("Math", "The princess of sciences");
         science.setId(new ScienceId());
         scienceRepository.save(science);
@@ -57,8 +55,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void courseCreateRetrieveWithScienceTest()
-    {
+    public void courseCreateRetrieveWithScienceTest() {
         Science science = new Science("Name", "Desc");
         science.setId(new ScienceId());
         scienceRepository.save(science);
@@ -76,8 +73,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void courseScienceRelationshipByIdTest()
-    {
+    public void courseScienceRelationshipByIdTest() {
         Science science = new Science("Math", "Desc");
         science.setId(new ScienceId());
         scienceRepository.save(science);
@@ -95,8 +91,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void courseScienceRelationShipTest()
-    {
+    public void courseScienceRelationShipTest() {
         Science science = new Science();
         science.setName("Math or something");
         science.setDescription("Science desc");
@@ -118,8 +113,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void lessonCreateRetrieveTest()
-    {
+    public void lessonCreateRetrieveTest() {
         Lesson lesson = new Lesson();
         var lessonId = new LessonId();
         lesson.setId(lessonId);
@@ -132,8 +126,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void lessonCourseRelationShipTest()
-    {
+    public void lessonCourseRelationShipTest() {
         Course course = new Course();
         course.setId(new CourseId());
         course.setCreatedBy(mockUser);
@@ -156,8 +149,7 @@ public class StudyProgramTests {
     }
 
     @Test
-    public void lessonNavigationTest()
-    {
+    public void lessonNavigationTest() {
         Course course = new Course();
         course.setId(new CourseId());
         course.setName("Course");
@@ -192,4 +184,19 @@ public class StudyProgramTests {
         assertEquals(fetchedLesson2.getPreviousElement(), fetchedLesson1);
     }
 
+    public void lessonSegmentCreateRetrieveTest() {
+
+    }
+
+    public void lessonSegmentToLessonRelationshipTest() {
+
+    }
+
+    public void lessonSegmentNavigationTest() {
+
+    }
+
+    public void lessonSegmentSkillRelationshipTest() {
+
+    }
 }

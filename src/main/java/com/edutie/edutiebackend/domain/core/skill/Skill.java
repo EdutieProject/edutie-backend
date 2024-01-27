@@ -11,6 +11,7 @@ import com.edutie.edutiebackend.domain.core.skill.rules.TraitMultiplierValueBoun
 
 import com.edutie.edutiebackend.domain.rule.Result;
 import com.edutie.edutiebackend.domain.rule.Rule;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Skill extends AuditableEntityBase<SkillId> {
     @Setter
     private String name;

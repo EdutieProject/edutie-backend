@@ -5,6 +5,7 @@ import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.shared.errors.NavigationErrors;
+import com.edutie.edutiebackend.domain.core.shared.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
 import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,15 +23,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
     @Setter
     private String name;
-//    @Embedded
     @Setter
-    private String overviewDescription;
-//    @Embedded
+    @Embedded
+    @AttributeOverride(name = "text", column = @Column(name = "overview_description"))
+    private PromptFragment overviewDescription;
     @Setter
-    private String exerciseDescription;
+    @Embedded
+    @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
+    private PromptFragment exerciseDescription;
 
     @ManyToOne
     @Setter
