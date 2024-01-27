@@ -1,9 +1,9 @@
-package com.edutie.edutiebackend.domain.core.common.base;
+package com.edutie.edutiebackend.domain.core.shared.base;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.edutie.edutiebackend.domain.core.common.identities.UserId;
+import com.edutie.edutiebackend.domain.core.shared.identities.UserId;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -11,7 +11,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 

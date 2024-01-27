@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.core;
 
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.student.Student;
 import com.edutie.edutiebackend.domain.core.student.entites.AbilityLearningParameter;
 import com.edutie.edutiebackend.domain.core.student.entites.IntelligenceLearningParameter;
@@ -31,7 +31,7 @@ public class StudentTests {
     {
         Student student = new Student();
         var result = student.setBirthdate(LocalDate.of(1410, 7, 15));
-        System.out.println("CODE:" + result.getRuleErrors().get(0).getCode());
+        System.out.println("CODE:" + result.getErrors().get(0).getCode());
         assertFalse(result.isSuccess());
     }
 

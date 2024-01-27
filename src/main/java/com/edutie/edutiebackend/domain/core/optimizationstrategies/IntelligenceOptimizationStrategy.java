@@ -1,11 +1,8 @@
 package com.edutie.edutiebackend.domain.core.optimizationstrategies;
 
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.base.OptimizationStrategy;
-import jakarta.persistence.Entity;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 public class IntelligenceOptimizationStrategy extends OptimizationStrategy<Ability> {

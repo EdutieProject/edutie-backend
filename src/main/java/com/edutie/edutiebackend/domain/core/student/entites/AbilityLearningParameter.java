@@ -1,8 +1,7 @@
 package com.edutie.edutiebackend.domain.core.student.entites;
 
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.student.entites.base.LearningParameter;
-import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 

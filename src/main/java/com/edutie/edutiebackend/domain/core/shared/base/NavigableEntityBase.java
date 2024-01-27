@@ -1,7 +1,8 @@
-package com.edutie.edutiebackend.domain.core.common.base;
+package com.edutie.edutiebackend.domain.core.shared.base;
 
+import com.edutie.edutiebackend.domain.core.shared.errors.NavigationErrors;
+import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,6 @@ import java.util.Set;
 @MappedSuperclass
 public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<?, ?>, TId extends Serializable> extends AuditableEntityBase<TId> {
 
-//    @MapsId("id")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "previous_element_id", nullable = true)
     @JsonIgnore
@@ -24,14 +24,16 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
     @OneToMany(mappedBy = "previousElement", fetch = FetchType.EAGER)
     protected final Set<TNavigationEntity> nextElements = new HashSet<>();
 
-    public abstract void addNextElement(TNavigationEntity navigationEntity);
+    public abstract Result addNextElement(TNavigationEntity navigationEntity);
 
-    public void removeNextElement(TNavigationEntity navigationEntity) {
-        nextElements.remove(navigationEntity);
+    public Result removeNextElement(TNavigationEntity navigationEntity) {
+        return nextElements.remove(navigationEntity) ?
+                Result.success() : Result.failure(NavigationErrors.elementNotFound(this.getClass()));
     }
 
-    public void removeNextElementById(TId entityId) {
+    public Result removeNextElementById(TId entityId) {
         var searchedEntity = nextElements.stream().filter(o->o.getId()==entityId).findFirst();
-        searchedEntity.ifPresent(nextElements::remove);
+        return searchedEntity.isPresent() ?
+                removeNextElement(searchedEntity.get()) : Result.failure(NavigationErrors.elementNotFound(this.getClass()));
     }
 }

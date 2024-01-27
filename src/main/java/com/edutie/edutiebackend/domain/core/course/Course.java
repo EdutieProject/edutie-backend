@@ -1,9 +1,8 @@
 package com.edutie.edutiebackend.domain.core.course;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.shared.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.course.identities.CourseId;
 import com.edutie.edutiebackend.domain.core.science.Science;
-import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

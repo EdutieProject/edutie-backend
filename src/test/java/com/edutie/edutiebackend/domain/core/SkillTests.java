@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.core;
 
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

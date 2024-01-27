@@ -1,8 +1,8 @@
 package com.edutie.edutiebackend.domain.core;
 
-import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.shared.generationprompt.PromptFragment;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.shared.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.base.OptimizationStrategy;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 import org.junit.jupiter.api.Test;

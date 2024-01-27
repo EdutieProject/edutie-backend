@@ -1,12 +1,12 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
+import com.edutie.edutiebackend.domain.core.shared.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
-import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.core.shared.errors.NavigationErrors;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
+import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -78,10 +78,11 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     /**
      * @param lessonSegment
      */
-    //TODO: introduce a rule?
     @Override
-    public void addNextElement(LessonSegment lessonSegment) {
-        if(lessonSegment.getLesson() != lesson) return;
+    public Result addNextElement(LessonSegment lessonSegment) {
+        if(lessonSegment.getLesson() != lesson)
+            return Result.failure(NavigationErrors.elementNotFound(this.getClass()));
         nextElements.add(lessonSegment);
+        return Result.success();
     }
 }

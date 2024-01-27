@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.core.learningresult.rules;
 
+import com.edutie.edutiebackend.domain.rule.Error;
 import com.edutie.edutiebackend.domain.rule.Rule;
-import com.edutie.edutiebackend.domain.rule.RuleError;
 
 import java.util.List;
 import java.util.function.Function;
@@ -19,9 +19,9 @@ public class AssessmentPointsBoundsRule implements Rule<Integer> {
      * @return
      */
     @Override
-    public List<RuleError> check(Integer value) {
+    public List<Error> check(Integer value) {
         return boundsCondition.apply(value) ?
                 emptyList() :
-                singletonList(new RuleError(this, "Point bounds requirements have not been met."));
+                singletonList(new Error(this, "Point bounds requirements have not been met."));
     }
 }

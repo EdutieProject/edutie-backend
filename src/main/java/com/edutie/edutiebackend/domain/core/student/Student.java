@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.identities.UserId;
+import com.edutie.edutiebackend.domain.core.shared.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.shared.identities.UserId;
 import com.edutie.edutiebackend.domain.core.student.entites.AbilityLearningParameter;
 import com.edutie.edutiebackend.domain.core.student.entites.IntelligenceLearningParameter;
 import com.edutie.edutiebackend.domain.core.student.entites.base.LearningParameter;

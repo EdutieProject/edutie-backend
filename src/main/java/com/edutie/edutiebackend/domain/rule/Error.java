@@ -6,17 +6,17 @@ import lombok.Getter;
  *
  */
 @Getter
-public class RuleError {
+public class Error {
     String message;
     String code;
 
-    public RuleError(Rule<?> brokenRule, String message)
+    public Error(Rule<?> brokenRule, String message)
     {
         this.message = message;
         this.code = brokenRule.getClass().getSimpleName();
     }
 
-    public RuleError(String code, String message)
+    public Error(String code, String message)
     {
         this.message = message;
         this.code = code;

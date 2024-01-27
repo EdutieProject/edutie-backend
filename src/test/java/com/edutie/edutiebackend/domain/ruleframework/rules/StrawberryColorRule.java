@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.ruleframework.rules;
 
+import com.edutie.edutiebackend.domain.rule.Error;
 import com.edutie.edutiebackend.domain.rule.Rule;
-import com.edutie.edutiebackend.domain.rule.RuleError;
 import com.edutie.edutiebackend.domain.ruleframework.mock.Color;
 
 import java.util.List;
@@ -13,9 +13,9 @@ public class StrawberryColorRule implements Rule<Color> {
 
 
     @Override
-    public List<RuleError> check(Color fruitColor) {
+    public List<Error> check(Color fruitColor) {
         return fruitColor.equals(Color.RED) ?
                 emptyList() :
-                singletonList(new RuleError(this, "Invalid color for this fruit!"));
+                singletonList(new Error(this, "Invalid color for this fruit!"));
     }
 }

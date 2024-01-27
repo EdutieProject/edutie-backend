@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.learningresult;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.shared.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.learningresult.entities.LearningAssessment;
 import com.edutie.edutiebackend.domain.core.learningresult.entities.SkillAssessment;
 import com.edutie.edutiebackend.domain.core.learningresult.errors.LearningResultErrors;

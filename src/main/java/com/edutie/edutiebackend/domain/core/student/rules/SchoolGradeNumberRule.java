@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.student.rules;
 
-import com.edutie.edutiebackend.domain.rule.RuleError;
+import com.edutie.edutiebackend.domain.rule.Error;
 import com.edutie.edutiebackend.domain.rule.Rule;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
@@ -19,13 +19,13 @@ public class SchoolGradeNumberRule implements Rule<SchoolStage> {
 
 
     @Override
-    public List<RuleError> check(SchoolStage schoolStage) {
+    public List<Error> check(SchoolStage schoolStage) {
         boolean gradeNumberCorrect = gradeNumberCondition.apply(schoolStage);
         if(gradeNumberCorrect)
             return Collections.emptyList();
         else
             return Collections.singletonList(
-                new RuleError(this, "Invalid grade number for given school type")
+                new Error(this, "Invalid grade number for given school type")
             );
     }
 }

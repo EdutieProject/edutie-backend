@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.common.generationprompt;
+package com.edutie.edutiebackend.domain.core.shared.generationprompt;
 
 import jakarta.persistence.Embeddable;
 

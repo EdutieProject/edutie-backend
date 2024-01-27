@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.common.studenttraits;
+package com.edutie.edutiebackend.domain.core.shared.studenttraits;
 
 import com.edutie.edutiebackend.domain.repository.converter.enums.AbstractEnumConverter;
 import com.edutie.edutiebackend.domain.repository.converter.enums.PersistableEnum;
