@@ -7,8 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Class responsible for defining exercise types, which
- * go together with AI generation.
+ * Class responsible for defining exercise types which differ in utilized skills.
  * Example types would be Problem-based, case-scenario, inquiry-based, etc.
  */
 @Data
@@ -16,16 +15,5 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class ExerciseType extends EntityBase<ExerciseTypeId> {
     private String name;
-    //TODO: implement abilitySet
-//    Set<Ability> abilitySet;
-//
-//    public void addAbility(Ability ability)
-//    {
-//        abilitySet.add(ability);
-//    }
-//
-//    public void removeAbility(Ability ability)
-//    {
-//        abilitySet.remove(ability);
-//    }
+    private String description;
 }

@@ -9,7 +9,6 @@ import lombok.Getter;
  * Serves as a one-off alternative for user to know about
  * feedback opinion.
  */
-//TODO: broaden feedback types
 @Getter
 public enum FeedbackType implements PersistableEnum<String> {
     POSITIVE("Positive"),
