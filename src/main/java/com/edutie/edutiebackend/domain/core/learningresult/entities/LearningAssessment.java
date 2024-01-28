@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.core.learningresult.entities;
 
-import com.edutie.edutiebackend.domain.core.shared.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningAssessmentId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.LearningRequirement;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LearningRequirementId;

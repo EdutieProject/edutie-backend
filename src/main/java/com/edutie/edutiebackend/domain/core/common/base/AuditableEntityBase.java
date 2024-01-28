@@ -1,9 +1,9 @@
-package com.edutie.edutiebackend.domain.core.shared.base;
+package com.edutie.edutiebackend.domain.core.common.base;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.edutie.edutiebackend.domain.core.shared.identities.UserId;
+import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;

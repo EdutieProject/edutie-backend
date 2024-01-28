@@ -6,7 +6,7 @@ import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.science.Science;
 import com.edutie.edutiebackend.domain.core.science.identities.ScienceId;
-import com.edutie.edutiebackend.domain.core.shared.identities.UserId;
+import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
@@ -171,7 +171,7 @@ public class StudyProgramTests {
         lesson2.setName("Lesson Two");
         lesson2.setDescription("Alright");
 
-        // NOTE: this is the only way of performing this without transactions.
+        // TODO: is this the only way of performing this without transactions?
         lesson2.setPreviousElement(lesson1);
 
         lessonRepository.save(lesson1);

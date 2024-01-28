@@ -3,7 +3,7 @@ package com.edutie.edutiebackend.domain.core.learningresource;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.edutie.edutiebackend.domain.core.shared.base.EntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;

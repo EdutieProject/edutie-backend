@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.domain.core.shared.errors;
+package com.edutie.edutiebackend.domain.core.common.errors;
 
-import com.edutie.edutiebackend.domain.core.shared.base.NavigableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.rule.Error;
 
 public class NavigationErrors {

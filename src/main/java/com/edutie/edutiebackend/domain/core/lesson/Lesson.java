@@ -1,10 +1,10 @@
 package com.edutie.edutiebackend.domain.core.lesson;
 
-import com.edutie.edutiebackend.domain.core.shared.base.NavigableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.core.course.Course;
 import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 
-import com.edutie.edutiebackend.domain.core.shared.errors.NavigationErrors;
+import com.edutie.edutiebackend.domain.core.common.errors.NavigationErrors;
 import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

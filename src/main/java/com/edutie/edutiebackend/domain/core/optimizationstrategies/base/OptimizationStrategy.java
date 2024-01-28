@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.core.optimizationstrategies.base;
 
-import com.edutie.edutiebackend.domain.core.shared.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.shared.generationprompt.PromptFragment;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
 import jakarta.persistence.Embedded;
 

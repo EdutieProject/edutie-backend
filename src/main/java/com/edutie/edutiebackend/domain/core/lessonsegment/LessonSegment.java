@@ -1,11 +1,11 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment;
 
-import com.edutie.edutiebackend.domain.core.shared.base.NavigableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.shared.errors.NavigationErrors;
-import com.edutie.edutiebackend.domain.core.shared.generationprompt.PromptFragment;
+import com.edutie.edutiebackend.domain.core.common.errors.NavigationErrors;
+import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
 import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;

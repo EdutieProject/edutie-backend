@@ -2,9 +2,9 @@ package com.edutie.edutiebackend.domain.core.skill;
 
 import java.util.HashMap;
 
-import com.edutie.edutiebackend.domain.core.shared.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.shared.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.errors.SkillErrors;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.core.skill.rules.TraitMultiplierValueBoundsRule;

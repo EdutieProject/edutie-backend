@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.shared.base;
+package com.edutie.edutiebackend.domain.core.common.base;
 
 import java.io.Serializable;
 

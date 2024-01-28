@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.shared.identities;
+package com.edutie.edutiebackend.domain.core.common.identities;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

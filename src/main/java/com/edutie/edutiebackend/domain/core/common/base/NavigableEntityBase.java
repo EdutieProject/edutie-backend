@@ -1,6 +1,6 @@
-package com.edutie.edutiebackend.domain.core.shared.base;
+package com.edutie.edutiebackend.domain.core.common.base;
 
-import com.edutie.edutiebackend.domain.core.shared.errors.NavigationErrors;
+import com.edutie.edutiebackend.domain.core.common.errors.NavigationErrors;
 import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

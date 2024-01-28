@@ -1,7 +1,7 @@
 package com.edutie.edutiebackend.domain.core;
 
-import com.edutie.edutiebackend.domain.core.shared.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.shared.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.student.Student;
 import com.edutie.edutiebackend.domain.core.student.entites.AbilityLearningParameter;
 import com.edutie.edutiebackend.domain.core.student.entites.IntelligenceLearningParameter;
