@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.repository.converter.enums;
+package com.edutie.edutiebackend.domain.core.common.enums;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

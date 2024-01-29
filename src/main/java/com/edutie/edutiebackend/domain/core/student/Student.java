@@ -1,8 +1,5 @@
 package com.edutie.edutiebackend.domain.core.student;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
@@ -30,6 +27,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+
+import static com.edutie.edutiebackend.domain.core.common.Utilities.findSetOf;
 
 /**
  * Student class conceals all the student characteristics of the user.
@@ -78,7 +77,7 @@ public class Student extends AuditableEntityBase<StudentId> {
     @SneakyThrows
     public <T extends Enum<T>, U extends LearningParameter<T>> void adaptLearningParameters(Class<U> learningParamClass, T trait, double progressValue)
     {
-        Set<U> learningParameters = findSetOf(learningParamClass).orElseThrow();
+        Set<U> learningParameters = findSetOf(learningParamClass, this).orElseThrow();
         var searchedLearningParam = learningParameters.stream().filter(o->o.getTrait() == trait).findFirst();
         if (searchedLearningParam.isPresent()) searchedLearningParam.get().adapt(progressValue);
         else {
@@ -100,7 +99,7 @@ public class Student extends AuditableEntityBase<StudentId> {
      */
     public <T extends Enum<T>, U extends LearningParameter<T>> Optional<U> getLearningParameter(Class<U> learningParamClass, T trait)
     {
-        return findSetOf(learningParamClass)
+        return findSetOf(learningParamClass, this)
                 .orElseThrow()
                 .stream()
                 .filter(o->o.getTrait()==trait)
@@ -124,7 +123,7 @@ public class Student extends AuditableEntityBase<StudentId> {
 
     public <U extends  LearningParameter<?>> Set<U> getLearningParameters(Class<U> learningParamClass)
     {
-        return findSetOf(learningParamClass).orElseThrow();
+        return findSetOf(learningParamClass, this).orElseThrow();
     }
 
 
@@ -172,26 +171,4 @@ public class Student extends AuditableEntityBase<StudentId> {
         return validationResult;
     }
 
-
-    private <T> Optional<Set<T>> findSetOf(Class<T> traitClass) {
-        Field[] fields = getClass().getDeclaredFields();
-
-        for (Field field : fields) {
-            if (field.getType() == Set.class) {
-                ParameterizedType genericType = (ParameterizedType) field.getGenericType();
-                Type[] typeArguments = genericType.getActualTypeArguments();
-
-                if (typeArguments.length > 0 && typeArguments[0] == traitClass) {
-                    try {
-                        field.setAccessible(true);
-                        return Optional.of((Set<T>) field.get(this));
-                    } catch (IllegalAccessException e) {
-                        System.out.println(e.getMessage());
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        return Optional.empty();
-    }
 }
