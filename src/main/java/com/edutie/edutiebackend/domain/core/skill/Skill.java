@@ -12,10 +12,7 @@ import com.edutie.edutiebackend.domain.core.skill.entities.base.TraitIndicator;
 import com.edutie.edutiebackend.domain.core.skill.identities.IndicatorId;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.*;
 
 /**
@@ -47,7 +44,7 @@ public class Skill extends AuditableEntityBase<SkillId> {
         this.name = name;
     }
 
-    //TODO: signature improvement: return Set<? extends TraitIndicator<T>>
+    //TODO: signature improvement: function may return Set<? extends TraitIndicator<T>>
     public <T extends Enum<T>> Set<? extends TraitIndicator<?>> getIndicators() {
         Set<TraitIndicator<?>> traitIndicators = new HashSet<>();
         traitIndicators.addAll(intelligenceIndicators);
@@ -66,7 +63,9 @@ public class Skill extends AuditableEntityBase<SkillId> {
     {
         var indicators = Utilities.findSetOf(indicatorClass, this).orElseThrow();
         var searchedIndicator = indicators.stream().filter(o->o.getTrait() == trait).findFirst();
-        return searchedIndicator.isPresent() ? searchedIndicator : Optional.empty();
+        return searchedIndicator.isPresent() ?
+                searchedIndicator :
+                Optional.empty();
     }
 
     /**
@@ -80,9 +79,9 @@ public class Skill extends AuditableEntityBase<SkillId> {
     {
         var indicators = Utilities.findSetOf(indicatorClass, this).orElseThrow(RuntimeException::new);
         var foundIndicator = indicators.stream().filter(o->o.getTrait() == trait).findFirst();
-        if (foundIndicator.isPresent())
+        if (foundIndicator.isPresent()) {
             foundIndicator.get().setValue(value);
-        else {
+        } else {
             var newTraitIndicator = indicatorClass.getConstructor().newInstance();
             newTraitIndicator.setId(new IndicatorId());
             newTraitIndicator.setTrait(trait);
