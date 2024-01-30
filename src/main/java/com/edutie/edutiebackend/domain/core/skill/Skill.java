@@ -3,9 +3,11 @@ package com.edutie.edutiebackend.domain.core.skill;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.edutie.edutiebackend.domain.core.common.Utilities;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
 import com.edutie.edutiebackend.domain.core.skill.entities.AbilityIndicator;
 import com.edutie.edutiebackend.domain.core.skill.entities.IntelligenceIndicator;
 import com.edutie.edutiebackend.domain.core.skill.entities.base.TraitIndicator;
@@ -44,8 +46,7 @@ public class Skill extends AuditableEntityBase<SkillId> {
         this.name = name;
     }
 
-    //TODO: signature improvement: function may return Set<? extends TraitIndicator<T>>
-    public <T extends Enum<T>> Set<? extends TraitIndicator<?>> getIndicators() {
+    public Set<? extends TraitIndicator<?>> getIndicators() {
         Set<TraitIndicator<?>> traitIndicators = new HashSet<>();
         traitIndicators.addAll(intelligenceIndicators);
         traitIndicators.addAll(abilityIndicators);
