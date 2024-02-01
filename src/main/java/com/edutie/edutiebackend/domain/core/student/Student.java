@@ -21,37 +21,30 @@ import com.edutie.edutiebackend.domain.core.student.rules.SchoolGradeNumberRule;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Transient;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
+import jakarta.persistence.*;
+import lombok.*;
 
 import static com.edutie.edutiebackend.domain.core.common.Utilities.findSetOf;
 
 /**
  * Student class conceals all the student characteristics of the user.
- * This is an aggregate root of the student.
+ * Note that the relationship with the user is maintained by createdBy field in the base class.
  */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
+@Entity
 public class Student extends AuditableEntityBase<StudentId> {
-    @Nullable
-    @Getter
     @Embedded
-    private SchoolStage schoolStage = null;
-    @Nullable
-    @Getter
+    private SchoolStage schoolStage = new SchoolStage();
     private LocalDate birthdate = null;
+//    @OneToMany(targetEntity = AbilityLearningParameter.class, fetch = FetchType.EAGER)
     @Transient
     Set<AbilityLearningParameter> abilityLearningParameters = new HashSet<>();
+//    @OneToMany(targetEntity = IntelligenceLearningParameter.class, fetch = FetchType.EAGER)
     @Transient
     Set<IntelligenceLearningParameter> intelligenceLearningParameters = new HashSet<>();
-
-    @Getter
-    // one-to-one relationship with user
-    private UserId userId;
 
     /**
      * Default constructor used for associating student's account with a user.
@@ -62,7 +55,7 @@ public class Student extends AuditableEntityBase<StudentId> {
      */
     public Student(UserId userId)
     {
-        this.userId = userId;
+        setCreatedBy(userId);
     }
 
     /**

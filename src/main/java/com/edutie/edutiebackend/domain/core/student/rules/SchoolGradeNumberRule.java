@@ -14,7 +14,7 @@ public class SchoolGradeNumberRule implements Rule<SchoolStage> {
         case HIGH_SCHOOL -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <= 4;
         case TECHNICAL_HIGH_SCHOOL -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <= 5;
         case TERTIARY_SCHOOL -> schoolStage.gradeNumber() > 0 && schoolStage.gradeNumber() <=3 ;
-        case HOMESCHOOLING, NO_SCHOOL -> true;
+        case HOMESCHOOLING, NO_SCHOOL, UNASSIGNED -> true;
     };
 
 

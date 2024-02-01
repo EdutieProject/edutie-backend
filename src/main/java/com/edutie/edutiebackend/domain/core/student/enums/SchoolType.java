@@ -14,7 +14,8 @@ public enum SchoolType implements PersistableEnum<String>
     TECHNICAL_HIGH_SCHOOL("Technical High School"),
     TERTIARY_SCHOOL("Tertiary School"),
     HOMESCHOOLING("Homeschooling"),
-    NO_SCHOOL("No School");
+    NO_SCHOOL("No School"),
+    UNASSIGNED("Unassigned");
 
 
     private final String code;

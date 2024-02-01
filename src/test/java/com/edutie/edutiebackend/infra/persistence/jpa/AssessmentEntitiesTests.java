@@ -7,9 +7,9 @@ import com.edutie.edutiebackend.domain.core.skill.Skill;
 import com.edutie.edutiebackend.domain.core.skill.entities.AbilityIndicator;
 import com.edutie.edutiebackend.domain.core.skill.entities.IntelligenceIndicator;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.AbilityIndicatorRepository;
-import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.IntelligenceIndicatorRepository;
-import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.SkillRepository;
+import com.edutie.edutiebackend.domain.core.student.Student;
+import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
+import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +27,12 @@ public class AssessmentEntitiesTests {
     IntelligenceIndicatorRepository intelligenceIndicatorRepository;
     @Autowired
     AbilityIndicatorRepository abilityIndicatorRepository;
+    @Autowired
+    StudentRepository studentRepository;
+//    @Autowired
+//    AbilityLearningParamRepository abilityLearningParamRepository;
+//    @Autowired
+//    IntelligenceLearningParamRepository intelligenceLearningParamRepository;
 
     @Test
     public void skillCreateRetrieveTest() {
@@ -59,5 +65,16 @@ public class AssessmentEntitiesTests {
         assertTrue(fetchedSkill.isPresent());
         assertFalse(skill.getIndicators().isEmpty());
         assertEquals(skill.getIndicators().stream().filter(o->o.getTrait() instanceof Ability).findFirst().get().getValue(), 2);
+    }
+
+    @Test
+    public void studentCreateRetrieveTest() {
+        Student student = new Student();
+        student.setId(new StudentId());
+        student.setCreatedBy(mockUser);
+        studentRepository.save(student);
+
+        var fetchedStudent = studentRepository.findById(student.getId()).orElse(new Student());
+        assertEquals(mockUser, fetchedStudent.getCreatedBy());
     }
 }
