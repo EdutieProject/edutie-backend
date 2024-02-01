@@ -4,13 +4,11 @@ import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.common.enums.PersistableEnum;
 import com.edutie.edutiebackend.domain.core.skill.identities.IndicatorId;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @MappedSuperclass
