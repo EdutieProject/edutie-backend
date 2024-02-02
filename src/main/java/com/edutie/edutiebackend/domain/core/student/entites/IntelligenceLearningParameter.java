@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
-//@Entity
+@Entity
 public class IntelligenceLearningParameter extends LearningParameter<Intelligence> {
 
     @Column(name = "parameter_trait")

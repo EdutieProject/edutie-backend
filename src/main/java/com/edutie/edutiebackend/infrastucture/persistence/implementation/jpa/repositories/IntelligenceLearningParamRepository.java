@@ -4,7 +4,5 @@ import com.edutie.edutiebackend.domain.core.student.entites.IntelligenceLearning
 import com.edutie.edutiebackend.domain.core.student.identities.LearningParameterId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IntelligenceLearningParamRepository
-//        extends JpaRepository<IntelligenceLearningParameter, LearningParameterId>
-{
+public interface IntelligenceLearningParamRepository extends JpaRepository<IntelligenceLearningParameter, LearningParameterId> {
 }

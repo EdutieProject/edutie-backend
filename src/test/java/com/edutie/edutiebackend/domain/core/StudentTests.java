@@ -82,8 +82,7 @@ public class StudentTests {
     public void learningParamsInitializationTests()
     {
         Student student = new Student();
-        assertTrue(student.getLearningParameters(AbilityLearningParameter.class).isEmpty());
-        assertTrue(student.getLearningParameters(IntelligenceLearningParameter.class).isEmpty());
+        assertTrue(student.getAllLearningParameters().isEmpty());
     }
 
     @Test
@@ -98,7 +97,7 @@ public class StudentTests {
     {
         Student student = new Student();
         student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
-        assertFalse(student.getLearningParameters(AbilityLearningParameter.class).isEmpty());
+        assertFalse(student.getAllLearningParameters().isEmpty());
         assertTrue(student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).isPresent());
     }
 

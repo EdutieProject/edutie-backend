@@ -8,6 +8,8 @@ import com.edutie.edutiebackend.domain.core.skill.entities.AbilityIndicator;
 import com.edutie.edutiebackend.domain.core.skill.entities.IntelligenceIndicator;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.core.student.Student;
+import com.edutie.edutiebackend.domain.core.student.entites.AbilityLearningParameter;
+import com.edutie.edutiebackend.domain.core.student.enums.SchoolType;
 import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
 import com.edutie.edutiebackend.infrastucture.persistence.implementation.jpa.repositories.*;
 import org.junit.jupiter.api.Test;
@@ -29,10 +31,10 @@ public class AssessmentEntitiesTests {
     AbilityIndicatorRepository abilityIndicatorRepository;
     @Autowired
     StudentRepository studentRepository;
-//    @Autowired
-//    AbilityLearningParamRepository abilityLearningParamRepository;
-//    @Autowired
-//    IntelligenceLearningParamRepository intelligenceLearningParamRepository;
+    @Autowired
+    AbilityLearningParamRepository abilityLearningParamRepository;
+    @Autowired
+    IntelligenceLearningParamRepository intelligenceLearningParamRepository;
 
     @Test
     public void skillCreateRetrieveTest() {
@@ -76,5 +78,34 @@ public class AssessmentEntitiesTests {
 
         var fetchedStudent = studentRepository.findById(student.getId()).orElse(new Student());
         assertEquals(mockUser, fetchedStudent.getCreatedBy());
+    }
+
+    @Test
+    public void studentCreateRetrieveWithParametersTest() {
+        Student student = new Student();
+        student.setId(new StudentId());
+        student.setCreatedBy(mockUser);
+        student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
+
+        abilityLearningParamRepository.save(
+                student.getAbilityLearningParameters().stream().findFirst().get()
+        );
+
+        studentRepository.save(student);
+
+        var fetchedStudent = studentRepository.save(student);
+        assertFalse(student.getAllLearningParameters().isEmpty());
+    }
+
+    @Test
+    public void studentSchoolStageTest() {
+        Student student = new Student();
+        student.setId(new StudentId());
+        student.setCreatedBy(mockUser);
+        student.setSchoolStage(SchoolType.HIGH_SCHOOL, 2, "Mat-Fiz");
+        studentRepository.save(student);
+
+        var fetchedStudent = studentRepository.findById(student.getId()).orElseThrow();
+        assertEquals(fetchedStudent.getSchoolStage().gradeNumber(), 2);
     }
 }

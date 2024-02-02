@@ -6,15 +6,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @MappedSuperclass
 public abstract class LearningParameter<TTrait extends Enum<TTrait>> extends EntityBase<LearningParameterId> {
     @Setter
-    @Column(name = "parameter_value")
-    double value;
+    @Column(name = "parameter_value", nullable = false)
+    Double value = 0.0;
 
     public abstract TTrait getTrait();
     public abstract void setTrait(TTrait trait);
