@@ -6,19 +6,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
-import java.io.Serializable;
-
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@EqualsAndHashCode(callSuper = true)
 @Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
-public abstract class LearningParameter<TTrait extends Enum<TTrait> & Serializable> extends EntityBase<LearningParameterId> {
-    @Column(name = "parameter_trait")
-    TTrait trait;
+public abstract class LearningParameter<TTrait extends Enum<TTrait>> extends EntityBase<LearningParameterId> {
+    @Setter
     @Column(name = "parameter_value")
     double value;
+
+    public abstract TTrait getTrait();
+    public abstract void setTrait(TTrait trait);
 
     /**
      * Simply adds a given progress value to the current value

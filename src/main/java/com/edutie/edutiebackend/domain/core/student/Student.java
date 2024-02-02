@@ -20,7 +20,6 @@ import com.edutie.edutiebackend.domain.core.student.rules.StudentAgeBoundsRule;
 import com.edutie.edutiebackend.domain.core.student.rules.SchoolGradeNumberRule;
 import com.edutie.edutiebackend.domain.core.student.valueobjects.SchoolStage;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -114,7 +113,7 @@ public class Student extends AuditableEntityBase<StudentId> {
         return learningParam.map(LearningParameter::getValue).orElse(0.0);
     }
 
-    public <U extends  LearningParameter<?>> Set<U> getLearningParameters(Class<U> learningParamClass)
+    public <U extends LearningParameter<?>> Set<U> getLearningParameters(Class<U> learningParamClass)
     {
         return findSetOf(learningParamClass, this).orElseThrow();
     }
