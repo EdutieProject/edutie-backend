@@ -1,18 +1,21 @@
 package com.edutie.edutiebackend.domain.core.learningresult;
 
+import com.edutie.edutiebackend.domain.core.common.Utilities;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.learningresult.entities.LearningAssessment;
 import com.edutie.edutiebackend.domain.core.learningresult.entities.SkillAssessment;
+import com.edutie.edutiebackend.domain.core.learningresult.entities.base.Assessment;
 import com.edutie.edutiebackend.domain.core.learningresult.errors.LearningResultErrors;
 import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningResultId;
 import com.edutie.edutiebackend.domain.core.learningresult.rules.AssessmentPointsBoundsRule;
 import com.edutie.edutiebackend.domain.core.learningresult.valueobjects.Feedback;
 import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
+import com.edutie.edutiebackend.domain.core.lessonsegment.entities.LearningRequirement;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LearningRequirementId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.core.skill.Skill;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
 import com.edutie.edutiebackend.domain.core.student.Student;
-import com.edutie.edutiebackend.domain.core.student.identities.StudentId;
+import com.edutie.edutiebackend.domain.rule.Error;
 import com.edutie.edutiebackend.domain.rule.Result;
 import com.edutie.edutiebackend.domain.rule.Rule;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,55 +38,51 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     @JoinColumn(name = "lesson_segment_id", updatable = false, insertable = false)
     @JsonIgnore
     private LessonSegment lessonSegment;
-    @Setter
-    @Column(name = "lesson_segment_id")
-    private LessonSegmentId lessonSegmentId;
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", updatable = false, insertable = false)
     @JsonIgnore
     private Student student;
-    @Setter
-    @Column(name = "student_id")
-    private StudentId studentId;
 
     @Setter
     private String reportText;
     @Setter
     @Embedded
-    private Feedback feedback;
+    private Feedback feedback = new Feedback();
     @OneToMany
-    private Set<SkillAssessment> skillAssessments = new HashSet<>();
+    private final Set<SkillAssessment> skillAssessments = new HashSet<>();
     @OneToMany
-    private Set<LearningAssessment> learningAssessments = new HashSet<>();
+    private final Set<LearningAssessment> learningAssessments = new HashSet<>();
 
-    public Result addSkillAssessment(SkillId skillId, int pointsValue) {
-        var validationResult = Rule.validate(AssessmentPointsBoundsRule.class, pointsValue);
-        if (validationResult.isSuccess())
-            skillAssessments.add(SkillAssessment.create(skillId, pointsValue));
+    public Set<Assessment<?>> getAllAssessments() {
+        Set<Assessment<?>> assessments = new HashSet<>();
+        assessments.addAll(skillAssessments);
+        assessments.addAll(learningAssessments);
+        return assessments;
+    }
+
+    public <T extends Assessment<?>> Result addAssessment(T assessment, Class<T> assessmentClass)
+    {
+        var assessmentSet = Utilities.findSetOf(assessmentClass, this).orElseThrow();
+        var validationResult = Rule.validate(AssessmentPointsBoundsRule.class, assessment.getPoints());
+        if(validationResult.isFailure())
+            return validationResult;
+        var searchedAssessment =  assessmentSet.stream().filter(o->o.getEntity() == assessment.getEntity()).findFirst();
+        searchedAssessment.ifPresent(assessmentSet::remove);
+        assessmentSet.add(assessment);
         return validationResult;
     }
 
-    public Result removeSkillAssessment(SkillId skillId) {
-        var skillAssessment = skillAssessments.stream().filter(o -> o.getSkillId() == skillId).findFirst();
-        skillAssessment.ifPresent(assessment -> skillAssessments.remove(assessment));
-        return skillAssessment.isPresent() ? Result.success() : Result.failure(LearningResultErrors.noAssessmentFound());
+    public Result removeAssessment(Skill skill) {
+        var searchedAssessment = skillAssessments.stream().filter(o -> o.getEntity() == skill).findFirst();
+        searchedAssessment.ifPresent(skillAssessments::remove);
+        return searchedAssessment.isPresent() ? Result.success() : Result.failure(LearningResultErrors.noAssessmentFound());
     }
 
-    public Result addLearningAssessment(LearningRequirementId learningAssessmentId, int pointsValue) {
-        var validationResult = Rule.validate(AssessmentPointsBoundsRule.class, pointsValue);
-        if(validationResult.isSuccess())
-            learningAssessments.add(LearningAssessment.create(learningAssessmentId, pointsValue));
-        return validationResult;
+    public Result removeAssessment(LearningRequirement learningRequirement) {
+        var searchedAssessment = learningAssessments.stream().filter(o -> o.getEntity() == learningRequirement).findFirst();
+        searchedAssessment.ifPresent(learningAssessments::remove);
+        return searchedAssessment.isPresent() ? Result.success() : Result.failure(LearningResultErrors.noAssessmentFound());
     }
 
-    public Result removeLearningAssessment(LearningRequirementId learningRequirementId) {
-        var learningAssessment = learningAssessments
-                .stream()
-                .filter(o->o.getLearningRequirementId() == learningRequirementId)
-                .findFirst();
-        learningAssessment.ifPresent(assessment -> learningAssessments.remove(assessment));
-        return learningAssessment.isPresent() ?
-                Result.success() : Result.failure(LearningResultErrors.noAssessmentFound());
-    }
 
 }
