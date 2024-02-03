@@ -99,6 +99,10 @@ public class StudentTests {
         student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
         assertFalse(student.getAllLearningParameters().isEmpty());
         assertTrue(student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).isPresent());
+        assertEquals(10.0, student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).get().getValue());
+
+        student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
+        assertEquals(20.0, student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).get().getValue());
     }
 
     @Test
