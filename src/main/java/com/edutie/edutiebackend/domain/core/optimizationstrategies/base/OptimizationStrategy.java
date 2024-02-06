@@ -17,10 +17,11 @@ import lombok.*;
 @Getter
 @Setter
 @MappedSuperclass
-public class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
+public abstract class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
+    private String name;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name= "optimization_description"))
-    private PromptFragment optimizationDescription;
+    private PromptFragment optimizationDescription = new PromptFragment();
     private TTrait trait;
-    private double requiredValue;
+    private Double requiredValue = 0.0;
 }
