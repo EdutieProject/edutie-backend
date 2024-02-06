@@ -1,11 +1,11 @@
 package com.edutie.edutiebackend.domain.core.student.errors;
 
-import com.edutie.edutiebackend.domain.rule.RuleError;
+import com.edutie.edutiebackend.domain.rule.Error;
 
 public class StudentErrors {
-    public static RuleError schoolStageAlternationError()
+    public static Error schoolStageAlternationError()
     {
-        return new RuleError(
+        return new Error(
                 "SchoolStageNotSet",
                 "Attempt to alter school stage based on current which does not exist");
     }

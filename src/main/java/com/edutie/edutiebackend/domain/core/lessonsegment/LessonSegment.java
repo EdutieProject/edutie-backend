@@ -1,13 +1,13 @@
 package com.edutie.edutiebackend.domain.core.lessonsegment;
 
-import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.edutiebackend.domain.core.common.studynavigation.LearningTreeNavigator;
+import com.edutie.edutiebackend.domain.core.common.base.NavigableEntityBase;
 import com.edutie.edutiebackend.domain.core.lesson.Lesson;
-import com.edutie.edutiebackend.domain.core.lesson.identities.LessonId;
 import com.edutie.edutiebackend.domain.core.lessonsegment.entities.ExerciseType;
 import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.edutiebackend.domain.core.common.errors.NavigationErrors;
+import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
+import com.edutie.edutiebackend.domain.rule.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,16 +24,17 @@ import java.util.Set;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
+//TODO: add learning requirements
+public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
     @Setter
     private String name;
-    @Embedded
-    public final LearningTreeNavigator<LessonSegmentId> navigation = new LearningTreeNavigator<>();
-    @Embedded
     @Setter
+    @Embedded
+    @AttributeOverride(name = "text", column = @Column(name = "overview_description"))
     private PromptFragment overviewDescription;
-    @Embedded
     @Setter
+    @Embedded
+    @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
     private PromptFragment exerciseDescription;
 
     @ManyToOne
@@ -44,21 +45,20 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     @JsonIgnore
     private final Set<Skill> skills = new HashSet<>();
 
-    @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id", updatable = false, insertable = false)
+    @JoinColumn(name = "lesson_id")
+    @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
     @JsonIgnore
+    @Setter
     private Lesson lesson;
-    @Column(name = "lesson_id")
-    private LessonId lessonId;
 
     /**
      * Recommended constructor assigning the segment
      * to the given lesson
-     * @param lessonId lesson id
+     * @param lesson lesson
      */
-    public LessonSegment(LessonId lessonId)
+    public LessonSegment(Lesson lesson)
     {
-        this.lessonId = lessonId;
+        this.lesson = lesson;
     }
 
 
@@ -78,5 +78,16 @@ public class LessonSegment extends AuditableEntityBase<LessonSegmentId> {
     public void removeSkill(Skill skill)
     {
         skills.remove(skill);
+    }
+
+    /**
+     * @param lessonSegment
+     */
+    @Override
+    public Result addNextElement(LessonSegment lessonSegment) {
+        if(lessonSegment.getLesson() != lesson)
+            return Result.failure(NavigationErrors.elementNotFound(this.getClass()));
+        nextElements.add(lessonSegment);
+        return Result.success();
     }
 }

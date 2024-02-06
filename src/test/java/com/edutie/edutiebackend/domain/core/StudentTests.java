@@ -31,7 +31,7 @@ public class StudentTests {
     {
         Student student = new Student();
         var result = student.setBirthdate(LocalDate.of(1410, 7, 15));
-        System.out.println("CODE:" + result.getRuleErrors().get(0).getCode());
+        System.out.println("CODE:" + result.getErrors().get(0).getCode());
         assertFalse(result.isSuccess());
     }
 
@@ -82,8 +82,7 @@ public class StudentTests {
     public void learningParamsInitializationTests()
     {
         Student student = new Student();
-        assertTrue(student.getLearningParameters(AbilityLearningParameter.class).isEmpty());
-        assertTrue(student.getLearningParameters(IntelligenceLearningParameter.class).isEmpty());
+        assertTrue(student.getAllLearningParameters().isEmpty());
     }
 
     @Test
@@ -98,8 +97,12 @@ public class StudentTests {
     {
         Student student = new Student();
         student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
-        assertFalse(student.getLearningParameters(AbilityLearningParameter.class).isEmpty());
+        assertFalse(student.getAllLearningParameters().isEmpty());
         assertTrue(student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).isPresent());
+        assertEquals(10.0, student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).get().getValue());
+
+        student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
+        assertEquals(20.0, student.getLearningParameter(AbilityLearningParameter.class, Ability.CRITICAL_THINKING).get().getValue());
     }
 
     @Test

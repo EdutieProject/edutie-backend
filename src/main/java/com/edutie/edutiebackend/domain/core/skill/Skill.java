@@ -1,24 +1,20 @@
 package com.edutie.edutiebackend.domain.core.skill;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
+import com.edutie.edutiebackend.domain.core.common.Utilities;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
-import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
-import com.edutie.edutiebackend.domain.core.skill.errors.SkillErrors;
+import com.edutie.edutiebackend.domain.core.skill.entities.AbilityIndicator;
+import com.edutie.edutiebackend.domain.core.skill.entities.IntelligenceIndicator;
+import com.edutie.edutiebackend.domain.core.skill.entities.base.TraitIndicator;
+import com.edutie.edutiebackend.domain.core.skill.identities.IndicatorId;
 import com.edutie.edutiebackend.domain.core.skill.identities.SkillId;
-import com.edutie.edutiebackend.domain.core.skill.rules.TraitMultiplierValueBoundsRule;
-
-import com.edutie.edutiebackend.domain.rule.Result;
-import com.edutie.edutiebackend.domain.rule.Rule;
-import com.edutie.edutiebackend.domain.rule.RuleError;
-import com.edutie.edutiebackend.domain.rule.Validation;
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Skill is a high-level indicator of Learning Resource's knowledge requirements.
@@ -33,124 +29,76 @@ import lombok.Setter;
 public class Skill extends AuditableEntityBase<SkillId> {
     @Setter
     private String name;
-    // many-to-many with additional column - multiplierValue
-    private final HashMap<Ability, Double> abilityMultipliers = new HashMap<>();
-    // many-to-many with additional column - multiplierValue
-    private final HashMap<Intelligence, Double> intelligenceMultipliers = new HashMap<>();
 
-    public Skill(String name)
-    {
+    @OneToMany(targetEntity = AbilityIndicator.class, fetch = FetchType.EAGER)
+    private final Set<AbilityIndicator> abilityIndicators = new HashSet<>();
+
+    @OneToMany(targetEntity = IntelligenceIndicator.class, fetch = FetchType.EAGER)
+    private final Set<IntelligenceIndicator> intelligenceIndicators = new HashSet<>();
+
+    /**
+     * Recommended constructor.
+     * @param name desired skill name
+     */
+    public Skill(String name) {
         this.name = name;
+    }
+
+    public Set<? extends TraitIndicator<?>> getIndicators() {
+        Set<TraitIndicator<?>> traitIndicators = new HashSet<>();
+        traitIndicators.addAll(intelligenceIndicators);
+        traitIndicators.addAll(abilityIndicators);
+        return traitIndicators;
     }
 
     /**
      * Generic function returning the multiplier value for given trait.
      * Returns null if there is no mapping associated.
+     *
      * @param trait trait
+     * @param <T>   type of trait
      * @return value of multiplier or null.
-     * @param <T> type of trait
      */
-    public <T> Double getMultiplierValue(T trait)
-    {
-        if(trait instanceof Ability) return abilityMultipliers.get(trait);
-        if(trait instanceof Intelligence) return intelligenceMultipliers.get(trait);
-        return null;
+    public <T extends Enum<T>, U extends TraitIndicator<T>> Optional<? extends TraitIndicator<T>> getTraitIndicator(T trait, Class<U> indicatorClass) {
+        var indicators = Utilities.findSetOf(indicatorClass, this).orElseThrow();
+        var searchedIndicator = indicators.stream().filter(o -> o.getTrait() == trait).findFirst();
+        return searchedIndicator.isPresent() ?
+                searchedIndicator :
+                Optional.empty();
     }
 
     /**
      * Generic function assigning the multiplier value for given trait
+     *
      * @param trait trait
      * @param value value of multiplier
-     * @param <T> trait type
+     * @param <T>   trait type
      */
-    public <T> Result assignMultiplier(T trait, double value)
-    {
-        var validationResult = Rule.validate(TraitMultiplierValueBoundsRule.class, value);
-        if (validationResult.isFailure()) return validationResult;
-
-        switch (trait) {
-            case Ability a -> abilityMultipliers.put(a, value);
-            case Intelligence i -> intelligenceMultipliers.put(i, value);
-            default -> { return Result.failure(SkillErrors.unhandledTraitError()); }
+    @SneakyThrows
+    public <T extends Enum<T>, U extends TraitIndicator<T>> void assignTraitIndicator(T trait, int value, Class<U> indicatorClass) {
+        var indicators = Utilities.findSetOf(indicatorClass, this).orElseThrow(RuntimeException::new);
+        var foundIndicator = indicators.stream().filter(o -> o.getTrait() == trait).findFirst();
+        if (foundIndicator.isPresent()) {
+            foundIndicator.get().setValue(value);
+        } else {
+            var newTraitIndicator = indicatorClass.getConstructor().newInstance();
+            newTraitIndicator.setId(new IndicatorId());
+            newTraitIndicator.setTrait(trait);
+            newTraitIndicator.setValue(value);
+            indicators.add(newTraitIndicator);
         }
-        return Result.success();
     }
 
     /**
      * Generic function removing multiplier from the skill
+     *
      * @param trait trait of the multiplier
-     * @param <T> type of trait
+     * @param <T>   type of trait
      */
-    public <T> void removeMultiplier(T trait)
-    {
-        switch (trait) {
-            case Ability a -> abilityMultipliers.remove(a);
-            case Intelligence i -> intelligenceMultipliers.remove(i);
-            default -> {}
-        }
+    public <T extends Enum<T>, U extends TraitIndicator<T>> void removeIndicator(T trait, Class<U> indicatorClass) {
+        var indicatorSet = Utilities.findSetOf(indicatorClass, this).orElseThrow();
+        var searchedIndicator = indicatorSet.stream().filter(o -> o.getTrait() == trait).findFirst();
+        searchedIndicator.ifPresent(indicatorSet::remove);
     }
 
-
-    /**
-     * Retrieves multiplier value of given trait.
-     * @param ability ability trait
-     * @return value if exists, null otherwise
-     */
-    public Double getMultiplierValue(Ability ability)
-    {
-        return abilityMultipliers.get(ability);
-    }
-
-    /**
-     * Retrieves multiplier value of given trait
-     * @param intelligence intelligence trait
-     * @return value if exists, null otherwise
-     */
-    public Double getMultiplierValue(Intelligence intelligence)
-    {
-        return intelligenceMultipliers.get(intelligence);
-    }
-
-    /**
-     * Assigns a multiplier to given ability, where multiplier indicates the importance of given trait. Throws
-     * exception if value is invalid.
-     * @param ability ability to assign to.
-     * @param multiplier multiplier value
-     */
-    public Result assignAbilityMultiplier(Ability ability, double multiplier){
-        var validationResult = Rule.validate(TraitMultiplierValueBoundsRule.class, multiplier);
-        if(validationResult.isSuccess())
-            abilityMultipliers.put(ability, multiplier);
-        return validationResult;
-    }
-
-    /**
-     * Removes given ability from the multiplier mapping
-     * @param ability ability to remove
-     */
-    public void removeAbilityMultiplier(Ability ability){
-        abilityMultipliers.remove(ability);
-    }
-
-
-    /**
-     * Assigns a multiplier to given intelligence, where multiplier indicates the importance of given trait. Throws
-     * exception if value is invalid.
-     * @param intelligence intelligence to assign to
-     * @param multiplier multiplier value
-     */
-    public Result assignIntelligenceMultiplier(Intelligence intelligence, double multiplier) {
-        var validationResult = Rule.validate(TraitMultiplierValueBoundsRule.class, multiplier);
-        if(validationResult.isSuccess())
-            intelligenceMultipliers.put(intelligence, multiplier);
-        return validationResult;
-    }
-
-    /**
-     * Removes intelligence multiplier from the mapping
-     * @param intelligence intelligence to remove
-     */
-    public void removeIntelligenceMultiplier(Intelligence intelligence){
-        intelligenceMultipliers.remove(intelligence);
-    }
 }

@@ -3,9 +3,10 @@ package com.edutie.edutiebackend.domain.core.optimizationstrategies.base;
 import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
 import com.edutie.edutiebackend.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
@@ -16,9 +17,11 @@ import lombok.*;
 @Getter
 @Setter
 @MappedSuperclass
-public class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
+public abstract class OptimizationStrategy<TTrait extends Enum<TTrait>> extends AuditableEntityBase<OptimizationStrategyId> {
+    private String name;
     @Embedded
-    private PromptFragment optimizationDescription;
+    @AttributeOverride(name = "text", column = @Column(name= "optimization_description"))
+    private PromptFragment optimizationDescription = new PromptFragment();
     private TTrait trait;
-    private double requiredValue;
+    private Double requiredValue = 0.0;
 }

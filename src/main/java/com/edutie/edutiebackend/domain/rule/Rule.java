@@ -8,8 +8,9 @@ import java.util.ArrayList;
  * by the ruleClass used by static validation method.
  * @param <T> type of ruleClass-checked object
  */
+//TODO: rule framework refactoring / use existing validation framework
 public interface Rule<T> {
-    List<RuleError> check(T object);
+    List<Error> check(T object);
 
     /**
      * Validate a ruleClass of given object
@@ -20,14 +21,14 @@ public interface Rule<T> {
      * @param <T> type of object to validate
      */
     static <U extends Rule<T>, T> Result validate(Class<U> ruleClass, T ruleObject) {
-        List<RuleError> ruleErrors;
+        List<Error> errors;
         try {
             U rule = ruleClass.getConstructor().newInstance();
-            ruleErrors = new ArrayList<>(rule.check(ruleObject));
+            errors = new ArrayList<>(rule.check(ruleObject));
         } catch (Exception exception) {
             throw new RuntimeException(exception);
         }
-        return Result.fromErrorList(ruleErrors);
+        return Result.fromErrorList(errors);
     }
 
     /**
@@ -40,31 +41,31 @@ public interface Rule<T> {
      */
     static <U extends Rule<T>, T> Result validate(List<Class<U>> ruleClasses, T ruleObject)
     {
-        List<RuleError> ruleErrors = new ArrayList<>();
+        List<Error> errors = new ArrayList<>();
         for (var ruleClass : ruleClasses)
         {
             try {
                 U rule = ruleClass.getConstructor().newInstance();
-                ruleErrors.addAll(rule.check(ruleObject));
+                errors.addAll(rule.check(ruleObject));
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         }
-        return Result.fromErrorList(ruleErrors);
+        return Result.fromErrorList(errors);
     }
 
     static <U extends Rule<T>, T> Result validate(List<Validation<U, T>> validations)
     {
-        List<RuleError> ruleErrors = new ArrayList<>();
+        List<Error> errors = new ArrayList<>();
         for (var validation : validations)
         {
             try {
                 U rule = validation.ruleClass().getConstructor().newInstance();
-                ruleErrors.addAll(rule.check(validation.validatedObject()));
+                errors.addAll(rule.check(validation.validatedObject()));
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         }
-        return Result.fromErrorList(ruleErrors);
+        return Result.fromErrorList(errors);
     }
 }

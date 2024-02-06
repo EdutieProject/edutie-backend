@@ -1,15 +1,23 @@
 package com.edutie.edutiebackend.domain.core.learningresource;
 
+import com.edutie.edutiebackend.domain.core.common.Utilities;
+import com.edutie.edutiebackend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
+import com.edutie.edutiebackend.domain.core.lessonsegment.LessonSegment;
+import com.edutie.edutiebackend.domain.core.optimizationstrategies.AbilityOptimizationStrategy;
+import com.edutie.edutiebackend.domain.core.optimizationstrategies.IntelligenceOptimizationStrategy;
+import com.edutie.edutiebackend.domain.core.optimizationstrategies.base.OptimizationStrategy;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
-import com.edutie.edutiebackend.domain.core.learningresource.identities.LearningResourceId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.edutiebackend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
-
-import jakarta.persistence.Entity;
-import lombok.*;
 
 /**
  * A singular form of learning in the application.
@@ -21,39 +29,46 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public final class LearningResource extends EntityBase<LearningResourceId> {
+//TODO: (DOMAIN) add hints
+public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private String overviewText;
     private String exerciseText;
-    // many-to-many relationship
-    private final Set<OptimizationStrategyId> optimizationStrategies = new HashSet<>();
-    // many-to-one relationship
-    private LessonSegmentId lessonSegmentId;
+    @ManyToMany
+    private final Set<IntelligenceOptimizationStrategy> intelligenceOptimizationStrategies = new HashSet<>();
+    @ManyToMany
+    private final Set<AbilityOptimizationStrategy> abilityOptimizationStrategies = new HashSet<>();
+    @ManyToOne(targetEntity = LessonSegment.class, fetch = FetchType.EAGER)
+    private LessonSegment lessonSegment;
 
     /**
      * Recommended constructor which associates the resource with concrete
      * lesson segment.
-     * @param lessonSegmentId lesson segment id
      */
-    public LearningResource(LessonSegmentId lessonSegmentId)
-    {
-        this.lessonSegmentId = lessonSegmentId;
+    public LearningResource(LessonSegment lessonSegment) {
+        this.lessonSegment = lessonSegment;
     }
 
-    /**
-     * Adds optimization strategy
-     * @param optimizationStrategyId optimization strategy identifier
-     */
-    public void addOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
-    {
-        optimizationStrategies.add(optimizationStrategyId);
+    public Set<OptimizationStrategy<?>> getAllOptimizationStrategies() {
+        Set<OptimizationStrategy<?>> optimizationStrategies = new HashSet<>();
+        optimizationStrategies.addAll(abilityOptimizationStrategies);
+        optimizationStrategies.addAll(intelligenceOptimizationStrategies);
+        return optimizationStrategies;
     }
 
-    /**
-     * Removes optimization strategy
-     * @param optimizationStrategyId optimization strategy identifier
-     */
-    public void removeOptimizationStrategy(OptimizationStrategyId optimizationStrategyId)
-    {
-        optimizationStrategies.remove(optimizationStrategyId);
+    public <T extends OptimizationStrategy<?>> void addOptimizationStrategy(T optimizationStrategy, Class<T> strategyClass) {
+        var optimizationStrategySet = Utilities.findSetOf(strategyClass, this).orElseThrow();
+        optimizationStrategySet.add(optimizationStrategy);
     }
+
+    public <T extends OptimizationStrategy<?>> void removeOptimizationStrategy(T optimizationStrategy, Class<T> strategyClass) {
+        var optimizationStrategySet = Utilities.findSetOf(strategyClass, this).orElseThrow();
+        optimizationStrategySet.remove(optimizationStrategy);
+    }
+
+    public <T extends OptimizationStrategy<?>, U> void removeOptimizationStrategyById(U optimizationStrategyId, Class<T> strategyClass) {
+        var optimizationStrategySet = Utilities.findSetOf(strategyClass, this).orElseThrow();
+        optimizationStrategySet.stream().filter(o -> o.getId() == optimizationStrategyId).findFirst()
+                .ifPresent(optimizationStrategySet::remove);
+    }
+
 }

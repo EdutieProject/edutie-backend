@@ -9,30 +9,30 @@ import static java.util.Collections.*;
 
 @Getter
 public class Result {
-    List<RuleError> ruleErrors;
+    List<Error> errors;
     boolean success;
 
-    public Result(List<RuleError> ruleErrorList)
+    public Result(List<Error> errorList)
     {
-        ruleErrors = ruleErrorList;
-        success = ruleErrorList.isEmpty();
+        errors = errorList;
+        success = errorList.isEmpty();
     }
 
-    public Result(boolean success, RuleError ruleError)
+    public Result(boolean success, Error error)
     {
         this.success = success;
-        this.ruleErrors = singletonList(ruleError);
+        this.errors = singletonList(error);
     }
 
-    public Result(boolean success, List<RuleError> ruleErrors)
+    public Result(boolean success, List<Error> errors)
     {
         this.success = success;
-        this.ruleErrors = ruleErrors;
+        this.errors = errors;
     }
 
-    public static Result fromErrorList(List<RuleError> ruleErrors)
+    public static Result fromErrorList(List<Error> errors)
     {
-        return new Result(ruleErrors);
+        return new Result(errors);
     }
 
     public static  Result success()
@@ -40,9 +40,9 @@ public class Result {
         return new Result(true, emptyList());
     }
 
-    public static Result failure(RuleError ruleError)
+    public static Result failure(Error error)
     {
-        return new Result(false, ruleError);
+        return new Result(false, error);
     }
 
     public boolean isFailure()

@@ -1,6 +1,6 @@
 package com.edutie.edutiebackend.domain.ruleframework.tests;
 
-import com.edutie.edutiebackend.domain.rule.RuleError;
+import com.edutie.edutiebackend.domain.rule.Error;
 import com.edutie.edutiebackend.domain.ruleframework.mock.Color;
 import com.edutie.edutiebackend.domain.ruleframework.mock.Fruit;
 import com.edutie.edutiebackend.domain.ruleframework.rules.StrawberryColorRule;
@@ -40,11 +40,11 @@ public class RuleFrameworkTests {
     {
         Fruit strawberry = Fruit.strawberry();
         var result = strawberry.setColor(Color.ORANGE);
-        RuleError error;
+        Error error;
         if(result.isFailure())
-            error = result.getRuleErrors().get(0);
+            error = result.getErrors().get(0);
         else
-            error = new RuleError("NoCodeProvided", "Invalid message");
+            error = new Error("NoCodeProvided", "Invalid message");
         assertEquals(
                 StrawberryColorRule.class.getSimpleName(),
                 error.getCode()
