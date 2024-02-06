@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * by the ruleClass used by static validation method.
  * @param <T> type of ruleClass-checked object
  */
+//TODO: rule framework refactoring / use existing validation framework
 public interface Rule<T> {
     List<Error> check(T object);
 

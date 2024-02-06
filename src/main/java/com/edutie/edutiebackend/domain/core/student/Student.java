@@ -117,8 +117,8 @@ public class Student extends AuditableEntityBase<StudentId> {
 
     public Set<LearningParameter<?>> getAllLearningParameters() {
         Set<LearningParameter<?>> learningParameters = new HashSet<>();
-        learningParameters.addAll(findSetOf(AbilityLearningParameter.class, this).orElseThrow());
-        learningParameters.addAll(findSetOf(IntelligenceLearningParameter.class, this).orElseThrow());
+        learningParameters.addAll(abilityLearningParameters);
+        learningParameters.addAll(intelligenceLearningParameters);
         return learningParameters;
     }
 
@@ -166,7 +166,6 @@ public class Student extends AuditableEntityBase<StudentId> {
         SchoolStage schoolStage = new SchoolStage(schoolType, gradeNumber, specialization);
         return setSchoolStage(schoolStage);
     }
-
 
     /**
      * Sets student birthdate
