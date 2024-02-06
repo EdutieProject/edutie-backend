@@ -3,6 +3,13 @@ package com.edutie.edutiebackend.infra.persistence.jpa;
 import com.edutie.edutiebackend.domain.core.common.identities.UserId;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Ability;
 import com.edutie.edutiebackend.domain.core.common.studenttraits.Intelligence;
+import com.edutie.edutiebackend.domain.core.learningresult.LearningResult;
+import com.edutie.edutiebackend.domain.core.learningresult.entities.LearningAssessment;
+import com.edutie.edutiebackend.domain.core.learningresult.entities.SkillAssessment;
+import com.edutie.edutiebackend.domain.core.learningresult.entities.base.Assessment;
+import com.edutie.edutiebackend.domain.core.learningresult.identities.LearningResultId;
+import com.edutie.edutiebackend.domain.core.learningrequirement.LearningRequirement;
+import com.edutie.edutiebackend.domain.core.learningrequirement.identities.LearningRequirementId;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
 import com.edutie.edutiebackend.domain.core.skill.entities.AbilityIndicator;
 import com.edutie.edutiebackend.domain.core.skill.entities.IntelligenceIndicator;
@@ -21,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class AssessmentEntitiesTests {
 
-    private final UserId mockUser = new UserId();
+    private final UserId testUser = new UserId();
 
     @Autowired
     SkillRepository skillRepository;
@@ -35,11 +42,20 @@ public class AssessmentEntitiesTests {
     AbilityLearningParamRepository abilityLearningParamRepository;
     @Autowired
     IntelligenceLearningParamRepository intelligenceLearningParamRepository;
+    @Autowired
+    LearningResultRepository learningResultRepository;
+    @Autowired
+    SkillAssessmentRepository skillAssessmentRepository;
+    @Autowired
+    LearningAssessmentRepository learningAssessmentRepository;
+    @Autowired
+    LearningRequirementRepository learningRequirementRepository;
+
 
     @Test
     public void skillCreateRetrieveTest() {
         Skill skill = new Skill();
-        skill.setCreatedBy(mockUser);
+        skill.setCreatedBy(testUser);
         skill.setId(new SkillId());
         skill.setName("Sample skill");
 
@@ -54,7 +70,7 @@ public class AssessmentEntitiesTests {
     public void skillWithIndicatorsCreateRetrieveTest() {
         Skill skill = new Skill();
         skill.setId(new SkillId());
-        skill.setCreatedBy(mockUser);
+        skill.setCreatedBy(testUser);
         skill.assignTraitIndicator(Ability.CREATIVITY, 2, AbilityIndicator.class);
         skill.assignTraitIndicator(Intelligence.LOGICAL, 1, IntelligenceIndicator.class);
 
@@ -73,18 +89,18 @@ public class AssessmentEntitiesTests {
     public void studentCreateRetrieveTest() {
         Student student = new Student();
         student.setId(new StudentId());
-        student.setCreatedBy(mockUser);
+        student.setCreatedBy(testUser);
         studentRepository.save(student);
 
         var fetchedStudent = studentRepository.findById(student.getId()).orElse(new Student());
-        assertEquals(mockUser, fetchedStudent.getCreatedBy());
+        assertEquals(testUser, fetchedStudent.getCreatedBy());
     }
 
     @Test
     public void studentCreateRetrieveWithParametersTest() {
         Student student = new Student();
         student.setId(new StudentId());
-        student.setCreatedBy(mockUser);
+        student.setCreatedBy(testUser);
         student.adaptLearningParameters(AbilityLearningParameter.class, Ability.CRITICAL_THINKING, 10.0);
 
         abilityLearningParamRepository.save(
@@ -101,11 +117,51 @@ public class AssessmentEntitiesTests {
     public void studentSchoolStageTest() {
         Student student = new Student();
         student.setId(new StudentId());
-        student.setCreatedBy(mockUser);
+        student.setCreatedBy(testUser);
         student.setSchoolStage(SchoolType.HIGH_SCHOOL, 2, "Mat-Fiz");
         studentRepository.save(student);
 
         var fetchedStudent = studentRepository.findById(student.getId()).orElseThrow();
         assertEquals(fetchedStudent.getSchoolStage().gradeNumber(), 2);
+    }
+
+    @Test
+    public void learningResultCreateRetrieveTest() {
+        LearningResult learningResult = new LearningResult();
+        learningResult.setId(new LearningResultId());
+        learningResult.setCreatedBy(testUser);
+        learningResultRepository.save(learningResult);
+
+        var fetchedResult = learningResultRepository.findById(learningResult.getId());
+        assertTrue(fetchedResult.isPresent());
+        assertEquals(learningResult.getId(), fetchedResult.get().getId());
+    }
+
+    @Test
+    public void learningResultRelationshipsTest() {
+        Skill skill = new Skill();
+        skill.setId(new SkillId());
+        skill.setCreatedBy(testUser);
+        LearningRequirement learningRequirement = new LearningRequirement();
+        learningRequirement.setId(new LearningRequirementId());
+        learningRequirement.setCreatedBy(testUser);
+        skillRepository.save(skill);
+        learningRequirementRepository.save(learningRequirement);
+
+        LearningResult learningResult = new LearningResult();
+        learningResult.setId(new LearningResultId());
+        learningResult.setCreatedBy(testUser);
+        var skillAssessment = Assessment.create(skill, 30);
+        skillAssessmentRepository.save(skillAssessment);
+        var learningAssessment = Assessment.create(learningRequirement, 20);
+        learningAssessmentRepository.save(learningAssessment);
+        learningResult.addAssessment(skillAssessment, SkillAssessment.class);
+        learningResult.addAssessment(learningAssessment, LearningAssessment.class);
+        learningResultRepository.save(learningResult);
+
+        var fetchedLr = learningResultRepository.findById(learningResult.getId());
+        assertEquals(20 , learningResult.getLearningAssessments().stream().findFirst().get().getAssessmentPoints());
+        assertEquals(30 , learningResult.getSkillAssessments().stream().findFirst().get().getAssessmentPoints());
+        assertEquals(2 , learningResult.getAllAssessments().size());
     }
 }

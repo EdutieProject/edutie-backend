@@ -24,6 +24,7 @@ import java.util.Set;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @Entity
+//TODO: add learning requirements
 public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
     @Setter
     private String name;

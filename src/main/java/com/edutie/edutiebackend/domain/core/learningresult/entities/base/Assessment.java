@@ -3,10 +3,9 @@ package com.edutie.edutiebackend.domain.core.learningresult.entities.base;
 import com.edutie.edutiebackend.domain.core.common.base.EntityBase;
 import com.edutie.edutiebackend.domain.core.learningresult.entities.LearningAssessment;
 import com.edutie.edutiebackend.domain.core.learningresult.entities.SkillAssessment;
-import com.edutie.edutiebackend.domain.core.learningresult.identities.AsessmentId;
-import com.edutie.edutiebackend.domain.core.lessonsegment.entities.LearningRequirement;
+import com.edutie.edutiebackend.domain.core.learningresult.identities.AssessmentId;
+import com.edutie.edutiebackend.domain.core.learningrequirement.LearningRequirement;
 import com.edutie.edutiebackend.domain.core.skill.Skill;
-import com.edutie.edutiebackend.domain.core.student.entites.IntelligenceLearningParameter;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
@@ -18,24 +17,24 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public abstract class Assessment<TAssessment> extends EntityBase<AsessmentId> {
+public abstract class Assessment<TAssessedEntity> extends EntityBase<AssessmentId> {
     @Column(name = "assessment_points")
-    int points;
+    int assessmentPoints;
     @ManyToOne(fetch = FetchType.EAGER)
-    TAssessment entity;
+    TAssessedEntity entity;
 
     public static LearningAssessment create(LearningRequirement learningRequirement, int pointsValue) {
         var assessment = new LearningAssessment();
-        assessment.setId(new AsessmentId());
+        assessment.setId(new AssessmentId());
         assessment.setEntity(learningRequirement);
-        assessment.setPoints(pointsValue);
+        assessment.setAssessmentPoints(pointsValue);
         return assessment;
     }
     public static SkillAssessment create(Skill skill, int pointsValue) {
         var assessment = new SkillAssessment();
-        assessment.setId(new AsessmentId());
+        assessment.setId(new AssessmentId());
         assessment.setEntity(skill);
-        assessment.setPoints(pointsValue);
+        assessment.setAssessmentPoints(pointsValue);
         return assessment;
     }
 }

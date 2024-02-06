@@ -12,7 +12,7 @@ import static java.util.Collections.emptyList;
 
 public class AssessmentPointsBoundsRule implements Rule<Integer> {
 
-    Function<Integer, Boolean> boundsCondition = (value) -> value > 0 && value <=10;
+    Function<Integer, Boolean> boundsCondition = (value) -> value > 0 && value <=100;
 
     /**
      * @param value

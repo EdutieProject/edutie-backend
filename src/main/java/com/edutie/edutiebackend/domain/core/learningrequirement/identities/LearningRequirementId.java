@@ -1,4 +1,4 @@
-package com.edutie.edutiebackend.domain.core.lessonsegment.identities;
+package com.edutie.edutiebackend.domain.core.learningrequirement.identities;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.Embeddable;
