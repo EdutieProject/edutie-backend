@@ -13,13 +13,13 @@ import com.edutie.backend.domain.core.student.identities.StudentId;
 import com.edutie.backend.domain.core.student.rules.SchoolGradeNumberRule;
 import com.edutie.backend.domain.core.student.rules.StudentAgeBoundsRule;
 import com.edutie.backend.domain.core.student.valueobjects.SchoolStage;
-import validation.Result;
-import validation.RuleEnforcer;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import validation.Result;
+import validation.RuleEnforcer;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -54,8 +54,11 @@ public class Student extends AuditableEntityBase<StudentId> {
      *
      * @param userId user's identity
      */
-    public Student(UserId userId) {
-        setCreatedBy(userId);
+    public static Student create(UserId userId) {
+        Student student = new Student();
+        student.setCreatedBy(userId);
+        student.setId(new StudentId());
+        return student;
     }
 
     /**
@@ -156,8 +159,9 @@ public class Student extends AuditableEntityBase<StudentId> {
 
     /**
      * Sets student school stage based on details
-     * @param schoolType school type
-     * @param gradeNumber grade number
+     *
+     * @param schoolType     school type
+     * @param gradeNumber    grade number
      * @param specialization class specialization as string
      * @return Result
      */

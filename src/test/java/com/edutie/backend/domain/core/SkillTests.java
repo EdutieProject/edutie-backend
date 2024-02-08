@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SkillTests {
     @Test
     public void skillInitializationTest() {
-        Skill skill = new Skill("skill");
+        Skill skill = new Skill();
+        skill.setName("skill");
         assertEquals(
                 skill.getName(),
                 "skill"

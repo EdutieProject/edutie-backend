@@ -29,6 +29,7 @@ public abstract class AuditableEntityBase<TId extends Serializable> extends Enti
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "update_user_id"))
     private UserId updatedBy;
+    @Setter(AccessLevel.PROTECTED)
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id", nullable = false))
     private UserId createdBy;

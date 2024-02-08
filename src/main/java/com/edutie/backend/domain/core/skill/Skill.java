@@ -1,9 +1,10 @@
 package com.edutie.backend.domain.core.skill;
 
-import com.edutie.backend.domain.core.skill.entities.AbilityIndicator;
-import com.edutie.backend.domain.core.skill.entities.IntelligenceIndicator;
 import com.edutie.backend.domain.core.common.Utilities;
 import com.edutie.backend.domain.core.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.core.common.identities.UserId;
+import com.edutie.backend.domain.core.skill.entities.AbilityIndicator;
+import com.edutie.backend.domain.core.skill.entities.IntelligenceIndicator;
 import com.edutie.backend.domain.core.skill.entities.base.TraitIndicator;
 import com.edutie.backend.domain.core.skill.identities.IndicatorId;
 import com.edutie.backend.domain.core.skill.identities.SkillId;
@@ -38,10 +39,14 @@ public class Skill extends AuditableEntityBase<SkillId> {
 
     /**
      * Recommended constructor.
-     * @param name desired skill name
+     * @param creatorId id of a creator
      */
-    public Skill(String name) {
-        this.name = name;
+    //TODO!! after edutie-backend #33, dokumentacja #18
+    public static Skill create(UserId creatorId) {
+        Skill skill = new Skill();
+        skill.setCreatedBy(creatorId);
+        skill.setId(new SkillId());
+        return skill;
     }
 
     public Set<? extends TraitIndicator<?>> getIndicators() {
