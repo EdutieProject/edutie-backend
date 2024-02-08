@@ -22,6 +22,8 @@ public abstract class OptimizationStrategy<TTrait extends Enum<TTrait>> extends 
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name= "optimization_description"))
     private PromptFragment optimizationDescription = new PromptFragment();
-    private TTrait trait;
     private Double requiredValue = 0.0;
+
+    public abstract TTrait getTrait();
+    public abstract void setTrait(TTrait trait);
 }
