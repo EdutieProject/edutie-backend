@@ -3,14 +3,13 @@ package com.edutie.backend.domain.psychology.skill;
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.psychology.psychologist.Psychologist;
 import com.edutie.backend.domain.psychology.skill.entities.AbilityIndicator;
 import com.edutie.backend.domain.psychology.skill.entities.IntelligenceIndicator;
 import com.edutie.backend.domain.psychology.skill.entities.base.TraitIndicator;
 import com.edutie.backend.domain.psychology.skill.identities.IndicatorId;
 import com.edutie.backend.domain.psychology.skill.identities.SkillId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
@@ -31,6 +30,9 @@ public class Skill extends AuditableEntityBase<SkillId> {
     @Setter
     private String name;
 
+    @ManyToOne
+    private Psychologist psychologist;
+
     @OneToMany(targetEntity = AbilityIndicator.class, fetch = FetchType.EAGER)
     private final Set<AbilityIndicator> abilityIndicators = new HashSet<>();
 
@@ -39,12 +41,11 @@ public class Skill extends AuditableEntityBase<SkillId> {
 
     /**
      * Recommended constructor.
-     * @param creatorId id of a creator
+     * @param psychologist psychologist profile reference
      */
-    //TODO!! after edutie-backend #33, dokumentacja #18
-    public static Skill create(UserId creatorId) {
+    public static Skill create(Psychologist psychologist) {
         Skill skill = new Skill();
-        skill.setCreatedBy(creatorId);
+        skill.setCreatedBy(psychologist.getCreatedBy());
         skill.setId(new SkillId());
         return skill;
     }
