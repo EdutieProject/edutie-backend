@@ -4,8 +4,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import com.edutie.backend.domain.core.course.Course;
-import com.edutie.backend.domain.core.course.identities.CourseId;
+import com.edutie.backend.domain.studyprogram.course.Course;
+import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.application.services.common.servicebase.GenericRetrievalService;
 
 public interface CourseService extends GenericRetrievalService<Course, CourseId> {

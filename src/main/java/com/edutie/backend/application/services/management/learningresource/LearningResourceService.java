@@ -3,9 +3,9 @@ package com.edutie.backend.application.services.management.learningresource;
 import java.util.Set;
 
 import com.edutie.backend.application.services.common.servicebase.GenericCrudService;
-import com.edutie.backend.domain.core.learningresource.LearningResource;
-import com.edutie.backend.domain.core.learningresource.identities.LearningResourceId;
-import com.edutie.backend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
 
 public interface LearningResourceService extends GenericCrudService<LearningResource, LearningResourceId> {
     /**

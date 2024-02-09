@@ -2,9 +2,9 @@ package com.edutie.backend.application.services.management.lesson;
 
 import java.util.Set;
 
-import com.edutie.backend.domain.core.course.identities.CourseId;
-import com.edutie.backend.domain.core.lesson.Lesson;
-import com.edutie.backend.domain.core.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
+import com.edutie.backend.domain.studyprogram.lesson.Lesson;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.application.services.common.servicebase.GenericCrudService;
 
 public interface LessonService extends GenericCrudService<Lesson, LessonId> {

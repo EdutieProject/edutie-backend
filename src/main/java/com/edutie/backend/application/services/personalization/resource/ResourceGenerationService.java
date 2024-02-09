@@ -1,7 +1,7 @@
 package com.edutie.backend.application.services.personalization.resource;
 
 import com.edutie.backend.application.services.personalization.resource.commands.GenerateResourceCommand;
-import com.edutie.backend.domain.core.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 
 /**
  * Interface responsible for creating learning resources

@@ -1,12 +1,12 @@
 package com.edutie.backend.infra.persistence.jpa;
 
-import com.edutie.backend.domain.core.common.identities.UserId;
-import com.edutie.backend.domain.core.course.Course;
-import com.edutie.backend.domain.core.course.identities.CourseId;
-import com.edutie.backend.domain.core.lesson.Lesson;
-import com.edutie.backend.domain.core.lesson.identities.LessonId;
-import com.edutie.backend.domain.core.science.Science;
-import com.edutie.backend.domain.core.science.identities.ScienceId;
+import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.studyprogram.course.Course;
+import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
+import com.edutie.backend.domain.studyprogram.lesson.Lesson;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.science.Science;
+import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;

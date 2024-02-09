@@ -2,7 +2,7 @@ package com.edutie.backend.application.services.management.student.commands;
 
 import com.edutie.backend.application.utils.data.nullableproperty.NullableProperty;
 import com.edutie.backend.application.services.common.requests.AuthenticatedServiceRequest;
-import com.edutie.backend.domain.core.student.valueobjects.SchoolStage;
+import com.edutie.backend.domain.learner.student.valueobjects.SchoolStage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

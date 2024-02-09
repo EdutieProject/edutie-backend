@@ -1,10 +1,10 @@
 package com.edutie.backend.application.services.management.student;
 
 import com.edutie.backend.application.services.management.student.commands.StudentUpdateCommand;
-import com.edutie.backend.domain.core.student.Student;
+import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.application.services.common.requests.AuthenticatedServiceRequest;
 import com.edutie.backend.application.services.common.servicebase.GenericRetrievalService;
-import com.edutie.backend.domain.core.student.identities.StudentId;
+import com.edutie.backend.domain.learner.student.identities.StudentId;
 
 public interface StudentService extends GenericRetrievalService<Student, StudentId> {
     /**

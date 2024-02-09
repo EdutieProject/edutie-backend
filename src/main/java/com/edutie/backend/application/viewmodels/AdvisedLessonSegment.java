@@ -1,6 +1,6 @@
 package com.edutie.backend.application.viewmodels;
 
-import com.edutie.backend.domain.core.lessonsegment.LessonSegment;
+import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 
 /**
  * A class wrapping around LessonSegment together with a parameter

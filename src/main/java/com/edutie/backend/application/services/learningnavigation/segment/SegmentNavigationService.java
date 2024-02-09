@@ -1,8 +1,8 @@
 package com.edutie.backend.application.services.learningnavigation.segment;
 
-import com.edutie.backend.domain.core.lesson.identities.LessonId;
-import com.edutie.backend.domain.core.lessonsegment.identities.LessonSegmentId;
-import com.edutie.backend.domain.core.student.identities.StudentId;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
+import com.edutie.backend.domain.learner.student.identities.StudentId;
 
 import java.util.Set;
 

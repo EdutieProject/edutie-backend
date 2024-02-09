@@ -2,10 +2,10 @@ package com.edutie.backend.application.services.management.lessonsegment;
 
 import java.util.Set;
 
-import com.edutie.backend.domain.core.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.application.services.common.servicebase.GenericCrudService;
-import com.edutie.backend.domain.core.lessonsegment.LessonSegment;
-import com.edutie.backend.domain.core.lessonsegment.identities.LessonSegmentId;
+import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
+import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
 
 public interface LessonSegmentService extends GenericCrudService<LessonSegment, LessonSegmentId> {
     /**

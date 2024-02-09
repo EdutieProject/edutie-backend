@@ -1,6 +1,6 @@
 package com.edutie.backend.application.viewmodels;
 
-import com.edutie.backend.domain.core.learningresult.LearningResult;
+import com.edutie.backend.domain.learner.learningresult.LearningResult;
 
 import lombok.Data;
 

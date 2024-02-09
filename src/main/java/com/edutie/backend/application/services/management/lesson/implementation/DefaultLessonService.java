@@ -4,9 +4,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.edutie.backend.application.services.management.lesson.LessonService;
-import com.edutie.backend.domain.core.course.identities.CourseId;
-import com.edutie.backend.domain.core.lesson.Lesson;
-import com.edutie.backend.domain.core.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
+import com.edutie.backend.domain.studyprogram.lesson.Lesson;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import org.springframework.stereotype.Service;
 
 @Service

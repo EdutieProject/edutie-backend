@@ -1,14 +1,14 @@
 package com.edutie.backend.infra.persistence.jpa;
 
-import com.edutie.backend.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.core.common.identities.UserId;
-import com.edutie.backend.domain.core.common.studenttraits.Ability;
-import com.edutie.backend.domain.core.common.studenttraits.Intelligence;
-import com.edutie.backend.domain.core.learningresource.LearningResource;
-import com.edutie.backend.domain.core.learningresource.identities.LearningResourceId;
-import com.edutie.backend.domain.core.optimizationstrategies.AbilityOptimizationStrategy;
-import com.edutie.backend.domain.core.optimizationstrategies.IntelligenceOptimizationStrategy;
-import com.edutie.backend.domain.core.optimizationstrategies.identities.OptimizationStrategyId;
+import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.common.studenttraits.Ability;
+import com.edutie.backend.domain.common.studenttraits.Intelligence;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;
+import com.edutie.backend.domain.personalization.optimizationstrategies.IntelligenceOptimizationStrategy;
+import com.edutie.backend.domain.personalization.optimizationstrategies.identities.OptimizationStrategyId;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.IntelligenceOptimizationStrategyRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AbilityOptimizationStrategyRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LearningResourceRepository;
