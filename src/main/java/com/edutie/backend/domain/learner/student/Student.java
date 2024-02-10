@@ -3,6 +3,7 @@ package com.edutie.backend.domain.learner.student;
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.learner.learningresult.LearningResult;
 import com.edutie.backend.domain.learner.student.entites.AbilityLearningParameter;
 import com.edutie.backend.domain.learner.student.entites.IntelligenceLearningParameter;
 import com.edutie.backend.domain.learner.student.entites.base.LearningParameter;
@@ -40,11 +41,11 @@ public class Student extends AuditableEntityBase<StudentId> {
     private SchoolStage schoolStage = new SchoolStage();
     private LocalDate birthdate = null;
     @OneToMany(targetEntity = AbilityLearningParameter.class, fetch = FetchType.EAGER)
-    @Setter(AccessLevel.PRIVATE)
-    Set<AbilityLearningParameter> abilityLearningParameters = new HashSet<>();
+    private final Set<AbilityLearningParameter> abilityLearningParameters = new HashSet<>();
     @OneToMany(targetEntity = IntelligenceLearningParameter.class, fetch = FetchType.EAGER)
-    @Setter(AccessLevel.PRIVATE)
-    Set<IntelligenceLearningParameter> intelligenceLearningParameters = new HashSet<>();
+    private final Set<IntelligenceLearningParameter> intelligenceLearningParameters = new HashSet<>();
+    @OneToMany(mappedBy = "student_id")
+    private final Set<LearningResult> learningHistory = new HashSet<>();
 
     /**
      * Default constructor used for associating student's account with a user.
