@@ -2,6 +2,7 @@ package com.edutie.backend.domain.learner.learningresult;
 
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.learner.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import com.edutie.backend.domain.psychology.skill.Skill;
 import com.edutie.backend.domain.learner.student.Student;
@@ -72,18 +73,23 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
 
     public <T extends Assessment<?>> Result addAssessment(T assessment, Class<T> assessmentClass)
     {
-        var assessmentSet = Utilities.findSetOf(assessmentClass, this).orElseThrow();
         var validationResult = RuleEnforcer.validate(AssessmentPointsBoundsRule.class, assessment.getAssessmentPoints());
         if(validationResult.isFailure())
             return validationResult;
+        var assessmentSet = Utilities.findSetOf(assessmentClass, this).orElseThrow();
         var searchedAssessment =  assessmentSet.stream().filter(o->o.getEntity() == assessment.getEntity()).findFirst();
         searchedAssessment.ifPresent(assessmentSet::remove);
         assessmentSet.add(assessment);
         return validationResult;
     }
 
+    @SneakyThrows
     public <T, U extends Assessment<T>> Result addAssessment(T assessedEntity, int assessmentPoints, Class<U> assessmentClass) {
-        return Result.failure(new Error("",""));
+        var newAssessment = assessmentClass.getConstructor().newInstance();
+        newAssessment.setAssessmentPoints(assessmentPoints);
+        newAssessment.setEntity(assessedEntity);
+        newAssessment.setId(new AssessmentId());
+        return addAssessment(newAssessment, assessmentClass);
     }
 
     public Result removeAssessment(Skill skill) {
