@@ -23,14 +23,16 @@ import java.util.Set;
  * given trait.
  */
 @Getter
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Skill extends AuditableEntityBase<SkillId> {
-    @Setter
     private String name;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Psychologist.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "psychologist_id")
+    @Setter(AccessLevel.PRIVATE)
     private Psychologist psychologist;
 
     @OneToMany(targetEntity = AbilityIndicator.class, fetch = FetchType.EAGER)
@@ -40,13 +42,15 @@ public class Skill extends AuditableEntityBase<SkillId> {
     private final Set<IntelligenceIndicator> intelligenceIndicators = new HashSet<>();
 
     /**
-     * Recommended constructor.
+     * Recommended constructor associating skill with a psychologist.
      * @param psychologist psychologist profile reference
+     * @return Skill
      */
     public static Skill create(Psychologist psychologist) {
         Skill skill = new Skill();
         skill.setCreatedBy(psychologist.getCreatedBy());
         skill.setId(new SkillId());
+        skill.setPsychologist(psychologist);
         return skill;
     }
 

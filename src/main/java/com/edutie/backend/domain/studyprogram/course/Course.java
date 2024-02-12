@@ -32,14 +32,27 @@ public class Course extends AuditableEntityBase<CourseId> {
     private Science science;
 
     /**
-     * Recommended constructor
-     * @param creator creator profile reference
+     * Recommended constructor associating course with a creator
+     * @param creator creator reference
+     * @return Course
      */
     public static Course create(Creator creator) {
         Course course = new Course();
         course.setId(new CourseId());
         course.setCreatedBy(creator.getCreatedBy());
         course.setCreator(creator);
+        return course;
+    }
+
+    /**
+     * Recommended constructor associating course with a creator and science
+     * @param creator creator reference
+     * @param science science reference
+     * @return Course
+     */
+    public static Course create(Creator creator, Science science) {
+        Course course = create(creator);
+        course.setScience(science);
         return course;
     }
 }

@@ -3,6 +3,7 @@ package com.edutie.backend.domain.studyprogram.lessonsegment;
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.psychology.skill.Skill;
 import com.edutie.backend.domain.studyprogram.lessonsegment.entities.ExerciseType;
@@ -22,43 +23,55 @@ import java.util.Set;
  */
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
 //TODO: add learning requirements
 public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
-    @Setter
     private String name;
-    @Setter
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "overview_description"))
     private PromptFragment overviewDescription;
-    @Setter
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
     private PromptFragment exerciseDescription;
-
     @ManyToOne
-    @Setter
     private ExerciseType exerciseType;
-
     @ManyToMany
     @JsonIgnore
     private final Set<Skill> skills = new HashSet<>();
-
     @JoinColumn(name = "lesson_id")
     @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
     @JsonIgnore
-    @Setter
+    @Setter(AccessLevel.PRIVATE)
     private Lesson lesson;
+    @ManyToOne
+    @Setter(AccessLevel.PRIVATE)
+    private Creator creator;
 
     /**
-     * Recommended constructor assigning the segment
-     * to the given lesson
-     * @param lesson lesson
+     * Recommended constructor associating Lesson Segment with a creator
+     * @param creator creator profile reference
+     * @return Lesson Segment
      */
-    public LessonSegment(Lesson lesson)
-    {
-        this.lesson = lesson;
+    public static LessonSegment create(Creator creator) {
+        LessonSegment lessonSegment = new LessonSegment();
+        lessonSegment.setId(new LessonSegmentId());
+        lessonSegment.setCreatedBy(creator.getCreatedBy());
+        lessonSegment.setCreator(creator);
+        return lessonSegment;
+    }
+
+    /**
+     * Recommended constructor associating Lesson Segment with a creator and lesson
+     * @param creator creator reference
+     * @param lesson lesson reference
+     * @return Lesson Segment
+     */
+    public static LessonSegment create(Creator creator, Lesson lesson) {
+        LessonSegment lessonSegment = create(creator);
+        lessonSegment.setLesson(lesson);
+        return lessonSegment;
     }
 
 
