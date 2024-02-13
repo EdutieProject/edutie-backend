@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Getter
 @MappedSuperclass
-public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<?, ?>, TId extends Serializable> extends AuditableEntityBase<TId> {
+public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<TNavigationEntity, TId>, TId extends Serializable> extends AuditableEntityBase<TId> {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "previous_element_id", nullable = true)

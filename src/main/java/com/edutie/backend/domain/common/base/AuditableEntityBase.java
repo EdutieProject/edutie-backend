@@ -2,6 +2,7 @@ package com.edutie.backend.domain.common.base;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.edutie.backend.domain.common.identities.UserId;
 
@@ -24,8 +25,8 @@ import lombok.Setter;
 public abstract class AuditableEntityBase<TId extends Serializable> extends EntityBase<TId>{
     @Setter(AccessLevel.PRIVATE)
     @Column(name = "created_on", nullable = false)
-    private LocalDate createdOn = LocalDate.now();
-    private LocalDate updatedOn;
+    private LocalDateTime createdOn = LocalDateTime.now();
+    private LocalDateTime updatedOn;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "update_user_id"))
     private UserId updatedBy;
@@ -33,4 +34,9 @@ public abstract class AuditableEntityBase<TId extends Serializable> extends Enti
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id", nullable = false))
     private UserId createdBy;
+
+    protected void update(UserId userId) {
+        updatedBy = userId;
+        updatedOn = LocalDateTime.now();
+    }
 }
