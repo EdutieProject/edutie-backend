@@ -7,7 +7,7 @@ import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.psychology.skill.Skill;
-import com.edutie.backend.domain.studyprogram.lessonsegment.entities.ExerciseType;
+import com.edutie.backend.domain.studyprogram.exercisetype.ExerciseType;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
 import validation.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
