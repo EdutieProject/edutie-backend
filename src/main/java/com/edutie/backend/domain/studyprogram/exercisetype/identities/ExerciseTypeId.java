@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.studyprogram.lessonsegment.identities;
+package com.edutie.backend.domain.studyprogram.exercisetype.identities;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
