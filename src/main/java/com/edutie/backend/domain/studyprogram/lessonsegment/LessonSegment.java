@@ -4,6 +4,7 @@ import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.psychology.skill.Skill;
 import com.edutie.backend.domain.studyprogram.lessonsegment.entities.ExerciseType;
@@ -26,7 +27,6 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-//TODO: add learning requirements
 public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
     private String name;
     @Embedded
@@ -40,6 +40,9 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     @ManyToMany
     @JsonIgnore
     private final Set<Skill> skills = new HashSet<>();
+    @ManyToMany
+    @JsonIgnore
+    private final Set<LearningRequirement> learningRequirements = new HashSet<>();
     @JoinColumn(name = "lesson_id")
     @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -76,7 +79,7 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
 
 
     /**
-     * Adds common skill to the common skills list
+     * Adds skill association
      * @param skill skill entity
      */
     public void addSkill(Skill skill)
@@ -85,7 +88,7 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     }
 
     /**
-     * Removes common skill from the common skills list
+     * Removes skill association
      * @param skill skill entity
      */
     public void removeSkill(Skill skill)
@@ -94,7 +97,25 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     }
 
     /**
-     * @param lessonSegment
+     * Adds learning requirement association
+     * @param learningRequirement learning requirement
+     */
+    public void addLearningRequirement(LearningRequirement learningRequirement) {
+        learningRequirements.add(learningRequirement);
+    }
+
+    /**
+     * Removes learning requirement association
+     * @param learningRequirement learning requirement
+     */
+    public void removeLearningRequirement(LearningRequirement learningRequirement) {
+        learningRequirements.remove(learningRequirement);
+    }
+
+    /**
+     * Adds next element to the lesson segment tree
+     * @param lessonSegment segment to add as next
+     * @return Result of the operation
      */
     @Override
     public Result addNextElement(LessonSegment lessonSegment) {
