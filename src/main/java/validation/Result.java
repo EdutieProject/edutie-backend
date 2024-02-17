@@ -1,52 +1,78 @@
 package validation;
 
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.Value;
 
 import java.util.List;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
 
-
+/**
+ * Results are object for operation success and failure representation.
+ * Result may contain errors that caused the operation to fail. If the result
+ * does not contain any errors, it is considered successful;
+ */
 @Getter
+@Value
 public class Result {
     List<Error> errors;
-    boolean success;
 
-    private Result(List<Error> errorList)
-    {
+    private Result(@NonNull List<Error> errorList) {
         errors = errorList;
-        success = errorList.isEmpty();
     }
 
-    private Result(boolean success, Error error)
-    {
-        this.success = success;
+    private Result(@NonNull Error error) {
         this.errors = singletonList(error);
     }
 
-    private Result(boolean success, List<Error> errors)
-    {
-        this.success = success;
-        this.errors = errors;
-    }
-
-    public static Result fromErrorList(List<Error> errors)
-    {
+    /**
+     * Computes the result object based on the errors provided. If the provided
+     * error list is empty, return successful result. Failure result is returned
+     * otherwise
+     *
+     * @param errors error list
+     * @return Result object
+     */
+    public static Result fromErrorList(@NonNull List<Error> errors) {
         return new Result(errors);
     }
 
-    public static  Result success()
-    {
-        return new Result(true, emptyList());
+    /**
+     * Creates a blank successful result
+     *
+     * @return Result object
+     */
+    public static Result success() {
+        return new Result(emptyList());
     }
 
-    public static Result failure(Error error)
-    {
-        return new Result(false, error);
+    /**
+     * Creates a failure result with specified error
+     *
+     * @param error error
+     * @return Result object
+     */
+    public static Result failure(@NonNull Error error) {
+        return new Result(singletonList(error));
     }
 
-    public boolean isFailure()
-    {
-        return !success;
+    /**
+     * Indicates whether result is a failure result
+     *
+     * @return boolean - true/false
+     */
+    public boolean isFailure() {
+        return !isSuccess();
+    }
+
+    /**
+     * Indicates whether result is successful
+     *
+     * @return boolean - true/false
+     */
+    public boolean isSuccess() {
+        return errors.isEmpty();
     }
 }

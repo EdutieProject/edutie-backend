@@ -1,0 +1,27 @@
+package com.edutie.backend.infrastucture.persistence.contexts.studyprogram;
+
+import com.edutie.backend.domain.studyprogram.creator.identities.CreatorId;
+import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.studyprogram.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
+import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
+
+import java.util.List;
+
+public interface LearningRequirementPersistenceContext extends PersistenceContext<LearningRequirement, LearningRequirementId> {
+    /**
+     * Retrieve all learning requirements associated with given creator
+     *
+     * @param creatorId creator id
+     * @return Learning Requirement list
+     */
+    List<LearningRequirement> getAllOfCreatorId(CreatorId creatorId);
+
+    /**
+     * Retrieve all learning requirements associated with given science
+     *
+     * @param scienceId science id
+     * @return Learning Requirement list
+     */
+    List<LearningRequirement> getAllOfScienceId(ScienceId scienceId);
+}

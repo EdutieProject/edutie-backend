@@ -11,8 +11,6 @@ import com.edutie.backend.domain.learner.student.enums.SchoolType;
 import com.edutie.backend.domain.learner.student.errors.StudentErrors;
 import com.edutie.backend.domain.learner.student.identities.LearningParameterId;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
-import com.edutie.backend.domain.learner.student.rules.SchoolGradeNumberRule;
-import com.edutie.backend.domain.learner.student.rules.StudentAgeBoundsRule;
 import com.edutie.backend.domain.learner.student.valueobjects.SchoolStage;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -20,7 +18,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 import validation.Result;
-import validation.RuleEnforcer;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -125,7 +122,13 @@ public class Student extends AuditableEntityBase<StudentId> {
         return learningParameters;
     }
 
-
+    /**
+     * Progresses the school stage based on current school stage. Common
+     * use case is to advance a grade up.
+     *
+     * @param progressValue progress value
+     * @return Result object
+     */
     public Result changeSchoolStage(int progressValue) {
         if (schoolStage == null) return Result.failure(
                 StudentErrors.schoolStageAlternationError()
@@ -139,12 +142,10 @@ public class Student extends AuditableEntityBase<StudentId> {
         return setSchoolStage(newSchoolStage);
     }
 
-
+    //TODO: Implement validation after #31 VALIDATION FRAMEWORK REFACTORING
     public Result setSchoolStage(SchoolStage providedSchoolStage) {
-        var validationResult = RuleEnforcer.validate(SchoolGradeNumberRule.class, providedSchoolStage);
-        if (validationResult.isSuccess())
-            schoolStage = providedSchoolStage;
-        return validationResult;
+        schoolStage = providedSchoolStage;
+        return Result.success();
     }
 
     /**
@@ -166,6 +167,7 @@ public class Student extends AuditableEntityBase<StudentId> {
      * @param specialization class specialization as string
      * @return Result
      */
+    //TODO: Implement validation after #31 VALIDATION FRAMEWORK REFACTORING
     public Result setSchoolStage(SchoolType schoolType, int gradeNumber, String specialization) {
         SchoolStage schoolStage = new SchoolStage(schoolType, gradeNumber, specialization);
         return setSchoolStage(schoolStage);
@@ -178,10 +180,8 @@ public class Student extends AuditableEntityBase<StudentId> {
      * @return Rule validation result
      */
     public Result setBirthdate(LocalDate providedBirthdate) {
-        var validationResult = RuleEnforcer.validate(StudentAgeBoundsRule.class, providedBirthdate);
-        if (validationResult.isSuccess())
-            birthdate = providedBirthdate;
-        return validationResult;
+        birthdate = providedBirthdate;
+        return Result.success();
     }
 
 }

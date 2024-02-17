@@ -32,7 +32,7 @@ public class StudentTests {
     {
         Student student = new Student();
         var result = student.setBirthdate(LocalDate.of(1410, 7, 15));
-        System.out.println("CODE:" + result.getErrors().get(0).getCode());
+        System.out.println("CODE:" + result.getErrors().get(0).code());
         Assertions.assertFalse(result.isSuccess());
     }
 
