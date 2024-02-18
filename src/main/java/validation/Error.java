@@ -8,6 +8,5 @@ import lombok.Value;
  * Code is meant to represent the unique error cause, the message is the
  * description of the error.
  */
-@Getter
 public record Error(String code, String message) {
 }

@@ -41,7 +41,7 @@ public class Student extends AuditableEntityBase<StudentId> {
     private final Set<AbilityLearningParameter> abilityLearningParameters = new HashSet<>();
     @OneToMany(targetEntity = IntelligenceLearningParameter.class, fetch = FetchType.EAGER)
     private final Set<IntelligenceLearningParameter> intelligenceLearningParameters = new HashSet<>();
-    @OneToMany(mappedBy = "student_id")
+    @OneToMany
     private final Set<LearningResult> learningHistory = new HashSet<>();
 
     /**
