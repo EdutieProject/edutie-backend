@@ -18,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RequiredArgsConstructor
 public class StudentJpaTests {
-    private final UserId testUser = new UserId();
-    private Student student;
+    private final UserId testUser = new UserId();private Student student;
     @Autowired
     private StudentRepository studentRepository;
     @Autowired

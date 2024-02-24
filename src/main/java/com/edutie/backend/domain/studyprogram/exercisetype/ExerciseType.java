@@ -30,4 +30,8 @@ public class ExerciseType extends AuditableEntityBase<ExerciseTypeId> {
         exerciseType.setCreatedBy(userId);
         return exerciseType;
     }
+    public void UserUpdate(UserId userId){
+        update(userId);
+    }
+
 }
