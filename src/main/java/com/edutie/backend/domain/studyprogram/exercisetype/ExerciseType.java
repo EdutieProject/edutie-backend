@@ -4,6 +4,9 @@ import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.exercisetype.identities.ExerciseTypeId;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +20,8 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class ExerciseType extends AuditableEntityBase<ExerciseTypeId> {
     private String name;
+    @Embedded
+    @AttributeOverride(name="text", column = @Column(name = "description"))
     private PromptFragment description;
 
     public static ExerciseType create(UserId userId) {

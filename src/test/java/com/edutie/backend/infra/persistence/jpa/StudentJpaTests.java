@@ -8,7 +8,7 @@ import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositor
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.IntelligenceLearningParamRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RequiredArgsConstructor
-public class StudentJpaTest {
-    private static final UserId testUser = new UserId();
-    private static Student student;
+public class StudentJpaTests {
+    private final UserId testUser = new UserId();
+    private Student student;
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
@@ -27,8 +27,8 @@ public class StudentJpaTest {
     @Autowired
     private AbilityLearningParamRepository abilityLearningParamRepository;
 
-    @BeforeAll
-    public static void testSetup() {
+    @BeforeEach
+    public void testSetup() {
         student = Student.create(testUser);
     }
 
@@ -46,5 +46,4 @@ public class StudentJpaTest {
                         student.getAllLearningParameters().stream().findFirst().get())
         );
     }
-
 }
