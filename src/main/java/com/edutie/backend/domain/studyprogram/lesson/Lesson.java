@@ -23,12 +23,12 @@ import lombok.*;
 public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
-    @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
+
+    @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
     @JsonIgnore
     private Course course;
-
-    @ManyToOne
+    @ManyToOne(targetEntity = Creator.class, fetch = FetchType.EAGER)
     private Creator creator;
 
     /**
@@ -69,6 +69,4 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
         nextElements.add(lesson);
         return Result.success();
     }
-
-
 }
