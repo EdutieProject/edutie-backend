@@ -5,11 +5,16 @@ import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
-
-import validation.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import validation.Result;
 
 /**
  * A group of lesson segments with a tree-like structure. All lessons are part
@@ -33,6 +38,7 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
 
     /**
      * Recommended constructor associating lesson with a creator
+     *
      * @param creator creator profile reference
      * @return Lesson
      */
@@ -46,8 +52,9 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
 
     /**
      * Recommended constructor associating Lesson with a creator and course
+     *
      * @param creator creator reference
-     * @param course course reference
+     * @param course  course reference
      * @return Lesson
      */
     public static Lesson create(Creator creator, Course course) {
@@ -60,12 +67,13 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     /**
      * Adds next element. Does nothing if element is not encompassed within
      * same course.
-     * @param lesson
+     *
+     * @param lesson lesson to be added as next
      */
     @Override
     public Result addNextElement(Lesson lesson) {
         if (lesson.getCourse() != course)
-            return Result.failure(NavigationErrors.elementNotFound(this.getClass()));
+            return Result.failure(NavigationErrors.invalidParentEntity());
         nextElements.add(lesson);
         return Result.success();
     }
