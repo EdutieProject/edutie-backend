@@ -15,13 +15,13 @@ import java.util.Set;
 @MappedSuperclass
 public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<TNavigationEntity, TId>, TId extends Serializable> extends AuditableEntityBase<TId> {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "previous_element_id", nullable = true)
     @JsonIgnore
     @Setter
     private TNavigationEntity previousElement = null;
 
-    @OneToMany(mappedBy = "previousElement", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "previousElement", fetch = FetchType.LAZY)
     protected final Set<TNavigationEntity> nextElements = new HashSet<>();
 
     public abstract Result addNextElement(TNavigationEntity navigationEntity);
