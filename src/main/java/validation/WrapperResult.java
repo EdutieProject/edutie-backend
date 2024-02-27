@@ -3,7 +3,6 @@ package validation;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * A wrapper type around the result class. Contains the additional field
@@ -12,8 +11,8 @@ import java.util.Collections;
  * <b>This class is not meant to be used directly</b>, if you want to create a wrapper
  * result consider using static method provided in the base Result class
  *
- * @see validation.Result Base Result Class
  * @param <T> type of contained value
+ * @see validation.Result Base Result Class
  */
 @Getter
 public class WrapperResult<T> extends Result {
