@@ -1,7 +1,6 @@
-package com.edutie.backend.domain.psychology.skill.identities;
+package com.edutie.backend.domain.education.skill.identities;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.persistence.PersistenceContexts;
 
 import java.io.Serializable;
 import java.util.UUID;

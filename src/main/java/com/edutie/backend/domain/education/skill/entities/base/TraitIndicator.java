@@ -1,6 +1,6 @@
-package com.edutie.backend.domain.psychology.skill.entities.base;
+package com.edutie.backend.domain.education.skill.entities.base;
 
-import com.edutie.backend.domain.psychology.skill.identities.IndicatorId;
+import com.edutie.backend.domain.education.skill.identities.IndicatorId;
 import com.edutie.backend.domain.common.base.EntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

@@ -1,9 +1,9 @@
-package com.edutie.backend.domain.studyprogram.exercisetype;
+package com.edutie.backend.domain.education.exercisetype;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.exercisetype.identities.ExerciseTypeId;
+import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

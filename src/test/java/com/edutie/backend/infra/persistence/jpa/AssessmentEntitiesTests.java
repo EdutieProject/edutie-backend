@@ -1,30 +1,9 @@
 package com.edutie.backend.infra.persistence.jpa;
 
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.common.studenttraits.Ability;
-import com.edutie.backend.domain.common.studenttraits.Intelligence;
-import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.studyprogram.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.learner.learningresult.LearningResult;
-import com.edutie.backend.domain.learner.learningresult.entities.LearningAssessment;
-import com.edutie.backend.domain.learner.learningresult.entities.SkillAssessment;
-import com.edutie.backend.domain.learner.learningresult.entities.base.Assessment;
-import com.edutie.backend.domain.learner.learningresult.identities.LearningResultId;
-import com.edutie.backend.domain.psychology.skill.Skill;
-import com.edutie.backend.domain.psychology.skill.entities.AbilityIndicator;
-import com.edutie.backend.domain.psychology.skill.entities.IntelligenceIndicator;
-import com.edutie.backend.domain.psychology.skill.identities.SkillId;
-import com.edutie.backend.domain.learner.student.Student;
-import com.edutie.backend.domain.learner.student.entites.AbilityLearningParameter;
-import com.edutie.backend.domain.learner.student.enums.SchoolType;
-import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.*;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class AssessmentEntitiesTests {

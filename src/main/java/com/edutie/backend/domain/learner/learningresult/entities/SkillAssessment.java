@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.learner.learningresult.entities;
 
 import com.edutie.backend.domain.learner.learningresult.entities.base.Assessment;
-import com.edutie.backend.domain.psychology.skill.Skill;
+import com.edutie.backend.domain.education.skill.Skill;
 import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
 

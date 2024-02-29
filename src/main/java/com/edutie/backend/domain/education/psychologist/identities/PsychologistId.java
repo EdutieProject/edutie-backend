@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.psychology.psychologist.identities;
+package com.edutie.backend.domain.education.psychologist.identities;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

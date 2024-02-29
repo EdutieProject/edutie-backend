@@ -1,14 +1,13 @@
-package com.edutie.backend.domain.psychology.skill;
+package com.edutie.backend.domain.education.skill;
 
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.psychology.psychologist.Psychologist;
-import com.edutie.backend.domain.psychology.skill.entities.AbilityIndicator;
-import com.edutie.backend.domain.psychology.skill.entities.IntelligenceIndicator;
-import com.edutie.backend.domain.psychology.skill.entities.base.TraitIndicator;
-import com.edutie.backend.domain.psychology.skill.identities.IndicatorId;
-import com.edutie.backend.domain.psychology.skill.identities.SkillId;
+import com.edutie.backend.domain.education.psychologist.Psychologist;
+import com.edutie.backend.domain.education.skill.entities.AbilityIndicator;
+import com.edutie.backend.domain.education.skill.entities.IntelligenceIndicator;
+import com.edutie.backend.domain.education.skill.entities.base.TraitIndicator;
+import com.edutie.backend.domain.education.skill.identities.IndicatorId;
+import com.edutie.backend.domain.education.skill.identities.SkillId;
 import jakarta.persistence.*;
 import lombok.*;
 

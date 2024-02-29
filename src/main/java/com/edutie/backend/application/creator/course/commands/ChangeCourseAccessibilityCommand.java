@@ -1,9 +1,9 @@
 package com.edutie.backend.application.creator.course.commands;
 
-import com.edutie.backend.domain.studyprogram.creator.identities.CreatorId;
+import com.edutie.backend.domain.education.educator.identities.EducatorId;
 
 public record ChangeCourseAccessibilityCommand(
-        CreatorId creatorId,
+        EducatorId educatorId,
         boolean accessibility
 ) {
 }

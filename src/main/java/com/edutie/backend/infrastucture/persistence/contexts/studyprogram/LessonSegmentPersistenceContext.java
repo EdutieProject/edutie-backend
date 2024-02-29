@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastucture.persistence.contexts.studyprogram;
 
-import com.edutie.backend.domain.studyprogram.creator.identities.CreatorId;
+import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
@@ -18,8 +18,8 @@ public interface LessonSegmentPersistenceContext extends PersistenceContext<Less
 
     /**
      * Retrieve all lesson segments associated with given creator
-     * @param creatorId creator id
+     * @param educatorId creator id
      * @return Lesson Segment list
      */
-    List<LessonSegment> getAllOfCreatorId(CreatorId creatorId);
+    List<LessonSegment> getAllOfCreatorId(EducatorId educatorId);
 }

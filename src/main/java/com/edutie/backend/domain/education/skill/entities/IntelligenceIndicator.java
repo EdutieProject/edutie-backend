@@ -1,7 +1,7 @@
-package com.edutie.backend.domain.psychology.skill.entities;
+package com.edutie.backend.domain.education.skill.entities;
 
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
-import com.edutie.backend.domain.psychology.skill.entities.base.TraitIndicator;
+import com.edutie.backend.domain.education.skill.entities.base.TraitIndicator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;

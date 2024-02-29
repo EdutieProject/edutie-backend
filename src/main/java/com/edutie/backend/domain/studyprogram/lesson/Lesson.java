@@ -3,7 +3,7 @@ package com.edutie.backend.domain.studyprogram.lesson;
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
@@ -34,31 +34,31 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private Course course;
 
     @ManyToOne
-    private Creator creator;
+    private Educator educator;
 
     /**
      * Recommended constructor associating lesson with a creator
      *
-     * @param creator creator profile reference
+     * @param educator creator profile reference
      * @return Lesson
      */
-    public static Lesson create(Creator creator) {
+    public static Lesson create(Educator educator) {
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
-        lesson.setCreatedBy(creator.getCreatedBy());
-        lesson.setCreator(creator);
+        lesson.setCreatedBy(educator.getCreatedBy());
+        lesson.setEducator(educator);
         return lesson;
     }
 
     /**
      * Recommended constructor associating Lesson with a creator and course
      *
-     * @param creator creator reference
+     * @param educator creator reference
      * @param course  course reference
      * @return Lesson
      */
-    public static Lesson create(Creator creator, Course course) {
-        Lesson lesson = create(creator);
+    public static Lesson create(Educator educator, Course course) {
+        Lesson lesson = create(educator);
         lesson.setCourse(course);
         return lesson;
     }
