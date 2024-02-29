@@ -21,6 +21,7 @@ import java.util.Set;
  * It contains necessary mappings for  abilities and intelligences utilized in
  * the task with given multiplier being an indicator of the importance of
  * given trait.
+ * @deprecated
  */
 @Getter
 @Setter

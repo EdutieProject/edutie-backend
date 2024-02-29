@@ -46,6 +46,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     private String reportText;
     @Embedded
     private Feedback feedback = new Feedback();
+    //TODO: remove skill reference
     @OneToMany(targetEntity = SkillAssessment.class)
     private final Set<SkillAssessment> skillAssessments = new HashSet<>();
     @OneToMany(targetEntity = LearningAssessment.class)

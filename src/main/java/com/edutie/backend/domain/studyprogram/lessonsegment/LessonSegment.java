@@ -39,6 +39,7 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     private ExerciseType exerciseType;
     @ManyToMany
     @JsonIgnore
+    //TODO: remove skill references
     private final Set<Skill> skills = new HashSet<>();
     @ManyToMany
     @JsonIgnore
