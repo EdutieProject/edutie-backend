@@ -1,7 +1,19 @@
-# Application layer a.k.a. "Use cases" layer
+# Application layer 
 
-Application layer is the place where all the core logic should be placed. In some of
-the solutions there is no distinction between domain layer and use cases layer and
-those two packages are merged together. Distinct use case layer usually goes with
-anemic domain model, where domain layer consists mostly of Plain Old Java Objects 
-(POJOs) with no methods.
+Application layer is a place for orchestrating the use cases using the _API_ provided by the domain. Services
+specified in this layer are exposed to the user by the presentation infrastructure. 
+
+## Structure:
+- learning/ `Services exposed for students for learning use cases, most of which are read operations.`
+    - course/
+    - lesson/
+    - segment/
+    - resource/
+ - creator/ `Services exposed for the creators responsible for study program management`
+    - course/
+    - lesson/
+    - segment/
+- profiles/ `Services responsible for roles (profiles) management`
+    - educator/
+    - student/
+    - admin/ `Note: not implemented yet`
