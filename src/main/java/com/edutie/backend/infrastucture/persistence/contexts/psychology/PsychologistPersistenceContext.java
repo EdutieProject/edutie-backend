@@ -1,8 +1,8 @@
 package com.edutie.backend.infrastucture.persistence.contexts.psychology;
 
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.psychology.psychologist.Psychologist;
-import com.edutie.backend.domain.psychology.psychologist.identities.PsychologistId;
+import com.edutie.backend.domain.education.psychologist.Psychologist;
+import com.edutie.backend.domain.education.psychologist.identities.PsychologistId;
 import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
 
 import java.util.Optional;

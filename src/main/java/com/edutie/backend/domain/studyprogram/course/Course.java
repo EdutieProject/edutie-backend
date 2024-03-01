@@ -2,7 +2,7 @@ package com.edutie.backend.domain.studyprogram.course;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.science.Science;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,9 +23,9 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private boolean accessible = false;
-    @ManyToOne(targetEntity = Creator.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
-    private Creator creator;
+    private Educator educator;
     @ManyToOne(targetEntity = Science.class)
     @JoinColumn(name = "science_id")
     @JsonIgnore
@@ -33,25 +33,25 @@ public class Course extends AuditableEntityBase<CourseId> {
 
     /**
      * Recommended constructor associating course with a creator
-     * @param creator creator reference
+     * @param educator creator reference
      * @return Course
      */
-    public static Course create(Creator creator) {
+    public static Course create(Educator educator) {
         Course course = new Course();
         course.setId(new CourseId());
-        course.setCreatedBy(creator.getCreatedBy());
-        course.setCreator(creator);
+        course.setCreatedBy(educator.getCreatedBy());
+        course.setEducator(educator);
         return course;
     }
 
     /**
      * Recommended constructor associating course with a creator and science
-     * @param creator creator reference
+     * @param educator creator reference
      * @param science science reference
      * @return Course
      */
-    public static Course create(Creator creator, Science science) {
-        Course course = create(creator);
+    public static Course create(Educator educator, Science science) {
+        Course course = create(educator);
         course.setScience(science);
         return course;
     }

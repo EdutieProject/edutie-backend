@@ -3,10 +3,10 @@ package com.edutie.backend.domain.studyprogram.lessonsegment;
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.psychology.skill.Skill;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
-import com.edutie.backend.domain.studyprogram.exercisetype.ExerciseType;
-import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.skill.Skill;
+import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.exercisetype.ExerciseType;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,8 +19,9 @@ import java.util.Set;
 
 
 /**
- * A wrapper around the learning resource. It can manage navigation through navigation property.
- * It has all necessities to provide learning resource by generation or by selection.
+ * A segment of a lesson. Most atomic part of learning which is responsible for describing the goals
+ * and requirements for the student to make. Segment is responsible for providing the student with the
+ * learning resource adjusted for their needs.
  */
 @NoArgsConstructor
 @Getter
@@ -39,6 +40,7 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     private ExerciseType exerciseType;
     @ManyToMany
     @JsonIgnore
+    //TODO: remove skill references
     private final Set<Skill> skills = new HashSet<>();
     @ManyToMany
     @JsonIgnore
@@ -50,31 +52,31 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     private Lesson lesson;
     @ManyToOne
     @Setter(AccessLevel.PRIVATE)
-    private Creator creator;
+    private Educator educator;
 
     /**
      * Recommended constructor associating Lesson Segment with a creator
      *
-     * @param creator creator profile reference
+     * @param educator creator profile reference
      * @return Lesson Segment
      */
-    public static LessonSegment create(Creator creator) {
+    public static LessonSegment create(Educator educator) {
         LessonSegment lessonSegment = new LessonSegment();
         lessonSegment.setId(new LessonSegmentId());
-        lessonSegment.setCreatedBy(creator.getCreatedBy());
-        lessonSegment.setCreator(creator);
+        lessonSegment.setCreatedBy(educator.getCreatedBy());
+        lessonSegment.setEducator(educator);
         return lessonSegment;
     }
 
     /**
      * Recommended constructor associating Lesson Segment with a creator and lesson
      *
-     * @param creator creator reference
+     * @param educator creator reference
      * @param lesson  lesson reference
      * @return Lesson Segment
      */
-    public static LessonSegment create(Creator creator, Lesson lesson) {
-        LessonSegment lessonSegment = create(creator);
+    public static LessonSegment create(Educator educator, Lesson lesson) {
+        LessonSegment lessonSegment = create(educator);
         lessonSegment.setLesson(lesson);
         return lessonSegment;
     }

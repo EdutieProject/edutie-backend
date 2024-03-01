@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastucture.persistence.contexts.studyprogram;
 
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
-import com.edutie.backend.domain.studyprogram.creator.identities.CreatorId;
+import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
@@ -18,8 +18,8 @@ public interface LessonPersistenceContext extends PersistenceContext<Lesson, Les
 
     /**
      * Retrieve all lessons associated with given creator
-     * @param creatorId creator id
+     * @param educatorId creator id
      * @return Lesson list
      */
-    List<Lesson> getAllOfCreatorId(CreatorId creatorId);
+    List<Lesson> getAllOfCreatorId(EducatorId educatorId);
 }
