@@ -19,8 +19,9 @@ import java.util.Set;
 
 
 /**
- * A wrapper around the learning resource. It can manage navigation through navigation property.
- * It has all necessities to provide learning resource by generation or by selection.
+ * A segment of a lesson. Most atomic part of learning which is responsible for describing the goals
+ * and requirements for the student to make. Segment is responsible for providing the student with the
+ * learning resource adjusted for their needs.
  */
 @NoArgsConstructor
 @Getter
