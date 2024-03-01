@@ -4,12 +4,12 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
 
-public record CreateLessonSegmentAsNextCommand(
+public record ChangeSegmentPropertiesCommand(
         EducatorId educatorId,
-        String segmentName,
-        String segmentOverviewDescription,
-        String segmentExerciseDescription,
-        ExerciseTypeId exerciseTypeId,
-        LessonSegmentId previousSegmentId
+        LessonSegmentId lessonId,
+        String name,
+        String overviewDescription,
+        String exerciseDescription,
+        ExerciseTypeId exerciseTypeId
 ) {
 }

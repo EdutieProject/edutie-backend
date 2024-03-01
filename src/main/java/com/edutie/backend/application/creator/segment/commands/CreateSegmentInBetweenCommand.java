@@ -4,7 +4,7 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
 
-public record CreateLessonSegmentInBetweenCommand(
+public record CreateSegmentInBetweenCommand(
         EducatorId educatorId,
         String segmentName,
         String segmentOverviewDescription,
