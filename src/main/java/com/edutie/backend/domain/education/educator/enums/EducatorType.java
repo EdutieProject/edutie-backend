@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.education.educator.enums;
 
+import com.edutie.backend.domain.common.enums.AbstractEnumConverter;
 import com.edutie.backend.domain.common.enums.PersistableEnum;
 import lombok.Getter;
 
@@ -13,5 +14,12 @@ public enum EducatorType implements PersistableEnum<String> {
 
     EducatorType(String code) {
         this.code = code;
+    }
+
+    public static class Converter extends AbstractEnumConverter<EducatorType, String> {
+        public Converter(Class<EducatorType> clazz) {
+            super(clazz);
+        }
+        
     }
 }
