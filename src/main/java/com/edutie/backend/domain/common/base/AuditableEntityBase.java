@@ -1,7 +1,6 @@
 package com.edutie.backend.domain.common.base;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.edutie.backend.domain.common.identities.UserId;
