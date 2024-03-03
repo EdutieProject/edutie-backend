@@ -27,4 +27,22 @@ public class Educator extends AuditableEntityBase<EducatorId> {
         educator.setAdminId(adminId);
         return educator;
     }
+    
+    /**
+     * Indicates whether the educator has creator privileges. Creator privileges give access
+     * to course creation and management.
+     * @return true/false
+     */
+    public boolean hasCreatorPrivileges() {
+        return this.type.equals(EducatorType.CREATOR) || this.type.equals(EducatorType.PEDAGOGUE);
+    }
+
+    /**
+     * Indicates whether the educator has psychologist privileges Psychologist privileges mean
+     * access to the learning personalization framework.
+     * @return
+     */
+    public boolean hasPsychologistPrivileges() {
+        return this.type.equals(EducatorType.PSYCHOLOGIST) || this.type.equals(EducatorType.PEDAGOGUE);
+    }
 }
