@@ -2,7 +2,7 @@ package com.edutie.backend.domain.education.skill;
 
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.education.psychologist.Psychologist;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.skill.entities.AbilityIndicator;
 import com.edutie.backend.domain.education.skill.entities.IntelligenceIndicator;
 import com.edutie.backend.domain.education.skill.entities.base.TraitIndicator;
@@ -30,10 +30,10 @@ import java.util.Set;
 public class Skill extends AuditableEntityBase<SkillId> {
     private String name;
 
-    @ManyToOne(targetEntity = Psychologist.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "psychologist_id")
+    @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "educator_id")
     @Setter(AccessLevel.PRIVATE)
-    private Psychologist psychologist;
+    private Educator educator;
 
     @OneToMany(targetEntity = AbilityIndicator.class, fetch = FetchType.EAGER)
     private final Set<AbilityIndicator> abilityIndicators = new HashSet<>();
@@ -43,14 +43,14 @@ public class Skill extends AuditableEntityBase<SkillId> {
 
     /**
      * Recommended constructor associating skill with a psychologist.
-     * @param psychologist psychologist profile reference
+     * @param educator educator profile reference
      * @return Skill
      */
-    public static Skill create(Psychologist psychologist) {
+    public static Skill create(Educator educator) {
         Skill skill = new Skill();
-        skill.setCreatedBy(psychologist.getCreatedBy());
+        skill.setCreatedBy(educator.getCreatedBy());
         skill.setId(new SkillId());
-        skill.setPsychologist(psychologist);
+        skill.setEducator(educator);
         return skill;
     }
 
