@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import validation.WrapperResult;
 
 @NoArgsConstructor
 @Getter
@@ -25,27 +26,16 @@ public class LearningRequirement extends AuditableEntityBase<LearningRequirement
     private Educator educator;
 
     /**
-     * Recommended constructor associating Learning Requirement with a creator
+     * Recommended constructor associating Learning Requirement with an educator and a science
      * @param educator creator reference
      * @return Learning Requirement
      */
-    public static LearningRequirement create(Educator educator) {
+    public static WrapperResult<LearningRequirement> create(Educator educator, Science science) {
         LearningRequirement learningRequirement = new LearningRequirement();
         learningRequirement.setId(new LearningRequirementId());
         learningRequirement.setCreatedBy(educator.getCreatedBy());
         learningRequirement.setEducator(educator);
-        return learningRequirement;
-    }
-
-    /**
-     * Recommended constructor associating Learning Requirement with creator and science
-     * @param educator creator reference
-     * @param science science reference
-     * @return Learning Requirement
-     */
-    public static LearningRequirement create(Educator educator, Science science) {
-        LearningRequirement learningRequirement = create(educator);
         learningRequirement.setScience(science);
-        return learningRequirement;
+        return WrapperResult.successWrapper(learningRequirement);
     }
 }
