@@ -10,11 +10,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import validation.Result;
+import validation.WrapperResult;
 
 /**
  * A group of lesson segments with a tree-like structure. All lessons are part
@@ -31,24 +33,11 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     @JsonIgnore
+    @Setter(AccessLevel.PRIVATE)
     private Course course;
-
     @ManyToOne
+    @Setter(AccessLevel.PRIVATE)
     private Educator educator;
-
-    /**
-     * Recommended constructor associating lesson with a creator
-     *
-     * @param educator creator profile reference
-     * @return Lesson
-     */
-    public static Lesson create(Educator educator) {
-        Lesson lesson = new Lesson();
-        lesson.setId(new LessonId());
-        lesson.setCreatedBy(educator.getCreatedBy());
-        lesson.setEducator(educator);
-        return lesson;
-    }
 
     /**
      * Recommended constructor associating Lesson with a creator and course
@@ -57,10 +46,13 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
      * @param course  course reference
      * @return Lesson
      */
-    public static Lesson create(Educator educator, Course course) {
-        Lesson lesson = create(educator);
+    public static WrapperResult<Lesson> create(Educator educator, Course course) {
+        Lesson lesson = new Lesson();
+        lesson.setId(new LessonId());
+        lesson.setCreatedBy(educator.getCreatedBy());
+        lesson.setEducator(educator);
         lesson.setCourse(course);
-        return lesson;
+        return WrapperResult.successWrapper(lesson);
     }
 
 

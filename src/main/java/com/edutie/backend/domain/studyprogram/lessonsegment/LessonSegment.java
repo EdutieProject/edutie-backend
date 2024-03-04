@@ -3,7 +3,6 @@ package com.edutie.backend.domain.studyprogram.lessonsegment;
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.education.skill.Skill;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
@@ -13,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import validation.Result;
+import validation.WrapperResult;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,10 +40,6 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     private ExerciseType exerciseType;
     @ManyToMany
     @JsonIgnore
-    //TODO: remove skill references
-    private final Set<Skill> skills = new HashSet<>();
-    @ManyToMany
-    @JsonIgnore
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
     @JoinColumn(name = "lesson_id")
     @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
@@ -55,49 +51,19 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     private Educator educator;
 
     /**
-     * Recommended constructor associating Lesson Segment with a creator
-     *
-     * @param educator creator profile reference
-     * @return Lesson Segment
-     */
-    public static LessonSegment create(Educator educator) {
-        LessonSegment lessonSegment = new LessonSegment();
-        lessonSegment.setId(new LessonSegmentId());
-        lessonSegment.setCreatedBy(educator.getCreatedBy());
-        lessonSegment.setEducator(educator);
-        return lessonSegment;
-    }
-
-    /**
      * Recommended constructor associating Lesson Segment with a creator and lesson
      *
      * @param educator creator reference
      * @param lesson  lesson reference
      * @return Lesson Segment
      */
-    public static LessonSegment create(Educator educator, Lesson lesson) {
-        LessonSegment lessonSegment = create(educator);
+    public static WrapperResult<LessonSegment> create(Educator educator, Lesson lesson) {
+        LessonSegment lessonSegment = new LessonSegment();
+        lessonSegment.setId(new LessonSegmentId());
+        lessonSegment.setCreatedBy(educator.getCreatedBy());
+        lessonSegment.setEducator(educator);
         lessonSegment.setLesson(lesson);
-        return lessonSegment;
-    }
-
-
-    /**
-     * Adds skill association
-     *
-     * @param skill skill entity
-     */
-    public void addSkill(Skill skill) {
-        skills.add(skill);
-    }
-
-    /**
-     * Removes skill association
-     *
-     * @param skill skill entity
-     */
-    public void removeSkill(Skill skill) {
-        skills.remove(skill);
+        return WrapperResult.successWrapper(lessonSegment);
     }
 
     /**

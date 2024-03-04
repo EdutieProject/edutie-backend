@@ -1,7 +1,6 @@
 package com.edutie.backend.domain.studyprogram.science;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import jakarta.persistence.Entity;

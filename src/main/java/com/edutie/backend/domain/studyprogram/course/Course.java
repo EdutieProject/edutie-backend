@@ -8,6 +8,7 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import validation.WrapperResult;
 
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
@@ -29,20 +30,8 @@ public class Course extends AuditableEntityBase<CourseId> {
     @ManyToOne(targetEntity = Science.class)
     @JoinColumn(name = "science_id")
     @JsonIgnore
+    @Setter(AccessLevel.PRIVATE)
     private Science science;
-
-    /**
-     * Recommended constructor associating course with a creator
-     * @param educator creator reference
-     * @return Course
-     */
-    public static Course create(Educator educator) {
-        Course course = new Course();
-        course.setId(new CourseId());
-        course.setCreatedBy(educator.getCreatedBy());
-        course.setEducator(educator);
-        return course;
-    }
 
     /**
      * Recommended constructor associating course with a creator and science
@@ -50,10 +39,13 @@ public class Course extends AuditableEntityBase<CourseId> {
      * @param science science reference
      * @return Course
      */
-    public static Course create(Educator educator, Science science) {
-        Course course = create(educator);
+    public static WrapperResult<Course> create(Educator educator, Science science) {
+        Course course = new Course();
+        course.setId(new CourseId());
+        course.setCreatedBy(educator.getCreatedBy());
+        course.setEducator(educator);
         course.setScience(science);
-        return course;
+        return WrapperResult.successWrapper(course);
     }
 }
 
