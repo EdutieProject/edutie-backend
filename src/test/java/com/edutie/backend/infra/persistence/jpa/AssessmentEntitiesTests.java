@@ -3,6 +3,8 @@ package com.edutie.backend.infra.persistence.jpa;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.common.studenttraits.Ability;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
+import com.edutie.backend.domain.psychology.psychologist.Psychologist;
+import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.learner.learningresult.LearningResult;
@@ -18,8 +20,10 @@ import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.entites.AbilityLearningParameter;
 import com.edutie.backend.domain.learner.student.enums.SchoolType;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
+import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +34,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AssessmentEntitiesTests {
 
     private final UserId testUser = new UserId();
+    private Skill skill;
+    private Psychologist psychologist;
+    private Creator creator;
 
     @Autowired
     SkillRepository skillRepository;
@@ -51,18 +58,32 @@ public class AssessmentEntitiesTests {
     LearningAssessmentRepository learningAssessmentRepository;
     @Autowired
     LearningRequirementRepository learningRequirementRepository;
+    @Autowired
+    CreatorRepository creatorRepository;
+    @Autowired
+    ScienceRepository scienceRepository;
 
+
+    @BeforeEach
+    public void testSetUp() {
+        creator = Creator.create(testUser);
+        creatorRepository.save(creator);
+
+        Science science = Science.create(testUser);
+        scienceRepository.save(science);
+
+        psychologist = Psychologist.create(testUser);
+        skill = Skill.create(psychologist);
+        skillRepository.save(skill);
+
+    }
 
 //    @Test
 //    public void skillCreateRetrieveTest() {
-//        Skill skill = new Skill();
-//        skill.setCreatedBy(testUser);
-//        skill.setId(new SkillId());
+//
 //        skill.setName("Sample skill");
 //
-//        skillRepository.save(skill);
-//
-//        var fetchedSkill = skillRepository.findById(skill.getId());
+//        var fetchedSkill = skillRepository.findById(skill.getId()).orElseThrow();
 //        assertTrue(fetchedSkill.isPresent());
 //        assertEquals(fetchedSkill.get().getName(), skill.getName());
 //    }
