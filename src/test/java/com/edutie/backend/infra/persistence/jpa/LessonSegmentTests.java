@@ -64,9 +64,6 @@ public class LessonSegmentTests {
 
         lessonSegment = LessonSegment.create(creator, lesson);
         lessonSegmentRepository.save(lessonSegment);
-
-
-
     }
 
     @Test
@@ -142,14 +139,15 @@ public class LessonSegmentTests {
         LessonSegment lessonSegment1 = LessonSegment.create(creator, lesson);
         assertNotNull(lessonSegment1);
         assertNotNull(lessonSegment1.getId());
+        lessonSegmentRepository.save(lessonSegment1);
 
         lessonSegment.addNextElement(lessonSegment1);
-        lessonSegmentRepository.save(lessonSegment1);
+        lessonSegmentRepository.save(lessonSegment);
 
         var fetch = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
         assertNotNull(fetch.getNextElements());
         System.out.println(fetch.getNextElements());
-        //assertEquals(fetch.getNextElements().stream(), lessonSegment1);
+        assertEquals(fetch.getNextElements().stream().findFirst().orElseThrow(), lessonSegment1);
     }
 
 
