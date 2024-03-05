@@ -40,7 +40,7 @@ public abstract class OptimizationStrategy<TTrait extends Enum<TTrait>> extends 
         return abilityOptimizationStrategy;
     }
 
-    private static IntelligenceOptimizationStrategy create(UserId userId, Intelligence intelligence) {
+    protected static IntelligenceOptimizationStrategy create(UserId userId, Intelligence intelligence) {
         IntelligenceOptimizationStrategy abilityOptimizationStrategy = new IntelligenceOptimizationStrategy();
         abilityOptimizationStrategy.setId(new OptimizationStrategyId());
         abilityOptimizationStrategy.setCreatedBy(userId);

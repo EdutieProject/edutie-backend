@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.personalization.optimizationstrategies;
 
+import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
 import com.edutie.backend.domain.personalization.optimizationstrategies.base.OptimizationStrategy;
 import jakarta.persistence.Convert;

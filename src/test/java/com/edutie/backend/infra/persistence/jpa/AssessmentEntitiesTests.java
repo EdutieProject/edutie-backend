@@ -3,24 +3,20 @@ package com.edutie.backend.infra.persistence.jpa;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.common.studenttraits.Ability;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
-import com.edutie.backend.domain.psychology.psychologist.Psychologist;
-import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
-import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.studyprogram.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.learner.learningresult.LearningResult;
 import com.edutie.backend.domain.learner.learningresult.entities.LearningAssessment;
 import com.edutie.backend.domain.learner.learningresult.entities.SkillAssessment;
-import com.edutie.backend.domain.learner.learningresult.entities.base.Assessment;
-import com.edutie.backend.domain.learner.learningresult.identities.LearningResultId;
-import com.edutie.backend.domain.psychology.skill.Skill;
-import com.edutie.backend.domain.psychology.skill.entities.AbilityIndicator;
-import com.edutie.backend.domain.psychology.skill.entities.IntelligenceIndicator;
-import com.edutie.backend.domain.psychology.skill.identities.SkillId;
+import com.edutie.backend.domain.learner.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.entites.AbilityLearningParameter;
 import com.edutie.backend.domain.learner.student.enums.SchoolType;
-import com.edutie.backend.domain.learner.student.identities.StudentId;
+import com.edutie.backend.domain.psychology.psychologist.Psychologist;
+import com.edutie.backend.domain.psychology.skill.Skill;
+import com.edutie.backend.domain.psychology.skill.entities.AbilityIndicator;
+import com.edutie.backend.domain.psychology.skill.entities.IntelligenceIndicator;
+import com.edutie.backend.domain.studyprogram.course.Course;
+import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import com.edutie.backend.domain.studyprogram.science.Science;
@@ -81,7 +77,6 @@ public class AssessmentEntitiesTests {
     LessonRepository lessonRepository;
     @Autowired
     LessonSegmentRepository lessonSegmentRepository;
-
 
 
 
@@ -189,17 +184,32 @@ public class AssessmentEntitiesTests {
         learningRequirement = LearningRequirement.create(creator,science);
         learningRequirementRepository.save(learningRequirement);
 
-//        var skillAssessment = Assessment.create(skill, 30);
-//        skillAssessmentRepository.save(skillAssessment);
-//        var learningAssessment = Assessment.create(learningRequirement, 20);
-//        learningAssessmentRepository.save(learningAssessment);
-//        learningResult.addAssessment(skillAssessment, SkillAssessment.class);
-//        learningResult.addAssessment(learningAssessment, LearningAssessment.class);
-//        learningResultRepository.save(learningResult);
-//
-//        var fetchedLr = learningResultRepository.findById(learningResult.getId());
-//        Assertions.assertEquals(20 , learningResult.getLearningAssessments().stream().findFirst().get().getAssessmentPoints());
-//        Assertions.assertEquals(30 , learningResult.getSkillAssessments().stream().findFirst().get().getAssessmentPoints());
-//        assertEquals(2 , learningResult.getAllAssessments().size());
+//        var skillAssessment = Assessment.crea(skill, 30);
+
+        var skillAssessment = new SkillAssessment();
+        var assessmentId = new AssessmentId();
+        skillAssessment.setId(assessmentId);
+        skillAssessment.setEntity(skill);
+        skillAssessment.setAssessmentPoints(30);
+        skillAssessmentRepository.save(skillAssessment);
+
+
+        //var learningAssessment = Assessment.create(learningRequirement, 20);
+
+        var learningAssessment = new LearningAssessment();
+        var learningAssesssmentId = new AssessmentId();
+        learningAssessment.setId(learningAssesssmentId);
+        learningAssessment.setEntity(learningRequirement);
+        learningAssessment.setAssessmentPoints(20);
+        learningAssessmentRepository.save(learningAssessment);
+
+        learningResult.addAssessment(skillAssessment, SkillAssessment.class);
+        learningResult.addAssessment(learningAssessment, LearningAssessment.class);
+        learningResultRepository.save(learningResult);
+
+        var fetchedLr = learningResultRepository.findById(learningResult.getId());
+        Assertions.assertEquals(20 , learningResult.getLearningAssessments().stream().findFirst().get().getAssessmentPoints());
+        Assertions.assertEquals(30 , learningResult.getSkillAssessments().stream().findFirst().get().getAssessmentPoints());
+        assertEquals(2 , learningResult.getAllAssessments().size());
     }
 }

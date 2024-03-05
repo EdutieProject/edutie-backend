@@ -68,5 +68,5 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
             return Result.failure(NavigationErrors.elementNotFound(this.getClass()));
         nextElements.add(lesson);
         return Result.success();
+        }
     }
-}

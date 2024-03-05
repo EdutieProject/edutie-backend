@@ -4,7 +4,6 @@ import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CreatorRepository;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,15 +87,53 @@ public class LessonTests {
 
 
     @Test
+    @Transactional
     public void testAddNextElement() {
         Lesson lesson1 = Lesson.create(creator, course);
-        assertNotNull(lesson1);
-        assertNotNull(lesson1.getId());
-
+        Lesson lesson2 = Lesson.create(creator, course);
         lessonRepository.save(lesson1);
-        lesson.addNextElement(lesson1);
+        lessonRepository.save(lesson2);
 
-        var fetech = lessonRepository.findById(lesson1.getId()).orElseThrow();
-        assertEquals(fetech.getCourse(), course);
+        lesson.addNextElement(lesson1);
+        lessonRepository.save(lesson);
+
+        var fetch1 = lessonRepository.findById(lesson.getId()).orElseThrow();
+        assertEquals(fetch1.getNextElements().stream().findFirst().orElseThrow(), lesson1);
+
+        lesson.addNextElement(lesson2);
+        lessonRepository.save(lesson);
+
+        var fetch2 = lessonRepository.findById(lesson.getId()).orElseThrow();
+        assertEquals(fetch2.getNextElements().stream().skip(1).findFirst().orElseThrow(), lesson2);
+    }
+
+    @Test
+    @Transactional
+    public void testSetPreviousElement(){
+        Lesson lesson1 = Lesson.create(creator, course);
+        Lesson lesson2 = Lesson.create(creator, course);
+        lessonRepository.save(lesson1);
+        lessonRepository.save(lesson2);
+
+        lesson.setPreviousElement(lesson1);
+        lessonRepository.save(lesson);
+
+        var fetch1 = lessonRepository.findById(lesson.getId()).orElseThrow();
+        assertEquals(fetch1.getPreviousElement(), lesson1);
+
+        lesson.setPreviousElement(lesson2);
+        lessonRepository.save(lesson);
+
+        var fetch2 = lessonRepository.findById(lesson.getId()).orElseThrow();
+        assertEquals(fetch2.getPreviousElement(), lesson2);
+
+    }
+
+    @Test
+    public void testLessonCourseRelationShip(){
+        Lesson fetchedLesson = lessonRepository.getReferenceById(lesson.getId());
+
+        assertEquals(fetchedLesson.getId(), lesson.getId());
+        assertEquals(lesson.getCourse(), course);
     }
 }

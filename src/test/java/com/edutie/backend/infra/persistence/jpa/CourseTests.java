@@ -36,17 +36,11 @@ public class CourseTests {
         science = Science.create(testUserId);
         scienceRepository.save(science);
         course = Course.create(creator, science);
+        courseRepository.save(course);
     }
 
     @Test
     public void testCourseCreation() {
-
-        //assertNotNull(course);
-        //assertEquals(creator, course.getCreator());
-        //assertEquals(science, course.getScience());
-
-
-        courseRepository.save(course);
 
         var fetched = courseRepository.findById(course.getId()).orElseThrow();
         assertEquals(fetched, course);
@@ -61,18 +55,21 @@ public class CourseTests {
     public void testCourseNameAndDescription() {
         course.setName("Java Programming");
         course.setDescription("Learn Java Programming from scratch");
+        courseRepository.save(course);
 
-        assertEquals("Java Programming", course.getName());
-        assertEquals("Learn Java Programming from scratch", course.getDescription());
+        var fetch = courseRepository.findById(course.getId()).orElseThrow();
+        assertEquals("Java Programming", fetch.getName());
+        assertEquals("Learn Java Programming from scratch", fetch.getDescription());
     }
 
     @Test
     public void testOneToManyRelationship() {
+        Science science1 = Science.create(testUserId);
+        scienceRepository.save(science1);
 
         Course course1 = Course.create(creator, science);
-        Course course2 = Course.create(creator, science);
+        Course course2 = Course.create(creator, science1);
 
-        scienceRepository.save(science);
         courseRepository.save(course);
         courseRepository.save(course1);
         courseRepository.save(course2);
@@ -84,5 +81,24 @@ public class CourseTests {
         assertEquals(fetched, course);
         assertEquals(fetched1, course1);
         assertEquals(fetched2, course2);
+
+        var fetchedCourse = courseRepository.findById(course.getId()).orElse(new Course());
+        assertEquals(fetchedCourse.getScience(), science);
+
+        var fetchedCourse1 = courseRepository.findById(course1.getId()).orElse(new Course());
+        assertEquals(fetchedCourse1.getScience(), science);
+
+        var fetchedCourse2 = courseRepository.findById(course2.getId()).orElse(new Course());
+        assertEquals(fetchedCourse2.getScience(), science1);
     }
+
+    @Test
+    public void  testCourseScienceRelationshipById(){
+
+        var fetchedCourse = courseRepository.findById(course.getId()).orElse(new Course());
+        assertEquals(fetchedCourse.getScience(), science);
+
+    }
+
+
 }

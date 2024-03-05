@@ -3,19 +3,19 @@ package com.edutie.backend.infra.persistence.jpa;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
-import com.edutie.backend.domain.studyprogram.lesson.Lesson;
-import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.studyprogram.creator.identities.CreatorId;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This test class encompasses database tests related to
@@ -25,7 +25,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class StudyProgramTests {
 
-    UserId mockUser = new UserId();
+    UserId testUser = new UserId();
+    private Course course;
+
 
     @Autowired
     private CourseRepository courseRepository;
@@ -34,13 +36,29 @@ public class StudyProgramTests {
     @Autowired
     private LessonRepository lessonRepository;
 
+
+    @BeforeEach
+    public void testSetUp() {
+
+    }
+
+
+    //TODO all tests are conducted but in other tests classes
+
+
 //    @Test
 //    public void courseCreateRetrieveTest() {
+//        Creator creator= new Creator();
+//        creator.setId(new CreatorId());
+//        course = Course.create(creator);
+//
+//        course.getCreatedBy();
+//
 //        Course course = new Course();
 //        course.setId(new CourseId());
 //        course.setName("Sample course");
 //        course.setDescription("Description text");
-//        course.setCreatedBy(mockUser);
+//        course.set
 //        courseRepository.save(course);
 //
 //        assertTrue(courseRepository.findById(course.getId()).isPresent());
@@ -72,6 +90,9 @@ public class StudyProgramTests {
 //        assertEquals(retrievedCourse.getName(), course.getName());
 //        assertEquals(retrievedCourse.getScience(), science);
 //    }
+
+
+//    /////////    /////////    /////////    /////////    /////////    /////////    /////////    /////////    ///////
 //
 //    @Test
 //    public void courseScienceRelationshipByIdTest() {
@@ -81,7 +102,7 @@ public class StudyProgramTests {
 //
 //        Course course = new Course();
 //        course.setId(new CourseId());
-//        course.setCreatedBy(mockUser);
+//        course.setCreatedBy(testUser);
 //        course.setName("ABC");
 //        course.setDescription("DEF");
 //        course.setScience(science);
@@ -185,9 +206,6 @@ public class StudyProgramTests {
 //        Assertions.assertEquals(fetchedLesson2.getPreviousElement(), fetchedLesson1);
 //    }
 //
-//    public void lessonSegmentCreateRetrieveTest() {
-//
-//    }
 //
 //    public void lessonSegmentToLessonRelationshipTest() {
 //

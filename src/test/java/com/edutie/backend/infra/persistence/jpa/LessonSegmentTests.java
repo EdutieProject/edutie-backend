@@ -3,7 +3,6 @@ package com.edutie.backend.infra.persistence.jpa;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.psychology.psychologist.Psychologist;
-import com.edutie.backend.domain.psychology.psychologist.identities.PsychologistId;
 import com.edutie.backend.domain.psychology.skill.Skill;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
@@ -19,14 +18,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 @SpringBootTest
 @NoArgsConstructor
 public class LessonSegmentTests {
     private final UserId testUserId = new UserId();
     private Creator creator;
-    private Course course;
     private Lesson lesson;
     private LessonSegment lessonSegment;
     private Skill  skill;
@@ -56,7 +53,7 @@ public class LessonSegmentTests {
         Science science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        course = Course.create(creator, science);
+        Course course = Course.create(creator, science);
         courseRepository.save(course);
 
         lesson = Lesson.create(creator, course);
@@ -137,18 +134,43 @@ public class LessonSegmentTests {
     @Transactional
     public void testAddNextElement() {
         LessonSegment lessonSegment1 = LessonSegment.create(creator, lesson);
-        assertNotNull(lessonSegment1);
-        assertNotNull(lessonSegment1.getId());
+        LessonSegment lessonSegment2 = LessonSegment.create(creator, lesson);
         lessonSegmentRepository.save(lessonSegment1);
+        lessonSegmentRepository.save(lessonSegment2);
 
         lessonSegment.addNextElement(lessonSegment1);
         lessonSegmentRepository.save(lessonSegment);
 
-        var fetch = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
-        assertNotNull(fetch.getNextElements());
-        System.out.println(fetch.getNextElements());
-        assertEquals(fetch.getNextElements().stream().findFirst().orElseThrow(), lessonSegment1);
+        var fetch1 = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
+        assertEquals(fetch1.getNextElements().stream().findFirst().orElseThrow(), lessonSegment1);
+
+        lessonSegment.addNextElement(lessonSegment2);
+        lessonSegmentRepository.save(lessonSegment);
+
+        var fetch2 = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
+        assertEquals(fetch2.getNextElements().stream().skip(1).findFirst().orElseThrow(), lessonSegment2);
     }
 
+    @Test
+    @Transactional
+    public void testSetPreviousElement(){
+        LessonSegment lessonSegment1 = LessonSegment.create(creator, lesson);
+        LessonSegment lessonSegment2 = LessonSegment.create(creator, lesson);
+        lessonSegmentRepository.save(lessonSegment1);
+        lessonSegmentRepository.save(lessonSegment2);
+
+        lessonSegment.addNextElement(lessonSegment1);
+        lessonSegmentRepository.save(lessonSegment);
+
+        var fetch1 = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
+        assertEquals(fetch1.getNextElements().stream().findFirst().orElseThrow(), lessonSegment1);
+
+        lessonSegment.addNextElement(lessonSegment2);
+        lessonSegmentRepository.save(lessonSegment);
+
+        var fetch2 = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
+        assertEquals(fetch2.getNextElements().stream().findFirst().orElseThrow(), lessonSegment2);
+
+    }
 
 }
