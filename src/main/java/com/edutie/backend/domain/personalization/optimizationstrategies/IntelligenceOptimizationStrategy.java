@@ -21,4 +21,6 @@ public class IntelligenceOptimizationStrategy extends OptimizationStrategy<Intel
     public void setTrait(Intelligence intelligence) {
         this.intelligence = intelligence;
     }
+
 }
+

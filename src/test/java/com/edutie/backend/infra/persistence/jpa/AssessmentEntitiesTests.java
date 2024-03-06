@@ -197,8 +197,8 @@ public class AssessmentEntitiesTests {
         //var learningAssessment = Assessment.create(learningRequirement, 20);
 
         var learningAssessment = new LearningAssessment();
-        var learningAssesssmentId = new AssessmentId();
-        learningAssessment.setId(learningAssesssmentId);
+        var learningAssessmentId = new AssessmentId();
+        learningAssessment.setId(learningAssessmentId);
         learningAssessment.setEntity(learningRequirement);
         learningAssessment.setAssessmentPoints(20);
         learningAssessmentRepository.save(learningAssessment);
