@@ -2,7 +2,7 @@ package com.edutie.backend.infra.persistence.jpa;
 
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CreatorRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ public class CreatorTests {
     private final UserId testUserId = new UserId();
 
     @Autowired
-    private CreatorRepository creatorRepository;
+    private EducatorRepository educatorRepository;
     @Test
     public void testCreate() {
         Creator creator = Creator.create(testUserId);
-        creatorRepository.save(creator);
-        assertEquals(creatorRepository.findById(creator.getId()).orElseThrow(), creator);
+        educatorRepository.save(creator);
+        assertEquals(educatorRepository.findById(creator.getId()).orElseThrow(), creator);
     }
 }

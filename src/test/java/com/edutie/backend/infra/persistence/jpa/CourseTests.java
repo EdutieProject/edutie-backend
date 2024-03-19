@@ -1,6 +1,8 @@
 package com.edutie.backend.infra.persistence.jpa;
 
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.science.Science;
@@ -11,19 +13,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @RequiredArgsConstructor
 public class CourseTests {
     private final UserId testUserId = new UserId();
+    private final AdminId adminId = new AdminId();
     private Course course;
-    private Creator creator;
+    private Educator educator;
     private Science science;
 
 
     @Autowired
-    private CreatorRepository creatorRepository;
+    private EducatorRepository educatorRepository;
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
@@ -31,11 +32,11 @@ public class CourseTests {
 
     @BeforeEach
     public void testSetup() {
-        creator = Creator.create(testUserId);
-        creatorRepository.save(creator);
+        educator = Educator.create(testUserId, adminId);
+        educatorRepository.save(educator);
         science = Science.create(testUserId);
         scienceRepository.save(science);
-        course = Course.create(creator, science);
+        course = Course.create(educator, science);
         courseRepository.save(course);
     }
 
@@ -67,8 +68,8 @@ public class CourseTests {
         Science science1 = Science.create(testUserId);
         scienceRepository.save(science1);
 
-        Course course1 = Course.create(creator, science);
-        Course course2 = Course.create(creator, science1);
+        Course course1 = Course.create(educator, science);
+        Course course2 = Course.create(educator, science1);
 
         courseRepository.save(course);
         courseRepository.save(course1);

@@ -3,7 +3,7 @@ package com.edutie.backend.infra.persistence.jpa;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CreatorRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,14 +21,14 @@ public class ScienceTests {
     private Science science;
 
     @Autowired
-    private CreatorRepository creatorRepository;
+    private EducatorRepository educatorRepository;
     @Autowired
     private ScienceRepository scienceRepository;
 
     @BeforeEach
     public void testSetup() {
         Creator creator = Creator.create(testUserId);
-        creatorRepository.save(creator);
+        educatorRepository.save(creator);
         science = Science.create(testUserId);
     }
 

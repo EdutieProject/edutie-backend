@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c4c97b4-5ca0-4a7e-8600-027774123e30" name="Changes" comment="few tests" />
+    <list default="true" id="3c4c97b4-5ca0-4a7e-8600-027774123e30" name="Changes" comment="few tests">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/CreatorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/EducatorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/PsychologistRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/AssessmentEntitiesTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/AssessmentEntitiesTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CourseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CourseTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CreatorTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CreatorTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LearningRequirementTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LearningRequirementTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonSegmentTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonSegmentTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/ScienceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/ScienceTests.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,35 +40,38 @@
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="mavenHome" value="Use Maven wrapper" />
-        <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
   <component name="ProjectId" id="2afp1F3k6Nsy1paLGCFLwvwNVsj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/cezary/Desktop/IdeaProjects/edutie-backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;662e2956edeb063ed66ad66a72fbec77&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "MonkeyBETA",
+    "last_opened_file_path": "/Users/cezary/Desktop/IdeaProjects/edutie-backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "spring.configuration.checksum": "662e2956edeb063ed66ad66a72fbec77",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -203,6 +218,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="few tests" />

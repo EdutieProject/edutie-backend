@@ -1,12 +1,12 @@
 package com.edutie.backend.infra.persistence.jpa;
 
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CreatorRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
 import lombok.NoArgsConstructor;
@@ -22,12 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @NoArgsConstructor
 public class LessonTests {
     private final UserId testUserId = new UserId();
-    private Creator creator;
+    private final AdminId adminId = new AdminId();
+    private Educator educator;
     private Course course;
     private Lesson lesson;
 
     @Autowired
-    private CreatorRepository creatorRepository;
+    private EducatorRepository educatorRepository;
     @Autowired
     private LessonRepository lessonRepository;
     @Autowired
@@ -37,22 +38,22 @@ public class LessonTests {
 
     @BeforeEach
     public void testSetup() {
-        creator = Creator.create(testUserId);
-        creatorRepository.save(creator);
+        educator = Educator.create(testUserId, adminId);
+        educatorRepository.save(educator);
 
         Science science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        course = Course.create(creator, science);
+        course = Course.create(educator, science).getValue();
         courseRepository.save(course);
 
-        lesson = Lesson.create(creator, course);
+        lesson = Lesson.create(educator, course).getValue();
         lessonRepository.save(lesson);
     }
 
     @Test
     public void testCreate() {
-        lesson = Lesson.create(creator, course);
+        lesson = Lesson.create(educator, course).getValue();
         lessonRepository.save(lesson);
 
         assertEquals(lessonRepository.findById(lesson.getId()).orElseThrow(), lesson);
@@ -70,8 +71,8 @@ public class LessonTests {
     @Test
     public void testOneToManyRelationship() {
 
-        Lesson lesson1 = Lesson.create(creator, course);
-        Lesson lesson2 = Lesson.create(creator, course);
+        Lesson lesson1 = Lesson.create(educator, course).getValue();
+        Lesson lesson2 = Lesson.create(educator, course).getValue();
 
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
@@ -89,8 +90,8 @@ public class LessonTests {
     @Test
     @Transactional
     public void testAddNextElement() {
-        Lesson lesson1 = Lesson.create(creator, course);
-        Lesson lesson2 = Lesson.create(creator, course);
+        Lesson lesson1 = Lesson.create(educator, course).getValue();
+        Lesson lesson2 = Lesson.create(educator, course).getValue();
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
@@ -110,8 +111,8 @@ public class LessonTests {
     @Test
     @Transactional
     public void testSetPreviousElement(){
-        Lesson lesson1 = Lesson.create(creator, course);
-        Lesson lesson2 = Lesson.create(creator, course);
+        Lesson lesson1 = Lesson.create(educator, course).getValue();
+        Lesson lesson2 = Lesson.create(educator, course).getValue();
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 

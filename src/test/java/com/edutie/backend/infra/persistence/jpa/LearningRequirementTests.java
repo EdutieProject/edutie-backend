@@ -1,11 +1,12 @@
 package com.edutie.backend.infra.persistence.jpa;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
-import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CreatorRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LearningRequirementRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class LearningRequirementTests {
     private final UserId testUserId = new UserId();
-    private Creator creator;
+    private final AdminId adminId = new AdminId();
+    private Educator creator;
     private Science science;
     private LearningRequirement learningRequirement;
 
 
     @Autowired
-    private CreatorRepository creatorRepository;
+    private EducatorRepository educatorRepository;
     @Autowired
     private LearningRequirementRepository learningRequirementRepository;
     @Autowired
@@ -33,20 +35,20 @@ public class LearningRequirementTests {
 
     @BeforeEach
     public void testSetup() {
-        creator = Creator.create(testUserId);
-        creatorRepository.save(creator);
+        creator = Educator.create(testUserId, adminId);
+        educatorRepository.save(creator);
 
         science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        learningRequirement = LearningRequirement.create(creator, science);
+        learningRequirement = LearningRequirement.create(creator, science).getValue();
     }
 
     @Test
     public void testLearningRequirementCreation() {
 
         assertNotNull(learningRequirement);
-        assertEquals(creator, learningRequirement.getCreator());
+        assertEquals(creator, learningRequirement.getEducator());
         assertEquals(science, learningRequirement.getScience());
 
         learningRequirementRepository.save(learningRequirement);
@@ -67,8 +69,8 @@ public class LearningRequirementTests {
     @Test
     public void testOneToManyRelationship() {
 
-        LearningRequirement learningRequirement1 = LearningRequirement.create(creator, science);
-        LearningRequirement learningRequirement2 = LearningRequirement.create(creator, science);
+        LearningRequirement learningRequirement1 = LearningRequirement.create(creator, science).getValue();
+        LearningRequirement learningRequirement2 = LearningRequirement.create(creator, science).getValue();
 
         learningRequirementRepository.save(learningRequirement);
         learningRequirementRepository.save(learningRequirement1);

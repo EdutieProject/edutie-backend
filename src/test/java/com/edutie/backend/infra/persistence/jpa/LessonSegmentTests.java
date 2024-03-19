@@ -1,11 +1,11 @@
 package com.edutie.backend.infra.persistence.jpa;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.psychology.psychologist.Psychologist;
-import com.edutie.backend.domain.psychology.skill.Skill;
+import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.skill.Skill;
 import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import com.edutie.backend.domain.studyprogram.science.Science;
@@ -23,15 +23,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @NoArgsConstructor
 public class LessonSegmentTests {
     private final UserId testUserId = new UserId();
-    private Creator creator;
+    private final AdminId adminId = new AdminId();
     private Lesson lesson;
     private LessonSegment lessonSegment;
-    private Skill  skill;
-    private Psychologist psychologist;
+    private Educator educator;
 
 
     @Autowired
-    private CreatorRepository creatorRepository;
+    private EducatorRepository educatorRepository;
     @Autowired
     private LessonRepository lessonRepository;
     @Autowired
@@ -42,31 +41,29 @@ public class LessonSegmentTests {
     private LessonSegmentRepository lessonSegmentRepository;
     @Autowired
     private SkillRepository skillRepository;
-    @Autowired
-    private PsychologistRepository psychologistRepository;
 
     @BeforeEach
     public void testSetup() {
-        creator = Creator.create(testUserId);
-        creatorRepository.save(creator);
+        educator = Educator.create(testUserId, adminId);
+        educatorRepository.save(educator);
 
         Science science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        Course course = Course.create(creator, science);
+        Course course = Course.create(educator, science);
         courseRepository.save(course);
 
-        lesson = Lesson.create(creator, course);
+        lesson = Lesson.create(educator, course).getValue();
         lessonRepository.save(lesson);
 
-        lessonSegment = LessonSegment.create(creator, lesson);
+        lessonSegment = LessonSegment.create(educator, lesson).getValue();
         lessonSegmentRepository.save(lessonSegment);
     }
 
     @Test
     @Transactional
     public void testCreate() {
-        lessonSegment = LessonSegment.create(creator, lesson);
+        lessonSegment = LessonSegment.create(educator, lesson).getValue();
         assertNotNull(lessonSegment.getId());
         lessonSegmentRepository.save(lessonSegment);
 
@@ -90,51 +87,9 @@ public class LessonSegmentTests {
 
     @Test
     @Transactional
-    public void testAddSkill() {
-        psychologist = Psychologist.create(testUserId);
-        psychologistRepository.save(psychologist);
-
-        skill = Skill.create(psychologist);
-        skillRepository.save(skill);
-
-        var testSkill = skillRepository.findById(skill.getId()).orElseThrow();
-        assertEquals(testSkill, skill);
-
-        lessonSegment.addSkill(skill);
-        lessonSegmentRepository.save(lessonSegment);
-
-        var fetched = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
-        assertEquals(fetched.getSkills().stream().findFirst().orElseThrow(), skill);
-    }
-
-
-    @Test
-    @Transactional
-    public void testRemoveSkill(){
-        psychologist = Psychologist.create(testUserId);
-        psychologistRepository.save(psychologist);
-
-        skill = Skill.create(psychologist);
-        skillRepository.save(skill);
-
-        lessonSegment.addSkill(skill);
-        //System.out.println(skill);
-        lessonSegmentRepository.save(lessonSegment);
-
-
-        lessonSegment.removeSkill(skill);
-        lessonSegmentRepository.save(lessonSegment);
-
-        var fetched = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
-        //System.out.println(fetched.getSkills());
-        assertTrue(fetched.getSkills().isEmpty());
-    }
-
-    @Test
-    @Transactional
     public void testAddNextElement() {
-        LessonSegment lessonSegment1 = LessonSegment.create(creator, lesson);
-        LessonSegment lessonSegment2 = LessonSegment.create(creator, lesson);
+        LessonSegment lessonSegment1 = LessonSegment.create(educator, lesson).getValue();
+        LessonSegment lessonSegment2 = LessonSegment.create(educator, lesson).getValue();
         lessonSegmentRepository.save(lessonSegment1);
         lessonSegmentRepository.save(lessonSegment2);
 
@@ -154,8 +109,8 @@ public class LessonSegmentTests {
     @Test
     @Transactional
     public void testSetPreviousElement(){
-        LessonSegment lessonSegment1 = LessonSegment.create(creator, lesson);
-        LessonSegment lessonSegment2 = LessonSegment.create(creator, lesson);
+        LessonSegment lessonSegment1 = LessonSegment.create(educator, lesson).getValue();
+        LessonSegment lessonSegment2 = LessonSegment.create(educator, lesson).getValue();
         lessonSegmentRepository.save(lessonSegment1);
         lessonSegmentRepository.save(lessonSegment2);
 

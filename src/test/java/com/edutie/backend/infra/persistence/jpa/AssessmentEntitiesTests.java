@@ -66,7 +66,7 @@ public class AssessmentEntitiesTests {
     @Autowired
     LearningRequirementRepository learningRequirementRepository;
     @Autowired
-    CreatorRepository creatorRepository;
+    EducatorRepository educatorRepository;
     @Autowired
     ScienceRepository scienceRepository;
     @Autowired
@@ -83,7 +83,7 @@ public class AssessmentEntitiesTests {
     @BeforeEach
     public void testSetUp() {
         creator = Creator.create(testUser);
-        creatorRepository.save(creator);
+        educatorRepository.save(creator);
 
         science = Science.create(testUser);
         scienceRepository.save(science);
