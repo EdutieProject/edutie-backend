@@ -10,8 +10,8 @@ import com.edutie.backend.domain.learner.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.learner.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.learner.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.learner.student.Student;
-import com.edutie.backend.domain.psychology.skill.Skill;
-import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.skill.Skill;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -46,6 +46,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     private String reportText;
     @Embedded
     private Feedback feedback = new Feedback();
+    //TODO: remove skill reference
     @OneToMany(targetEntity = SkillAssessment.class)
     private final Set<SkillAssessment> skillAssessments = new HashSet<>();
     @OneToMany(targetEntity = LearningAssessment.class)

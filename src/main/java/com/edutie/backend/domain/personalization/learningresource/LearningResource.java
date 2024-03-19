@@ -2,7 +2,6 @@ package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;

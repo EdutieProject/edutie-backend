@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.learner.learningresult.entities;
 
 import com.edutie.backend.domain.learner.learningresult.entities.base.Assessment;
-import com.edutie.backend.domain.studyprogram.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

@@ -1,7 +1,6 @@
 package com.edutie.backend.domain.common.base;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.edutie.backend.domain.common.identities.UserId;
@@ -35,7 +34,11 @@ public abstract class AuditableEntityBase<TId extends Serializable> extends Enti
     @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id", nullable = false))
     private UserId createdBy;
 
-    protected void update(UserId userId) {
+    /**
+     * Adjusts the update-related fields of the auditable entity.
+     * @param userId user performing the modification
+     */
+    public void update(UserId userId) {
         updatedBy = userId;
         updatedOn = LocalDateTime.now();
     }

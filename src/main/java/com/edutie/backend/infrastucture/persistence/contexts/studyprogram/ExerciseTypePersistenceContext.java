@@ -1,8 +1,8 @@
 package com.edutie.backend.infrastucture.persistence.contexts.studyprogram;
 
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.exercisetype.ExerciseType;
-import com.edutie.backend.domain.studyprogram.exercisetype.identities.ExerciseTypeId;
+import com.edutie.backend.domain.education.exercisetype.ExerciseType;
+import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
 
 import java.util.List;
