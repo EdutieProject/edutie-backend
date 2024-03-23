@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3c4c97b4-5ca0-4a7e-8600-027774123e30" name="Changes" comment="Educator related merge part 1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/edutie/backend/domain/studyprogram/course/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/edutie/backend/domain/studyprogram/course/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/edutie/backend/domain/studyprogram/science/Science.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/edutie/backend/domain/studyprogram/science/Science.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/ExerciseTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/ExerciseTypeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/AssessmentEntitiesTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CourseTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CourseTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CreatorTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/CreatorTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/ExerciseTypeTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/ExerciseTypeTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonSegmentTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonSegmentTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/LessonTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/ScienceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/ScienceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/StudyProgramTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/edutie/backend/infra/persistence/jpa/StudyProgramTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/exceptions/NotImplementedException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/assessment/AssessmentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/assessment/implementation/DefaultAssessmentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/assessment/requests/ReportAssessmentRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/common/requests/AuthenticatedServiceRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/common/requests/ServiceRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/common/servicebase/GenericCrudService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/common/servicebase/GenericRetrievalService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/learningnavigation/resource/ResourceNavigationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/learningnavigation/segment/SegmentNavigationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/course/CourseService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/learningresource/LearningResourceService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/learningresult/LearningResultService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/lesson/LessonService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/lesson/implementation/DefaultLessonService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/lessonsegment/LessonSegmentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/optimizationstrategy/OptimizationStrategyService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/skill/SkillService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/student/StudentService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/management/student/commands/StudentUpdateCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/personalization/resource/ResourceGenerationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/services/personalization/resource/commands/GenerateResourceCommand.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/utils/data/nullableproperty/NullableProperty.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/viewmodels/AdvisedLessonSegment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/application/viewmodels/LearningEffect.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/common/base/AuditableEntityBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/common/base/AuditableEntityBase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/common/errors/NavigationErrors.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/common/errors/NavigationErrors.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/common/identities/UserId.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/common/identities/UserId.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/learner/learningresult/LearningResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/learner/learningresult/LearningResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/learner/learningresult/entities/LearningAssessment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/learner/learningresult/entities/LearningAssessment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/learner/learningresult/entities/SkillAssessment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/learner/learningresult/entities/SkillAssessment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/personalization/learningresource/LearningResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/personalization/learningresource/LearningResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/psychologist/Psychologist.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/psychologist/identities/PsychologistId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/skill/Skill.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/skill/entities/AbilityIndicator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/skill/entities/IntelligenceIndicator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/skill/entities/base/TraitIndicator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/skill/identities/IndicatorId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/psychology/skill/identities/SkillId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/course/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/course/Course.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/creator/Creator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/creator/identities/CreatorId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/exercisetype/ExerciseType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/exercisetype/identities/ExerciseTypeId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/learningrequirement/LearningRequirement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/learningrequirement/identities/LearningRequirementId.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/lesson/Lesson.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/lesson/Lesson.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/lessonsegment/LessonSegment.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/lessonsegment/LessonSegment.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/science/Science.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/domain/studyprogram/science/Science.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/psychology/PsychologistPersistenceContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/psychology/SkillPersistenceContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/CreatorPersistenceContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/CreatorPersistenceContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/ExerciseTypePersistenceContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/ExerciseTypePersistenceContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/LearningRequirementPersistenceContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/LearningRequirementPersistenceContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/LessonPersistenceContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/LessonPersistenceContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/LessonSegmentPersistenceContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/contexts/studyprogram/LessonSegmentPersistenceContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/AbilityIndicatorRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/AbilityIndicatorRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/CreatorRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/ExerciseTypeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/ExerciseTypeRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/IntelligenceIndicatorRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/IntelligenceIndicatorRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/LearningRequirementRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/LearningRequirementRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/PsychologistRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/SkillRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/edutie/backend/infrastucture/persistence/implementation/jpa/repositories/SkillRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/validation/Error.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/validation/Error.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/validation/Result.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/validation/Result.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/AssessmentEntitiesTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/CourseTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/CreatorTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/ExerciseTypeTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/LearningRequirementTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/LessonSegmentTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/LessonTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/PersonalizationEntitiesTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/ScienceTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/StudentJpaTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/infra/persistence/jpa/StudyProgramTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/misc/PlaygroundTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/misc/definitions/Bar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/edutie/backend/misc/definitions/Foo.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2afp1F3k6Nsy1paLGCFLwvwNVsj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;MonkeyBETA&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/cezary/Desktop/IdeaProjects/edutie-backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;662e2956edeb063ed66ad66a72fbec77&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.CourseTests.testOneToManyRelationship">
+    <configuration name="CourseTests.testCourseAccessibility" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="edutie-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.edutie.backend.infra.persistence.jpa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.edutie.backend.infra.persistence.jpa" />
+      <option name="MAIN_CLASS_NAME" value="com.edutie.backend.infra.persistence.jpa.CourseTests" />
+      <option name="METHOD_NAME" value="testCourseAccessibility" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CourseTests.testOneToManyRelationship" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="edutie-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.edutie.backend.infra.persistence.jpa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.edutie.backend.infra.persistence.jpa" />
+      <option name="MAIN_CLASS_NAME" value="com.edutie.backend.infra.persistence.jpa.CourseTests" />
+      <option name="METHOD_NAME" value="testOneToManyRelationship" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExerciseTypeTests.testUserUpdate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="edutie-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.edutie.backend.infra.persistence.jpa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.edutie.backend.infra.persistence.jpa" />
+      <option name="MAIN_CLASS_NAME" value="com.edutie.backend.infra.persistence.jpa.ExerciseTypeTests" />
+      <option name="METHOD_NAME" value="testUserUpdate" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LearningRequirementTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="edutie-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.edutie.backend.infra.persistence.jpa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.edutie.backend.infra.persistence.jpa" />
+      <option name="MAIN_CLASS_NAME" value="com.edutie.backend.infra.persistence.jpa.LearningRequirementTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LessonTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="edutie-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.edutie.backend.infra.persistence.jpa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.edutie.backend.infra.persistence.jpa" />
+      <option name="MAIN_CLASS_NAME" value="com.edutie.backend.infra.persistence.jpa.LessonTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EdutieBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="edutie-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edutie.backend.EdutieBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="edutie-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.edutie.backend.EdutieBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CourseTests.testOneToManyRelationship" />
+        <item itemvalue="JUnit.LessonTests" />
+        <item itemvalue="JUnit.CourseTests.testCourseAccessibility" />
+        <item itemvalue="JUnit.ExerciseTypeTests.testUserUpdate" />
+        <item itemvalue="JUnit.LearningRequirementTests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c4c97b4-5ca0-4a7e-8600-027774123e30" name="Changes" comment="" />
+      <created>1704719272109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704719272109</updated>
+      <workItem from="1704719275311" duration="109000" />
+      <workItem from="1704805725549" duration="5228000" />
+      <workItem from="1705091319205" duration="66000" />
+      <workItem from="1708366560366" duration="3496000" />
+      <workItem from="1708370990117" duration="2240000" />
+      <workItem from="1708451668700" duration="13639000" />
+      <workItem from="1708616479411" duration="6559000" />
+      <workItem from="1708777092551" duration="846000" />
+      <workItem from="1710884444511" duration="601000" />
+      <workItem from="1711194860281" duration="3130000" />
+    </task>
+    <task id="LOCAL-00001" summary="few tests">
+      <created>1708777770692</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1708777770692</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Educator related merge part 1">
+      <option name="closed" value="true" />
+      <created>1710884886333</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710884886333</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="MonkeyBETA" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="few tests" />
+    <MESSAGE value="Educator related merge part 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Educator related merge part 1" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
