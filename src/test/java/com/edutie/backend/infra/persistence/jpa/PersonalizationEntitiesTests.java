@@ -1,48 +1,48 @@
 package com.edutie.backend.infra.persistence.jpa;
 
-import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.common.studenttraits.Ability;
-import com.edutie.backend.domain.common.studenttraits.Intelligence;
-import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
-import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;
 import com.edutie.backend.domain.personalization.optimizationstrategies.IntelligenceOptimizationStrategy;
-import com.edutie.backend.domain.personalization.optimizationstrategies.identities.OptimizationStrategyId;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.IntelligenceOptimizationStrategyRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AbilityOptimizationStrategyRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.IntelligenceOptimizationStrategyRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LearningResourceRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class PersonalizationEntitiesTests {
 
     UserId testUser = new UserId();
+    private IntelligenceOptimizationStrategy intelligenceOptimizationStrategy;
+
 
     @Autowired
     IntelligenceOptimizationStrategyRepository intelligenceOptimizationStrategyRepository;
     @Autowired
     AbilityOptimizationStrategyRepository abilityOptimizationStrategyRepository;
-
     @Autowired
     LearningResourceRepository learningResourceRepository;
+
+
+
+    @BeforeEach
+    public void testSetup() {
+//        intelligenceOptimizationStrategy = IntelligenceOptimizationStrategy;
+    }
 
 //    @Test
 //    public void intelligenceOptimizationStrategyCreateRetrieveTest() {
 //        IntelligenceOptimizationStrategy optimizationStrategy = new IntelligenceOptimizationStrategy();
 //        optimizationStrategy.setId(new OptimizationStrategyId());
 //        optimizationStrategy.setCreatedBy(testUser);
+//
 //        optimizationStrategy.setOptimizationDescription(PromptFragment.of("Hello"));
 //        optimizationStrategy.setTrait(Intelligence.LOGICAL);
 //        intelligenceOptimizationStrategyRepository.saveAndFlush(optimizationStrategy);
 //
 //        var fetched = intelligenceOptimizationStrategyRepository.findById(optimizationStrategy.getId());
-//        assertTrue(fetched.isPresent());
-//    }
-//
+//        assertTrue(fetched.isPresent());}
+
 //    @Test
 //    public void abilityOptimizationStrategyCreateRetrieveTest() {
 //        AbilityOptimizationStrategy optimizationStrategy = new AbilityOptimizationStrategy();

@@ -23,6 +23,7 @@ public class Science extends AuditableEntityBase<ScienceId> {
      * Recommended constructor associating science with a creator - user.
      * Science may be only added by administrators thus it is not related with
      * creators.
+     *
      * @param userId user id
      * @return Science
      */

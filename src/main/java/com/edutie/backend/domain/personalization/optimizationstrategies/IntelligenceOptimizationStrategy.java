@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.personalization.optimizationstrategies;
 
+import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
 import com.edutie.backend.domain.personalization.optimizationstrategies.base.OptimizationStrategy;
 import jakarta.persistence.Convert;
@@ -20,4 +21,6 @@ public class IntelligenceOptimizationStrategy extends OptimizationStrategy<Intel
     public void setTrait(Intelligence intelligence) {
         this.intelligence = intelligence;
     }
+
 }
+

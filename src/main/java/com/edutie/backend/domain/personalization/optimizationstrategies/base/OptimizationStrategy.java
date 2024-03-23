@@ -32,7 +32,7 @@ public abstract class OptimizationStrategy<TTrait extends Enum<TTrait>> extends 
     public abstract TTrait getTrait();
     public abstract void setTrait(TTrait trait);
 
-    private static AbilityOptimizationStrategy create(UserId userId, Ability ability) {
+    public static AbilityOptimizationStrategy create(UserId userId, Ability ability) {
         AbilityOptimizationStrategy abilityOptimizationStrategy = new AbilityOptimizationStrategy();
         abilityOptimizationStrategy.setId(new OptimizationStrategyId());
         abilityOptimizationStrategy.setCreatedBy(userId);
@@ -40,7 +40,7 @@ public abstract class OptimizationStrategy<TTrait extends Enum<TTrait>> extends 
         return abilityOptimizationStrategy;
     }
 
-    private static IntelligenceOptimizationStrategy create(UserId userId, Intelligence intelligence) {
+    public static IntelligenceOptimizationStrategy create(UserId userId, Intelligence intelligence) {
         IntelligenceOptimizationStrategy abilityOptimizationStrategy = new IntelligenceOptimizationStrategy();
         abilityOptimizationStrategy.setId(new OptimizationStrategyId());
         abilityOptimizationStrategy.setCreatedBy(userId);

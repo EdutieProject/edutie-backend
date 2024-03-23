@@ -4,31 +4,28 @@ import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.entites.IntelligenceLearningParameter;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AbilityLearningParamRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.IntelligenceLearningParamRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @RequiredArgsConstructor
-public class StudentJpaTest {
-    private static final UserId testUser = new UserId();
-    private static Student student;
+public class StudentJpaTests {
+    private final UserId testUser = new UserId();private Student student;
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
     private IntelligenceLearningParamRepository intelligenceLearningParamRepository;
-    @Autowired
-    private AbilityLearningParamRepository abilityLearningParamRepository;
 
-    @BeforeAll
-    public static void testSetup() {
+    @BeforeEach
+    public void testSetup() {
         student = Student.create(testUser);
     }
 
@@ -46,5 +43,4 @@ public class StudentJpaTest {
                         student.getAllLearningParameters().stream().findFirst().get())
         );
     }
-
 }

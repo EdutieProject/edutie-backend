@@ -30,12 +30,13 @@ import validation.WrapperResult;
 public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
-    @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
+
+    @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
     @JsonIgnore
     @Setter(AccessLevel.PRIVATE)
     private Course course;
-    @ManyToOne
+    @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     private Educator educator;
 
@@ -68,7 +69,5 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
             return Result.failure(NavigationErrors.invalidParentEntity());
         nextElements.add(lesson);
         return Result.success();
+        }
     }
-
-
-}
