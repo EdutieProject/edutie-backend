@@ -37,7 +37,7 @@ public class CourseTests {
         educatorRepository.save(educator);
         science = Science.create(testUserId);
         scienceRepository.save(science);
-        course = Course.create(educator, science).getValue();
+        course = Course.create(educator, science);
         courseRepository.save(course);
     }
 
@@ -69,8 +69,8 @@ public class CourseTests {
         Science science1 = Science.create(testUserId);
         scienceRepository.save(science1);
 
-        Course course1 = Course.create(educator, science).getValue();
-        Course course2 = Course.create(educator, science1).getValue();
+        Course course1 = Course.create(educator, science);
+        Course course2 = Course.create(educator, science1);
 
         courseRepository.save(course);
         courseRepository.save(course1);

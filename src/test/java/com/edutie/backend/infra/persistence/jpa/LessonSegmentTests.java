@@ -50,7 +50,7 @@ public class LessonSegmentTests {
         Science science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        Course course = Course.create(educator, science).getValue();
+        Course course = Course.create(educator, science);
         courseRepository.save(course);
 
         lesson = Lesson.create(educator, course).getValue();

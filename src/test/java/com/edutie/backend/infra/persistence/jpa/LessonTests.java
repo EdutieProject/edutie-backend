@@ -45,7 +45,7 @@ public class LessonTests {
         Science science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        course = Course.create(educator, science).getValue();
+        course = Course.create(educator, science);
         courseRepository.save(course);
 
         lesson = Lesson.create(educator, course).getValue();
