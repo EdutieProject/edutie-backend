@@ -10,7 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
-import validation.WrapperResult;
 
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
@@ -42,13 +41,13 @@ public class Course extends AuditableEntityBase<CourseId> {
      * @param science  science reference
      * @return Course
      */
-    public static WrapperResult<Course> create(Educator educator, Science science) {
+    public static Course create(Educator educator, Science science) {
         Course course = new Course();
         course.setId(new CourseId());
         course.setCreatedBy(educator.getCreatedBy());
         course.setEducator(educator);
         course.setScience(science);
-        return WrapperResult.successWrapper(course);
+        return course;
     }
 }
 
