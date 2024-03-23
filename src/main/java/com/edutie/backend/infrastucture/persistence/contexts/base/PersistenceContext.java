@@ -2,6 +2,7 @@ package com.edutie.backend.infrastucture.persistence.contexts.base;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import validation.Result;
+import validation.WrapperResult;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public interface PersistenceContext<T extends EntityBase<TId>, TId extends Seria
      * @param id entity id
      * @return Optional entity
      */
-    Optional<T> getById(TId id);
+    WrapperResult<T> getById(TId id);
 
     /**
      * Persists the provided entity into the database. If it is already present,
