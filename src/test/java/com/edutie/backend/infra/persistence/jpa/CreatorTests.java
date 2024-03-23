@@ -1,7 +1,8 @@
 package com.edutie.backend.infra.persistence.jpa;
 
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 public class CreatorTests {
     private final UserId testUserId = new UserId();
+    private final AdminId adminId = new AdminId();
 
     @Autowired
     private EducatorRepository educatorRepository;
+
     @Test
     public void testCreate() {
-        Creator creator = Creator.create(testUserId);
+        Educator creator = Educator.create(testUserId, adminId);
         educatorRepository.save(creator);
         assertEquals(educatorRepository.findById(creator.getId()).orElseThrow(), creator);
     }

@@ -2,9 +2,6 @@ package com.edutie.backend.domain.studyprogram.science;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -26,6 +23,7 @@ public class Science extends AuditableEntityBase<ScienceId> {
      * Recommended constructor associating science with a creator - user.
      * Science may be only added by administrators thus it is not related with
      * creators.
+     *
      * @param userId user id
      * @return Science
      */

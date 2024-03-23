@@ -1,7 +1,8 @@
 package com.edutie.backend.infra.persistence.jpa;
 
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ScienceTests {
     private final UserId testUserId = new UserId();
+    private final AdminId adminId = new AdminId();
     private Science science;
 
     @Autowired
@@ -27,8 +29,8 @@ public class ScienceTests {
 
     @BeforeEach
     public void testSetup() {
-        Creator creator = Creator.create(testUserId);
-        educatorRepository.save(creator);
+        Educator educator = Educator.create(testUserId, adminId);
+        educatorRepository.save(educator);
         science = Science.create(testUserId);
     }
 

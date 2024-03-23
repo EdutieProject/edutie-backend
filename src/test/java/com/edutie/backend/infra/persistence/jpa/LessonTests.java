@@ -5,6 +5,7 @@ import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.science.Science;
+import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;

@@ -4,7 +4,6 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.skill.Skill;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
@@ -17,7 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @NoArgsConstructor
@@ -50,7 +50,7 @@ public class LessonSegmentTests {
         Science science = Science.create(testUserId);
         scienceRepository.save(science);
 
-        Course course = Course.create(educator, science);
+        Course course = Course.create(educator, science).getValue();
         courseRepository.save(course);
 
         lesson = Lesson.create(educator, course).getValue();
@@ -81,8 +81,8 @@ public class LessonSegmentTests {
         var fetched = lessonSegmentRepository.findById(lessonSegment.getId()).orElseThrow();
         assertEquals(fetched.getName(), "TestName");
         assertEquals("TestName", lessonSegment.getName());
-        assertEquals("TestExerciseDescription",lessonSegment.getExerciseDescription().text());
-        assertEquals("TestOverviewDescription",lessonSegment.getOverviewDescription().text());
+        assertEquals("TestExerciseDescription", lessonSegment.getExerciseDescription().text());
+        assertEquals("TestOverviewDescription", lessonSegment.getOverviewDescription().text());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class LessonSegmentTests {
 
     @Test
     @Transactional
-    public void testSetPreviousElement(){
+    public void testSetPreviousElement() {
         LessonSegment lessonSegment1 = LessonSegment.create(educator, lesson).getValue();
         LessonSegment lessonSegment2 = LessonSegment.create(educator, lesson).getValue();
         lessonSegmentRepository.save(lessonSegment1);

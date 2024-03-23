@@ -4,7 +4,6 @@ import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.creator.Creator;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.*;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class CourseTests {
         educatorRepository.save(educator);
         science = Science.create(testUserId);
         scienceRepository.save(science);
-        course = Course.create(educator, science);
+        course = Course.create(educator, science).getValue();
         courseRepository.save(course);
     }
 
@@ -68,8 +69,8 @@ public class CourseTests {
         Science science1 = Science.create(testUserId);
         scienceRepository.save(science1);
 
-        Course course1 = Course.create(educator, science);
-        Course course2 = Course.create(educator, science1);
+        Course course1 = Course.create(educator, science).getValue();
+        Course course2 = Course.create(educator, science1).getValue();
 
         courseRepository.save(course);
         courseRepository.save(course1);
