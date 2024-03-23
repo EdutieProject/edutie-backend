@@ -1,8 +1,8 @@
-package com.edutie.backend.application.creator.course;
+package com.edutie.backend.application.creation.course;
 
-import com.edutie.backend.application.creator.course.commands.ChangeCourseAccessibilityCommand;
-import com.edutie.backend.application.creator.course.commands.ChangeCoursePropertiesCommand;
-import com.edutie.backend.application.creator.course.commands.CreateCourseCommand;
+import com.edutie.backend.application.creation.course.commands.ChangeCourseAccessibilityCommand;
+import com.edutie.backend.application.creation.course.commands.ChangeCoursePropertiesCommand;
+import com.edutie.backend.application.creation.course.commands.CreateCourseCommand;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import validation.Result;

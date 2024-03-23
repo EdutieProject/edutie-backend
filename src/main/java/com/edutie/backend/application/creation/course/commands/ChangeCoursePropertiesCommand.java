@@ -1,4 +1,4 @@
-package com.edutie.backend.application.creator.course.commands;
+package com.edutie.backend.application.creation.course.commands;
 
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;

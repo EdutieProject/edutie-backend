@@ -1,6 +1,6 @@
-package com.edutie.backend.application.creator.segment;
+package com.edutie.backend.application.creation.segment;
 
-import com.edutie.backend.application.creator.segment.commands.*;
+import com.edutie.backend.application.creation.segment.commands.*;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import validation.Result;

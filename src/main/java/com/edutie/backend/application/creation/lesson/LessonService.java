@@ -1,6 +1,6 @@
-package com.edutie.backend.application.creator.lesson;
+package com.edutie.backend.application.creation.lesson;
 
-import com.edutie.backend.application.creator.lesson.commands.*;
+import com.edutie.backend.application.creation.lesson.commands.*;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import validation.Result;
