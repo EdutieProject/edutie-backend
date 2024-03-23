@@ -1,14 +1,15 @@
 package com.edutie.backend.domain.studyprogram.course;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.science.Science;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
-import validation.WrapperResult;
 
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
@@ -35,17 +36,18 @@ public class Course extends AuditableEntityBase<CourseId> {
 
     /**
      * Recommended constructor associating course with a creator and science
+     *
      * @param educator creator reference
-     * @param science science reference
+     * @param science  science reference
      * @return Course
      */
-    public static WrapperResult<Course> create(Educator educator, Science science) {
+    public static Course create(Educator educator, Science science) {
         Course course = new Course();
         course.setId(new CourseId());
         course.setCreatedBy(educator.getCreatedBy());
         course.setEducator(educator);
         course.setScience(science);
-        return WrapperResult.successWrapper(course);
+        return course;
     }
 }
 
