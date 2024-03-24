@@ -1,4 +1,4 @@
-package com.edutie.backend.application.implementation;
+package com.edutie.backend.application.implementation.profiles;
 
 import com.edutie.backend.application.implementation.shared.ApplicationError;
 import com.edutie.backend.application.profiles.educator.EducatorProfileService;
