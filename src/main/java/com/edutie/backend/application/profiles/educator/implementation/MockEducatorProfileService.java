@@ -1,6 +1,6 @@
-package com.edutie.backend.application.implementation.profiles;
+package com.edutie.backend.application.profiles.educator.implementation;
 
-import com.edutie.backend.application.implementation.shared.ApplicationError;
+import com.edutie.backend.application.shared.ApplicationError;
 import com.edutie.backend.application.profiles.educator.EducatorProfileService;
 import com.edutie.backend.application.profiles.educator.commands.ChangeEducatorTypeCommand;
 import com.edutie.backend.domain.common.identities.UserId;

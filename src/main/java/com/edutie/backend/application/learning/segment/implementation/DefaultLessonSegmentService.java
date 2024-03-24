@@ -1,4 +1,4 @@
-package com.edutie.backend.application.implementation.learning;
+package com.edutie.backend.application.learning.segment.implementation;
 
 import com.edutie.backend.application.learning.segment.SegmentService;
 import com.edutie.backend.application.learning.segment.viewmodels.SegmentView;

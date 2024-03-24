@@ -1,4 +1,4 @@
-package com.edutie.backend.application.implementation.shared;
+package com.edutie.backend.application.shared;
 
 import validation.Error;
 

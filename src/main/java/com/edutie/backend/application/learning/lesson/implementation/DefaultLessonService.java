@@ -1,4 +1,4 @@
-package com.edutie.backend.application.implementation.learning;
+package com.edutie.backend.application.learning.lesson.implementation;
 
 import com.edutie.backend.application.learning.lesson.LessonService;
 import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;

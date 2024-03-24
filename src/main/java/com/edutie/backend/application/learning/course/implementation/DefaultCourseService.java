@@ -1,4 +1,4 @@
-package com.edutie.backend.application.implementation.learning;
+package com.edutie.backend.application.learning.course.implementation;
 
 import com.edutie.backend.application.learning.course.CourseService;
 import com.edutie.backend.domain.learner.student.Student;

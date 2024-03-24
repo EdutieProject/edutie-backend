@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Service interface for managing learning resources in the educational learning context.
  */
+//TODO verify docs
 public interface LearningResourceService {
 
     /**
