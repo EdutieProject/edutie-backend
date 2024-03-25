@@ -3,14 +3,12 @@ package com.edutie.backend.domain.learner.learningresult;
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.learner.learningresult.entities.LearningAssessment;
-import com.edutie.backend.domain.learner.learningresult.entities.SkillAssessment;
 import com.edutie.backend.domain.learner.learningresult.entities.base.Assessment;
 import com.edutie.backend.domain.learner.learningresult.errors.LearningResultErrors;
 import com.edutie.backend.domain.learner.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.learner.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.learner.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.learner.student.Student;
-import com.edutie.backend.domain.education.skill.Skill;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,9 +44,6 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     private String reportText;
     @Embedded
     private Feedback feedback = new Feedback();
-    //TODO: remove skill reference
-    @OneToMany(targetEntity = SkillAssessment.class)
-    private final Set<SkillAssessment> skillAssessments = new HashSet<>();
     @OneToMany(targetEntity = LearningAssessment.class)
     private final Set<LearningAssessment> learningAssessments = new HashSet<>();
 
@@ -74,10 +69,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      * @return Assessment set
      */
     public Set<Assessment<?>> getAllAssessments() {
-        Set<Assessment<?>> assessments = new HashSet<>();
-        assessments.addAll(skillAssessments);
-        assessments.addAll(learningAssessments);
-        return assessments;
+        return new HashSet<>(learningAssessments);
     }
 
     /**
@@ -114,18 +106,6 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
         newAssessment.setEntity(assessedEntity);
         newAssessment.setId(new AssessmentId());
         return addAssessment(newAssessment, assessmentClass);
-    }
-
-    /**
-     * Removes skill assessment
-     *
-     * @param skill skill
-     * @return Result object
-     */
-    public Result removeAssessment(Skill skill) {
-        var searchedAssessment = skillAssessments.stream().filter(o -> o.getEntity() == skill).findFirst();
-        searchedAssessment.ifPresent(skillAssessments::remove);
-        return searchedAssessment.isPresent() ? Result.success() : Result.failure(LearningResultErrors.noAssessmentFound());
     }
 
     /**

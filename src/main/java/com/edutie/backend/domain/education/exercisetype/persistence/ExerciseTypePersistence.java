@@ -1,13 +1,13 @@
-package com.edutie.backend.infrastucture.persistence.contexts.studyprogram;
+package com.edutie.backend.domain.education.exercisetype.persistence;
 
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
-import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
+import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
 import java.util.List;
 
-public interface ExerciseTypePersistenceContext extends PersistenceContext<ExerciseType, ExerciseTypeId> {
+public interface ExerciseTypePersistence extends PersistenceBase<ExerciseType, ExerciseTypeId> {
     /**
      * Retrieve all exercise types
      * @return Exercise Type list

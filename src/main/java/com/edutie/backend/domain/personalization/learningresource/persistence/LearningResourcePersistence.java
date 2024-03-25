@@ -1,14 +1,14 @@
-package com.edutie.backend.infrastucture.persistence.contexts.personalization;
+package com.edutie.backend.domain.personalization.learningresource.persistence;
 
 import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
-import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
+import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
 import java.util.List;
 
-public interface LearningResourcePersistenceContext extends PersistenceContext<LearningResource, LearningResourceId> {
+public interface LearningResourcePersistence extends PersistenceBase<LearningResource, LearningResourceId> {
     /**
      * Retrieve all learning resources associated with given lesson segment
      * @param lessonSegmentId lesson segment id

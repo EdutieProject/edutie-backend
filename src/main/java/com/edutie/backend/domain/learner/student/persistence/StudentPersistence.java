@@ -1,13 +1,11 @@
-package com.edutie.backend.infrastucture.persistence.contexts.learner;
+package com.edutie.backend.domain.learner.student.persistence;
 
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
-import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
+import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
-import java.util.Optional;
-
-public interface StudentPersistenceContext extends PersistenceContext<Student, StudentId> {
+public interface StudentPersistence extends PersistenceBase<Student, StudentId> {
     /**
      * Retrieve Student reference based on the user id. It does not return an exceptional type, because
      * by design Student is present for all users.

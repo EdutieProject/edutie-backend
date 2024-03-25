@@ -1,12 +1,12 @@
-package com.edutie.backend.infrastucture.persistence.contexts.studyprogram;
+package com.edutie.backend.domain.studyprogram.science.persistence;
 
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
+import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
 import java.util.List;
 
-public interface SciencePersistenceContext extends PersistenceContext<Science, ScienceId> {
+public interface SciencePersistence extends PersistenceBase<Science, ScienceId> {
     /**
      * Retrieve all sciences
      * @return Science list
