@@ -6,17 +6,17 @@ import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import org.springframework.stereotype.Component;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DefaultCoursePersistence implements CoursePersistence {
 
     @Override
-    public WrapperResult<Course> getById(CourseId courseId) {
+    public Optional<Course> getById(CourseId courseId) {
 
-        return null;
+        return Optional.empty();
     }
 
     @Override
