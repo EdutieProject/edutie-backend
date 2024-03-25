@@ -3,7 +3,7 @@ package com.edutie.backend.infrastucture.persistence.implementation.contexts.stu
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.infrastucture.persistence.contexts.studyprogram.CoursePersistenceContext;
+import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import org.springframework.stereotype.Component;
 import validation.Result;
 import validation.WrapperResult;
@@ -11,7 +11,7 @@ import validation.WrapperResult;
 import java.util.List;
 
 @Component
-public class DefaultCoursePersistenceContext implements CoursePersistenceContext {
+public class DefaultCoursePersistence implements CoursePersistence {
 
     @Override
     public WrapperResult<Course> getById(CourseId courseId) {

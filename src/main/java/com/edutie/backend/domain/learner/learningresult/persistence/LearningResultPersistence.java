@@ -1,14 +1,14 @@
-package com.edutie.backend.infrastucture.persistence.contexts.learner;
+package com.edutie.backend.domain.learner.learningresult.persistence;
 
 import com.edutie.backend.domain.learner.learningresult.LearningResult;
 import com.edutie.backend.domain.learner.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
-import com.edutie.backend.infrastucture.persistence.contexts.base.PersistenceContext;
+import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
 import java.util.List;
 
-public interface LearningResultPersistenceContext extends PersistenceContext<LearningResult, LearningResultId> {
+public interface LearningResultPersistence extends PersistenceBase<LearningResult, LearningResultId> {
     /**
      * Retrieve all learning results associated with given lesson segment
      * @param lessonSegmentId lesson segment identifier

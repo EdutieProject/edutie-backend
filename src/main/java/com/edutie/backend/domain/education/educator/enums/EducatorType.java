@@ -17,8 +17,8 @@ public enum EducatorType implements PersistableEnum<String> {
     }
 
     public static class Converter extends AbstractEnumConverter<EducatorType, String> {
-        public Converter(Class<EducatorType> clazz) {
-            super(clazz);
+        public Converter() {
+            super(EducatorType.class);
         }
         
     }

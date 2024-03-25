@@ -1,14 +1,13 @@
-package com.edutie.backend.infrastucture.persistence.contexts.base;
+package com.edutie.backend.domain.common.persistence;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import validation.Result;
 import validation.WrapperResult;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 
-public interface PersistenceContext<T extends EntityBase<TId>, TId extends Serializable> {
+public interface PersistenceBase<T extends EntityBase<TId>, TId extends Serializable> {
     /**
      * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
      * it might not be present based on the identifier presence in the database.

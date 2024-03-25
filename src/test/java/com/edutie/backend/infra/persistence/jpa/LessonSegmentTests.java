@@ -39,8 +39,6 @@ public class LessonSegmentTests {
     private ScienceRepository scienceRepository;
     @Autowired
     private LessonSegmentRepository lessonSegmentRepository;
-    @Autowired
-    private SkillRepository skillRepository;
 
     @BeforeEach
     public void testSetup() {
