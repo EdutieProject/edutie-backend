@@ -5,7 +5,8 @@ import com.edutie.backend.application.profiles.student.StudentProfileService;
 import com.edutie.backend.application.profiles.student.commands.ChangeStudentProfilePropertiesCommand;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.learner.student.Student;
-import com.edutie.backend.infrastucture.persistence.contexts.learner.StudentPersistenceContext;
+import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,13 +14,11 @@ import validation.Result;
 import validation.WrapperResult;
 
 @Component
+@RequiredArgsConstructor
 public class DefaultStudentProfileService implements StudentProfileService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private final StudentPersistenceContext studentPersistenceContext;
+    private final StudentPersistence studentPersistence;
 
-    public DefaultStudentProfileService(StudentPersistenceContext studentPersistenceContext) {
-        this.studentPersistenceContext = studentPersistenceContext;
-    }
 
     /**
      * Resets the student profile for the specified user.
@@ -32,7 +31,7 @@ public class DefaultStudentProfileService implements StudentProfileService {
     public Result resetStudentProfile(UserId userId) {
         LOGGER.info("Resetting student profile for student of id: {}", userId.identifierValue());
         Student studentProfile = Student.create(userId);
-        Result result = studentPersistenceContext.save(studentProfile);
+        Result result = studentPersistence.save(studentProfile);
         if (result.isSuccess()) {
             LOGGER.info("Student profile reset for student of id {} successful", userId.identifierValue());
             return result;
@@ -50,7 +49,7 @@ public class DefaultStudentProfileService implements StudentProfileService {
     @Override
     public Result changeStudentProfileProperties(ChangeStudentProfilePropertiesCommand command) {
         LOGGER.info("Changing student profile properties for student of id {}", command.studentId().identifierValue());
-        WrapperResult<Student> fetchResult = studentPersistenceContext.getById(command.studentId());
+        WrapperResult<Student> fetchResult = studentPersistence.getById(command.studentId());
         if (fetchResult.isSuccess()) {
             Student student = fetchResult.getValue();
             student.setSchoolStage(command.studentSchoolStage());
