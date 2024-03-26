@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.security.implementation;
+package com.edutie.backend.infrastucture.authentication.implementation;
 
 import java.io.IOException;
 import java.util.Optional;
