@@ -5,7 +5,8 @@ import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
-import com.edutie.backend.infrastucture.persistence.contexts.studyprogram.LessonPersistenceContext;
+import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,13 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class DefaultLessonService implements LessonService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private LessonPersistenceContext lessonPersistenceContext;
-
-    public DefaultLessonService(LessonPersistenceContext lessonPersistenceContext) {
-        this.lessonPersistenceContext = lessonPersistenceContext;
-    }
+    private LessonPersistence lessonPersistence;
 
     /**
      * Retrieves a list of lesson views for a specific course and student.
@@ -32,8 +30,8 @@ public class DefaultLessonService implements LessonService {
     @Override
     public List<LessonView> getLessonsOfCourseForStudent(CourseId courseId, StudentId studentId) {
         LOGGER.info("Retrieving lessons for course of id {} for student of id {}", courseId.identifierValue(), studentId.identifierValue());
-        List<Lesson> lessons = lessonPersistenceContext.getAllOfCourseId(courseId);
-        //TODO: compute "done" property in lesson view
-        return lessons.stream().map(o->new LessonView(o, false)).collect(Collectors.toList());
+        List<Lesson> lessons = lessonPersistence.getAllOfCourseId(courseId);
+        //TODO: compute "done" property in lesson view. Perhaps add mappedBy property for Lesson
+        return lessons.stream().map(o -> new LessonView(o, false)).collect(Collectors.toList());
     }
 }
