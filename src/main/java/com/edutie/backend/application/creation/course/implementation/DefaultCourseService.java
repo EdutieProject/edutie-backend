@@ -12,28 +12,22 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import validation.Result;
 import validation.WrapperResult;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class DefaultCourseService implements CourseService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final CoursePersistence coursePersistence;
     private final EducatorPersistence educatorPersistence;
     private final SciencePersistence sciencePersistence;
-
-    public DefaultCourseService(CoursePersistence coursePersistence, EducatorPersistence educatorPersistence, SciencePersistence sciencePersistence) {
-        this.coursePersistence = coursePersistence;
-        this.educatorPersistence = educatorPersistence;
-        this.sciencePersistence = sciencePersistence;
-    }
 
 
     /**
@@ -45,12 +39,8 @@ public class DefaultCourseService implements CourseService {
     @Override
     public List<Course> getAllCoursesFromEducator(EducatorId educatorId) {
         LOGGER.info("Retrieving all courses made by educator of id {}", educatorId.identifierValue());
-        Optional<Educator> optionalEducator = educatorPersistence.getById(educatorId);
-        if (optionalEducator.isPresent()) {
-            return coursePersistence.getAllOfEducatorId(educatorId);
-        }
-        LOGGER.info("No educator of id {} found. Returning empty list.", educatorId.identifierValue());
-        return new ArrayList<>();
+        Educator educator = educatorPersistence.getById(educatorId).getValue();
+        return coursePersistence.getAllOfEducatorId(educatorId);
     }
 
     /**
@@ -62,20 +52,17 @@ public class DefaultCourseService implements CourseService {
     @Override
     public WrapperResult<Course> createCourse(CreateCourseCommand command) {
         LOGGER.info("Creating course by educator of id {}", command.educatorId().identifierValue());
-        //TODO: design: do we infer that educator is present from the authorization layer?
-        try {
-            Educator educator = educatorPersistence.getById(command.educatorId()).orElseThrow();
-            Science science = sciencePersistence.getById(command.scienceId()).orElseThrow();
-            Course course = Course.create(educator, science);
-            course.setName(command.courseName());
-            course.setDescription(command.courseDescription());
-            coursePersistence.save(course);
-            LOGGER.info("Course creation success. Course id: {}", course.getId().identifierValue());
-            return WrapperResult.successWrapper(course);
-        } catch (Exception exception) {
-            LOGGER.error("Creating course failed. Encountered exception: \n {}", exception.getMessage());
-            return WrapperResult.failureWrapper(ApplicationError.persistenceOperationError());
+        Educator educator = educatorPersistence.getById(command.educatorId()).getValue();
+        WrapperResult<Science> scienceResult = sciencePersistence.getById(command.scienceId());
+        if (scienceResult.isFailure()) {
+            LOGGER.info("Science of id {} was not found", command.scienceId().identifierValue());
         }
+        Course course = Course.create(educator, scienceResult.getValue());
+        course.setName(command.courseName());
+        course.setDescription(command.courseDescription());
+        coursePersistence.save(course);
+        LOGGER.info("Course creation success. Course id: {}", course.getId().identifierValue());
+        return WrapperResult.successWrapper(course);
     }
 
     /**
@@ -87,14 +74,13 @@ public class DefaultCourseService implements CourseService {
     @Override
     public Result changeCourseProperties(ChangeCoursePropertiesCommand command) {
         LOGGER.info("Modifying course of id {} by educator of id {}", command.courseId().identifierValue(), command.educatorId().identifierValue());
-        Optional<Course> optionalCourse = coursePersistence.getById(command.courseId());
-        if (optionalCourse.isEmpty()) {
+        WrapperResult<Course> courseSearchResult = coursePersistence.getById(command.courseId());
+        if (courseSearchResult.isFailure()) {
             LOGGER.info("Course of id {} has not been found in persistence", command.courseId().identifierValue());
             return Result.failure(ApplicationError.persistenceOperationError());
         }
-        Course course = optionalCourse.get();
-        //TODO: authorization ???
-        Educator educator = educatorPersistence.getById(command.educatorId()).orElseThrow();
+        Course course = courseSearchResult.getValue();
+        Educator educator = educatorPersistence.getById(command.educatorId()).getValue();
         if (!course.getEducator().equals(educator)) {
             LOGGER.info("Educator of id {} did not create the course of provided id. Therefore, they have no privilege " +
                     "of modifying this course properties.", command.educatorId().identifierValue());
@@ -115,6 +101,21 @@ public class DefaultCourseService implements CourseService {
      */
     @Override
     public Result changeCourseAccessibility(ChangeCourseAccessibilityCommand command) {
-
+        LOGGER.info("Modifying course accessibility of id {} by educator of id {}", command.courseId().identifierValue(), command.educatorId().identifierValue());
+        WrapperResult<Course> courseSearchResult = coursePersistence.getById(command.courseId());
+        if (courseSearchResult.isFailure()) {
+            LOGGER.info("Course of id {} has not been found in persistence", command.courseId().identifierValue());
+            return Result.failure(ApplicationError.persistenceOperationError());
+        }
+        Course course = courseSearchResult.getValue();
+        Educator educator = educatorPersistence.getById(command.educatorId()).getValue();
+        if (!course.getEducator().equals(educator)) {
+            LOGGER.info("Educator of id {} did not create the course of provided id. Therefore, they have no privilege " +
+                    "of modifying this course properties.", command.educatorId().identifierValue());
+            return Result.failure(ApplicationError.authorizationError());
+        }
+        course.setAccessible(command.accessibility());
+        course.setUpdatedBy(educator.getCreatedBy());
+        return Result.success();
     }
 }
