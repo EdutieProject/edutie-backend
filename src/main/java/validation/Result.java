@@ -3,10 +3,6 @@ package validation;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Results are object for operation success or failure representation.
  * Result may contain errors that caused the operation to fail. If the result
@@ -14,17 +10,13 @@ import java.util.List;
  */
 @Getter
 public class Result {
-    List<Error> errors = new ArrayList<>();
+    Error error = null;
 
     protected Result() {
     }
 
-    private Result(@NonNull List<Error> errorList) {
-        errors = errorList;
-    }
-
-    private Result(@NonNull Error error) {
-        errors.add(error);
+    protected Result(Error error) {
+        this.error = error;
     }
 
     /**
@@ -42,19 +34,7 @@ public class Result {
      * @return boolean - true/false
      */
     public boolean isSuccess() {
-        return errors.isEmpty();
-    }
-
-    /**
-     * Computes the result object based on the errors provided. If the provided
-     * error list is empty, return successful result. Failure result is returned
-     * otherwise
-     *
-     * @param errors error list
-     * @return Result object
-     */
-    public static Result fromErrors(@NonNull Error... errors) {
-        return new Result(Arrays.stream(errors).toList());
+        return error == null;
     }
 
     /**
@@ -78,10 +58,10 @@ public class Result {
 
 
     public static <T> WrapperResult<T> successWrapper(T value) {
-        return new WrapperResult<>(value);
+        return new WrapperResult<>(value, null);
     }
 
-    public static <T> WrapperResult<T> failureWrapper(Error... errors) {
-        return new WrapperResult<>(null, errors);
+    public static <T> WrapperResult<T> failureWrapper(Error error) {
+        return new WrapperResult<>(null, error);
     }
 }
