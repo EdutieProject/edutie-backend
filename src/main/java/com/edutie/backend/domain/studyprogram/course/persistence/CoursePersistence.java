@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.studyprogram.course.persistence;
 
+import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
@@ -27,4 +28,10 @@ public interface CoursePersistence extends PersistenceBase<Course, CourseId> {
      * @return Course list
      */
     List<Course> getAllInaccessibleOfScienceId(ScienceId scienceId);
+    /**
+     * Retrieve all courses created by given educator
+     * @param educatorId educator id
+     * @return Course list
+     */
+    List<Course> getAllOfEducatorId(EducatorId educatorId);
 }
