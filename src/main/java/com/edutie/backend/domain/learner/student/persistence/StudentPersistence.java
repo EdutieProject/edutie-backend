@@ -7,8 +7,8 @@ import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
 public interface StudentPersistence extends PersistenceBase<Student, StudentId> {
     /**
-     * Retrieve Student reference based on the user id. It does not return an exceptional type, because
-     * by design Student is present for all users.
+     * Retrieve Student reference based on the user id. It does not return an optional type, because
+     * by convention Student role is present for all users.
      * @param userId user identifier
      * @return Student reference
      */
