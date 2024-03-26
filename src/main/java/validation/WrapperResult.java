@@ -28,13 +28,15 @@ public class WrapperResult<T> extends Result {
      * @return new Wrapper Result of a new type.
      */
     public <U> WrapperResult<U> map(Function<T, U> mapper) {
-        checkNullValue();
+        if (value == null)
+            return new WrapperResult<>(null, this.getError());
         return WrapperResult.successWrapper(mapper.apply(value));
     }
 
     /**
      * Flattens the result, creating a Wrapper Result from a Result class, freeing the
      * wrapped value.
+     *
      * @return Result object mirroring this Wrapper Result
      */
     public Result flatten() {
@@ -45,6 +47,7 @@ public class WrapperResult<T> extends Result {
      * Retrieves the value. May throw {@code ResultMisuseException} when the value is null. The value is null
      * only if the wrapper result is failure, so it is necessary to check using {@code isFailure()}
      * or {@code isSuccess()}
+     *
      * @return Wrapped Value
      */
     public T getValue() {
