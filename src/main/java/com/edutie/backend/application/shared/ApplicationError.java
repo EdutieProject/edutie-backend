@@ -2,6 +2,7 @@ package com.edutie.backend.application.shared;
 
 import validation.Error;
 
+//TODO: error translation or different solution ?
 public class ApplicationError {
     public static Error persistenceOperationError() {
         return new Error("PERSISTENCE.404", "Database-related error occurred");

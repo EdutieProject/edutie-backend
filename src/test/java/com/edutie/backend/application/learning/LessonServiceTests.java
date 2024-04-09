@@ -1,6 +1,5 @@
 package com.edutie.backend.application.learning;
 
-import com.edutie.backend.application.learning.lesson.LessonService;
 import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -16,8 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class LessonServiceTests {
