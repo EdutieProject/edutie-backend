@@ -25,6 +25,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 //TODO: (DOMAIN) add hints
+//TODO: rework according to docs.
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private String overviewText;
     private String exerciseText;

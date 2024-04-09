@@ -1,6 +1,7 @@
 package com.edutie.backend.application.profiles.educator;
 
 import com.edutie.backend.application.profiles.educator.commands.ChangeEducatorTypeCommand;
+import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
 import validation.Result;
 
@@ -13,9 +14,10 @@ public interface EducatorProfileService {
      * Adds an educator profile for the specified user.
      *
      * @param userId The identifier of the user.
+     * @param adminId The identifier of admin assigning the role.
      * @return A {@code Result} indicating the success or failure of adding the educator profile.
      */
-    Result addEducatorProfile(UserId userId);
+    Result addEducatorProfile(UserId userId, AdminId adminId);
 
     /**
      * Changes the type of educator for the specified user based on the provided command.

@@ -9,7 +9,7 @@ specified in this layer are exposed to the user by the presentation infrastructu
     - lesson/
     - lessonSegment/
     - resource/
- - creator/ `Services exposed for the creators responsible for study program management`
+ - creation/ `Services exposed for the educators responsible for study program management`
     - course/
     - lesson/
     - lessonSegment/

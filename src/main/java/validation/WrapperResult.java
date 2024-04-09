@@ -1,8 +1,6 @@
 package validation;
 
-import lombok.Getter;
-
-import java.util.Arrays;
+import java.util.function.Function;
 
 /**
  * A wrapper type around the result class. Contains the additional field
@@ -14,12 +12,51 @@ import java.util.Arrays;
  * @param <T> type of contained value
  * @see validation.Result Base Result Class
  */
-@Getter
 public class WrapperResult<T> extends Result {
     T value;
 
-    protected WrapperResult(T obj, Error... errors) {
-        this.errors = Arrays.stream(errors).toList();
+    private void checkNullValue() {
+        if (value == null)
+            throw new ResultMisuseException("The value of the result was null! Could not proceed with the operation.");
+    }
+
+    /**
+     * Converts the wrapper result to the wrapper result of a different.
+     *
+     * @param mapper function converting
+     * @param <U>    type of new Wrapper Result
+     * @return new Wrapper Result of a new type.
+     */
+    public <U> WrapperResult<U> map(Function<T, U> mapper) {
+        if (value == null)
+            return new WrapperResult<>(null, this.getError());
+        return WrapperResult.successWrapper(mapper.apply(value));
+    }
+
+    /**
+     * Flattens the result, creating a Wrapper Result from a Result class, freeing the
+     * wrapped value.
+     *
+     * @return Result object mirroring this Wrapper Result
+     */
+    public Result flatten() {
+        return new Result(this.getError());
+    }
+
+    /**
+     * Retrieves the value. May throw {@code ResultMisuseException} when the value is null. The value is null
+     * only if the wrapper result is failure, so it is necessary to check using {@code isFailure()}
+     * or {@code isSuccess()}
+     *
+     * @return Wrapped Value
+     */
+    public T getValue() {
+        checkNullValue();
+        return value;
+    }
+
+    protected WrapperResult(T obj, Error error) {
+        this.error = error;
         this.value = obj;
     }
 

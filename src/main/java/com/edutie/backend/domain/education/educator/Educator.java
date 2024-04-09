@@ -10,10 +10,13 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Getter
 @Setter
+//TODO: rework privileges & educator types according to docs.
 public class Educator extends AuditableEntityBase<EducatorId> {
     @Convert(converter = EducatorType.Converter.class)
     EducatorType type = EducatorType.CREATOR;
@@ -27,7 +30,7 @@ public class Educator extends AuditableEntityBase<EducatorId> {
         educator.setAdminId(adminId);
         return educator;
     }
-    
+
     /**
      * Indicates whether the educator has creator privileges. Creator privileges give access
      * to course creation and management.
