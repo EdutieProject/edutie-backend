@@ -6,7 +6,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 
 import java.time.LocalDate;
 
-public record ChangeStudentProfilePropertiesCommand(
+public record ModifyStudentPropertiesCommand(
         StudentId studentId,
         JsonNullable<LocalDate> studentBirthdate,
         SchoolStage studentSchoolStage
