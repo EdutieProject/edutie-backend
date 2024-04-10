@@ -1,4 +1,4 @@
-package com.edutie.backend.application.shared;
+package com.edutie.backend.application.common;
 
 /**
  * Base use case handler interface. This interface should be used as a parent interface

@@ -28,7 +28,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegmentId> {
+public class Segment extends NavigableEntityBase<Segment, LessonSegmentId> {
     private String name;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "overview_description"))
@@ -57,13 +57,13 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
      * @param lesson  lesson reference
      * @return Lesson Segment
      */
-    public static WrapperResult<LessonSegment> create(Educator educator, Lesson lesson) {
-        LessonSegment lessonSegment = new LessonSegment();
-        lessonSegment.setId(new LessonSegmentId());
-        lessonSegment.setCreatedBy(educator.getCreatedBy());
-        lessonSegment.setEducator(educator);
-        lessonSegment.setLesson(lesson);
-        return WrapperResult.successWrapper(lessonSegment);
+    public static WrapperResult<Segment> create(Educator educator, Lesson lesson) {
+        Segment segment = new Segment();
+        segment.setId(new LessonSegmentId());
+        segment.setCreatedBy(educator.getCreatedBy());
+        segment.setEducator(educator);
+        segment.setLesson(lesson);
+        return WrapperResult.successWrapper(segment);
     }
 
     /**
@@ -87,14 +87,14 @@ public class LessonSegment extends NavigableEntityBase<LessonSegment, LessonSegm
     /**
      * Adds next element to the lesson segment tree
      *
-     * @param lessonSegment segment to be added as next
+     * @param segment segment to be added as next
      * @return Result of the operation
      */
     @Override
-    public Result addNextElement(LessonSegment lessonSegment) {
-        if (lessonSegment.getLesson() != lesson)
+    public Result addNextElement(Segment segment) {
+        if (segment.getLesson() != lesson)
             return Result.failure(NavigationErrors.invalidParentEntity());
-        nextElements.add(lessonSegment);
+        nextElements.add(segment);
         return Result.success();
     }
 }

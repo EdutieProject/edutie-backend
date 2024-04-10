@@ -1,6 +1,6 @@
 package com.edutie.backend.application.profiles.student.implementation;
 
-import com.edutie.backend.application.shared.ApplicationError;
+import com.edutie.backend.application.common.ApplicationError;
 import com.edutie.backend.application.profiles.student.StudentProfileService;
 import com.edutie.backend.application.profiles.student.commands.ChangeStudentProfilePropertiesCommand;
 import com.edutie.backend.domain.common.identities.UserId;

@@ -7,7 +7,7 @@ import com.edutie.backend.domain.personalization.learningresource.identities.Lea
 import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;
 import com.edutie.backend.domain.personalization.optimizationstrategies.IntelligenceOptimizationStrategy;
 import com.edutie.backend.domain.personalization.optimizationstrategies.base.OptimizationStrategy;
-import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
+import com.edutie.backend.domain.studyprogram.lessonsegment.Segment;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,10 +33,10 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private final Set<IntelligenceOptimizationStrategy> intelligenceOptimizationStrategies = new HashSet<>();
     @ManyToMany
     private final Set<AbilityOptimizationStrategy> abilityOptimizationStrategies = new HashSet<>();
-    @ManyToOne(targetEntity = LessonSegment.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Segment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "lesson_segment_id")
     @Setter(AccessLevel.PRIVATE)
-    private LessonSegment lessonSegment;
+    private Segment segment;
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
     @Setter(AccessLevel.PRIVATE)
@@ -45,15 +45,15 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     /**
      * Recommended constructor associating learning resource with a student (creation invoker) and a lesson segment.
      * @param student student profile reference
-     * @param lessonSegment lesson segment reference
+     * @param segment lesson segment reference
      * @return Learning Resource
      */
-    public static LearningResource create(Student student, LessonSegment lessonSegment) {
+    public static LearningResource create(Student student, Segment segment) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
         learningResource.setCreatedBy(student.getCreatedBy());
         learningResource.setStudent(student);
-        learningResource.setLessonSegment(lessonSegment);
+        learningResource.setSegment(segment);
         return learningResource;
     }
 

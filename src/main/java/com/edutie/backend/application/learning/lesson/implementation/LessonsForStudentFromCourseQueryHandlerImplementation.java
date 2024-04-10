@@ -3,7 +3,7 @@ package com.edutie.backend.application.learning.lesson.implementation;
 import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCourseQueryHandler;
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
-import com.edutie.backend.application.shared.UseCaseHandlerBase;
+import com.edutie.backend.application.common.UseCaseHandlerBase;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import lombok.RequiredArgsConstructor;

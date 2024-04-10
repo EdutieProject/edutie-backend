@@ -10,7 +10,7 @@ import com.edutie.backend.domain.learner.learningresult.identities.LearningResul
 import com.edutie.backend.domain.learner.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
+import com.edutie.backend.domain.studyprogram.lessonsegment.Segment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,11 +31,11 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResult extends AuditableEntityBase<LearningResultId> {
-    @ManyToOne(targetEntity = LessonSegment.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Segment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "lesson_segment_id")
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
-    private LessonSegment lessonSegment;
+    private Segment segment;
     @Setter(AccessLevel.PRIVATE)
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")
@@ -51,15 +51,15 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      * Recommended constructor associating learning result with Student and lesson segment
      *
      * @param student       student reference
-     * @param lessonSegment lesson segment reference
+     * @param segment lesson segment reference
      * @return new Learning Result
      */
-    public static LearningResult create(Student student, LessonSegment lessonSegment) {
+    public static LearningResult create(Student student, Segment segment) {
         LearningResult learningResult = new LearningResult();
         learningResult.setId(new LearningResultId());
         learningResult.setCreatedBy(student.getCreatedBy());
         learningResult.setStudent(student);
-        learningResult.setLessonSegment(lessonSegment);
+        learningResult.setSegment(segment);
         return learningResult;
     }
 

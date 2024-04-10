@@ -1,8 +1,8 @@
 package com.edutie.backend.application.learning.course.implementation;
 
 import com.edutie.backend.application.learning.course.queries.CoursesByStudentProgressQuery;
-import com.edutie.backend.application.shared.UseCaseHandlerBase;
-import com.edutie.backend.application.shared.UseCaseHandler;
+import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.UseCaseHandler;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -23,7 +23,7 @@ public class CoursesByStudentProgressQueryHandlerImplementation extends UseCaseH
         Student student = studentPersistence.getById(query.studentId()).getValue();
         List<Course> coursesInProgress = student
                 .getLearningHistory().stream()
-                .map(o -> o.getLessonSegment().getLesson().getCourse())
+                .map(o -> o.getSegment().getLesson().getCourse())
                 .collect(Collectors.toSet())
                 .stream().toList();
         return WrapperResult.successWrapper(coursesInProgress);

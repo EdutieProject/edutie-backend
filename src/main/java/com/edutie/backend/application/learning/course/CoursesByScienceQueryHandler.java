@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.course;
 
 import com.edutie.backend.application.learning.course.queries.CoursesByScienceQuery;
-import com.edutie.backend.application.shared.UseCaseHandler;
+import com.edutie.backend.application.common.UseCaseHandler;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import validation.WrapperResult;
 
