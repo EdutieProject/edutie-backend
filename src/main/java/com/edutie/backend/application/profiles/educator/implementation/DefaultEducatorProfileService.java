@@ -1,7 +1,6 @@
 package com.edutie.backend.application.profiles.educator.implementation;
 
 import com.edutie.backend.application.profiles.errors.RoleError;
-import com.edutie.backend.application.shared.ApplicationError;
 import com.edutie.backend.application.profiles.educator.EducatorProfileService;
 import com.edutie.backend.application.profiles.educator.commands.ChangeEducatorTypeCommand;
 import com.edutie.backend.domain.common.identities.AdminId;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -65,7 +63,7 @@ public class DefaultEducatorProfileService implements EducatorProfileService {
         WrapperResult<Educator> educatorSearchResult = educatorPersistence.getByUserId(userId);
         if (educatorSearchResult.isFailure())
             return Result.failure(educatorSearchResult.getErrors().getFirst());
-        educatorPersistence.deleteById(educatorSearchResult.getValue().getId());
+        educatorPersistence.removeById(educatorSearchResult.getValue().getId());
         return Result.success();
     }
 }

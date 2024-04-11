@@ -5,7 +5,6 @@ import validation.Result;
 import validation.WrapperResult;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 
 public interface PersistenceBase<T extends EntityBase<TId>, TId extends Serializable> {
@@ -31,5 +30,15 @@ public interface PersistenceBase<T extends EntityBase<TId>, TId extends Serializ
      * @param id entity id
      * @return Result object
      */
-    Result deleteById(TId id);
+    Result removeById(TId id);
+
+    /**
+     * Removes the following entity from the database. This is a default method, which when not
+     * override is correlated with removeById() method.
+     * @param entity entity
+     * @return Result
+     */
+    default Result remove(T entity) {
+        return removeById(entity.getId());
+    };
 }
