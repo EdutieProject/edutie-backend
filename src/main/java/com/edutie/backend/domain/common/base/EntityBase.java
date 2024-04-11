@@ -3,6 +3,7 @@ package com.edutie.backend.domain.common.base;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import lombok.Setter;
  * @param <TId> Type of id. Example: Book entity has an id of type BookId
  */
 @Getter
-@Setter
+@Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
 @EqualsAndHashCode
 public abstract class EntityBase<TId extends Serializable> {
