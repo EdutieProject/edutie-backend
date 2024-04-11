@@ -49,7 +49,7 @@ public class DefaultCoursePersistence implements CoursePersistence {
      * @return Result object
      */
     @Override
-    public Result deleteById(CourseId courseId) {
+    public Result removeById(CourseId courseId) {
         return null;
     }
 
