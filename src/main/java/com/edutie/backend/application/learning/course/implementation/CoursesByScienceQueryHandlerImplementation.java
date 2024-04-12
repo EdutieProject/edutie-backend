@@ -2,7 +2,7 @@ package com.edutie.backend.application.learning.course.implementation;
 
 import com.edutie.backend.application.learning.course.CoursesByScienceQueryHandler;
 import com.edutie.backend.application.learning.course.queries.CoursesByScienceQuery;
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class CoursesByScienceQueryHandlerImplementation extends UseCaseHandlerBase implements CoursesByScienceQueryHandler {
+public class CoursesByScienceQueryHandlerImplementation extends HandlerBase implements CoursesByScienceQueryHandler {
     private final CoursePersistence coursePersistence;
     @Override
     public WrapperResult<List<Course>> handle(CoursesByScienceQuery query) {

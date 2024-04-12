@@ -1,6 +1,6 @@
 package com.edutie.backend.application.management.course.implementation;
 
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.course.CoursesFromEducatorQueryHandler;
 import com.edutie.backend.application.management.course.queries.CoursesFromEducatorQuery;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -12,7 +12,7 @@ import validation.WrapperResult;
 import java.util.List;
 @Component
 @RequiredArgsConstructor
-public class CoursesFromEducatorQueryHandlerImplementation extends UseCaseHandlerBase implements CoursesFromEducatorQueryHandler {
+public class CoursesFromEducatorQueryHandlerImplementation extends HandlerBase implements CoursesFromEducatorQueryHandler {
     private final CoursePersistence coursePersistence;
     @Override
     public WrapperResult<List<Course>> handle(CoursesFromEducatorQuery coursesFromEducatorQuery) {

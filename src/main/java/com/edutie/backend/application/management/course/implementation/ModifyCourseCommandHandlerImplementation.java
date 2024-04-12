@@ -1,6 +1,6 @@
 package com.edutie.backend.application.management.course.implementation;
 
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.course.ModifyCourseCommandHandler;
 import com.edutie.backend.application.management.course.commands.ModifyCourseCommand;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -15,7 +15,7 @@ import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor
-public class ModifyCourseCommandHandlerImplementation extends UseCaseHandlerBase implements ModifyCourseCommandHandler {
+public class ModifyCourseCommandHandlerImplementation extends HandlerBase implements ModifyCourseCommandHandler {
     private final CoursePersistence coursePersistence;
     private final EducatorPersistence educatorPersistence;
     @Override

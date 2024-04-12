@@ -1,6 +1,6 @@
 package com.edutie.backend.application.learning.segment.implementation;
 
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLessonQueryHandler;
 import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
 import com.edutie.backend.application.learning.segment.viewmodels.SegmentView;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class SegmentsForStudentFromLessonQueryHandlerImplementation extends UseCaseHandlerBase implements SegmentsForStudentFromLessonQueryHandler {
+public class SegmentsForStudentFromLessonQueryHandlerImplementation extends HandlerBase implements SegmentsForStudentFromLessonQueryHandler {
     private final StudentPersistence studentPersistence;
     private final LessonPersistence lessonPersistence;
     @Override

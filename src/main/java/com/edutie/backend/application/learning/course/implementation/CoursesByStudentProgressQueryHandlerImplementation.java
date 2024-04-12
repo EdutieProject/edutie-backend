@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.course.implementation;
 
 import com.edutie.backend.application.learning.course.queries.CoursesByStudentProgressQuery;
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.common.UseCaseHandler;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class CoursesByStudentProgressQueryHandlerImplementation extends UseCaseHandlerBase implements UseCaseHandler<WrapperResult<List<Course>>, CoursesByStudentProgressQuery> {
+public class CoursesByStudentProgressQueryHandlerImplementation extends HandlerBase implements UseCaseHandler<WrapperResult<List<Course>>, CoursesByStudentProgressQuery> {
     private final StudentPersistence studentPersistence;
     @Override
     public WrapperResult<List<Course>> handle(CoursesByStudentProgressQuery query) {

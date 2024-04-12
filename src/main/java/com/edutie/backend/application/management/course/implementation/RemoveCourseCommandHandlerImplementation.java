@@ -1,6 +1,6 @@
 package com.edutie.backend.application.management.course.implementation;
 
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.course.RemoveCourseCommandHandler;
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -14,7 +14,7 @@ import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor
-public class RemoveCourseCommandHandlerImplementation extends UseCaseHandlerBase implements RemoveCourseCommandHandler {
+public class RemoveCourseCommandHandlerImplementation extends HandlerBase implements RemoveCourseCommandHandler {
     private final CoursePersistence coursePersistence;
     private final EducatorPersistence educatorPersistence;
     @Override

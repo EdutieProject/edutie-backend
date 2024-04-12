@@ -3,7 +3,7 @@ package com.edutie.backend.application.learning.lesson.implementation;
 import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCourseQueryHandler;
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
-import com.edutie.backend.application.common.UseCaseHandlerBase;
+import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class LessonsForStudentFromCourseQueryHandlerImplementation extends UseCaseHandlerBase implements LessonsForStudentFromCourseQueryHandler {
+public class LessonsForStudentFromCourseQueryHandlerImplementation extends HandlerBase implements LessonsForStudentFromCourseQueryHandler {
     private final LessonPersistence lessonPersistence;
     @Override
     public WrapperResult<List<LessonView>> handle(LessonsForStudentFromCourseQuery query) {
