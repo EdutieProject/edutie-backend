@@ -7,7 +7,7 @@ import com.edutie.backend.domain.personalization.learningresource.identities.Lea
 import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;
 import com.edutie.backend.domain.personalization.optimizationstrategies.IntelligenceOptimizationStrategy;
 import com.edutie.backend.domain.personalization.optimizationstrategies.base.OptimizationStrategy;
-import com.edutie.backend.domain.studyprogram.lessonsegment.Segment;
+import com.edutie.backend.domain.studyprogram.segment.Segment;
 import jakarta.persistence.*;
 import lombok.*;
 

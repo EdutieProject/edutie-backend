@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.studyprogram.lessonsegment;
+package com.edutie.backend.domain.studyprogram.segment;
 
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
@@ -7,7 +7,7 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
-import com.edutie.backend.domain.studyprogram.lessonsegment.identities.LessonSegmentId;
+import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +28,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Segment extends NavigableEntityBase<Segment, LessonSegmentId> {
+public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     private String name;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "overview_description"))
@@ -59,7 +59,7 @@ public class Segment extends NavigableEntityBase<Segment, LessonSegmentId> {
      */
     public static WrapperResult<Segment> create(Educator educator, Lesson lesson) {
         Segment segment = new Segment();
-        segment.setId(new LessonSegmentId());
+        segment.setId(new SegmentId());
         segment.setCreatedBy(educator.getCreatedBy());
         segment.setEducator(educator);
         segment.setLesson(lesson);

@@ -10,7 +10,7 @@ import com.edutie.backend.domain.learner.learningresult.identities.LearningResul
 import com.edutie.backend.domain.learner.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.studyprogram.lessonsegment.Segment;
+import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

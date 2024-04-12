@@ -3,13 +3,14 @@ package com.edutie.backend.domain.studyprogram.course;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
+import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A group of lessons with a tree-like structure. There are many fundamental lessons, and
@@ -25,6 +26,8 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String name;
     private String description;
     private boolean accessible = false;
+    @OneToMany(mappedBy = "course")
+    private List<Lesson> lessons = new ArrayList<>();
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     private Educator educator;

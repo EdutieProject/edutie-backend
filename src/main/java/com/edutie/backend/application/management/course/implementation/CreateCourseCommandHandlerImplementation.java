@@ -29,6 +29,7 @@ public class CreateCourseCommandHandlerImplementation implements CreateCourseCom
             return WrapperResult.failureWrapper(new Error("COURSE-2", "Course name must not be null"));
         course.setName(createCourseCommand.courseName());
         course.setDescription(createCourseCommand.courseDescription() != null ? createCourseCommand.courseDescription() : "");
+        //TODO: add sample root lesson to course
         coursePersistence.save(course);
         return WrapperResult.successWrapper(course);
     }

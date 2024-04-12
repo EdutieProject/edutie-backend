@@ -5,11 +5,9 @@ import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import validation.Result;
 import validation.WrapperResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A group of lesson segments with a tree-like structure. All lessons are part
@@ -30,7 +31,8 @@ import validation.WrapperResult;
 public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
-
+    @OneToMany(mappedBy = "lesson")
+    private List<Segment> segments = new ArrayList<>();
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
     @JsonIgnore
