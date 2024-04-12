@@ -27,6 +27,7 @@ public class Course extends AuditableEntityBase<CourseId> {
     private String description;
     private boolean accessible = false;
     @OneToMany(mappedBy = "course")
+    @Setter(AccessLevel.PRIVATE)
     private List<Lesson> lessons = new ArrayList<>();
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)

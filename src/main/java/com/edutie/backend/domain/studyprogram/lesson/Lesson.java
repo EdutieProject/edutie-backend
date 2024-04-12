@@ -32,6 +32,7 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
     @OneToMany(mappedBy = "lesson")
+    @Setter(AccessLevel.PRIVATE)
     private List<Segment> segments = new ArrayList<>();
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
