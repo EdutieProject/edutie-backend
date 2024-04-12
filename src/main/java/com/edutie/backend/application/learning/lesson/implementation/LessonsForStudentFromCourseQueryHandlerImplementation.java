@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class LessonsForStudentFromCourseQueryHandlerImplementation
-        extends UseCaseHandlerBase implements LessonsForStudentFromCourseQueryHandler {
+public class LessonsForStudentFromCourseQueryHandlerImplementation extends UseCaseHandlerBase implements LessonsForStudentFromCourseQueryHandler {
     private final LessonPersistence lessonPersistence;
     @Override
     public WrapperResult<List<LessonView>> handle(LessonsForStudentFromCourseQuery query) {
