@@ -7,8 +7,10 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
+import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
+import com.edutie.backend.domain.studyprogram.segment.Segment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.Error;
@@ -30,8 +32,15 @@ public class CreateCourseCommandHandlerImplementation extends UseCaseHandlerBase
             return WrapperResult.failureWrapper(new Error("COURSE-2", "Course name must not be null"));
         course.setName(createCourseCommand.courseName());
         course.setDescription(createCourseCommand.courseDescription() != null ? createCourseCommand.courseDescription() : "");
-        //TODO: add sample root lesson to course
-        coursePersistence.save(course);
+        // IDK if this works, need testing. Additionally: should be moved somewhere into domain
+        Lesson lesson = Lesson.create(educator, course);
+        lesson.setName("First lesson");
+        lesson.setDescription("This is the first lesson in this course with a placeholder description.");
+        Segment segment = Segment.create(educator, lesson);
+        segment.setName("First segment. Start designing it now!");
+        lesson.getSegments().add(segment);
+        course.getLessons().add(lesson);
+        coursePersistence.deepSave(course);
         return WrapperResult.successWrapper(course);
     }
 }

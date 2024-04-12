@@ -57,13 +57,13 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
      * @param lesson  lesson reference
      * @return Lesson Segment
      */
-    public static WrapperResult<Segment> create(Educator educator, Lesson lesson) {
+    public static Segment create(Educator educator, Lesson lesson) {
         Segment segment = new Segment();
         segment.setId(new SegmentId());
         segment.setCreatedBy(educator.getCreatedBy());
         segment.setEducator(educator);
         segment.setLesson(lesson);
-        return WrapperResult.successWrapper(segment);
+        return segment;
     }
 
     /**

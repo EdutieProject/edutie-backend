@@ -50,13 +50,13 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
      * @param course  course reference
      * @return Lesson
      */
-    public static WrapperResult<Lesson> create(Educator educator, Course course) {
+    public static Lesson create(Educator educator, Course course) {
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
         lesson.setCreatedBy(educator.getCreatedBy());
         lesson.setEducator(educator);
         lesson.setCourse(course);
-        return WrapperResult.successWrapper(lesson);
+        return lesson;
     }
 
 
