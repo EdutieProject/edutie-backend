@@ -19,7 +19,6 @@ import validation.WrapperResult;
 @RequiredArgsConstructor
 public class CreateSegmentCommandHandlerImplementation extends HandlerBase implements CreateSegmentCommandHandler {
     private final SegmentPersistence segmentPersistence;
-    private final LessonPersistence lessonPersistence;
     private final EducatorPersistence educatorPersistence;
     @Override
     public WrapperResult<Segment> handle(CreateSegmentCommand command) {
