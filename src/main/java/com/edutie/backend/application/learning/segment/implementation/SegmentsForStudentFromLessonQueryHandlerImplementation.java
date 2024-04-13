@@ -22,10 +22,10 @@ public class SegmentsForStudentFromLessonQueryHandlerImplementation extends Hand
     private final LessonPersistence lessonPersistence;
     @Override
     public WrapperResult<List<SegmentView>> handle(SegmentsForStudentFromLessonQuery query) {
-        Student student = studentPersistence.getById(query.studentId()).getValue();
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(query.lessonId());
         if (lessonWrapperResult.isFailure())
             return lessonWrapperResult.map(o -> null);
+        Student student = studentPersistence.getByUserId(query.studentUserId());
         Lesson lesson = lessonWrapperResult.getValue();
         return WrapperResult.successWrapper(
                 lesson.getSegments().stream().map(o ->

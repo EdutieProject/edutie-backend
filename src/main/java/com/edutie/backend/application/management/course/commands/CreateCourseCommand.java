@@ -1,10 +1,10 @@
 package com.edutie.backend.application.management.course.commands;
 
-import com.edutie.backend.domain.education.educator.identities.EducatorId;
+import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 
 public record CreateCourseCommand(
-        EducatorId educatorId,
+        UserId educatorUserId,
         String courseName,
         String courseDescription,
         ScienceId scienceId

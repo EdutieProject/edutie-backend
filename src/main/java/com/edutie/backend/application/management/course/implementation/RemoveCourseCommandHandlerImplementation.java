@@ -18,9 +18,9 @@ public class RemoveCourseCommandHandlerImplementation extends HandlerBase implem
     private final CoursePersistence coursePersistence;
     private final EducatorPersistence educatorPersistence;
     @Override
-    public Result handle(RemoveCourseCommand removeCourseCommand) {
-        Educator educator = educatorPersistence.getById(removeCourseCommand.educatorId()).getValue();
-        WrapperResult<Course> courseWrapperResult = coursePersistence.getById(removeCourseCommand.courseId());
+    public Result handle(RemoveCourseCommand command) {
+        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        WrapperResult<Course> courseWrapperResult = coursePersistence.getById(command.courseId());
         if (courseWrapperResult.isFailure())
             return courseWrapperResult;
         Course course = courseWrapperResult.getValue();

@@ -19,20 +19,18 @@ public class ModifyCourseCommandHandlerImplementation extends HandlerBase implem
     private final CoursePersistence coursePersistence;
     private final EducatorPersistence educatorPersistence;
     @Override
-    public Result handle(ModifyCourseCommand modifyCourseCommand) {
-        WrapperResult<Course> courseWrapperResult = coursePersistence.getById(modifyCourseCommand.courseId());
+    public Result handle(ModifyCourseCommand command) {
+        WrapperResult<Course> courseWrapperResult = coursePersistence.getById(command.courseId());
         if (courseWrapperResult.isFailure())
             return courseWrapperResult;
         Course course = courseWrapperResult.getValue();
-        WrapperResult<Educator> educatorWrapperResult = educatorPersistence.getById(modifyCourseCommand.educatorId());
-        if (educatorWrapperResult.isFailure())
-            return educatorWrapperResult;
-        Educator educator = educatorWrapperResult.getValue();
+        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         if (!course.getEducator().equals(educator))
             return Result.failure(new Error("COURSE-1", "You might not modify a course which is not yours"));
-        if (modifyCourseCommand.courseName() != null) course.setName(modifyCourseCommand.courseName());
-        if (modifyCourseCommand.courseDescription() != null) course.setDescription(modifyCourseCommand.courseDescription());
-        if (modifyCourseCommand.accessibility() != null) course.setAccessible(modifyCourseCommand.accessibility());
+        if (command.courseName() != null) course.setName(command.courseName());
+        if (command.courseDescription() != null) course.setDescription(command.courseDescription());
+        if (command.accessibility() != null) course.setAccessible(command.accessibility());
+        course.update(command.educatorUserId());
         return Result.success();
     }
 }

@@ -23,16 +23,16 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
     private final SciencePersistence sciencePersistence;
     private final CoursePersistence coursePersistence;
     @Override
-    public WrapperResult<Course> handle(CreateCourseCommand createCourseCommand) {
-        Educator educator = educatorPersistence.getById(createCourseCommand.educatorId()).getValue();
-        Science science = sciencePersistence.getById(createCourseCommand.scienceId()).getValue();
+    public WrapperResult<Course> handle(CreateCourseCommand command) {
+        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Science science = sciencePersistence.getById(command.scienceId()).getValue();
         Course course = Course.create(educator, science);
-        if (createCourseCommand.courseName() == null)
+        if (command.courseName() == null)
             //TODO: self-documenting errors
             return WrapperResult.failureWrapper(new Error("COURSE-2", "Course name must not be null"));
-        course.setName(createCourseCommand.courseName());
-        course.setDescription(createCourseCommand.courseDescription() != null ? createCourseCommand.courseDescription() : "");
-        // IDK if this works, need testing. Additionally: should be moved somewhere into domain
+        course.setName(command.courseName());
+        course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
+        // IDK if this works, need testing. Additionally: should be moved somewhere into domain service
         Lesson lesson = Lesson.create(educator, course);
         lesson.setName("First lesson");
         lesson.setDescription("This is the first lesson in this course with a placeholder description.");
