@@ -6,7 +6,7 @@ import validation.Result;
 
 import java.io.Serializable;
 
-public interface RolePersistence<TEntity extends EntityBase<TId>, TId extends Serializable> {
+public interface RolePersistence<TEntity extends EntityBase<TId>, TId extends Serializable> extends PersistenceBase<TEntity, TId> {
     /**
      * Retrieves role profile for the given user. The presence of the role profile should be checked
      * using authorization before using this function.

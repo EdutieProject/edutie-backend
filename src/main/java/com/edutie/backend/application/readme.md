@@ -7,13 +7,14 @@ specified in this layer are exposed to the user by the presentation infrastructu
 - learning/ `Services exposed for students for learning use cases, most of which are read operations.`
     - course/
     - lesson/
-    - lessonSegment/
-    - resource/
- - creation/ `Services exposed for the educators responsible for study program management`
+    - segment/
+    - resource/ `Note: Not implemented yet`
+ - management/ `Services exposed for the educators responsible for study program management`
     - course/
     - lesson/
-    - lessonSegment/
+    - segment/
 - profiles/ `Services responsible for roles (profiles) management`
     - educator/
     - student/
     - admin/ `Note: not implemented yet`
+- common/ `Catalogue for common & shared concepts e.g. errors or base classes`

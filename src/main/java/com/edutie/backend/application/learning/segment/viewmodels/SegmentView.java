@@ -1,9 +1,9 @@
 package com.edutie.backend.application.learning.segment.viewmodels;
 
-import com.edutie.backend.domain.studyprogram.lessonsegment.LessonSegment;
+import com.edutie.backend.domain.studyprogram.segment.Segment;
 
 public record SegmentView(
-        LessonSegment lessonSegment,
+        Segment segment,
         boolean done
         ) {
 }

@@ -1,12 +1,9 @@
 package com.edutie.backend.application.learning;
 
-import com.edutie.backend.application.learning.course.CourseService;
 import com.edutie.backend.domain.common.identities.AdminId;
 import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.learner.student.Student;
-import com.edutie.backend.domain.learner.student.errors.StudentErrors;
-import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
@@ -17,8 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class CourseServiceTests {

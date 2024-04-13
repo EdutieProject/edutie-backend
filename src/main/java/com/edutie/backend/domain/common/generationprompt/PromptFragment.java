@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.common.generationprompt;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.Embeddable;
 
 /**
@@ -8,7 +9,7 @@ import jakarta.persistence.Embeddable;
  * @param text text injected into prompt for generation.
  */
 @Embeddable
-public record PromptFragment(String text) {
+public record PromptFragment(@JsonValue String text) {
     /**
      * Default constructor should not be used and is
      * added because of persistence purposes. Recommended way of creating
