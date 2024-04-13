@@ -4,17 +4,21 @@ import com.edutie.backend.domain.common.identities.UserId;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor
 public class StudentAuthorizationImplementation implements StudentAuthorization {
-    private final StudentPersistence studentPersistence;
+    private final StudentRepository studentRepository;
     @Override
-    public WrapperResult<StudentId> authorize(UserId userId) {
-        return Result.successWrapper(studentPersistence.getByUserId(userId).getId());
+    public Result authorize(UserId userId) {
+        return studentRepository.findStudentsByCreatedBy(userId).isEmpty() ?
+                Result.failure(new Error("AUTHORIZATION", "Expected Student role for this student"))
+                : Result.success();
     }
 }
