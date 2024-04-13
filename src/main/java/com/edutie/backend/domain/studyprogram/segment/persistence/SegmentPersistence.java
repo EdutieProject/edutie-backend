@@ -8,7 +8,7 @@ import com.edutie.backend.domain.common.persistence.PersistenceBase;
 
 import java.util.List;
 
-public interface LessonSegmentPersistence extends PersistenceBase<Segment, SegmentId> {
+public interface SegmentPersistence extends PersistenceBase<Segment, SegmentId> {
     /**
      * Retrieve all lesson segments associated with given lesson
      * @param lessonId lesson id

@@ -1,10 +1,11 @@
 package com.edutie.backend.application.management.science.commands;
 
-import com.edutie.backend.domain.common.identities.AdminId;
+import com.edutie.backend.domain.common.identities.UserId;
+import lombok.NonNull;
 
 public record CreateScienceCommand(
-        AdminId adminId,
-        String scienceName,
+        @NonNull UserId adminUserId,
+        @NonNull String scienceName,
         String scienceDescription
 ) {
 }

@@ -31,6 +31,7 @@ public class ModifyCourseCommandHandlerImplementation extends HandlerBase implem
         if (command.courseDescription() != null) course.setDescription(command.courseDescription());
         if (command.accessibility() != null) course.setAccessible(command.accessibility());
         course.update(command.educatorUserId());
+        coursePersistence.save(course);
         return Result.success();
     }
 }

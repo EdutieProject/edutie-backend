@@ -9,6 +9,7 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -24,6 +25,8 @@ public class RemoveCourseCommandHandlerImplementation extends HandlerBase implem
         if (courseWrapperResult.isFailure())
             return courseWrapperResult;
         Course course = courseWrapperResult.getValue();
+        if (!course.getEducator().equals(educator))
+            return Result.failure(new Error("COURSE-3", "Only the creator of the course may delete it"));
         return coursePersistence.remove(course);
     }
 }
