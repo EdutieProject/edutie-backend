@@ -6,18 +6,21 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import validation.Error;
+import validation.Result;
 import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor
 public class EducatorAuthorizationImplementation implements EducatorAuthorization {
-    private final EducatorPersistence educatorPersistence;
-
+    private final EducatorRepository educatorRepository;
     @Override
-    public WrapperResult<EducatorId> authorize(UserId userId) {
-        WrapperResult<Educator> educatorResult = educatorPersistence.getByUserId(userId);
-        return educatorResult.map(EntityBase::getId);
+    public Result authorize(UserId userId) {
+        return educatorRepository.findEducatorsByCreatedBy(userId).isEmpty() ?
+                Result.failure(new Error("AUTHORIZATION", "Expected Educator role for this user"))
+                : Result.success();
     }
 }

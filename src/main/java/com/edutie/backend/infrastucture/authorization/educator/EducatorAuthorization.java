@@ -1,7 +1,6 @@
 package com.edutie.backend.infrastucture.authorization.educator;
 
-import com.edutie.backend.domain.education.educator.identities.EducatorId;
-import com.edutie.backend.infrastucture.authorization.base.Authorization;
+import com.edutie.backend.infrastucture.authorization.base.AuthorizationBase;
 
-public interface EducatorAuthorization extends Authorization<EducatorId> {
+public interface EducatorAuthorization extends AuthorizationBase {
 }
