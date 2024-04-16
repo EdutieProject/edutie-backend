@@ -129,8 +129,8 @@ public class StudyProgramTests {
 //    @Test
 //    public void lessonCreateRetrieveTest() {
 //        Lesson lesson = new Lesson();
-//        var lessonId = new LessonId();
-//        lesson.setId(lessonId);
+//        var segmentId = new LessonId();
+//        lesson.setId(segmentId);
 //        lesson.setCreatedBy(mockUser);
 //        lesson.setName("The first lesson");
 //        lesson.setDescription("First lesson's description");

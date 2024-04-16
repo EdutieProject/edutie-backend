@@ -1,8 +1,9 @@
 package com.edutie.backend.application.profiles.student.commands;
 
 import com.edutie.backend.domain.administration.UserId;
+import lombok.NonNull;
 
 public record ResetStudentProfileCommand(
-        UserId studentUserId
+        @NonNull UserId studentUserId
 ){
 }
