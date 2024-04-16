@@ -13,6 +13,6 @@ public class RemoveEducatorRoleCommandHandlerImplementation extends HandlerBase 
     private final EducatorPersistence educatorPersistence;
     @Override
     public Result handle(RemoveEducatorRoleCommand command) {
-        return educatorPersistence.removeForUser(command.educatorUserId());
+        return educatorPersistence.removeById(command.educatorId());
     }
 }

@@ -2,7 +2,7 @@ package com.edutie.backend.domain.personalization.optimizationstrategies.base;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.studenttraits.Ability;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
 import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;

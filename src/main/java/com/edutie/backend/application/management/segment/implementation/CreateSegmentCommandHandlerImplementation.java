@@ -28,8 +28,6 @@ public class CreateSegmentCommandHandlerImplementation extends HandlerBase imple
             return previousSegmentWrapper;
         Segment segment = Segment.create(educator, previousSegmentWrapper.getValue().getLesson());
         segment.setName(command.segmentName());
-        //TODO after reimplementation
-        LOGGER.info("Not implemented yet, no write operations performed");
         segmentPersistence.save(segment);
         return WrapperResult.successWrapper(segment);
     }

@@ -28,7 +28,7 @@ public class RemoveLessonCommandHandlerImplementation extends HandlerBase implem
             return lessonWrapperResult;
         Lesson lesson = lessonWrapperResult.getValue();
         if (!lesson.getEducator().equals(educator))
-            return Result.failure(new Error("LESSON-1", "To modify lesson u must be a creator of it"));
+            return Result.failure(new Error("LESSON-1", "To remove a lesson u must be a creator of it"));
         Lesson previousLesson = lesson.getPreviousElement();
         Set<Lesson> nextLessons = lesson.getNextElements();
         for (Lesson nextLesson : nextLessons) {

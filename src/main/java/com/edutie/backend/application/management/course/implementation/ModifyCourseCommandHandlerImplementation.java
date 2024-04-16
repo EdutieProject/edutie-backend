@@ -26,6 +26,7 @@ public class ModifyCourseCommandHandlerImplementation extends HandlerBase implem
         Course course = courseWrapperResult.getValue();
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         if (!course.getEducator().equals(educator))
+            //TODO: self-documenting errors - domain (?)
             return Result.failure(new Error("COURSE-1", "You might not modify a course which is not yours"));
         if (command.courseName() != null) course.setName(command.courseName());
         if (command.courseDescription() != null) course.setDescription(command.courseDescription());

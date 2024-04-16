@@ -1,0 +1,17 @@
+package com.edutie.backend.domain.administration;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.MappedSuperclass;
+import lombok.AccessLevel;
+import lombok.Setter;
+
+import java.io.Serializable;
+@Setter(AccessLevel.PROTECTED)
+@MappedSuperclass
+public abstract class RestrictedRole<TId extends Serializable> extends Role<TId> {
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "assigned_by_admin_id", nullable = false))
+    protected AdminId assignedBy;
+}

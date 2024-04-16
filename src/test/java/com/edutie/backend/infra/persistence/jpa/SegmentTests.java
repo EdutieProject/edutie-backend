@@ -1,8 +1,8 @@
 package com.edutie.backend.infra.persistence.jpa;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.common.identities.AdminId;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;

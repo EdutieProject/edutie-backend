@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.common.identities;
+package com.edutie.backend.domain.administration;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.Embeddable;

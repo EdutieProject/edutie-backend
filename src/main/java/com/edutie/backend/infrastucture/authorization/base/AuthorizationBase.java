@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastucture.authorization.base;
 
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import validation.Result;
 
 /**

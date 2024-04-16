@@ -1,8 +1,8 @@
 package com.edutie.backend.domain.learner.student;
 
+import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.common.Utilities;
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.learner.learningresult.LearningResult;
 import com.edutie.backend.domain.learner.student.entites.AbilityLearningParameter;
 import com.edutie.backend.domain.learner.student.entites.IntelligenceLearningParameter;
@@ -33,7 +33,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Student extends AuditableEntityBase<StudentId> {
+public class Student extends Role<StudentId> {
     @Embedded
     private SchoolStage schoolStage = new SchoolStage();
     private LocalDate birthdate = null;
@@ -54,7 +54,7 @@ public class Student extends AuditableEntityBase<StudentId> {
      */
     public static Student create(UserId userId) {
         Student student = new Student();
-        student.setCreatedBy(userId);
+        student.setOwnerUserId(userId);
         student.setId(new StudentId());
         return student;
     }
