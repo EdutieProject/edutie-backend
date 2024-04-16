@@ -27,9 +27,6 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         Science science = sciencePersistence.getById(command.scienceId()).getValue();
         Course course = Course.create(educator, science);
-        if (command.courseName() == null)
-            //TODO: self-documenting errors
-            return WrapperResult.failureWrapper(new Error("COURSE-2", "Course name must not be null"));
         course.setName(command.courseName());
         course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
         // IDK if this works, need testing. Additionally: should be moved somewhere into domain service

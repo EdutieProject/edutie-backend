@@ -25,7 +25,7 @@ public class CreatedSegmentsQueryHandlerImplementation extends HandlerBase imple
             Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
             return Result.successWrapper(segmentPersistence.getAllOfCreatorId(educator.getId()));
         } catch (Exception exception) {
-            return Result.failureWrapper(new Error("Sth went wrong", exception.getMessage()));
+            return Result.failureWrapper(new Error("Sth went wrong", exception.getMessage())); // TODO: ?
         }
     }
 }
