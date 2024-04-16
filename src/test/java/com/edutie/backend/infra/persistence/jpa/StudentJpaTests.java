@@ -1,6 +1,6 @@
 package com.edutie.backend.infra.persistence.jpa;
 
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.studenttraits.Intelligence;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.entites.IntelligenceLearningParameter;

@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.common.persistence;
 
 import com.edutie.backend.domain.common.base.EntityBase;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import validation.Result;
 
 import java.io.Serializable;

@@ -3,7 +3,7 @@ package com.edutie.backend.domain.common.base;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;

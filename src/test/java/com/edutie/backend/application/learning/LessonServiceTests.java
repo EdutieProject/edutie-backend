@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning;
 
-import com.edutie.backend.domain.common.identities.AdminId;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.studyprogram.course.Course;

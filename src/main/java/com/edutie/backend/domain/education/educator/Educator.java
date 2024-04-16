@@ -1,8 +1,8 @@
 package com.edutie.backend.domain.education.educator;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.common.identities.AdminId;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
 

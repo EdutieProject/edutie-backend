@@ -1,6 +1,6 @@
 package com.edutie.backend.infra.persistence.jpa;
 
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;

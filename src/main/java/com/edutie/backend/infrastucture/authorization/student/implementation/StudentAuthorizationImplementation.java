@@ -1,15 +1,12 @@
 package com.edutie.backend.infrastucture.authorization.student.implementation;
 
-import com.edutie.backend.domain.common.identities.UserId;
-import com.edutie.backend.domain.learner.student.identities.StudentId;
-import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.Error;
 import validation.Result;
-import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor

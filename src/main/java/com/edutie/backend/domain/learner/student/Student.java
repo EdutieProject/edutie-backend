@@ -2,7 +2,7 @@ package com.edutie.backend.domain.learner.student;
 
 import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.common.identities.UserId;
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.learner.learningresult.LearningResult;
 import com.edutie.backend.domain.learner.student.entites.AbilityLearningParameter;
 import com.edutie.backend.domain.learner.student.entites.IntelligenceLearningParameter;
