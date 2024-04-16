@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.education.educator;
 
+import com.edutie.backend.domain.administration.RestrictedRole;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.administration.AdminId;
 import com.edutie.backend.domain.administration.UserId;
@@ -17,35 +18,14 @@ import lombok.Setter;
 @Getter
 @Setter
 //TODO: rework privileges & educator types according to docs.
-public class Educator extends AuditableEntityBase<EducatorId> {
+public class Educator extends RestrictedRole<EducatorId> {
     @Convert(converter = EducatorType.Converter.class)
     EducatorType type = EducatorType.CREATOR;
-    @Embedded
-    @Setter(AccessLevel.PRIVATE)
-    AdminId adminId;
     public static Educator create(UserId userId, AdminId adminId) {
         Educator educator = new Educator();
         educator.setId(new EducatorId());
-        educator.setCreatedBy(userId);
-        educator.setAdminId(adminId);
+        educator.setOwnerUserId(userId);
+        educator.setAssignedBy(adminId);
         return educator;
-    }
-
-    /**
-     * Indicates whether the educator has creator privileges. Creator privileges give access
-     * to course creation and management.
-     * @return true/false
-     */
-    public boolean hasCreatorPrivileges() {
-        return this.type.equals(EducatorType.CREATOR) || this.type.equals(EducatorType.PEDAGOGUE);
-    }
-
-    /**
-     * Indicates whether the educator has psychologist privileges Psychologist privileges mean
-     * access to the learning personalization framework.
-     * @return
-     */
-    public boolean hasPsychologistPrivileges() {
-        return this.type.equals(EducatorType.PSYCHOLOGIST) || this.type.equals(EducatorType.PEDAGOGUE);
     }
 }
