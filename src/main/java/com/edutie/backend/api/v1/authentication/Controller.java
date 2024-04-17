@@ -1,4 +1,4 @@
-package com.edutie.backend.api.authentication;
+package com.edutie.backend.api.v1.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
