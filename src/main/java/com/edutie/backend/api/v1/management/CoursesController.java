@@ -1,4 +1,4 @@
-package com.edutie.backend.api.v1.management.course;
+package com.edutie.backend.api.v1.management;
 
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.management.course.CreateCourseCommandHandler;
@@ -45,7 +45,7 @@ public class CoursesController {
         UserId actionUserId = authentication.authenticateUser(jwt);
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createCourseCommandHandler.handle(command));
+                .handle(() -> createCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @PatchMapping
@@ -54,7 +54,7 @@ public class CoursesController {
         UserId actionUserId = authentication.authenticateUser(jwt);
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> modifyCourseCommandHandler.handle(command));
+                .handle(() -> modifyCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @DeleteMapping
@@ -63,7 +63,7 @@ public class CoursesController {
         UserId actionUserId = authentication.authenticateUser(jwt);
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> removeCourseCommandHandler.handle(command));
+                .handle(() -> removeCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
 }
