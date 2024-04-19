@@ -30,7 +30,7 @@ public class SegmentsController {
     private final CreatedSegmentsQueryHandler createdSegmentsQueryHandler;
     private final EducatorAuthorization educatorAuthorization;
 
-    @GetMapping("/created")
+    @GetMapping
     public ResponseEntity<?> getCreatedSegments() {
         JsonWebToken jwt = new JsonWebToken();
         UserId actionUserId = authentication.authenticateUser(jwt);

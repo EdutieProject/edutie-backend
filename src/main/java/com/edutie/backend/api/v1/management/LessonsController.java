@@ -30,7 +30,7 @@ public class LessonsController {
     private final CreatedLessonsQueryHandler createdLessonsQueryHandler;
     private final EducatorAuthorization educatorAuthorization;
 
-    @GetMapping("/created")
+    @GetMapping
     public ResponseEntity<?> getCreatedLessons() {
         JsonWebToken jwt = new JsonWebToken();
         UserId actionUserId = authentication.authenticateUser(jwt);
