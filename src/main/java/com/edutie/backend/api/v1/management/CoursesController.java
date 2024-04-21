@@ -50,8 +50,7 @@ public class CoursesController {
 
     @PatchMapping
     public ResponseEntity<?> modifyCourse(@RequestBody ModifyCourseCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> modifyCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
@@ -59,8 +58,7 @@ public class CoursesController {
 
     @DeleteMapping
     public ResponseEntity<?> removeCourse(@RequestBody RemoveCourseCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> removeCourseCommandHandler.handle(command.educatorUserId(actionUserId)));

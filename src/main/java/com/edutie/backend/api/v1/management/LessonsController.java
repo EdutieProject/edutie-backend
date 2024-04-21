@@ -32,8 +32,7 @@ public class LessonsController {
 
     @GetMapping
     public ResponseEntity<?> getCreatedLessons() {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createdLessonsQueryHandler.handle(new CreatedLessonsQuery(actionUserId)));
@@ -41,8 +40,7 @@ public class LessonsController {
 
     @PostMapping
     public ResponseEntity<?> createLesson(@RequestBody CreateLessonCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createLessonCommandHandler.handle(command.educatorUserId(actionUserId)));
@@ -50,8 +48,7 @@ public class LessonsController {
 
     @PatchMapping
     public ResponseEntity<?> modifyLesson(@RequestBody ModifyLessonCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> modifyLessonCommandHandler.handle(command.educatorUserId(actionUserId)));
@@ -59,8 +56,7 @@ public class LessonsController {
 
     @DeleteMapping
     public ResponseEntity<?> removeLesson(@RequestBody RemoveLessonCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> removeLessonCommandHandler.handle(command.educatorUserId(actionUserId)));

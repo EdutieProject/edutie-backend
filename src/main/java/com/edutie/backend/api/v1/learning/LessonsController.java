@@ -1,5 +1,6 @@
 package com.edutie.backend.api.v1.learning;
 
+import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCourseQueryHandler;
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.domain.administration.UserId;
@@ -27,12 +28,8 @@ public class LessonsController {
     @GetMapping()
     public ResponseEntity<?> getLessonsForStudentFromCourse(@RequestParam CourseId courseId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware
-        Result authorizationResult = studentAuthorization.authorize(actionUserId);
-        if (authorizationResult.isFailure())
-            return ResponseEntity.status(403).body(authorizationResult);
-        WrapperResult<?> result = lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(courseId, actionUserId));
-        return result.isSuccess() ?
-                ResponseEntity.ok(result.getValue())
-                : ResponseEntity.status(400).body(result.getValue());
+        return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
+                .authorize(actionUserId, studentAuthorization)
+                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(courseId, actionUserId)));
     }
 }

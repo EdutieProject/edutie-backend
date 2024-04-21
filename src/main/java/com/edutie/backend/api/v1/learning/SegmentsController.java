@@ -1,5 +1,6 @@
 package com.edutie.backend.api.v1.learning;
 
+import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLessonQueryHandler;
 import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
@@ -28,12 +29,8 @@ public class SegmentsController {
     @GetMapping
     public ResponseEntity<?> getSegmentsForStudentFromLesson(@RequestParam LessonId lessonId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware ?
-        Result authorizationResult = studentAuthorization.authorize(actionUserId);
-        if (authorizationResult.isFailure())
-            return ResponseEntity.status(403).body(authorizationResult);
-        WrapperResult<?> result = segmentsForStudentFromLessonQueryHandler.handle(new SegmentsForStudentFromLessonQuery(actionUserId, lessonId));
-        return result.isSuccess() ?
-                ResponseEntity.ok(result.getValue())
-                : ResponseEntity.status(404).body(result.getValue());
+        return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
+                .authorize(actionUserId, studentAuthorization)
+                .handle(() -> segmentsForStudentFromLessonQueryHandler.handle(new SegmentsForStudentFromLessonQuery(actionUserId, lessonId)));
     }
 }

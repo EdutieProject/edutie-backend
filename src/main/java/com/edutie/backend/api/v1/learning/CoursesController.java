@@ -1,5 +1,6 @@
 package com.edutie.backend.api.v1.learning;
 
+import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.course.queries.CoursesByScienceQuery;
 import com.edutie.backend.application.learning.course.queries.CoursesByStudentProgressQuery;
 import com.edutie.backend.domain.administration.UserId;
@@ -30,22 +31,17 @@ public class CoursesController {
 
     @GetMapping
     public ResponseEntity<?> getCoursesByScience(@RequestParam ScienceId scienceId) {
-        authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
-        WrapperResult<?> result = coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(scienceId));
-        return result.isSuccess() ?
-                ResponseEntity.ok(result.getValue())
-                : ResponseEntity.status(400).body(result);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
+        return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
+                .authorize(actionUserId, studentAuthorization)
+                .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(scienceId)));
     }
 
-    @GetMapping("/started")
+    @GetMapping("/progressed")
     public ResponseEntity<?> getCoursesByStudentProgress() {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
-        Result authorizationResult = studentAuthorization.authorize(actionUserId);
-        if (authorizationResult.isFailure())
-            return ResponseEntity.status(403).body(authorizationResult);
-        WrapperResult<?> result = coursesByStudentProgressQueryHandler.handle(new CoursesByStudentProgressQuery(actionUserId));
-        return result.isSuccess() ?
-                ResponseEntity.ok(result.getValue())
-                : ResponseEntity.status(400).body(result);
+        return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
+                .authorize(actionUserId, studentAuthorization)
+                .handle(() -> coursesByStudentProgressQueryHandler.handle(new CoursesByStudentProgressQuery(actionUserId)));
     }
 }

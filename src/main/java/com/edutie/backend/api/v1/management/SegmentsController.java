@@ -32,8 +32,7 @@ public class SegmentsController {
 
     @GetMapping
     public ResponseEntity<?> getCreatedSegments() {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery(actionUserId)));
@@ -41,8 +40,7 @@ public class SegmentsController {
 
     @PostMapping
     public ResponseEntity<?> createSegment(@RequestBody CreateSegmentCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createSegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
@@ -50,8 +48,7 @@ public class SegmentsController {
 
     @PatchMapping
     public ResponseEntity<?> modifySegment(@RequestBody ModifySegmentCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> modifySegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
@@ -59,8 +56,7 @@ public class SegmentsController {
 
     @DeleteMapping
     public ResponseEntity<?> modifySegment(@RequestBody RemoveSegmentCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> removeSegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
