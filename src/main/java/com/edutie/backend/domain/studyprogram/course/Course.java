@@ -48,7 +48,7 @@ public class Course extends AuditableEntityBase<CourseId> {
     public static Course create(Educator educator, Science science) {
         Course course = new Course();
         course.setId(new CourseId());
-        course.setCreatedBy(educator.getCreatedBy());
+        course.setCreatedBy(educator.getOwnerUserId());
         course.setEducator(educator);
         course.setScience(science);
         return course;

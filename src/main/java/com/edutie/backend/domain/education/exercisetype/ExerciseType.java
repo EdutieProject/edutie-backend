@@ -41,7 +41,7 @@ public class ExerciseType extends AuditableEntityBase<ExerciseTypeId> {
     public static WrapperResult<ExerciseType> create(Educator educator) {
         ExerciseType exerciseType = new ExerciseType();
         exerciseType.setId(new ExerciseTypeId());
-        exerciseType.setCreatedBy(educator.getCreatedBy());
+        exerciseType.setCreatedBy(educator.getOwnerUserId());
         exerciseType.setEducator(educator);
         return WrapperResult.successWrapper(exerciseType);
     }

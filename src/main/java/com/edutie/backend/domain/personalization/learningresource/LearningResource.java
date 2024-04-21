@@ -1,18 +1,14 @@
 package com.edutie.backend.domain.personalization.learningresource;
 
-import com.edutie.backend.domain.common.Utilities;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
-import com.edutie.backend.domain.personalization.optimizationstrategies.AbilityOptimizationStrategy;
-import com.edutie.backend.domain.personalization.optimizationstrategies.IntelligenceOptimizationStrategy;
-import com.edutie.backend.domain.personalization.optimizationstrategies.base.OptimizationStrategy;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A singular form of learning in the application.
@@ -27,12 +23,6 @@ import java.util.Set;
 //TODO: (DOMAIN) add hints
 //TODO: rework according to docs.
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
-    private String overviewText;
-    private String exerciseText;
-    @ManyToMany
-    private final Set<IntelligenceOptimizationStrategy> intelligenceOptimizationStrategies = new HashSet<>();
-    @ManyToMany
-    private final Set<AbilityOptimizationStrategy> abilityOptimizationStrategies = new HashSet<>();
     @ManyToOne(targetEntity = Segment.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "lesson_segment_id")
     @Setter(AccessLevel.PRIVATE)
@@ -44,6 +34,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
 
     /**
      * Recommended constructor associating learning resource with a student (creation invoker) and a lesson segment.
+     *
      * @param student student profile reference
      * @param segment lesson segment reference
      * @return Learning Resource
@@ -51,33 +42,10 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     public static LearningResource create(Student student, Segment segment) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
-        learningResource.setCreatedBy(student.getCreatedBy());
+        learningResource.setCreatedBy(student.getOwnerUserId());
         learningResource.setStudent(student);
         learningResource.setSegment(segment);
         return learningResource;
-    }
-
-    public Set<OptimizationStrategy<?>> getAllOptimizationStrategies() {
-        Set<OptimizationStrategy<?>> optimizationStrategies = new HashSet<>();
-        optimizationStrategies.addAll(abilityOptimizationStrategies);
-        optimizationStrategies.addAll(intelligenceOptimizationStrategies);
-        return optimizationStrategies;
-    }
-
-    public <T extends OptimizationStrategy<?>> void addOptimizationStrategy(T optimizationStrategy, Class<T> strategyClass) {
-        var optimizationStrategySet = Utilities.findSetOf(strategyClass, this).orElseThrow();
-        optimizationStrategySet.add(optimizationStrategy);
-    }
-
-    public <T extends OptimizationStrategy<?>> void removeOptimizationStrategy(T optimizationStrategy, Class<T> strategyClass) {
-        var optimizationStrategySet = Utilities.findSetOf(strategyClass, this).orElseThrow();
-        optimizationStrategySet.remove(optimizationStrategy);
-    }
-
-    public <T extends OptimizationStrategy<?>, U> void removeOptimizationStrategyById(U optimizationStrategyId, Class<T> strategyClass) {
-        var optimizationStrategySet = Utilities.findSetOf(strategyClass, this).orElseThrow();
-        optimizationStrategySet.stream().filter(o -> o.getId() == optimizationStrategyId).findFirst()
-                .ifPresent(optimizationStrategySet::remove);
     }
 
 }

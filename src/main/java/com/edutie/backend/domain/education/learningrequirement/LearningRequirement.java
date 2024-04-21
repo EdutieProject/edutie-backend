@@ -33,7 +33,7 @@ public class LearningRequirement extends AuditableEntityBase<LearningRequirement
     public static WrapperResult<LearningRequirement> create(Educator educator, Science science) {
         LearningRequirement learningRequirement = new LearningRequirement();
         learningRequirement.setId(new LearningRequirementId());
-        learningRequirement.setCreatedBy(educator.getCreatedBy());
+        learningRequirement.setCreatedBy(educator.getOwnerUserId());
         learningRequirement.setEducator(educator);
         learningRequirement.setScience(science);
         return WrapperResult.successWrapper(learningRequirement);
