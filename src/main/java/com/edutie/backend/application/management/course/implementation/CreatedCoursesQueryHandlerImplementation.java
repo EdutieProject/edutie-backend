@@ -20,6 +20,9 @@ public class CreatedCoursesQueryHandlerImplementation extends HandlerBase implem
     @Override
     public WrapperResult<List<Course>> handle(CreatedCoursesQuery query) {
         Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
-        return WrapperResult.successWrapper(coursePersistence.getAllOfEducatorId(educator.getId()));
+        WrapperResult<List<Course>> coursesResult = coursePersistence.getAllOfEducatorId(educator.getId());
+        if (coursesResult.isFailure())
+            return coursesResult;
+        return WrapperResult.successWrapper(coursesResult.getValue());
     }
 }

@@ -18,6 +18,9 @@ public class CoursesByScienceQueryHandlerImplementation extends HandlerBase impl
     @Override
     public WrapperResult<List<Course>> handle(CoursesByScienceQuery query) {
         LOGGER.info("Retrieving all courses of science of id {}", query.scienceId().identifierValue());
-        return WrapperResult.successWrapper(coursePersistence.getAllOfScienceId(query.scienceId()));
+        WrapperResult<List<Course>> coursesResult = coursePersistence.getAllOfScienceId(query.scienceId());
+        if (coursesResult.isFailure())
+            return coursesResult;
+        return WrapperResult.successWrapper(coursesResult.getValue());
     }
 }

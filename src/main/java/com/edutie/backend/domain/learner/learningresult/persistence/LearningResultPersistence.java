@@ -5,6 +5,7 @@ import com.edutie.backend.domain.learner.learningresult.identities.LearningResul
 import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.edutie.backend.domain.common.persistence.PersistenceBase;
+import validation.WrapperResult;
 
 import java.util.List;
 
@@ -12,14 +13,14 @@ public interface LearningResultPersistence extends PersistenceBase<LearningResul
     /**
      * Retrieve all learning results associated with given lesson segment
      * @param segmentId lesson segment identifier
-     * @return Learning Result list
+     * @return Wrapper result of desired list
      */
-    List<LearningResult> getAllOfLessonSegmentId(SegmentId segmentId);
+    WrapperResult<List<LearningResult>> getAllOfLessonSegmentId(SegmentId segmentId);
 
     /**
      * Retrieve all learning results associated with given student
      * @param studentId student identifier
-     * @return Learning Result list
+     * @return Wrapper result of desired list
      */
-    List<LearningResult> getAllOfStudentId(StudentId studentId);
+    WrapperResult<List<LearningResult>> getAllOfStudentId(StudentId studentId);
 }

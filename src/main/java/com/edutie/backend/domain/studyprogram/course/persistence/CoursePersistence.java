@@ -6,6 +6,7 @@ import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.domain.common.persistence.PersistenceBase;
 import validation.Result;
+import validation.WrapperResult;
 
 import java.util.List;
 
@@ -21,20 +22,20 @@ public interface CoursePersistence extends PersistenceBase<Course, CourseId> {
     /**
      * Retrieve all courses associated with given science
      * @param scienceId science id
-     * @return Course list
+     * @return Wrapper result of the desired list
      */
-    List<Course> getAllOfScienceId(ScienceId scienceId);
+    WrapperResult<List<Course>> getAllOfScienceId(ScienceId scienceId);
 
     /**
      * Retrieve all accessible courses associated with given science
      * @param scienceId science id
-     * @return Course list
+     * @return Wrapper result of the desired list
      */
-    List<Course> getAllAccessibleOfScienceId(ScienceId scienceId);
+    WrapperResult<List<Course>> getAllAccessibleOfScienceId(ScienceId scienceId);
     /**
      * Retrieve all courses created by given educator
      * @param educatorId educator id
-     * @return Course list
+     * @return Wrapper result of the desired list
      */
-    List<Course> getAllOfEducatorId(EducatorId educatorId);
+    WrapperResult<List<Course>> getAllOfEducatorId(EducatorId educatorId);
 }
