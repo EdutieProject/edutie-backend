@@ -18,8 +18,8 @@ public interface SegmentPersistence extends PersistenceBase<Segment, SegmentId> 
 
     /**
      * Retrieve all lesson segments associated with given creator
-     * @param educatorId creator id
+     * @param educatorId educator id
      * @return Lesson Segment list
      */
-    List<Segment> getAllOfCreatorId(EducatorId educatorId);
+    List<Segment> getAllOfEducatorId(EducatorId educatorId);
 }

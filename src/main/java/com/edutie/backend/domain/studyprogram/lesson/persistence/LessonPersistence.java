@@ -5,6 +5,7 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.common.persistence.PersistenceBase;
+import validation.Result;
 
 import java.util.List;
 
@@ -18,8 +19,15 @@ public interface LessonPersistence extends PersistenceBase<Lesson, LessonId> {
 
     /**
      * Retrieve all lessons associated with given creator
-     * @param educatorId creator id
+     * @param educatorId educator id
      * @return Lesson list
      */
-    List<Lesson> getAllOfCreatorId(EducatorId educatorId);
+    List<Lesson> getAllOfEducatorId(EducatorId educatorId);
+
+    /**
+     * Deep save the lesson together with all the underlying segments.
+     * @param lesson lesson to save
+     * @return result object
+     */
+    Result deepSave(Lesson lesson);
 }
