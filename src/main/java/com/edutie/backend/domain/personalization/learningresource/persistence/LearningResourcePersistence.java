@@ -4,12 +4,12 @@ import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
-import com.edutie.backend.domain.common.persistence.PersistenceBase;
+import com.edutie.backend.domain.common.persistence.Persistence;
 import validation.WrapperResult;
 
 import java.util.List;
 
-public interface LearningResourcePersistence extends PersistenceBase<LearningResource, LearningResourceId> {
+public interface LearningResourcePersistence extends Persistence<LearningResource, LearningResourceId> {
     /**
      * Retrieve all learning resources associated with given lesson segment
      * @param segmentId lesson segment id

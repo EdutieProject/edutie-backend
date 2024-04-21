@@ -4,12 +4,12 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.domain.common.persistence.PersistenceBase;
+import com.edutie.backend.domain.common.persistence.Persistence;
 import validation.WrapperResult;
 
 import java.util.List;
 
-public interface LearningRequirementPersistence extends PersistenceBase<LearningRequirement, LearningRequirementId> {
+public interface LearningRequirementPersistence extends Persistence<LearningRequirement, LearningRequirementId> {
     /**
      * Retrieve all learning requirements associated with given creator
      *

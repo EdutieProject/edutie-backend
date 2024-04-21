@@ -4,13 +4,13 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.domain.common.persistence.PersistenceBase;
+import com.edutie.backend.domain.common.persistence.Persistence;
 import validation.Result;
 import validation.WrapperResult;
 
 import java.util.List;
 
-public interface CoursePersistence extends PersistenceBase<Course, CourseId> {
+public interface CoursePersistence extends Persistence<Course, CourseId> {
     /**
      * Saves the course together with all its contents. This function
      * goes through the whole provided course and updates states of the course

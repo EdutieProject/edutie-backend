@@ -7,7 +7,7 @@ import validation.WrapperResult;
 import java.io.Serializable;
 
 
-public interface PersistenceBase<T extends EntityBase<TId>, TId extends Serializable> {
+public interface Persistence<T extends EntityBase<TId>, TId extends Serializable> {
     /**
      * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
      * it might not be present based on the identifier presence in the database.

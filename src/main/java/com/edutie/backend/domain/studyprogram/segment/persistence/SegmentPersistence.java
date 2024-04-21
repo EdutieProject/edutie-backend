@@ -4,11 +4,11 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
-import com.edutie.backend.domain.common.persistence.PersistenceBase;
+import com.edutie.backend.domain.common.persistence.Persistence;
 
 import java.util.List;
 
-public interface SegmentPersistence extends PersistenceBase<Segment, SegmentId> {
+public interface SegmentPersistence extends Persistence<Segment, SegmentId> {
     /**
      * Retrieve all lesson segments associated with given lesson
      * @param lessonId lesson id
