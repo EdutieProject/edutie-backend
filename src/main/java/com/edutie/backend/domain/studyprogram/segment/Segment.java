@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,7 +59,7 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     public static Segment create(Educator educator, Lesson lesson) {
         Segment segment = new Segment();
         segment.setId(new SegmentId());
-        segment.setCreatedBy(educator.getCreatedBy());
+        segment.setCreatedBy(educator.getOwnerUserId());
         segment.setEducator(educator);
         segment.setLesson(lesson);
         return segment;

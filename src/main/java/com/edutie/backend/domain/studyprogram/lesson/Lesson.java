@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     public static Lesson create(Educator educator, Course course) {
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
-        lesson.setCreatedBy(educator.getCreatedBy());
+        lesson.setCreatedBy(educator.getOwnerUserId());
         lesson.setEducator(educator);
         lesson.setCourse(course);
         return lesson;
