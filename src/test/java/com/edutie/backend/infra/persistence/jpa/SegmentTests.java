@@ -38,7 +38,7 @@ public class SegmentTests {
     @Autowired
     private ScienceRepository scienceRepository;
     @Autowired
-    private LessonSegmentRepository lessonSegmentRepository;
+    private SegmentRepository segmentRepository;
 
     @BeforeEach
     public void testSetup() {
@@ -55,7 +55,7 @@ public class SegmentTests {
         lessonRepository.save(lesson);
 
         segment = Segment.create(educator, lesson);
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
     }
 
     @Test
@@ -63,9 +63,9 @@ public class SegmentTests {
     public void testCreate() {
         segment = Segment.create(educator, lesson);
         assertNotNull(segment.getId());
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
 
-        assertEquals(lessonSegmentRepository.findById(segment.getId()).orElseThrow(), segment);
+        assertEquals(segmentRepository.findById(segment.getId()).orElseThrow(), segment);
     }
 
     @Test
@@ -74,9 +74,9 @@ public class SegmentTests {
         segment.setExerciseDescription(PromptFragment.of("TestExerciseDescription"));
         segment.setOverviewDescription(PromptFragment.of("TestOverviewDescription"));
 
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
 
-        var fetched = lessonSegmentRepository.findById(segment.getId()).orElseThrow();
+        var fetched = segmentRepository.findById(segment.getId()).orElseThrow();
         assertEquals(fetched.getName(), "TestName");
         assertEquals("TestName", segment.getName());
         assertEquals("TestExerciseDescription", segment.getExerciseDescription().text());
@@ -88,19 +88,19 @@ public class SegmentTests {
     public void testAddNextElement() {
         Segment segment1 = Segment.create(educator, lesson);
         Segment segment2 = Segment.create(educator, lesson);
-        lessonSegmentRepository.save(segment1);
-        lessonSegmentRepository.save(segment2);
+        segmentRepository.save(segment1);
+        segmentRepository.save(segment2);
 
         segment.addNextElement(segment1);
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
 
-        var fetch1 = lessonSegmentRepository.findById(segment.getId()).orElseThrow();
+        var fetch1 = segmentRepository.findById(segment.getId()).orElseThrow();
         assertEquals(fetch1.getNextElements().stream().findFirst().orElseThrow(), segment1);
 
         segment.addNextElement(segment2);
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
 
-        var fetch2 = lessonSegmentRepository.findById(segment.getId()).orElseThrow();
+        var fetch2 = segmentRepository.findById(segment.getId()).orElseThrow();
         assertEquals(fetch2.getNextElements().stream().skip(1).findFirst().orElseThrow(), segment2);
     }
 
@@ -109,19 +109,19 @@ public class SegmentTests {
     public void testSetPreviousElement() {
         Segment segment1 = Segment.create(educator, lesson);
         Segment segment2 = Segment.create(educator, lesson);
-        lessonSegmentRepository.save(segment1);
-        lessonSegmentRepository.save(segment2);
+        segmentRepository.save(segment1);
+        segmentRepository.save(segment2);
 
         segment.addNextElement(segment1);
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
 
-        var fetch1 = lessonSegmentRepository.findById(segment.getId()).orElseThrow();
+        var fetch1 = segmentRepository.findById(segment.getId()).orElseThrow();
         assertEquals(fetch1.getNextElements().stream().findFirst().orElseThrow(), segment1);
 
         segment.addNextElement(segment2);
-        lessonSegmentRepository.save(segment);
+        segmentRepository.save(segment);
 
-        var fetch2 = lessonSegmentRepository.findById(segment.getId()).orElseThrow();
+        var fetch2 = segmentRepository.findById(segment.getId()).orElseThrow();
         assertEquals(fetch2.getNextElements().stream().findFirst().orElseThrow(), segment2);
 
     }
