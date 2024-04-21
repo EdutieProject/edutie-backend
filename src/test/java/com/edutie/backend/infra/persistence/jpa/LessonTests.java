@@ -48,13 +48,13 @@ public class LessonTests {
         course = Course.create(educator, science);
         courseRepository.save(course);
 
-        lesson = Lesson.create(educator, course).getValue();
+        lesson = Lesson.create(educator, course);
         lessonRepository.save(lesson);
     }
 
     @Test
     public void testCreate() {
-        lesson = Lesson.create(educator, course).getValue();
+        lesson = Lesson.create(educator, course);
         lessonRepository.save(lesson);
 
         assertEquals(lessonRepository.findById(lesson.getId()).orElseThrow(), lesson);
@@ -72,8 +72,8 @@ public class LessonTests {
     @Test
     public void testOneToManyRelationship() {
 
-        Lesson lesson1 = Lesson.create(educator, course).getValue();
-        Lesson lesson2 = Lesson.create(educator, course).getValue();
+        Lesson lesson1 = Lesson.create(educator, course);
+        Lesson lesson2 = Lesson.create(educator, course);
 
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
@@ -91,8 +91,8 @@ public class LessonTests {
     @Test
     @Transactional
     public void testAddNextElement() {
-        Lesson lesson1 = Lesson.create(educator, course).getValue();
-        Lesson lesson2 = Lesson.create(educator, course).getValue();
+        Lesson lesson1 = Lesson.create(educator, course);
+        Lesson lesson2 = Lesson.create(educator, course);
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
@@ -112,8 +112,8 @@ public class LessonTests {
     @Test
     @Transactional
     public void testSetPreviousElement(){
-        Lesson lesson1 = Lesson.create(educator, course).getValue();
-        Lesson lesson2 = Lesson.create(educator, course).getValue();
+        Lesson lesson1 = Lesson.create(educator, course);
+        Lesson lesson2 = Lesson.create(educator, course);
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 

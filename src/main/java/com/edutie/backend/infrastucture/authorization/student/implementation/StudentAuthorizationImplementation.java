@@ -14,7 +14,7 @@ public class StudentAuthorizationImplementation implements StudentAuthorization 
     private final StudentRepository studentRepository;
     @Override
     public Result authorize(UserId userId) {
-        return studentRepository.findStudentsByCreatedBy(userId).isEmpty() ?
+        return studentRepository.findStudentsByOwnerUserId(userId).isEmpty() ?
                 Result.failure(new Error("AUTHORIZATION", "Expected Student role for this student"))
                 : Result.success();
     }

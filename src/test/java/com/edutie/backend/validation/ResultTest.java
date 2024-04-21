@@ -19,9 +19,4 @@ public class ResultTest {
         assert operationResult.isFailure();
     }
 
-    @Test
-    public void failureFromErrorsTest() {
-        var operationResult = Result.fromErrors(ErrorFactory.sampleError());
-        assert operationResult.isFailure();
-    }
 }

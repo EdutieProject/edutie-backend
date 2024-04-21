@@ -51,17 +51,17 @@ public class SegmentTests {
         Course course = Course.create(educator, science);
         courseRepository.save(course);
 
-        lesson = Lesson.create(educator, course).getValue();
+        lesson = Lesson.create(educator, course);
         lessonRepository.save(lesson);
 
-        segment = Segment.create(educator, lesson).getValue();
+        segment = Segment.create(educator, lesson);
         lessonSegmentRepository.save(segment);
     }
 
     @Test
     @Transactional
     public void testCreate() {
-        segment = Segment.create(educator, lesson).getValue();
+        segment = Segment.create(educator, lesson);
         assertNotNull(segment.getId());
         lessonSegmentRepository.save(segment);
 
@@ -86,8 +86,8 @@ public class SegmentTests {
     @Test
     @Transactional
     public void testAddNextElement() {
-        Segment segment1 = Segment.create(educator, lesson).getValue();
-        Segment segment2 = Segment.create(educator, lesson).getValue();
+        Segment segment1 = Segment.create(educator, lesson);
+        Segment segment2 = Segment.create(educator, lesson);
         lessonSegmentRepository.save(segment1);
         lessonSegmentRepository.save(segment2);
 
@@ -107,8 +107,8 @@ public class SegmentTests {
     @Test
     @Transactional
     public void testSetPreviousElement() {
-        Segment segment1 = Segment.create(educator, lesson).getValue();
-        Segment segment2 = Segment.create(educator, lesson).getValue();
+        Segment segment1 = Segment.create(educator, lesson);
+        Segment segment2 = Segment.create(educator, lesson);
         lessonSegmentRepository.save(segment1);
         lessonSegmentRepository.save(segment2);
 
