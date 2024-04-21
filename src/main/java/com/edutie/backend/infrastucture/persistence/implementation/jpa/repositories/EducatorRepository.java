@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EducatorRepository extends JpaRepository<Educator, EducatorId> {
-    List<Educator> findEducatorsByCreatedBy(UserId userId);
+    List<Educator> findEducatorsByOwnerUserId(UserId userId);
 }
