@@ -21,6 +21,6 @@ public class CreatedLessonsQueryHandlerImplementation extends HandlerBase implem
     @Override
     public WrapperResult<List<Lesson>> handle(CreatedLessonsQuery query) {
         Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
-        return WrapperResult.successWrapper(lessonPersistence.getAllOfEducatorId(educator.getId()));
+        return lessonPersistence.getAllOfEducatorId(educator.getId());
     }
 }

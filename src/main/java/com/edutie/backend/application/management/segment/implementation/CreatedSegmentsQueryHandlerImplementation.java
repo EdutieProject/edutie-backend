@@ -23,7 +23,7 @@ public class CreatedSegmentsQueryHandlerImplementation extends HandlerBase imple
     public WrapperResult<List<Segment>> handle(CreatedSegmentsQuery query) {
         try {
             Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
-            return Result.successWrapper(segmentPersistence.getAllOfEducatorId(educator.getId()));
+            return segmentPersistence.getAllOfEducatorId(educator.getId());
         } catch (Exception exception) {
             return Result.failureWrapper(new Error("Sth went wrong", exception.getMessage())); // TODO: ?
         }
