@@ -6,6 +6,7 @@ import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.common.persistence.Persistence;
 import validation.Result;
+import validation.WrapperResult;
 
 import java.util.List;
 
@@ -15,14 +16,14 @@ public interface LessonPersistence extends Persistence<Lesson, LessonId> {
      * @param courseId course id
      * @return Lesson list
      */
-    List<Lesson> getAllOfCourseId(CourseId courseId);
+    WrapperResult<List<Lesson>> getAllOfCourseId(CourseId courseId);
 
     /**
      * Retrieve all lessons associated with given creator
      * @param educatorId educator id
      * @return Lesson list
      */
-    List<Lesson> getAllOfEducatorId(EducatorId educatorId);
+    WrapperResult<List<Lesson>> getAllOfEducatorId(EducatorId educatorId);
 
     /**
      * Deep save the lesson together with all the underlying segments.
