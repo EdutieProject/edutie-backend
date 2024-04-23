@@ -5,7 +5,7 @@ import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLes
 import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
-import com.edutie.backend.infrastucture.authentication.ports.AuthenticationPlaceholder;
+import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;

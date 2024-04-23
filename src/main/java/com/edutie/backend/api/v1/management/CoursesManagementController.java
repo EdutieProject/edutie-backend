@@ -10,7 +10,7 @@ import com.edutie.backend.application.management.course.commands.ModifyCourseCom
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.application.management.course.queries.CreatedCoursesQuery;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.infrastucture.authentication.ports.AuthenticationPlaceholder;
+import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;

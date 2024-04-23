@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.authentication.ports;
+package com.edutie.backend.api.v1.authentication;
 
 import com.edutie.backend.domain.administration.UserId;
 import org.keycloak.representations.JsonWebToken;

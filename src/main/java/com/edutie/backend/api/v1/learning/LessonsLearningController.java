@@ -5,7 +5,7 @@ import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCours
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
-import com.edutie.backend.infrastucture.authentication.ports.AuthenticationPlaceholder;
+import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
