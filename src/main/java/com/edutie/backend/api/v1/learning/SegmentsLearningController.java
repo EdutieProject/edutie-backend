@@ -1,7 +1,6 @@
 package com.edutie.backend.api.v1.learning;
 
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLessonQueryHandler;
 import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
 import com.edutie.backend.domain.administration.UserId;
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import validation.Result;
 import validation.WrapperResult;
 
 @RestController
 @RequestMapping("api/v1/learning/segments")
 @RequiredArgsConstructor
-public class SegmentsController {
+public class SegmentsLearningController {
     private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
     private final SegmentsForStudentFromLessonQueryHandler segmentsForStudentFromLessonQueryHandler;

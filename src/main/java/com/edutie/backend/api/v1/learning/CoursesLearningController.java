@@ -16,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edutie.backend.application.learning.course.*;
-import validation.Result;
 import validation.WrapperResult;
 
 @RestController
 @RequestMapping("api/v1/learning/courses")
 @RequiredArgsConstructor
-public class CoursesController {
+public class CoursesLearningController {
     private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
     private final CoursesByScienceQueryHandler coursesByScienceQueryHandler;
