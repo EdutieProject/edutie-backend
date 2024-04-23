@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import validation.Result;
 import validation.WrapperResult;
 
 @RestController
 @RequestMapping("api/v1/learning/lessons")
 @RequiredArgsConstructor
-public class LessonsController {
+public class LessonsLearningController {
     private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
     private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;

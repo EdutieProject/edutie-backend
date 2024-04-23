@@ -22,7 +22,7 @@ import validation.WrapperResult;
 @RestController
 @RequestMapping("api/v1/management/courses")
 @RequiredArgsConstructor
-public class CoursesController {
+public class CoursesManagementController {
     private final AuthenticationPlaceholder authentication;
     private final CreateCourseCommandHandler createCourseCommandHandler;
     private final ModifyCourseCommandHandler modifyCourseCommandHandler;

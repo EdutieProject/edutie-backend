@@ -22,7 +22,7 @@ import validation.WrapperResult;
 @RestController
 @RequestMapping("/api/v1/management/segments")
 @RequiredArgsConstructor
-public class SegmentsController {
+public class SegmentsManagementController {
     private final AuthenticationPlaceholder authentication;
     private final CreateSegmentCommandHandler createSegmentCommandHandler;
     private final ModifySegmentCommandHandler modifySegmentCommandHandler;
