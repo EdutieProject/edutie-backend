@@ -10,7 +10,7 @@ import com.edutie.backend.application.management.segment.commands.ModifySegmentC
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.infrastucture.authentication.ports.AuthenticationPlaceholder;
+import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
