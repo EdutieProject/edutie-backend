@@ -10,6 +10,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter(AccessLevel.PROTECTED)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class AuditableEntityBase<TId extends Serializable> extends EntityBase<TId>{
     @Setter(AccessLevel.PRIVATE)
