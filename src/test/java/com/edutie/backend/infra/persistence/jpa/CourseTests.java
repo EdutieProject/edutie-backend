@@ -43,7 +43,6 @@ public class CourseTests {
 
     @Test
     public void testCourseCreation() {
-
         var fetched = courseRepository.findById(course.getId()).orElseThrow();
         assertEquals(fetched, course);
     }

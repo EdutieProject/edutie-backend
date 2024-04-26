@@ -13,6 +13,8 @@ import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositor
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -55,6 +57,7 @@ public class CoursePersistenceImplementation implements CoursePersistence {
      * @return Result object
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Result save(Course entity) {
         try {
             courseRepository.save(entity);
