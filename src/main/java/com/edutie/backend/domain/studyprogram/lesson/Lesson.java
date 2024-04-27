@@ -13,6 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     private String name;
@@ -71,5 +73,5 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
             return Result.failure(NavigationErrors.invalidParentEntity());
         nextElements.add(lesson);
         return Result.success();
-        }
     }
+}

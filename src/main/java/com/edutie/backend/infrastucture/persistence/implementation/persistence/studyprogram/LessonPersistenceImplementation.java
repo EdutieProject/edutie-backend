@@ -15,6 +15,8 @@ import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositor
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -56,6 +58,7 @@ public class LessonPersistenceImplementation implements LessonPersistence {
      * @return Result object
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Result save(Lesson entity) {
         try {
             lessonRepository.saveAndFlush(entity);
@@ -117,25 +120,6 @@ public class LessonPersistenceImplementation implements LessonPersistence {
             return WrapperResult.successWrapper(lessons);
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
-        }
-    }
-
-    /**
-     * Deep save the lesson together with all the underlying segments.
-     *
-     * @param lesson lesson to save
-     * @return result object
-     */
-    @Override
-    public Result deepSave(Lesson lesson) {
-        try {
-            for (Segment segment : lesson.getSegments()) {
-                segmentRepository.saveAndFlush(segment);
-            }
-            lessonRepository.saveAndFlush(lesson);
-            return Result.success();
-        } catch (Exception exception) {
-            return Result.failure(PersistenceError.exceptionEncountered(exception));
         }
     }
 }

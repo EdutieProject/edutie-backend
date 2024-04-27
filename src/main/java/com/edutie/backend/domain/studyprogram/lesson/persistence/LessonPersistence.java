@@ -24,11 +24,4 @@ public interface LessonPersistence extends Persistence<Lesson, LessonId> {
      * @return Lesson list
      */
     WrapperResult<List<Lesson>> getAllOfEducatorId(EducatorId educatorId);
-
-    /**
-     * Deep save the lesson together with all the underlying segments.
-     * @param lesson lesson to save
-     * @return result object
-     */
-    Result deepSave(Lesson lesson);
 }
