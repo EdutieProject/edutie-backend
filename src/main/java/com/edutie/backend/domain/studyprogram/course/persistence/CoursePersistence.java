@@ -12,6 +12,14 @@ import java.util.List;
 
 public interface CoursePersistence extends Persistence<Course, CourseId> {
     /**
+     * Saves the course together with all its contents. This function
+     * goes through the whole provided course and updates states of the course
+     * together with all the underlying entities.
+     * @param course course to save
+     * @return Result object
+     */
+    Result deepSave(Course course);
+    /**
      * Retrieve all courses associated with given science
      * @param scienceId science id
      * @return Wrapper result of the desired list

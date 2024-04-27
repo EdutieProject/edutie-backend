@@ -85,6 +85,30 @@ public class CoursePersistenceImplementation implements CoursePersistence {
     }
 
     /**
+     * Saves the course together with all its contents. This function
+     * goes through the whole provided course and updates states of the course
+     * together with all the underlying entities.
+     *
+     * @param course course to save
+     * @return Result object
+     */
+    @Override
+    public Result deepSave(Course course) {
+        try {
+            for (Lesson lesson : course.getLessons()) {
+                for (Segment segment : lesson.getSegments()) {
+                    segmentRepository.saveAndFlush(segment);
+                }
+                lessonRepository.saveAndFlush(lesson);
+            }
+            courseRepository.saveAndFlush(course);
+            return Result.success();
+        } catch (Exception exception) {
+            return Result.failure(PersistenceError.exceptionEncountered(exception));
+        }
+    }
+
+    /**
      * Retrieve all courses associated with given science
      *
      * @param scienceId science id
