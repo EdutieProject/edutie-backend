@@ -3,6 +3,8 @@ package validation;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.function.Supplier;
+
 /**
  * Results are object for operation success or failure representation.
  * Result may contain errors that caused the operation to fail. If the result
@@ -35,6 +37,10 @@ public class Result {
      */
     public boolean isSuccess() {
         return error == null;
+    }
+
+    public <T> WrapperResult<T> map(Supplier<T> mapper) {
+        return new WrapperResult<>(mapper.get(), error);
     }
 
     /**
