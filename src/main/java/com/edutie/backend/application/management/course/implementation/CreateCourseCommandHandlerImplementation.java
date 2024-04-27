@@ -37,7 +37,7 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
         segment.setName("First segment. Start designing it now!");
         lesson.getSegments().add(segment);
         course.getLessons().add(lesson);
-        coursePersistence.deepSave(course);
+//        coursePersistence.deepSave(course);
         return WrapperResult.successWrapper(course);
     }
 }
