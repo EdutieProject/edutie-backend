@@ -26,8 +26,6 @@ import java.util.Optional;
 public class CoursePersistenceImplementation implements CoursePersistence {
     private final CourseRepository courseRepository;
     private final ScienceRepository scienceRepository;
-    private final LessonRepository lessonRepository;
-    private final SegmentRepository segmentRepository;
     private final EducatorRepository educatorRepository;
     /**
      * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
@@ -78,30 +76,6 @@ public class CoursePersistenceImplementation implements CoursePersistence {
     public Result removeById(CourseId courseId) {
         try {
             courseRepository.deleteById(courseId);
-            return Result.success();
-        } catch (Exception exception) {
-            return Result.failure(PersistenceError.exceptionEncountered(exception));
-        }
-    }
-
-    /**
-     * Saves the course together with all its contents. This function
-     * goes through the whole provided course and updates states of the course
-     * together with all the underlying entities.
-     *
-     * @param course course to save
-     * @return Result object
-     */
-    @Override
-    public Result deepSave(Course course) {
-        try {
-            for (Lesson lesson : course.getLessons()) {
-                for (Segment segment : lesson.getSegments()) {
-                    segmentRepository.saveAndFlush(segment);
-                }
-                lessonRepository.saveAndFlush(lesson);
-            }
-            courseRepository.saveAndFlush(course);
             return Result.success();
         } catch (Exception exception) {
             return Result.failure(PersistenceError.exceptionEncountered(exception));
