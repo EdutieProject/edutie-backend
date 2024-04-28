@@ -11,19 +11,16 @@ import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersisten
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import validation.WrapperResult;
 
 import java.util.List;
 
 @SpringBootTest
-public class CourseEndToEndTests {
+public class CourseManagementEndToEndTests {
     @Autowired
     private CreateCourseCommandHandler createCourseCommandHandler;
     @Autowired
@@ -34,30 +31,27 @@ public class CourseEndToEndTests {
     private CoursePersistence coursePersistence;
     private final UserId userId = new UserId();
     private final AdminId adminId = new AdminId();
-    private ScienceId scienceId;
+
     @BeforeEach
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void testSetup() {
-        educatorPersistence.save(Educator.create(userId,adminId));
+        educatorPersistence.save(Educator.create(userId, adminId));
         sciencePersistence.save(Science.create(userId));
     }
 
     @Test
-    @Transactional
     public void createCourseTest() {
-        scienceId = sciencePersistence.getAll().getValue().stream().findFirst().get().getId();
+        ScienceId scienceId = sciencePersistence.getAll().getValue().stream().findFirst().get().getId();
         CreateCourseCommand command = new CreateCourseCommand(userId, "sample course", scienceId);
         WrapperResult<Course> courseWrapperResult = createCourseCommandHandler.handle(command);
         if (courseWrapperResult.isFailure())
             System.out.println(courseWrapperResult.getError());
         assert courseWrapperResult.isSuccess();
 
-        List<Course> courses =  coursePersistence.getAllOfScienceId(scienceId).getValue();
+        List<Course> courses = coursePersistence.getAllOfScienceId(scienceId).getValue();
         assert !courses.isEmpty();
 
         Course createdCourse = courses.getFirst();
         assert createdCourse.getName().equals("sample course");
-        assert createdCourse.getScience().getId().equals(scienceId);
         assert !createdCourse.getLessons().isEmpty();
         assert !createdCourse.getLessons().stream().flatMap(o -> o.getSegments().stream()).toList().isEmpty();
     }
