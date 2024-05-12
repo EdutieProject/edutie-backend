@@ -1,9 +1,12 @@
 package com.edutie.backend.infrastucture.persistence.implementation.config;
 
 import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.AdminPersistence;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
+import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -32,9 +35,9 @@ public class Seeding {
 	private final CoursePersistence coursePersistence;
 	private final LessonPersistence lessonPersistence;
 	private final SegmentPersistence segmentPersistence;
-	UserId uid = new UserId();
-	AdminId aid = new AdminId();
-	Educator educator = Educator.create(uid, aid);
+	UserId uid;
+	AdminId aid;
+	Educator educator;
 
 	/**
 	 * Constructor
@@ -46,11 +49,16 @@ public class Seeding {
 	 * @since 0.5
 	 */
 	@Autowired
-	public Seeding(SciencePersistence sciencePersistence, CoursePersistence coursePersistence, LessonPersistence lessonPersistence, SegmentPersistence segmentPersistence) {
+	public Seeding(SciencePersistence sciencePersistence, CoursePersistence coursePersistence, LessonPersistence lessonPersistence, SegmentPersistence segmentPersistence, AdminPersistence adminPersistence, EducatorPersistence educatorPersistence) {
 		this.sciencePersistence = sciencePersistence;
 		this.coursePersistence = coursePersistence;
 		this.lessonPersistence = lessonPersistence;
 		this.segmentPersistence = segmentPersistence;
+		uid = new UserId();
+		aid = adminPersistence.getAdminId(new UserId());
+		educator = Educator.create(uid, aid);
+		educator.setType(EducatorType.CREATOR);
+		educatorPersistence.save(educator);
 	}
 
 	/**
@@ -85,7 +93,6 @@ public class Seeding {
 	private void seedSciences(int sciences) {
 		for (int i = 0; i < sciences; i++)
 			seedScience(i);
-
 	}
 
 	/**
@@ -128,6 +135,7 @@ public class Seeding {
 		Course course = Course.create(educator, science);
 		course.setName("Course" + i);
 		course.setDescription("Description of Course" + i);
+		course.setAccessible(true);
 		coursePersistence.save(course);
 		seedLessons(course);
 	}
