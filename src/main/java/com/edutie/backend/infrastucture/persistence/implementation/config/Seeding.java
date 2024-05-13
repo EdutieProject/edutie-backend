@@ -1,6 +1,5 @@
 package com.edutie.backend.infrastucture.persistence.implementation.config;
 
-import com.edutie.backend.domain.administration.AdminId;
 import com.edutie.backend.domain.administration.AdminPersistence;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
@@ -18,6 +17,7 @@ import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersist
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import jakarta.annotation.PostConstruct;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,32 +31,38 @@ import org.springframework.stereotype.Component;
 public class Seeding {
 	final int MAX_SEEDED_COURSES = 10;
 	final int MAX_SEEDED_SCIENCES = 3;
+
 	private final SciencePersistence sciencePersistence;
 	private final CoursePersistence coursePersistence;
 	private final LessonPersistence lessonPersistence;
 	private final SegmentPersistence segmentPersistence;
-	UserId uid;
-	AdminId aid;
-	Educator educator;
+//	private final ExerciseTypePersistence exerciseTypePersistence;
+//	private final LearningRequirementPersistence learningRequirementPersistence;
+
+	private final UserId uid;
+	private final Educator educator;
 
 	/**
 	 * Constructor
 	 *
-	 * @param sciencePersistence science persistence
-	 * @param coursePersistence  course persistence
-	 * @param lessonPersistence  lesson persistence
-	 * @param segmentPersistence segment persistence
+	 * @param sciencePersistence  science persistence
+	 * @param coursePersistence   course persistence
+	 * @param lessonPersistence   lesson persistence
+	 * @param segmentPersistence  segment persistence
+	 * @param adminPersistence    admin persistence
+	 * @param educatorPersistence educator persistence
 	 * @since 0.5
 	 */
 	@Autowired
-	public Seeding(SciencePersistence sciencePersistence, CoursePersistence coursePersistence, LessonPersistence lessonPersistence, SegmentPersistence segmentPersistence, AdminPersistence adminPersistence, EducatorPersistence educatorPersistence) {
+	public Seeding(SciencePersistence sciencePersistence, CoursePersistence coursePersistence, LessonPersistence lessonPersistence, SegmentPersistence segmentPersistence, AdminPersistence adminPersistence, EducatorPersistence educatorPersistence/*, ExerciseTypePersistence exerciseTypePersistence, LearningRequirementPersistence learningRequirementPersistence*/) {
 		this.sciencePersistence = sciencePersistence;
 		this.coursePersistence = coursePersistence;
 		this.lessonPersistence = lessonPersistence;
 		this.segmentPersistence = segmentPersistence;
+//		this.exerciseTypePersistence = exerciseTypePersistence;
+//		this.learningRequirementPersistence = learningRequirementPersistence;
 		uid = new UserId();
-		aid = adminPersistence.getAdminId(new UserId());
-		educator = Educator.create(uid, aid);
+		educator = Educator.create(uid, adminPersistence.getAdminId(new UserId()));
 		educator.setType(EducatorType.CREATOR);
 		educatorPersistence.save(educator);
 	}
@@ -144,12 +150,12 @@ public class Seeding {
 	 * Seed lessons in course
 	 *
 	 * @param course course to seed
-	 * @see LessonSeeder#seedLessons(Course)
+	 * @see LessonSeeder#seedLessons()
 	 * @since 0.5
 	 */
 	private void seedLessons(Course course) {
-		LessonSeeder ls = new LessonSeeder();
-		ls.seedLessons(course);
+		LessonSeeder ls = new LessonSeeder(course);
+		ls.seedLessons();
 	}
 
 	/**
@@ -160,35 +166,40 @@ public class Seeding {
 	 * @since 0.5
 	 */
 	private class LessonSeeder {
-		private Course course;
+		private final Course course;
+
+		/**
+		 * Constructor of lesson seeder
+		 *
+		 * @param course course in which lessons will be seeded
+		 */
+		public LessonSeeder(Course course) {
+			this.course = course;
+		}
 
 		/**
 		 * Seed lessons in course using random variant
 		 *
-		 * @param course course to seed
-		 * @see LessonSeeder#variant1(Course)
-		 * @see LessonSeeder#variant2(Course)
+		 * @see LessonSeeder#variant1()
+		 * @see LessonSeeder#variant2()
 		 * @since 0.5
 		 */
-		public void seedLessons(Course course) {
+		public void seedLessons() {
 			switch ((int) Math.ceil(Math.random() * 2)) {
 				case 1 ->
-						variant1(course);
+						variant1();
 				case 2 ->
-						variant2(course);
+						variant2();
 			}
 		}
 
 		/**
 		 * Seed first lesson in course
 		 *
-		 * @param course course to seed
 		 * @return first lesson
 		 * @since 0.5
 		 */
-		private Lesson seedFirstLesson(Course course) {
-			this.course = course;
-
+		private @NonNull Lesson seedFirstLesson() {
 			Lesson lesson = Lesson.create(educator, course);
 			lesson.setName("Lesson 1");
 			lesson.setDescription("Description of Lesson 1");
@@ -206,13 +217,12 @@ public class Seeding {
 		 *  l5 --> l8 --> l9
 		 * </pre></details>
 		 *
-		 * @param course course to seed
-		 * @see #seedFirstLesson(Course)
+		 * @see #seedFirstLesson()
 		 * @see #seedLesson(int, Lesson)
 		 * @since 0.5
 		 **/
-		public void variant1(Course course) {
-			Lesson l1 = seedFirstLesson(course);
+		public void variant1() {
+			Lesson l1 = seedFirstLesson();
 
 			Lesson l2 = seedLesson(2, l1);
 			seedLesson(3, l2);
@@ -239,13 +249,12 @@ public class Seeding {
 		 *  l24 --> l26 --> l27
 		 * </pre></details>
 		 *
-		 * @param course course to seed
-		 * @see #seedFirstLesson(Course)
+		 * @see #seedFirstLesson()
 		 * @see #seedLesson(int, Lesson)
 		 * @since 0.5
 		 */
-		public void variant2(Course course) {
-			Lesson l1 = seedFirstLesson(course);
+		public void variant2() {
+			Lesson l1 = seedFirstLesson();
 
 			seedLesson(2, l1);
 
@@ -278,7 +287,7 @@ public class Seeding {
 		 * @see #seedSegments(Lesson)
 		 * @since 0.5
 		 */
-		private Lesson seedLesson(int i, Lesson prev) {
+		private @NonNull Lesson seedLesson(int i, Lesson prev) {
 			Lesson lesson = Lesson.create(educator, course);
 			lesson.setName("Lesson" + i);
 			lesson.setDescription("Description of Lesson" + i);
@@ -292,12 +301,12 @@ public class Seeding {
 		 * Seed segments in lesson
 		 *
 		 * @param lesson lesson to seed
-		 * @see SegmentSeeder#seedSegments(Lesson)
+		 * @see SegmentSeeder#seedSegments()
 		 * @since 0.5
 		 */
 		private void seedSegments(Lesson lesson) {
-			SegmentSeeder ss = new SegmentSeeder();
-			ss.seedSegments(lesson);
+			SegmentSeeder ss = new SegmentSeeder(lesson);
+			ss.seedSegments();
 		}
 
 		/**
@@ -308,47 +317,55 @@ public class Seeding {
 		 * @since 0.5
 		 */
 		private class SegmentSeeder {
-			private ExerciseType et;
-			private Lesson lesson;
+			private final ExerciseType et;
+			private final Lesson lesson;
 
 			/**
-			 * Seed segments in lesson using random variant
+			 * Constructor
 			 *
-			 * @param lesson lesson to seed
-			 * @see SegmentSeeder#variant1(Lesson)
-			 * @see SegmentSeeder#variant2(Lesson)
-			 * @see SegmentSeeder#variant3(Lesson)
-			 * @since 0.5
+			 * @param lesson lesson to seed the segments into
 			 */
-			void seedSegments(Lesson lesson) {
-				switch ((int) Math.ceil(Math.random() * 3)) {
-					case 1 ->
-							variant1(lesson);
-					case 2 ->
-							variant2(lesson);
-					case 3 ->
-							variant3(lesson);
-				}
-			}
-
-			/**
-			 * Seed first segment in lesson
-			 *
-			 * @param lesson lesson to seed
-			 * @return first segment
-			 * @since 0.5
-			 */
-			private Segment seedFirstSegment(Lesson lesson) {
+			private SegmentSeeder(Lesson lesson) {
 				this.lesson = lesson;
 
 				et = ExerciseType.create(educator).getValue();
 				et.setName("Exercise Type 1");
 				et.setDescription(PromptFragment.of("Description of Exercise Type 1"));
 
+//				exerciseTypePersistence.save(et);
+			}
+
+			/**
+			 * Seed segments in lesson using random variant
+			 *
+			 * @see SegmentSeeder#variant1()
+			 * @see SegmentSeeder#variant2()
+			 * @see SegmentSeeder#variant3()
+			 * @since 0.5
+			 */
+			void seedSegments() {
+				switch ((int) Math.ceil(Math.random() * 3)) {
+					case 1 ->
+							variant1();
+					case 2 ->
+							variant2();
+					case 3 ->
+							variant3();
+				}
+			}
+
+			/**
+			 * Seed first segment in lesson
+			 *
+			 * @return first segment
+			 * @since 0.5
+			 */
+			private @NonNull Segment seedFirstSegment() {
 				Science science = lesson.getCourse().getScience();
 				LearningRequirement lr1 = LearningRequirement.create(educator, science).getValue();
 				lr1.setName("Learning Requirement 1");
 				lr1.setDescription(PromptFragment.of("Description of Learning Requirement 1"));
+//				learningRequirementPersistence.save(lr1);
 
 				Segment s1 = Segment.create(educator, lesson);
 				s1.addLearningRequirement(lr1);
@@ -370,13 +387,12 @@ public class Seeding {
 			 *  s5 --> s8 --> s9
 			 * </pre></details>
 			 *
-			 * @param lesson lesson to seed
-			 * @see #seedFirstSegment(Lesson)
+			 * @see #seedFirstSegment()
 			 * @see #seedSegment(int, Segment)
 			 * @since 0.5
 			 **/
-			public void variant1(Lesson lesson) {
-				Segment s1 = seedFirstSegment(lesson);
+			public void variant1() {
+				Segment s1 = seedFirstSegment();
 
 				Segment s2 = seedSegment(2, s1);
 				seedSegment(3, s2);
@@ -403,13 +419,12 @@ public class Seeding {
 			 *  s24 --> s26 --> s27
 			 * </pre></details>
 			 *
-			 * @param lesson lesson to seed
-			 * @see #seedFirstSegment(Lesson)
+			 * @see #seedFirstSegment()
 			 * @see #seedSegment(int, Segment)
 			 * @since 0.5
 			 */
-			public void variant2(Lesson lesson) {
-				Segment s1 = seedFirstSegment(lesson);
+			public void variant2() {
+				Segment s1 = seedFirstSegment();
 
 				seedSegment(2, s1);
 
@@ -447,13 +462,12 @@ public class Seeding {
 			 *  s16 --> s18 --> s19
 			 * </pre></details>
 			 *
-			 * @param lesson lesson to seed
-			 * @see #seedFirstSegment(Lesson)
+			 * @see #seedFirstSegment()
 			 * @see #seedSegment(int, Segment)
 			 * @since 0.5
 			 */
-			public void variant3(Lesson lesson) {
-				Segment s1 = seedFirstSegment(lesson);
+			public void variant3() {
+				Segment s1 = seedFirstSegment();
 
 				Segment s2 = seedSegment(5, seedSegment(2, s1));
 				seedSegment(9, s2);
@@ -480,7 +494,7 @@ public class Seeding {
 			 * @return seeded lesson
 			 * @since 0.5
 			 */
-			private Segment seedSegment(int i, Segment prev) {
+			private @NonNull Segment seedSegment(int i, Segment prev) {
 				Segment segment = Segment.create(educator, lesson);
 				segment.setName("Segment" + i);
 				segment.setOverviewDescription(PromptFragment.of("Overview description of Segment" + i));
