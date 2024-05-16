@@ -6,8 +6,6 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
-import com.edutie.backend.domain.education.exercisetype.ExerciseType;
-import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
@@ -18,8 +16,9 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Seeding class for seeding database with sample data
@@ -28,6 +27,7 @@ import org.springframework.stereotype.Component;
  * @version 0.5
  */
 @Component
+@RequiredArgsConstructor
 public class Seeding {
 	final int MAX_SEEDED_COURSES = 10;
 	final int MAX_SEEDED_SCIENCES = 3;
@@ -36,36 +36,13 @@ public class Seeding {
 	private final CoursePersistence coursePersistence;
 	private final LessonPersistence lessonPersistence;
 	private final SegmentPersistence segmentPersistence;
+	private final AdminPersistence adminPersistence;
+	private final EducatorPersistence educatorPersistence;
 //	private final ExerciseTypePersistence exerciseTypePersistence;
 //	private final LearningRequirementPersistence learningRequirementPersistence;
 
-	private final UserId uid;
-	private final Educator educator;
-
-	/**
-	 * Constructor
-	 *
-	 * @param sciencePersistence  science persistence
-	 * @param coursePersistence   course persistence
-	 * @param lessonPersistence   lesson persistence
-	 * @param segmentPersistence  segment persistence
-	 * @param adminPersistence    admin persistence
-	 * @param educatorPersistence educator persistence
-	 * @since 0.5
-	 */
-	@Autowired
-	public Seeding(SciencePersistence sciencePersistence, CoursePersistence coursePersistence, LessonPersistence lessonPersistence, SegmentPersistence segmentPersistence, AdminPersistence adminPersistence, EducatorPersistence educatorPersistence/*, ExerciseTypePersistence exerciseTypePersistence, LearningRequirementPersistence learningRequirementPersistence*/) {
-		this.sciencePersistence = sciencePersistence;
-		this.coursePersistence = coursePersistence;
-		this.lessonPersistence = lessonPersistence;
-		this.segmentPersistence = segmentPersistence;
-//		this.exerciseTypePersistence = exerciseTypePersistence;
-//		this.learningRequirementPersistence = learningRequirementPersistence;
-		uid = new UserId();
-		educator = Educator.create(uid, adminPersistence.getAdminId(new UserId()));
-		educator.setType(EducatorType.CREATOR);
-		educatorPersistence.save(educator);
-	}
+	private final UserId uid = new UserId();
+	private Educator educator;
 
 	/**
 	 * Seed database with sample study program
@@ -75,7 +52,11 @@ public class Seeding {
 	 * @since 0.5
 	 */
 	@PostConstruct
+	@Transactional
 	public void seedStudyProgram() {
+		educator = Educator.create(uid, adminPersistence.getAdminId(new UserId()));
+		educator.setType(EducatorType.CREATOR);
+		educatorPersistence.save(educator);
 		seedSciences();
 	}
 
@@ -112,6 +93,7 @@ public class Seeding {
 		Science science = Science.create(uid);
 		science.setName("Science" + i);
 		science.setDescription("Description of Science" + i);
+		science.update(uid);
 		sciencePersistence.save(science);
 		seedCourses(science);
 	}
@@ -142,6 +124,7 @@ public class Seeding {
 		course.setName("Course" + i);
 		course.setDescription("Description of Course" + i);
 		course.setAccessible(true);
+		course.update(uid);
 		coursePersistence.save(course);
 		seedLessons(course);
 	}
@@ -184,6 +167,7 @@ public class Seeding {
 		 * @see LessonSeeder#variant2()
 		 * @since 0.5
 		 */
+		@Transactional
 		public void seedLessons() {
 			switch ((int) Math.ceil(Math.random() * 2)) {
 				case 1 ->
@@ -203,6 +187,7 @@ public class Seeding {
 			Lesson lesson = Lesson.create(educator, course);
 			lesson.setName("Lesson 1");
 			lesson.setDescription("Description of Lesson 1");
+			lesson.update(uid);
 			lessonPersistence.save(lesson);
 			seedSegments(lesson);
 			return lesson;
@@ -292,6 +277,7 @@ public class Seeding {
 			lesson.setName("Lesson" + i);
 			lesson.setDescription("Description of Lesson" + i);
 			lesson.setPreviousElement(prev);
+			lesson.update(uid);
 			lessonPersistence.save(lesson);
 			seedSegments(lesson);
 			return lesson;
@@ -317,7 +303,7 @@ public class Seeding {
 		 * @since 0.5
 		 */
 		private class SegmentSeeder {
-			private final ExerciseType et;
+			//			private final ExerciseType et;
 			private final Lesson lesson;
 
 			/**
@@ -325,12 +311,12 @@ public class Seeding {
 			 *
 			 * @param lesson lesson to seed the segments into
 			 */
-			private SegmentSeeder(Lesson lesson) {
+			public SegmentSeeder(Lesson lesson) {
 				this.lesson = lesson;
 
-				et = ExerciseType.create(educator).getValue();
-				et.setName("Exercise Type 1");
-				et.setDescription(PromptFragment.of("Description of Exercise Type 1"));
+//				et = ExerciseType.create(educator).getValue();
+//				et.setName("Exercise Type 1");
+//				et.setDescription(PromptFragment.of("Description of Exercise Type 1"));
 
 //				exerciseTypePersistence.save(et);
 			}
@@ -343,7 +329,8 @@ public class Seeding {
 			 * @see SegmentSeeder#variant3()
 			 * @since 0.5
 			 */
-			void seedSegments() {
+			@Transactional
+			public void seedSegments() {
 				switch ((int) Math.ceil(Math.random() * 3)) {
 					case 1 ->
 							variant1();
@@ -361,18 +348,19 @@ public class Seeding {
 			 * @since 0.5
 			 */
 			private @NonNull Segment seedFirstSegment() {
-				Science science = lesson.getCourse().getScience();
-				LearningRequirement lr1 = LearningRequirement.create(educator, science).getValue();
-				lr1.setName("Learning Requirement 1");
-				lr1.setDescription(PromptFragment.of("Description of Learning Requirement 1"));
+//				Science science = lesson.getCourse().getScience();
+//				LearningRequirement lr1 = LearningRequirement.create(educator, science).getValue();
+//				lr1.setName("Learning Requirement 1");
+//				lr1.setDescription(PromptFragment.of("Description of Learning Requirement 1"));
 //				learningRequirementPersistence.save(lr1);
 
 				Segment s1 = Segment.create(educator, lesson);
-				s1.addLearningRequirement(lr1);
+//				s1.addLearningRequirement(lr1);
 				s1.setName("Segment 1");
 				s1.setOverviewDescription(PromptFragment.of("Overview description of Segment 1"));
-				s1.setExerciseType(et);
+//				s1.setExerciseType(et);
 				s1.setExerciseDescription(PromptFragment.of("Exercise description of Segment 1"));
+				s1.update(uid);
 				segmentPersistence.save(s1);
 
 				return s1;
@@ -498,9 +486,10 @@ public class Seeding {
 				Segment segment = Segment.create(educator, lesson);
 				segment.setName("Segment" + i);
 				segment.setOverviewDescription(PromptFragment.of("Overview description of Segment" + i));
-				segment.setExerciseType(et);
+//				segment.setExerciseType(et);
 				segment.setExerciseDescription(PromptFragment.of("Exercise description of Segment" + i));
 				segment.setPreviousElement(prev);
+				segment.update(uid);
 				segmentPersistence.save(segment);
 				return segment;
 			}
