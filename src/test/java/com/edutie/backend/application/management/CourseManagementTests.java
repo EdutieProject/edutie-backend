@@ -1,4 +1,4 @@
-package com.edutie.backend.e2e;
+package com.edutie.backend.application.management;
 
 import com.edutie.backend.application.management.course.CreateCourseCommandHandler;
 import com.edutie.backend.application.management.course.CreatedCoursesQueryHandler;
@@ -13,7 +13,6 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
@@ -28,7 +27,7 @@ import validation.WrapperResult;
 import java.util.List;
 
 @SpringBootTest
-public class CourseManagementEndToEndTests {
+public class CourseManagementTests {
     @Autowired
     private CreateCourseCommandHandler createCourseCommandHandler;
     @Autowired
