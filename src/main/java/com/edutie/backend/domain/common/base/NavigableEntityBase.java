@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.common.base;
 
 import com.edutie.backend.domain.common.errors.NavigationErrors;
+import lombok.EqualsAndHashCode;
 import validation.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Getter
 @MappedSuperclass
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<TNavigationEntity, TId>, TId extends Serializable> extends AuditableEntityBase<TId> {
 
     @ManyToOne(fetch = FetchType.LAZY)

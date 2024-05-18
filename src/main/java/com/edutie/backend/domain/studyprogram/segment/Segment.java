@@ -25,7 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     private String name;

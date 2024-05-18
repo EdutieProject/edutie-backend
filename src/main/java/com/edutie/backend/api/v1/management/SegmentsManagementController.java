@@ -35,7 +35,7 @@ public class SegmentsManagementController {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery(actionUserId)));
+                .handle(() -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery().educatorUserId(actionUserId)));
     }
 
     @PostMapping
