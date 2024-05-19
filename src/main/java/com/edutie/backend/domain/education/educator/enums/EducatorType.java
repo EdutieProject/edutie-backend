@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public enum EducatorType implements PersistableEnum<String> {
-    CREATOR("Creator"),
-    PSYCHOLOGIST("Psychologist"),
+    CONTRIBUTOR("Contributor"),
+    TUTOR("Tutor"),
     PEDAGOGUE("Pedagogue");
 
     final String code;
