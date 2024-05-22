@@ -29,9 +29,10 @@ import java.util.Set;
 @Entity
 public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     private String name;
+    private String snippetDescription;
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "overview_description"))
-    private PromptFragment overviewDescription;
+    @AttributeOverride(name = "text", column = @Column(name = "theory_description"))
+    private PromptFragment theoryDescription;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
     private PromptFragment exerciseDescription;
@@ -53,7 +54,7 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
      * Recommended constructor associating Lesson Segment with a creator and lesson
      *
      * @param educator creator reference
-     * @param lesson  lesson reference
+     * @param lesson   lesson reference
      * @return Lesson Segment
      */
     public static Segment create(Educator educator, Lesson lesson) {

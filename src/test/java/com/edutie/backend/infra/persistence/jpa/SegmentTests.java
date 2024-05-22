@@ -72,7 +72,7 @@ public class SegmentTests {
     public void testLessonSegmentNameAndDescription() {
         segment.setName("TestName");
         segment.setExerciseDescription(PromptFragment.of("TestExerciseDescription"));
-        segment.setOverviewDescription(PromptFragment.of("TestOverviewDescription"));
+        segment.setTheoryDescription(PromptFragment.of("TestOverviewDescription"));
 
         segmentRepository.save(segment);
 
@@ -80,7 +80,7 @@ public class SegmentTests {
         assertEquals(fetched.getName(), "TestName");
         assertEquals("TestName", segment.getName());
         assertEquals("TestExerciseDescription", segment.getExerciseDescription().text());
-        assertEquals("TestOverviewDescription", segment.getOverviewDescription().text());
+        assertEquals("TestOverviewDescription", segment.getTheoryDescription().text());
     }
 
     @Test
