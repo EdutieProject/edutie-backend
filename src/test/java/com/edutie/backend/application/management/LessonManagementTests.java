@@ -96,10 +96,11 @@ public class LessonManagementTests {
     @Test
     public void modifyLessonTest() {
         ModifyLessonCommand command = new ModifyLessonCommand()
+                .educatorUserId(userId)
                 .lessonId(previousLesson.getId())
                 .lessonDescription("Hello world!")
                 .lessonName("Changed lesson name");
-        //TODO: fix
+
         Result result = modifyLessonCommandHandler.handle(command);
         assert result.isSuccess();
 

@@ -9,6 +9,8 @@ import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
@@ -21,6 +23,7 @@ public class RemoveLessonCommandHandlerImplementation extends HandlerBase implem
     private final LessonPersistence lessonPersistence;
     private final EducatorPersistence educatorPersistence;
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Result handle(RemoveLessonCommand command) {
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(command.lessonId());

@@ -21,6 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -55,6 +57,7 @@ public class CourseManagementTests {
     }
 
     @Test
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void createCourseTest() {
         CreateCourseCommand command = new CreateCourseCommand(userId, "sample course", scienceId);
         WrapperResult<Course> courseWrapperResult = createCourseCommandHandler.handle(command);
