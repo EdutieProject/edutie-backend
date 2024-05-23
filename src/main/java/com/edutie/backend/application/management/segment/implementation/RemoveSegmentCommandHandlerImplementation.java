@@ -24,7 +24,7 @@ public class RemoveSegmentCommandHandlerImplementation extends HandlerBase imple
     private final EducatorPersistence educatorPersistence;
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Result handle(RemoveSegmentCommand command) {
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         WrapperResult<Segment> segmentWrapperResult = segmentPersistence.getById(command.segmentId());
