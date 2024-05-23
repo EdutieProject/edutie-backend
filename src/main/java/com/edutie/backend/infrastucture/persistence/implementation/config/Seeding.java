@@ -17,6 +17,7 @@ import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersist
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class Seeding {
 	final int MAX_SEEDED_COURSES = 10;
 	final int MAX_SEEDED_SCIENCES = 3;
@@ -54,10 +56,16 @@ public class Seeding {
 	@PostConstruct
 	@Transactional
 	public void seedStudyProgram() {
+		log.info("====================================");
+		log.info("  STUDY PROGRAM DB SEEDING - START  ");
+		log.info("====================================");
 		educator = Educator.create(uid, adminPersistence.getAdminId(new UserId()));
 		educator.setType(EducatorType.CREATOR);
 		educatorPersistence.save(educator);
 		seedSciences();
+		log.info("====================================");
+		log.info("   STUDY PROGRAM DB SEEDING - END   ");
+		log.info("====================================");
 	}
 
 	/**
@@ -170,10 +178,8 @@ public class Seeding {
 		@Transactional
 		public void seedLessons() {
 			switch ((int) Math.ceil(Math.random() * 2)) {
-				case 1 ->
-						variant1();
-				case 2 ->
-						variant2();
+				case 1 -> variant1();
+				case 2 -> variant2();
 			}
 		}
 
@@ -332,12 +338,9 @@ public class Seeding {
 			@Transactional
 			public void seedSegments() {
 				switch ((int) Math.ceil(Math.random() * 3)) {
-					case 1 ->
-							variant1();
-					case 2 ->
-							variant2();
-					case 3 ->
-							variant3();
+					case 1 -> variant1();
+					case 2 -> variant2();
+					case 3 -> variant3();
 				}
 			}
 
