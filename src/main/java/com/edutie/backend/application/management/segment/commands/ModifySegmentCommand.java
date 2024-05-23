@@ -17,7 +17,7 @@ import java.util.List;
 public final class ModifySegmentCommand {
     private @NonNull UserId educatorUserId;
     private @NonNull SegmentId segmentId;
-    private String name;
+    private String segmentName;
     private String segmentSnippetDescription;
     private String segmentTheoryDescription;
     private String segmentExerciseDescription;

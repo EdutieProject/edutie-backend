@@ -78,13 +78,16 @@ public class SegmentManagementTests {
                 .educatorUserId(userId)
                 .previousSegmentId(previousSegmentId)
                 .segmentName("Hello World!")
-                .segmentOverviewDescription("Desc");
+                .segmentTheoryDescription("Desc");
 
         WrapperResult<Segment> segmentWrapperResult = createSegmentCommandHandler.handle(command);
 
-        assert segmentWrapperResult.isSuccess();
+        if (segmentWrapperResult.isFailure()) {
+            throw new AssertionError(segmentWrapperResult.getError().toString());
+        }
+
         assert segmentWrapperResult.getValue().getName().equals("Hello World!");
-        assert segmentWrapperResult.getValue().getOverviewDescription().text().equals("Desc");
+        assert segmentWrapperResult.getValue().getTheoryDescription().text().equals("Desc");
         assert segmentPersistence.getById(segmentWrapperResult.getValue().getId()).isSuccess();
     }
 
