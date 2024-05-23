@@ -35,7 +35,7 @@ public class LessonsManagementController {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createdLessonsQueryHandler.handle(new CreatedLessonsQuery(actionUserId)));
+                .handle(() -> createdLessonsQueryHandler.handle(new CreatedLessonsQuery().educatorUserId(actionUserId)));
     }
 
     @PostMapping

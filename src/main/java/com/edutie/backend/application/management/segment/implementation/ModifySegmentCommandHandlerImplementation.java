@@ -34,8 +34,8 @@ public class ModifySegmentCommandHandlerImplementation extends HandlerBase imple
             return Result.failureWrapper(new Error("SEGMENT-1", "To modify segment you must be a creator of it."));
 
         Segment segment = segmentWrapperResult.getValue();
-        if (command.name() != null) {
-            segment.setName(command.name());
+        if (command.segmentName() != null) {
+            segment.setName(command.segmentName());
         }
         if (command.segmentSnippetDescription() != null) {
             segment.setSnippetDescription(command.segmentSnippetDescription());

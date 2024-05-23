@@ -8,13 +8,10 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
-import com.edutie.backend.domain.studyprogram.lesson.Lesson;
-import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import validation.Error;
 import validation.WrapperResult;
 
 @Component
@@ -23,6 +20,7 @@ public class CreateSegmentCommandHandlerImplementation extends HandlerBase imple
     private final SegmentPersistence segmentPersistence;
     private final EducatorPersistence educatorPersistence;
     private final ExerciseTypePersistence exerciseTypePersistence;
+
     @Override
     public WrapperResult<Segment> handle(CreateSegmentCommand command) {
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
@@ -39,12 +37,12 @@ public class CreateSegmentCommandHandlerImplementation extends HandlerBase imple
         segment.setSnippetDescription(command.snippetDescription() != null ? command.snippetDescription() : "");
         segment.setTheoryDescription(PromptFragment.of(command.segmentTheoryDescription()));
         segment.setExerciseDescription(PromptFragment.of(command.segmentExerciseDescription()));
-
-        WrapperResult<ExerciseType> exerciseTypeWrapperResult = exerciseTypePersistence.getById(command.exerciseTypeId());
-        if (exerciseTypeWrapperResult.isFailure())
-            return exerciseTypeWrapperResult.map(o -> null);
-        segment.setExerciseType(exerciseTypeWrapperResult.getValue());
-
+        if (command.exerciseTypeId() != null) {
+            WrapperResult<ExerciseType> exerciseTypeWrapperResult = exerciseTypePersistence.getById(command.exerciseTypeId());
+            if (exerciseTypeWrapperResult.isFailure())
+                return exerciseTypeWrapperResult.map(o -> null);
+            segment.setExerciseType(exerciseTypeWrapperResult.getValue());
+        }
         segmentPersistence.save(segment);
         return WrapperResult.successWrapper(segment);
     }
