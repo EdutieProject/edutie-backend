@@ -16,7 +16,7 @@ public interface ExerciseTypePersistence extends Persistence<ExerciseType, Exerc
     WrapperResult<List<ExerciseType>> getAll();
 
     /**
-     * Retrieve all exercise types associated with given user
+     * Retrieve all exercise types associated with given educator
      * @param userId user id
      * @return Wrapper result of desired list
      */

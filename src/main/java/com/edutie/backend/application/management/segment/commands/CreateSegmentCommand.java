@@ -8,15 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.util.Objects;
-
 @Data
 @Accessors(fluent = true)
 @NoArgsConstructor
 public final class CreateSegmentCommand {
     private @NonNull UserId educatorUserId;
     private @NonNull String segmentName;
-    private String segmentOverviewDescription;
+    private String snippetDescription;
+    private String segmentTheoryDescription;
     private String segmentExerciseDescription;
     private ExerciseTypeId exerciseTypeId;
     private @NonNull SegmentId previousSegmentId;
