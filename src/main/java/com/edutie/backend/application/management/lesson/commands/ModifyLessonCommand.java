@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Accessors(fluent = true)
@@ -16,5 +17,5 @@ public final class ModifyLessonCommand {
     private String lessonName;
     private String lessonDescription;
     private LessonId previousLessonId;
-    private LessonId nextLessonId;
+    private List<LessonId> nextLessonIds = new ArrayList<>();
 }

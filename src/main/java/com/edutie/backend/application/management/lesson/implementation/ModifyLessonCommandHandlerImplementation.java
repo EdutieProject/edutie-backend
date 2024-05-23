@@ -6,6 +6,7 @@ import com.edutie.backend.application.management.lesson.commands.ModifyLessonCom
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -37,8 +38,8 @@ public class ModifyLessonCommandHandlerImplementation extends HandlerBase implem
                 return prevLessonWrapper;
             lesson.setPreviousElement(prevLessonWrapper.getValue());
         }
-        if (command.previousLessonId() != null) {
-            WrapperResult<Lesson> nextLessonWrapper = lessonPersistence.getById(command.nextLessonId());
+        for (LessonId nextLessonId : command.nextLessonIds()) {
+            WrapperResult<Lesson> nextLessonWrapper = lessonPersistence.getById(nextLessonId);
             if (nextLessonWrapper.isFailure())
                 return nextLessonWrapper;
             lesson.setPreviousElement(nextLessonWrapper.getValue());

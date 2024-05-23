@@ -1,11 +1,11 @@
 package com.edutie.backend.domain.common.base;
 
 import com.edutie.backend.domain.common.errors.NavigationErrors;
-import validation.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import validation.Result;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,6 +19,7 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
     @JoinColumn(name = "previous_element_id", nullable = true)
     @JsonIgnore
     @Setter
+    //TODO: parent element validation
     private TNavigationEntity previousElement = null;
 
     @OneToMany(mappedBy = "previousElement", fetch = FetchType.LAZY)
@@ -31,8 +32,9 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
                 Result.success() : Result.failure(NavigationErrors.elementNotFound(this.getClass()));
     }
 
+    //TODO: no Result as remove value
     public Result removeNextElementById(TId entityId) {
-        var searchedEntity = nextElements.stream().filter(o->o.getId()==entityId).findFirst();
+        var searchedEntity = nextElements.stream().filter(o -> o.getId() == entityId).findFirst();
         return searchedEntity.isPresent() ?
                 removeNextElement(searchedEntity.get()) : Result.failure(NavigationErrors.elementNotFound(this.getClass()));
     }
