@@ -177,8 +177,10 @@ public class Seeding {
 		@Transactional
 		public void seedLessons() {
 			switch ((int) Math.ceil(Math.random() * 2)) {
-				case 1 -> variant1();
-				case 2 -> variant2();
+				case 1 ->
+						variant1();
+				case 2 ->
+						variant2();
 			}
 		}
 
@@ -337,9 +339,12 @@ public class Seeding {
 			@Transactional
 			public void seedSegments() {
 				switch ((int) Math.ceil(Math.random() * 3)) {
-					case 1 -> variant1();
-					case 2 -> variant2();
-					case 3 -> variant3();
+					case 1 ->
+							variant1();
+					case 2 ->
+							variant2();
+					case 3 ->
+							variant3();
 				}
 			}
 
@@ -359,7 +364,8 @@ public class Seeding {
 				Segment s1 = Segment.create(educator, lesson);
 //				s1.addLearningRequirement(lr1);
 				s1.setName("Segment 1");
-				s1.setTheoryDescription(PromptFragment.of("Overview description of Segment 1"));
+				s1.setTheoryDescription(PromptFragment.of("Theory description of Segment 1"));
+				s1.setSnippetDescription("Snippet description of Segment 1");
 //				s1.setExerciseType(et);
 				s1.setExerciseDescription(PromptFragment.of("Exercise description of Segment 1"));
 				s1.update(uid);
@@ -487,7 +493,9 @@ public class Seeding {
 			private @NonNull Segment seedSegment(int i, Segment prev) {
 				Segment segment = Segment.create(educator, lesson);
 				segment.setName("Segment" + i);
-				segment.setTheoryDescription(PromptFragment.of("Overview description of Segment" + i));
+				segment.setTheoryDescription(PromptFragment.of("Theory description of Segment" + i));
+				segment.setSnippetDescription("Snippet description of Segment" + i);
+//				segment.setExerciseType(et);
 				segment.setExerciseDescription(PromptFragment.of("Exercise description of Segment" + i));
 				segment.setPreviousElement(prev);
 				segment.update(uid);
