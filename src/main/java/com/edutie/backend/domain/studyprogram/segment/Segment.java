@@ -32,9 +32,11 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     private String snippetDescription;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "theory_description"))
+    @JsonIgnore
     private PromptFragment theoryDescription;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
+    @JsonIgnore
     private PromptFragment exerciseDescription;
     @ManyToOne
     private ExerciseType exerciseType;
