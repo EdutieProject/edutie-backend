@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edutie.backend.application.learning.course.*;
 import validation.WrapperResult;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/v1/learning/courses")
 @RequiredArgsConstructor
@@ -29,11 +31,11 @@ public class CoursesLearningController {
 
 
     @GetMapping
-    public ResponseEntity<?> getCoursesByScience(@RequestParam ScienceId scienceId) {
+    public ResponseEntity<?> getCoursesByScience(@RequestParam String scienceId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
         return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(scienceId)));
+                .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(new ScienceId(UUID.fromString(scienceId)))));
     }
 
     @GetMapping("/progressed")
