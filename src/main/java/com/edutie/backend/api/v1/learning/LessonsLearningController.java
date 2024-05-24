@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import validation.WrapperResult;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("api/v1/learning/lessons")
 @RequiredArgsConstructor
@@ -25,10 +27,10 @@ public class LessonsLearningController {
     private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;
 
     @GetMapping()
-    public ResponseEntity<?> getLessonsForStudentFromCourse(@RequestParam CourseId courseId) {
+    public ResponseEntity<?> getLessonsForStudentFromCourse(@RequestParam String courseId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware
         return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(courseId, actionUserId)));
+                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(new CourseId(UUID.fromString(courseId)), actionUserId)));
     }
 }

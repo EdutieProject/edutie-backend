@@ -1,6 +1,8 @@
 package com.edutie.backend.domain.common.base;
 
+import com.edutie.backend.api.serialization.IdOnlySetSerializer;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
 import validation.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,6 +27,7 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
     private TNavigationEntity previousElement = null;
 
     @OneToMany(mappedBy = "previousElement", fetch = FetchType.LAZY)
+    @JsonSerialize(using = IdOnlySetSerializer.class)
     protected final Set<TNavigationEntity> nextElements = new HashSet<>();
 
     public abstract Result addNextElement(TNavigationEntity navigationEntity);
