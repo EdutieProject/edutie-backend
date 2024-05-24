@@ -29,7 +29,7 @@ public class SegmentsForStudentFromLessonQueryHandlerImplementation extends Hand
         Lesson lesson = lessonWrapperResult.getValue();
         return WrapperResult.successWrapper(
                 lesson.getSegments().stream().map(o ->
-                        new SegmentView(o, student.getLearningHistory().stream().anyMatch(res -> res.getSegment().equals(o)))
+                        new SegmentView(o, 2, 1, student.getLearningHistory().stream().anyMatch(res -> res.getSegment().equals(o)))
                 ).collect(Collectors.toList())
         );
     }
