@@ -60,7 +60,6 @@ public class Seeding {
 		log.info("  STUDY PROGRAM DB SEEDING - START  ");
 		log.info("====================================");
 		educator = Educator.create(uid, adminPersistence.getAdminId(new UserId()));
-		educator.setType(EducatorType.CREATOR);
 		educatorPersistence.save(educator);
 		seedSciences();
 		log.info("====================================");
@@ -360,7 +359,7 @@ public class Seeding {
 				Segment s1 = Segment.create(educator, lesson);
 //				s1.addLearningRequirement(lr1);
 				s1.setName("Segment 1");
-				s1.setOverviewDescription(PromptFragment.of("Overview description of Segment 1"));
+				s1.setTheoryDescription(PromptFragment.of("Overview description of Segment 1"));
 //				s1.setExerciseType(et);
 				s1.setExerciseDescription(PromptFragment.of("Exercise description of Segment 1"));
 				s1.update(uid);
@@ -488,8 +487,7 @@ public class Seeding {
 			private @NonNull Segment seedSegment(int i, Segment prev) {
 				Segment segment = Segment.create(educator, lesson);
 				segment.setName("Segment" + i);
-				segment.setOverviewDescription(PromptFragment.of("Overview description of Segment" + i));
-//				segment.setExerciseType(et);
+				segment.setTheoryDescription(PromptFragment.of("Overview description of Segment" + i));
 				segment.setExerciseDescription(PromptFragment.of("Exercise description of Segment" + i));
 				segment.setPreviousElement(prev);
 				segment.update(uid);
