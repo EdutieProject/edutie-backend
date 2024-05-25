@@ -21,9 +21,8 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "previous_element_id", nullable = true)
-    @JsonIgnore
+    @JsonSerialize(using = IdOnlySetSerializer.class)
     @Setter
-    //TODO: parent element validation
     private TNavigationEntity previousElement = null;
 
     @OneToMany(mappedBy = "previousElement", fetch = FetchType.LAZY)
