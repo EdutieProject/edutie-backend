@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.common.base;
 
+import com.edutie.backend.api.serialization.IdOnlySerializer;
 import com.edutie.backend.api.serialization.IdOnlySetSerializer;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -21,7 +22,7 @@ public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEnt
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "previous_element_id", nullable = true)
-    @JsonSerialize(using = IdOnlySetSerializer.class)
+    @JsonSerialize(using = IdOnlySerializer.class)
     @Setter
     private TNavigationEntity previousElement = null;
 
