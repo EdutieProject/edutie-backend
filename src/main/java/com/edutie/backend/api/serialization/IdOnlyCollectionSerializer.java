@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Collection;
 
-public class IdOnlySetSerializer<U extends EntityBase<?>, T extends Set<U>> extends StdSerializer<T> {
-    public IdOnlySetSerializer() {
+public class IdOnlyCollectionSerializer<U extends EntityBase<?>, T extends Collection<U>> extends StdSerializer<T> {
+    public IdOnlyCollectionSerializer() {
         this(null);
     }
-    protected IdOnlySetSerializer(Class<T> t) {
+    protected IdOnlyCollectionSerializer(Class<T> t) {
         super(t);
     }
 
