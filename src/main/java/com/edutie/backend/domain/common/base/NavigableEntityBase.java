@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.common.base;
 
-import com.edutie.backend.api.serialization.IdOnlySerializer;
-import com.edutie.backend.api.serialization.IdOnlyCollectionSerializer;
+import com.edutie.backend.api.serialization.serializers.IdOnlyCollectionSerializer;
+import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
