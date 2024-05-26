@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.studyprogram.course;
 
-import com.edutie.backend.api.serialization.IdOnlySerializer;
+import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;

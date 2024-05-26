@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.studyprogram.lesson;
 
-import com.edutie.backend.api.serialization.IdOnlySerializer;
+import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -15,8 +15,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 
 import java.util.ArrayList;

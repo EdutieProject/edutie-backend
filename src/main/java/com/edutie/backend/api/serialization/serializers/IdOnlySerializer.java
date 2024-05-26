@@ -1,4 +1,4 @@
-package com.edutie.backend.api.serialization;
+package com.edutie.backend.api.serialization.serializers;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.fasterxml.jackson.core.JsonGenerator;
