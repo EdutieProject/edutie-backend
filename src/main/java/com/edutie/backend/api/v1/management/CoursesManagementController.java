@@ -1,5 +1,6 @@
 package com.edutie.backend.api.v1.management;
 
+import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.management.course.CreateCourseCommandHandler;
 import com.edutie.backend.application.management.course.CreatedCoursesQueryHandler;
@@ -11,6 +12,7 @@ import com.edutie.backend.application.management.course.commands.RemoveCourseCom
 import com.edutie.backend.application.management.course.queries.CreatedCoursesQuery;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import validation.Result;
 import validation.WrapperResult;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/management/courses")
@@ -33,25 +37,25 @@ public class CoursesManagementController {
     private final EducatorAuthorization educatorAuthorization;
 
     @GetMapping
-    public ResponseEntity<?> getCreatedCourses() {
+    public ResponseEntity<ApiResult<List<Course>>> getCreatedCourses() {
         JsonWebToken jwt = new JsonWebToken();
         UserId actionUserId = authentication.authenticateUser(jwt);
-        return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
+        return new GenericRequestHandler<List<Course>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery(actionUserId)));
     }
 
     @PostMapping
-    public ResponseEntity<?> createCourse(@RequestBody CreateCourseCommand command) {
+    public ResponseEntity<ApiResult<Course>> createCourse(@RequestBody CreateCourseCommand command) {
         JsonWebToken jwt = new JsonWebToken();
         UserId actionUserId = authentication.authenticateUser(jwt);
-        return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
+        return new GenericRequestHandler<Course, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @PatchMapping
-    public ResponseEntity<?> modifyCourse(@RequestBody ModifyCourseCommand command) {
+    public ResponseEntity<ApiResult<Result>> modifyCourse(@RequestBody ModifyCourseCommand command) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
@@ -59,7 +63,7 @@ public class CoursesManagementController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> removeCourse(@RequestBody RemoveCourseCommand command) {
+    public ResponseEntity<ApiResult<Result>> removeCourse(@RequestBody RemoveCourseCommand command) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
