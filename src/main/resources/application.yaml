@@ -2,7 +2,6 @@ server:
   port: 8081
 
 
-
 spring:
   cert: http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs
   datasource:
@@ -37,3 +36,24 @@ spring:
 #      resource-server:
 #        jwt:
 #          issuer-uri: http://52.32.178.153:8080/realms/SpringBootKeycloak
+
+springdoc:
+  api-docs:
+    enabled: true
+    resolve-schema-properties: true
+    path: /v1/docs
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger
+    enabled: true
+  writer-with-default-pretty-printer: true
+  group-configs:
+    -
+      group: Learning
+      packages-to-scan:
+        - com.edutie.backend.api.v1.learning
+    -
+      group: Management
+      packages-to-scan:
+        - com.edutie.backend.api.v1.management
