@@ -12,6 +12,7 @@ import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQu
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import validation.WrapperResult;
 @RestController
 @RequestMapping("/api/v1/management/lessons")
 @RequiredArgsConstructor
+@Tag(name = "Lessons Management Controller", description = "Provides operations regarding lessons in the management context")
 public class LessonsManagementController {
     private final AuthenticationPlaceholder authentication;
     private final CreateLessonCommandHandler createLessonCommandHandler;

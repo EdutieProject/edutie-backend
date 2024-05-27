@@ -9,6 +9,10 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +27,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/learning/lessons")
 @RequiredArgsConstructor
+@Tag(name = "Lessons Learning Controller", description = "Provides operations regarding lessons in the learning context")
 public class LessonsLearningController {
     private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;

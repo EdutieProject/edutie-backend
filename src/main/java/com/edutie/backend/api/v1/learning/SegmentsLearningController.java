@@ -9,6 +9,7 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/v1/learning/segments")
 @RequiredArgsConstructor
+@Tag(name = "Segments Learning Controller", description = "Provides operations regarding segments in the learning context")
 public class SegmentsLearningController {
     private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
