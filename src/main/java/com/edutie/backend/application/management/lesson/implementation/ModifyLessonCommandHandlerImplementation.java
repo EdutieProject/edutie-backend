@@ -4,6 +4,7 @@ import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.lesson.ModifyLessonCommandHandler;
 import com.edutie.backend.application.management.lesson.commands.ModifyLessonCommand;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.errors.EducatorError;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
@@ -26,8 +27,11 @@ public class ModifyLessonCommandHandlerImplementation extends HandlerBase implem
         if (lessonWrapperResult.isFailure())
             return lessonWrapperResult;
         Lesson lesson = lessonWrapperResult.getValue();
-        if(!lesson.getEducator().equals(educator))
-            return Result.failure(new Error("LESSON", "To modify lesson you must be a creator of it."));
+        if(!lesson.getEducator().equals(educator)) {
+            LOGGER.info("Educator has insufficient permissions to modify this lesson");
+            return Result.failure(EducatorError.mustBeOwnerError(Lesson.class));
+        }
+
         if (command.lessonName() != null)
             lesson.setName(command.lessonName());
         if (command.lessonDescription() != null)

@@ -21,11 +21,8 @@ public class CreatedSegmentsQueryHandlerImplementation extends HandlerBase imple
     private final EducatorPersistence educatorPersistence;
     @Override
     public WrapperResult<List<Segment>> handle(CreatedSegmentsQuery query) {
-        try {
-            Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
-            return segmentPersistence.getAllOfEducatorId(educator.getId());
-        } catch (Exception exception) {
-            return Result.failureWrapper(new Error("Sth went wrong", exception.getMessage())); // TODO: ?
-        }
+        LOGGER.info("Retrieving segments created by educator of id {}", query.educatorUserId().identifierValue());
+        Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
+        return segmentPersistence.getAllOfEducatorId(educator.getId());
     }
 }
