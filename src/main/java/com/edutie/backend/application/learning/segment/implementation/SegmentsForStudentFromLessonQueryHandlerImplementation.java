@@ -22,9 +22,14 @@ public class SegmentsForStudentFromLessonQueryHandlerImplementation extends Hand
     private final LessonPersistence lessonPersistence;
     @Override
     public WrapperResult<List<SegmentView>> handle(SegmentsForStudentFromLessonQuery query) {
+        LOGGER.info("Retrieving segments from lesson of id {} for student of id {}",
+                query.lessonId().identifierValue(),
+                query.studentUserId().identifierValue());
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(query.lessonId());
-        if (lessonWrapperResult.isFailure())
+        if (lessonWrapperResult.isFailure()) {
+            LOGGER.info("Persistence error occurred: " + lessonWrapperResult.getError().toString());
             return lessonWrapperResult.map(o -> null);
+        }
         Student student = studentPersistence.getByUserId(query.studentUserId());
         Lesson lesson = lessonWrapperResult.getValue();
         return WrapperResult.successWrapper(

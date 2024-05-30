@@ -27,8 +27,11 @@ public class LessonsForStudentFromCourseQueryHandlerImplementation extends Handl
                 query.studentUserId().identifierValue());
         Student student = studentPersistence.getByUserId(query.studentUserId());
         WrapperResult<List<Lesson>> lessonsResult = lessonPersistence.getAllOfCourseId(query.courseId());
-        if (lessonsResult.isFailure())
+        if (lessonsResult.isFailure()) {
+            LOGGER.info("Persistence error: " + lessonsResult.getError().toString());
             return lessonsResult.map(o -> null);
+        }
+
         //TODO: note that current implementation signs which lesson is "touched".
         return lessonsResult.map(primaryResult -> primaryResult.stream().map(o ->
                         new LessonView(o, student.getLearningHistory().stream().map(
