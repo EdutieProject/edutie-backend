@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class Seeding {
-	final int MAX_SEEDED_COURSES = 10;
-	final int MAX_SEEDED_SCIENCES = 3;
+	final int MAX_SEEDED_COURSES = 4;
+	final int MAX_SEEDED_SCIENCES = 2;
 
 	private final SciencePersistence sciencePersistence;
 	private final CoursePersistence coursePersistence;
@@ -74,7 +74,8 @@ public class Seeding {
 	 * @since 0.5
 	 */
 	private void seedSciences() {
-		seedSciences((int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES));
+		int sciencesCount = (int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES);
+		seedSciences(sciencesCount == 0 ? 1 : sciencesCount);
 	}
 
 	/**
