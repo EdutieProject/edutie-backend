@@ -6,12 +6,9 @@ spring:
   cert: http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs
   datasource:
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-#    password: ${POSTGRES_PASSWORD}
-#    username: ${POSTGRES_USER}
-    url: jdbc:postgresql://localhost:5432/edutie
-    username: postgres
-    password: root
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    password: ${POSTGRES_PASSWORD}
+    username: ${POSTGRES_USER}
   jpa:
     hibernate:
       ddl-auto: create
