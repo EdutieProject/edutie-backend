@@ -90,6 +90,7 @@ public class ExerciseTypePersistenceImplementation implements ExerciseTypePersis
      * @param userId user id
      * @return Wrapper result of desired list
      */
+    //TODO ? refactor
     @Override
     public WrapperResult<List<ExerciseType>> getAllOfUserId(UserId userId) {
         return WrapperResult.failureWrapper(new Error("No impl", "Not implemented - refactor required"));
