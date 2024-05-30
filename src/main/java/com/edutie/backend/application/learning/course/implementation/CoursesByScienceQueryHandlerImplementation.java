@@ -19,8 +19,11 @@ public class CoursesByScienceQueryHandlerImplementation extends HandlerBase impl
     public WrapperResult<List<Course>> handle(CoursesByScienceQuery query) {
         LOGGER.info("Retrieving all courses of science of id {}", query.scienceId().identifierValue());
         WrapperResult<List<Course>> coursesResult = coursePersistence.getAllOfScienceId(query.scienceId());
-        if (coursesResult.isFailure())
+        if (coursesResult.isFailure()) {
+            LOGGER.info("Persistence error: " + coursesResult.getError().toString());
             return coursesResult;
+        }
+        LOGGER.info("Courses retrieved successfully");
         return WrapperResult.successWrapper(coursesResult.getValue());
     }
 }

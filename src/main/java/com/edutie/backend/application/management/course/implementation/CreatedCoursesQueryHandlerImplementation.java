@@ -19,10 +19,13 @@ public class CreatedCoursesQueryHandlerImplementation extends HandlerBase implem
     private final EducatorPersistence educatorPersistence;
     @Override
     public WrapperResult<List<Course>> handle(CreatedCoursesQuery query) {
+        LOGGER.info("Retrieving courses created by user of id {}", query.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
         WrapperResult<List<Course>> coursesResult = coursePersistence.getAllOfEducatorId(educator.getId());
-        if (coursesResult.isFailure())
+        if (coursesResult.isFailure()) {
+            LOGGER.info("Persistence failure occurred. Error: " + coursesResult.getError().toString());
             return coursesResult;
+        }
         return WrapperResult.successWrapper(coursesResult.getValue());
     }
 }

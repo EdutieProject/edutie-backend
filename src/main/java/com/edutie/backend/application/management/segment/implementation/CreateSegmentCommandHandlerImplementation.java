@@ -23,10 +23,15 @@ public class CreateSegmentCommandHandlerImplementation extends HandlerBase imple
 
     @Override
     public WrapperResult<Segment> handle(CreateSegmentCommand command) {
+        LOGGER.info("Creating segment by user of id {} with previous lesson of id {}",
+                command.educatorUserId().identifierValue(),
+                command.previousSegmentId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         WrapperResult<Segment> previousSegmentWrapperResult = segmentPersistence.getById(command.previousSegmentId());
-        if (previousSegmentWrapperResult.isFailure())
+        if (previousSegmentWrapperResult.isFailure()) {
+            LOGGER.info("Persistence error occurred. Error: {}", previousSegmentWrapperResult.getError().toString());
             return previousSegmentWrapperResult;
+        }
         Segment segment = Segment.create(educator, previousSegmentWrapperResult.getValue().getLesson());
         segment.setPreviousElement(previousSegmentWrapperResult.getValue());
         WrapperResult<Segment> nextSegmentWrapperResult = segmentPersistence.getById(command.nextSegmentId());

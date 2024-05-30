@@ -28,19 +28,33 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
     private final SegmentPersistence segmentPersistence;
     @Override
     public WrapperResult<Course> handle(CreateCourseCommand command) {
+        LOGGER.info("Creating course by user of id {} ", command.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         Science science = sciencePersistence.getById(command.scienceId()).getValue();
         Course course = Course.create(educator, science);
         course.setName(command.courseName());
         course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
         Result courseSaveResult = coursePersistence.save(course);
+        if (courseSaveResult.isFailure()) {
+            LOGGER.info("Persistence failure while saving course. Error: " + courseSaveResult.getError().toString());
+            return courseSaveResult.map(() -> null);
+        }
         Lesson lesson = Lesson.create(educator, course);
         lesson.setName("First lesson");
         lesson.setDescription("This is the first lesson in this course with a placeholder description.");
         Result lessonSaveResult = lessonPersistence.save(lesson);
+        if (lessonSaveResult.isFailure()) {
+            LOGGER.info("Persistence failure while saving initial lesson. Error: " + lessonSaveResult.getError().toString());
+            return lessonSaveResult.map(() -> null);
+        }
         Segment segment = Segment.create(educator, lesson);
         segment.setName("First segment. Start designing it now!");
         Result segmentSaveResult = segmentPersistence.save(segment);
+        if (segmentSaveResult.isFailure()) {
+            LOGGER.info("Persistence failure while saving initial segment. Error: " + segmentSaveResult.getError().toString());
+            return segmentSaveResult.map(() -> null);
+        }
+        LOGGER.info("Creating course success.");
         return WrapperResult.successWrapper(course);
     }
 }

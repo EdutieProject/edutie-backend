@@ -26,6 +26,7 @@ public class CoursesByStudentProgressQueryHandlerImplementation extends HandlerB
                 .map(o -> o.getSegment().getLesson().getCourse())
                 .collect(Collectors.toSet())
                 .stream().toList();
+        LOGGER.info("Courses retrieved successfully.");
         return WrapperResult.successWrapper(coursesInProgress);
     }
 }
