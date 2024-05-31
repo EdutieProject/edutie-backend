@@ -3,8 +3,8 @@ package com.edutie.backend.domain.studyprogram.lesson;
 import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
 import com.edutie.backend.domain.common.base.NavigableEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
-import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,7 +50,7 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
      * Recommended constructor associating Lesson with a creator and course
      *
      * @param educator creator reference
-     * @param course  course reference
+     * @param course   course reference
      * @return Lesson
      */
     public static Lesson create(Educator educator, Course course) {
@@ -74,6 +74,15 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
         if (lesson.getCourse() != course)
             return Result.failure(NavigationErrors.invalidParentEntity());
         nextElements.add(lesson);
+        return Result.success();
+    }
+
+    @Override
+    public Result setPreviousElement(Lesson lesson) {
+        if (!lesson.getCourse().equals(this.course)) {
+            return Result.failure(NavigationErrors.invalidParentEntity());
+        }
+        this.previousElement = lesson;
         return Result.success();
     }
 }

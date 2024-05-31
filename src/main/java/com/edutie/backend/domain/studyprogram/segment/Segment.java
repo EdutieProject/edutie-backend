@@ -99,4 +99,13 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
         nextElements.add(segment);
         return Result.success();
     }
+
+    @Override
+    public Result setPreviousElement(Segment segment) {
+        if (!segment.getLesson().equals(this.lesson)) {
+            return Result.failure(NavigationErrors.invalidParentEntity());
+        }
+        this.previousElement = segment;
+        return Result.success();
+    }
 }
