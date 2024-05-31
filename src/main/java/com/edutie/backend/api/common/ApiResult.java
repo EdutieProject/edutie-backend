@@ -21,7 +21,7 @@ public class ApiResult<T> {
 
     public static <T> ApiResult<T> fromWrapper(WrapperResult<T> wrapperResult) {
         ApiResult<T> apiResult = new ApiResult<>();
-        apiResult.data = wrapperResult.getValue();
+        apiResult.data = wrapperResult.isSuccess() ? wrapperResult.getValue() : null;
         apiResult.error = wrapperResult.getError();
         apiResult.success = wrapperResult.isSuccess();
         return apiResult;
