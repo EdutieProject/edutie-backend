@@ -35,11 +35,11 @@ public class CoursesLearningController {
 
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(@RequestParam String scienceId) {
+    public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(@RequestParam ScienceId scienceId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
         return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(new ScienceId(UUID.fromString(scienceId)))));
+                .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(scienceId)));
     }
 
     @GetMapping("/progressed")
