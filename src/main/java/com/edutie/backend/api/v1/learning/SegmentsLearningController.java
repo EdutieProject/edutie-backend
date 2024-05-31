@@ -31,10 +31,10 @@ public class SegmentsLearningController {
     private final SegmentsForStudentFromLessonQueryHandler segmentsForStudentFromLessonQueryHandler;
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Segment>>> getSegmentsForStudentFromLesson(@RequestParam String lessonId) {
+    public ResponseEntity<ApiResult<List<Segment>>> getSegmentsForStudentFromLesson(@RequestParam LessonId lessonId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware ?
         return new GenericRequestHandler<List<Segment>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> segmentsForStudentFromLessonQueryHandler.handle(new SegmentsForStudentFromLessonQuery(actionUserId, new LessonId(UUID.fromString(lessonId)))));
+                .handle(() -> segmentsForStudentFromLessonQueryHandler.handle(new SegmentsForStudentFromLessonQuery(actionUserId, lessonId)));
     }
 }

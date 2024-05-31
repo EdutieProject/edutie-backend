@@ -34,10 +34,10 @@ public class LessonsLearningController {
     private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;
 
     @GetMapping()
-    public ResponseEntity<ApiResult<List<Lesson>>> getLessonsForStudentFromCourse(@RequestParam String courseId) {
+    public ResponseEntity<ApiResult<List<Lesson>>> getLessonsForStudentFromCourse(@RequestParam CourseId courseId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware
         return new GenericRequestHandler<List<Lesson>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(new CourseId(UUID.fromString(courseId)), actionUserId)));
+                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(courseId, actionUserId)));
     }
 }

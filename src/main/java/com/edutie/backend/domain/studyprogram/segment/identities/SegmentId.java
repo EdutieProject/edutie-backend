@@ -1,12 +1,17 @@
 package com.edutie.backend.domain.studyprogram.segment.identities;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
+import jakarta.persistence.Embeddable;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public record SegmentId(@JsonValue UUID identifierValue) implements Serializable {
-    public SegmentId(){
-        this(UUID.randomUUID());
+@Embeddable
+public class SegmentId extends UuidIdentifier {
+    public SegmentId() {
+        super();
+    }
+
+    public SegmentId(UUID uuid) {
+        super(uuid);
     }
 }
