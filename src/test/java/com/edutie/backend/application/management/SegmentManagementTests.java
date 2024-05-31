@@ -31,6 +31,7 @@ import validation.Result;
 import validation.WrapperResult;
 
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 public class SegmentManagementTests {
