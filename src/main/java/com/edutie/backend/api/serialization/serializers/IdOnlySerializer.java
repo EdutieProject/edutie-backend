@@ -16,10 +16,10 @@ public class IdOnlySerializer<T extends EntityBase<?>> extends StdSerializer<T> 
     }
 
     @Override
-    public void serialize(T t, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(T entity, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("id", IdInference.inferId(t));
+        jsonGenerator.writeStringField("id", entity.getId().identifierValue().toString());
         jsonGenerator.writeEndObject();
     }
 }

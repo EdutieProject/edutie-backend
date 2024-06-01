@@ -3,10 +3,11 @@ package com.edutie.backend.domain.common.base.identity;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.MappedSuperclass;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class Identifier<TId> {
+public abstract class Identifier<TId> implements Serializable {
     @JsonValue
     protected TId identifierValue;
 

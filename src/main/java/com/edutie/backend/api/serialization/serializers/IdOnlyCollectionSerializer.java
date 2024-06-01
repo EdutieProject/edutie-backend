@@ -21,7 +21,7 @@ public class IdOnlyCollectionSerializer<U extends EntityBase<?>, T extends Colle
         jsonGenerator.writeStartArray();
         for (U entity : entityBases) {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("id", IdInference.inferId(entity));
+            jsonGenerator.writeStringField("id", entity.getId().identifierValue().toString());
             jsonGenerator.writeEndObject();
         }
         jsonGenerator.writeEndArray();
