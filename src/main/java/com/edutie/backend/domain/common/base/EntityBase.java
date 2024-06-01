@@ -2,6 +2,7 @@ package com.edutie.backend.domain.common.base;
 
 import java.io.Serializable;
 
+import com.edutie.backend.domain.common.base.identity.Identifier;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
 @EqualsAndHashCode
-public abstract class EntityBase<TId extends Serializable> {
+public abstract class EntityBase<TId extends Identifier<?> & Serializable> {
     @EmbeddedId
     @AttributeOverride(name = "identifierValue", column = @Column(name = "id"))
     private TId id;

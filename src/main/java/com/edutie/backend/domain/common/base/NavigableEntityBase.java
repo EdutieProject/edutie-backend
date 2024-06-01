@@ -2,6 +2,7 @@ package com.edutie.backend.domain.common.base;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlyCollectionSerializer;
 import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
+import com.edutie.backend.domain.common.base.identity.Identifier;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Getter
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<TNavigationEntity, TId>, TId extends Serializable> extends AuditableEntityBase<TId> {
+public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<TNavigationEntity, TId>, TId extends Identifier<?>> extends AuditableEntityBase<TId> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "previous_element_id", nullable = true)
