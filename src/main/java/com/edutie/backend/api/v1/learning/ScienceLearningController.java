@@ -7,7 +7,8 @@ import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.learning.science.AccessibleSciencesQueryHandler;
 import com.edutie.backend.application.learning.science.queries.AccessibleSciencesQuery;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.domain.studyprogram.science.Science;
+import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
+import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 import java.util.List;
 
