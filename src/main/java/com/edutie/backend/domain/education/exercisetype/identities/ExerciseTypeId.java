@@ -1,12 +1,17 @@
 package com.edutie.backend.domain.education.exercisetype.identities;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
+import jakarta.persistence.Embeddable;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public record ExerciseTypeId(@JsonValue UUID identifierValue) implements Serializable {
-    public ExerciseTypeId(){
-        this(UUID.randomUUID());
+@Embeddable
+public class ExerciseTypeId extends UuidIdentifier {
+    public ExerciseTypeId() {
+        super();
+    }
+
+    public ExerciseTypeId(UUID uuid) {
+        super(uuid);
     }
 }

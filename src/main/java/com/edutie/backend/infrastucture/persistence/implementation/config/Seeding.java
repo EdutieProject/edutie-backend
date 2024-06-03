@@ -4,7 +4,6 @@ import com.edutie.backend.domain.administration.AdminPersistence;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -31,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class Seeding {
-	final int MAX_SEEDED_COURSES = 4;
+	final int MAX_SEEDED_COURSES = 2;
 	final int MAX_SEEDED_SCIENCES = 2;
 
 	private final SciencePersistence sciencePersistence;
@@ -75,7 +74,7 @@ public class Seeding {
 	 */
 	private void seedSciences() {
 		int sciencesCount = (int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES);
-		seedSciences(sciencesCount == 0 ? 1 : sciencesCount);
+		seedSciences(sciencesCount);
 	}
 
 	/**

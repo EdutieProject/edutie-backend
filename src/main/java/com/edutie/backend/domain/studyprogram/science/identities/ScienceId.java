@@ -1,12 +1,17 @@
 package com.edutie.backend.domain.studyprogram.science.identities;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
+import jakarta.persistence.Embeddable;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public record ScienceId(@JsonValue UUID identifierValue) implements Serializable {
-    public ScienceId(){
-        this(UUID.randomUUID());
+@Embeddable
+public class ScienceId extends UuidIdentifier {
+    public ScienceId() {
+        super(UUID.randomUUID());
+    }
+
+    public ScienceId(UUID uuid) {
+        super(uuid);
     }
 }

@@ -1,12 +1,17 @@
 package com.edutie.backend.api.v1.learning;
 
+import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
+import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.application.learning.course.CoursesByScienceQueryHandler;
+import com.edutie.backend.application.learning.course.CoursesByStudentProgressQueryHandler;
 import com.edutie.backend.application.learning.course.queries.CoursesByScienceQuery;
 import com.edutie.backend.application.learning.course.queries.CoursesByStudentProgressQuery;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edutie.backend.application.learning.course.*;
-import validation.WrapperResult;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/learning/courses")
 @RequiredArgsConstructor
+@Tag(name = "Courses Learning Controller", description = "Provides operations regarding courses in the learning context")
 public class CoursesLearningController {
     private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
@@ -29,17 +34,17 @@ public class CoursesLearningController {
 
 
     @GetMapping
-    public ResponseEntity<?> getCoursesByScience(@RequestParam ScienceId scienceId) {
+    public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(@RequestParam ScienceId scienceId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
-        return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
+        return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(scienceId)));
     }
 
     @GetMapping("/progressed")
-    public ResponseEntity<?> getCoursesByStudentProgress() {
+    public ResponseEntity<ApiResult<List<Course>>> getCoursesByStudentProgress() {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
-        return new GenericRequestHandler<WrapperResult<?>, StudentAuthorization>()
+        return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> coursesByStudentProgressQueryHandler.handle(new CoursesByStudentProgressQuery(actionUserId)));
     }

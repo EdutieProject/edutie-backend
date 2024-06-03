@@ -1,12 +1,17 @@
 package com.edutie.backend.domain.studyprogram.lesson.identities;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
+import jakarta.persistence.Embeddable;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-public record LessonId(@JsonValue UUID identifierValue) implements Serializable {
-    public LessonId(){
-        this(UUID.randomUUID());
+@Embeddable
+public class LessonId extends UuidIdentifier {
+    public LessonId() {
+        super();
+    }
+
+    public LessonId(UUID uuid) {
+        super(uuid);
     }
 }

@@ -1,5 +1,6 @@
 package com.edutie.backend.api.v1.management;
 
+import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.management.lesson.CreateLessonCommandHandler;
 import com.edutie.backend.application.management.lesson.CreatedLessonsQueryHandler;
@@ -11,7 +12,9 @@ import com.edutie.backend.application.management.lesson.commands.RemoveLessonCom
 import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQuery;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import validation.Result;
 import validation.WrapperResult;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/management/lessons")
 @RequiredArgsConstructor
+@Tag(name = "Lessons Management Controller", description = "Provides operations regarding lessons in the management context")
 public class LessonsManagementController {
     private final AuthenticationPlaceholder authentication;
     private final CreateLessonCommandHandler createLessonCommandHandler;
@@ -31,23 +37,23 @@ public class LessonsManagementController {
     private final EducatorAuthorization educatorAuthorization;
 
     @GetMapping
-    public ResponseEntity<?> getCreatedLessons() {
+    public ResponseEntity<ApiResult<List<Lesson>>> getCreatedLessons() {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
-        return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
+        return new GenericRequestHandler<List<Lesson>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createdLessonsQueryHandler.handle(new CreatedLessonsQuery().educatorUserId(actionUserId)));
     }
 
     @PostMapping
-    public ResponseEntity<?> createLesson(@RequestBody CreateLessonCommand command) {
+    public ResponseEntity<ApiResult<Lesson>> createLesson(@RequestBody CreateLessonCommand command) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
-        return new GenericRequestHandler<WrapperResult<?>, EducatorAuthorization>()
+        return new GenericRequestHandler<Lesson, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createLessonCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @PatchMapping
-    public ResponseEntity<?> modifyLesson(@RequestBody ModifyLessonCommand command) {
+    public ResponseEntity<ApiResult<Result>> modifyLesson(@RequestBody ModifyLessonCommand command) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
@@ -55,7 +61,7 @@ public class LessonsManagementController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> removeLesson(@RequestBody RemoveLessonCommand command) {
+    public ResponseEntity<ApiResult<Result>> removeLesson(@RequestBody RemoveLessonCommand command) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)

@@ -1,10 +1,7 @@
 package com.edutie.backend.domain.common.base;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.edutie.backend.domain.administration.UserId;
-
+import com.edutie.backend.domain.common.base.identity.Identifier;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -14,16 +11,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 /**
  * Base class for an entity. Shipped with update and creation related fields
+ *
  * @param <TId> Type of id. Example: Book entity has an id of type BookId
  */
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
-public abstract class AuditableEntityBase<TId extends Serializable> extends EntityBase<TId>{
+public abstract class AuditableEntityBase<TId extends Identifier<?>> extends EntityBase<TId> {
     @Setter(AccessLevel.PRIVATE)
     @Column(name = "created_on", nullable = false)
     private LocalDateTime createdOn = LocalDateTime.now();
@@ -37,6 +37,7 @@ public abstract class AuditableEntityBase<TId extends Serializable> extends Enti
 
     /**
      * Adjusts the update-related fields of the auditable entity.
+     *
      * @param userId user performing the modification
      */
     public void update(UserId userId) {
