@@ -9,6 +9,7 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import validation.Result;
@@ -27,6 +28,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
+@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     private String name;
     private String snippetDescription;
