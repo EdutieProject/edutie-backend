@@ -5,14 +5,11 @@ import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCourseQueryHandler;
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
+import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
-import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.tags.Tags;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/learning/lessons")
@@ -33,10 +29,10 @@ public class LessonsLearningController {
     private final StudentAuthorization studentAuthorization;
     private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;
 
-    @GetMapping()
-    public ResponseEntity<ApiResult<List<Lesson>>> getLessonsForStudentFromCourse(@RequestParam CourseId courseId) {
+    @GetMapping
+    public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(@RequestParam CourseId courseId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware
-        return new GenericRequestHandler<List<Lesson>, StudentAuthorization>()
+        return new GenericRequestHandler<List<LessonView>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(courseId, actionUserId)));
     }

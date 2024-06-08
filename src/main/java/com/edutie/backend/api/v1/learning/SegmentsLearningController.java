@@ -5,9 +5,9 @@ import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLessonQueryHandler;
 import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
+import com.edutie.backend.application.learning.segment.viewmodels.SegmentView;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
-import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/learning/segments")
@@ -31,9 +30,9 @@ public class SegmentsLearningController {
     private final SegmentsForStudentFromLessonQueryHandler segmentsForStudentFromLessonQueryHandler;
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Segment>>> getSegmentsForStudentFromLesson(@RequestParam LessonId lessonId) {
+    public ResponseEntity<ApiResult<List<SegmentView>>> getSegmentsForStudentFromLesson(@RequestParam LessonId lessonId) {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware ?
-        return new GenericRequestHandler<List<Segment>, StudentAuthorization>()
+        return new GenericRequestHandler<List<SegmentView>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> segmentsForStudentFromLessonQueryHandler.handle(new SegmentsForStudentFromLessonQuery(actionUserId, lessonId)));
     }
