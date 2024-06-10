@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, CourseId> {
-    List<Course> findCoursesByScience(Science science);
-    List<Course> findCoursesByScienceAndAccessible(Science science, boolean accessible);
-    List<Course> findCoursesByEducator(Educator educator);
+	List<Course> findCoursesByScience(Science science);
+
+	List<Course> findCoursesByScienceAndAccessible(Science science, boolean accessible);
+
+	List<Course> findCoursesByEducator(Educator educator);
 }
