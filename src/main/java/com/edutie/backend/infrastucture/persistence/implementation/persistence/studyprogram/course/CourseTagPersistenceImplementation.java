@@ -1,8 +1,8 @@
 package com.edutie.backend.infrastucture.persistence.implementation.persistence.studyprogram.course;
 
-import com.edutie.backend.domain.studyprogram.course.entities.CourseTag;
-import com.edutie.backend.domain.studyprogram.course.identities.CourseTagId;
-import com.edutie.backend.domain.studyprogram.course.persistence.CourseTagPersistence;
+import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
+import com.edutie.backend.domain.studyprogram.course.tag.indentities.CourseTagId;
+import com.edutie.backend.domain.studyprogram.course.tag.persistence.CourseTagPersistence;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseTagRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;

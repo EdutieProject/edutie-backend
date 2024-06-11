@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.studyprogram.course.identities;
+package com.edutie.backend.domain.studyprogram.course.tag.indentities;
 
 import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
 
