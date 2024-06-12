@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.education.learningrequirement;
 
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
@@ -22,15 +22,13 @@ import java.util.Set;
 @Setter
 @Entity
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class LearningRequirement extends AuditableEntityBase<LearningRequirementId> {
+public class LearningRequirement extends EducatorCreatedAuditableEntity<LearningRequirementId> {
     private String name;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description = new PromptFragment();
     @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
     private Science science;
-    @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
-    private Educator educator;
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER)
     private Set<SubRequirement> subRequirements = new HashSet<>();
 

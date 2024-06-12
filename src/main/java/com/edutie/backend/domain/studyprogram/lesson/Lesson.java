@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.studyprogram.lesson;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
-import com.edutie.backend.domain.common.base.NavigableEntityBase;
+import com.edutie.backend.domain.common.base.TreeElementEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -10,11 +10,7 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import validation.Result;
 
 import java.util.ArrayList;
@@ -29,7 +25,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
-public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
+public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
     @OneToMany(mappedBy = "lesson")
@@ -42,9 +38,6 @@ public class Lesson extends NavigableEntityBase<Lesson, LessonId> {
     @Setter(AccessLevel.PRIVATE)
     @JsonSerialize(using = IdOnlySerializer.class)
     private Course course;
-    @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
-    @Setter(AccessLevel.PRIVATE)
-    private Educator educator;
 
     /**
      * Recommended constructor associating Lesson with a creator and course

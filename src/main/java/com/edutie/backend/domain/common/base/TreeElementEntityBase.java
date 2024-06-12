@@ -9,14 +9,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import validation.Result;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public abstract class NavigableEntityBase<TNavigationEntity extends NavigableEntityBase<TNavigationEntity, TId>, TId extends Identifier<?>> extends AuditableEntityBase<TId> {
+public abstract class TreeElementEntityBase<TNavigationEntity extends TreeElementEntityBase<TNavigationEntity, TId>, TId extends Identifier<?>>
+        extends EducatorCreatedAuditableEntity<TId> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "previous_element_id", nullable = true)
