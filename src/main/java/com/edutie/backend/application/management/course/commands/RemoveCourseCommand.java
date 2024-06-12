@@ -6,12 +6,19 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class RemoveCourseCommand extends EducatorAction {
+public final class RemoveCourseCommand extends EducatorAction<RemoveCourseCommand> {
     private @NonNull CourseId courseId;
+
+    @Override
+    protected RemoveCourseCommand getThis() {
+        return this;
+    }
 }
