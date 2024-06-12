@@ -34,6 +34,8 @@ public class SegmentsLearningController {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware ?
         return new GenericRequestHandler<List<SegmentView>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> segmentsForStudentFromLessonQueryHandler.handle(new SegmentsForStudentFromLessonQuery(actionUserId, lessonId)));
+                .handle(() -> segmentsForStudentFromLessonQueryHandler.handle(
+                        new SegmentsForStudentFromLessonQuery().studentUserId(actionUserId).lessonId(lessonId)
+                ));
     }
 }

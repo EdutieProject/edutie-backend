@@ -1,16 +1,22 @@
 package com.edutie.backend.application.management.segment.queries;
 
+import com.edutie.backend.application.common.actions.EducatorAction;
 import com.edutie.backend.domain.administration.UserId;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.Objects;
-
-@Data
-@Accessors(fluent = true)
 @NoArgsConstructor
-public final class CreatedSegmentsQuery {
-    private @NonNull UserId educatorUserId;
+@Getter
+@Setter
+@Accessors(fluent = true)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public final class CreatedSegmentsQuery extends EducatorAction<CreatedSegmentsQuery> {
+    @Override
+    protected CreatedSegmentsQuery getThis() {
+        return this;
+    }
 }

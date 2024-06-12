@@ -1,20 +1,26 @@
 package com.edutie.backend.application.management.science.commands;
 
-import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.application.common.actions.AdminAction;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
-@Accessors(fluent = true)
 @NoArgsConstructor
+@Getter
+@Setter
+@Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class CreateScienceCommand {
-    @JsonIgnore
-    private @NonNull UserId adminUserId;
+public class CreateScienceCommand extends AdminAction<CreateScienceCommand> {
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private @NonNull String scienceName;
     private String scienceDescription;
+
+    @Override
+    protected CreateScienceCommand getThis() {
+        return this;
+    }
 }
