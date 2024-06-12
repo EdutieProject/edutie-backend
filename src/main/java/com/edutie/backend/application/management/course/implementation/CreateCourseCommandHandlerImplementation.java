@@ -11,11 +11,15 @@ import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
+import com.edutie.backend.services.studyprogram.initializers.course.CourseInitializationDetails;
+import com.edutie.backend.services.studyprogram.initializers.course.CourseInitializer;
+import com.edutie.backend.services.studyprogram.initializers.lesson.LessonInitializationDetails;
+import com.edutie.backend.services.studyprogram.initializers.lesson.LessonInitializer;
+import com.edutie.backend.services.studyprogram.initializers.segment.SegmentInitializationDetails;
+import com.edutie.backend.services.studyprogram.initializers.segment.SegmentInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import validation.Result;
 import validation.WrapperResult;
 
 @Component
@@ -26,35 +30,34 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
     private final CoursePersistence coursePersistence;
     private final LessonPersistence lessonPersistence;
     private final SegmentPersistence segmentPersistence;
+
+    private final CourseInitializer courseInitializer;
+    private final LessonInitializer lessonInitializer;
+    private final SegmentInitializer segmentInitializer;
+
     @Override
     public WrapperResult<Course> handle(CreateCourseCommand command) {
         LOGGER.info("Creating course by user of id {} ", command.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         Science science = sciencePersistence.getById(command.scienceId()).getValue();
-        Course course = Course.create(educator, science);
-        course.setName(command.courseName());
-        course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
-        Result courseSaveResult = coursePersistence.save(course);
-        if (courseSaveResult.isFailure()) {
-            LOGGER.info("Persistence failure while saving course. Error: " + courseSaveResult.getError().toString());
-            return courseSaveResult.map(() -> null);
-        }
-        Lesson lesson = Lesson.create(educator, course);
-        lesson.setName("First lesson");
-        lesson.setDescription("This is the first lesson in this course with a placeholder description.");
-        Result lessonSaveResult = lessonPersistence.save(lesson);
-        if (lessonSaveResult.isFailure()) {
-            LOGGER.info("Persistence failure while saving initial lesson. Error: " + lessonSaveResult.getError().toString());
-            return lessonSaveResult.map(() -> null);
-        }
-        Segment segment = Segment.create(educator, lesson);
-        segment.setName("First segment. Start designing it now!");
-        Result segmentSaveResult = segmentPersistence.save(segment);
-        if (segmentSaveResult.isFailure()) {
-            LOGGER.info("Persistence failure while saving initial segment. Error: " + segmentSaveResult.getError().toString());
-            return segmentSaveResult.map(() -> null);
-        }
-        LOGGER.info("Creating course success.");
-        return WrapperResult.successWrapper(course);
+        WrapperResult<Course> initializedCourse = courseInitializer.initializeCourse(
+                new CourseInitializationDetails().educator(educator).science(science)
+                        .name(command.courseName()).description(command.courseDescription())
+        );
+        if (initializedCourse.isFailure())
+            return initializedCourse;
+        WrapperResult<Lesson> initializedFirstLesson = lessonInitializer.initializeLesson(
+                new LessonInitializationDetails().course(initializedCourse.getValue()).educator(educator)
+                        .name("The first lesson")
+                        .description("Sample description. Modify it as you like!")
+        );
+        if (initializedFirstLesson.isFailure())
+            return initializedFirstLesson.map(o -> null);
+        segmentInitializer.initializeSegment(
+                new SegmentInitializationDetails().educator(educator)
+                        .lesson(initializedFirstLesson.getValue()).name("The first segment")
+        );
+        LOGGER.info("Course creation & initialization success.");
+        return WrapperResult.successWrapper(initializedCourse.getValue());
     }
 }

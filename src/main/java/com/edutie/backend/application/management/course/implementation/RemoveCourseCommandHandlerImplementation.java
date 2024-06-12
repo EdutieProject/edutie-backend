@@ -33,6 +33,7 @@ public class RemoveCourseCommandHandlerImplementation extends HandlerBase implem
             LOGGER.info("Educator does not have sufficient permissions to modify this course");
             return Result.failure(EducatorError.mustBeOwnerError(Course.class));
         }
+        coursePersistence.remove(course);
         LOGGER.info("Course removed successfully");
         return coursePersistence.remove(course);
     }
