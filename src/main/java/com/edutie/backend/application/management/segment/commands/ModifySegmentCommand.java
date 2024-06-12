@@ -1,25 +1,24 @@
 package com.edutie.backend.application.management.segment.commands;
 
-import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.application.common.actions.EducatorAction;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Accessors(fluent = true)
 @NoArgsConstructor
+@Getter
+@Setter
+@Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class ModifySegmentCommand {
-    @JsonIgnore
-    private @NonNull UserId educatorUserId;
+public final class ModifySegmentCommand extends EducatorAction<ModifySegmentCommand> {
     private @NonNull SegmentId segmentId;
     private String segmentName;
     private String segmentSnippetDescription;
@@ -28,4 +27,9 @@ public final class ModifySegmentCommand {
     private ExerciseTypeId exerciseTypeId;
     private SegmentId previousSegmentId;
     private List<SegmentId> nextSegmentIds = new ArrayList<>();
+
+    @Override
+    protected ModifySegmentCommand getThis() {
+        return this;
+    }
 }

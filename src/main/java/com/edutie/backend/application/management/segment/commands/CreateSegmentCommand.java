@@ -1,21 +1,21 @@
 package com.edutie.backend.application.management.segment.commands;
 
-import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.application.common.actions.EducatorAction;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
-import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
-@Accessors(fluent = true)
 @NoArgsConstructor
+@Getter
+@Setter
+@Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class CreateSegmentCommand {
-    @JsonIgnore
-    private @NonNull UserId educatorUserId;
+public final class CreateSegmentCommand extends EducatorAction<CreateSegmentCommand> {
     private @NonNull String segmentName;
     private String snippetDescription;
     private String segmentTheoryDescription;
@@ -23,4 +23,9 @@ public final class CreateSegmentCommand {
     private ExerciseTypeId exerciseTypeId;
     private @NonNull SegmentId previousSegmentId;
     private SegmentId nextSegmentId;
+
+    @Override
+    protected CreateSegmentCommand getThis() {
+        return this;
+    }
 }

@@ -1,11 +1,28 @@
 package com.edutie.backend.application.learning.segment.queries;
 
+import com.edutie.backend.application.common.actions.StudentAction;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-public record SegmentsForStudentFromLessonQuery(
-        @NonNull UserId studentUserId,
-        @NonNull LessonId lessonId
-) {
+import java.util.Objects;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@Accessors(fluent = true)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public final class SegmentsForStudentFromLessonQuery extends StudentAction<SegmentsForStudentFromLessonQuery> {
+    private @NonNull UserId studentUserId;
+    private @NonNull LessonId lessonId;
+
+    @Override
+    protected SegmentsForStudentFromLessonQuery getThis() {
+        return this;
+    }
 }

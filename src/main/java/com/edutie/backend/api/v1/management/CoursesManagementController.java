@@ -42,7 +42,7 @@ public class CoursesManagementController {
         UserId actionUserId = authentication.authenticateUser(jwt);
         return new GenericRequestHandler<List<Course>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery(actionUserId)));
+                .handle(() -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery().educatorUserId(actionUserId)));
     }
 
     @PostMapping
