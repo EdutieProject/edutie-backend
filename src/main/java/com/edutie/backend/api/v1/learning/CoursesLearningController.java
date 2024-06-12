@@ -38,7 +38,9 @@ public class CoursesLearningController {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
         return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery(scienceId)));
+                .handle(() -> coursesByScienceQueryHandler.handle(
+                        new CoursesByScienceQuery().scienceId(scienceId)
+                ));
     }
 
     @GetMapping("/progressed")
@@ -46,6 +48,8 @@ public class CoursesLearningController {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
         return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> coursesByStudentProgressQueryHandler.handle(new CoursesByStudentProgressQuery(actionUserId)));
+                .handle(() -> coursesByStudentProgressQueryHandler.handle(
+                        new CoursesByStudentProgressQuery().studentUserId(actionUserId)
+                ));
     }
 }

@@ -34,6 +34,8 @@ public class LessonsLearningController {
         UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware
         return new GenericRequestHandler<List<LessonView>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
-                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(new LessonsForStudentFromCourseQuery(courseId, actionUserId)));
+                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(
+                        new LessonsForStudentFromCourseQuery().studentUserId(actionUserId).courseId(courseId)
+                ));
     }
 }
