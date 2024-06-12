@@ -5,6 +5,7 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -17,8 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class RemoveSegmentCommand extends EducatorAction<RemoveSegmentCommand> {
-    @JsonIgnore
-    private @NonNull UserId educatorUserId;
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private @NonNull SegmentId segmentId;
 
     @Override

@@ -18,7 +18,6 @@ import java.util.Objects;
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class SegmentsForStudentFromLessonQuery extends StudentAction<SegmentsForStudentFromLessonQuery> {
-    private @NonNull UserId studentUserId;
     private @NonNull LessonId lessonId;
 
     @Override

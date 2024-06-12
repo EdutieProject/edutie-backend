@@ -1,6 +1,8 @@
 package com.edutie.backend.application.common.actions;
 
 import com.edutie.backend.domain.administration.UserId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
@@ -11,7 +13,9 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public abstract class StudentAction<T extends StudentAction<T>> {
-    @NonNull UserId studentUserId;
+    @JsonIgnore
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+    private @NonNull UserId studentUserId;
 
     public T studentUserId(UserId userId) {
         this.studentUserId = userId;

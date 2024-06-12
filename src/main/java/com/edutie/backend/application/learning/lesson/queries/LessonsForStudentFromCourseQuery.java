@@ -17,7 +17,6 @@ import lombok.experimental.Accessors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class LessonsForStudentFromCourseQuery extends StudentAction<LessonsForStudentFromCourseQuery> {
     private @NonNull CourseId courseId;
-    private @NonNull UserId studentUserId;
 
     @Override
     protected LessonsForStudentFromCourseQuery getThis() {
