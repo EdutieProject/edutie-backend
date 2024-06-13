@@ -59,7 +59,7 @@ public class CourseManagementTests {
     @Test
     @Transactional(propagation = Propagation.SUPPORTS)
     public void createCourseTest() {
-        CreateCourseCommand command = new CreateCourseCommand(userId, "sample course", scienceId);
+        CreateCourseCommand command = new CreateCourseCommand().courseName("sample course").educatorUserId(userId).scienceId(scienceId);
         WrapperResult<Course> courseWrapperResult = createCourseCommandHandler.handle(command);
         if (courseWrapperResult.isFailure())
             System.out.println(courseWrapperResult.getError());

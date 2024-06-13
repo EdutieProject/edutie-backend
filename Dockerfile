@@ -1,7 +1,12 @@
 # Stage 1: Build stage
 FROM maven:3-amazoncorretto-21 AS build
 WORKDIR /app
+
+# Copy the pom.xml first and run the dependency download step
 COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy the source code
 COPY src ./src
 RUN mvn clean package -DskipTests
 
