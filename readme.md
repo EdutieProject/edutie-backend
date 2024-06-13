@@ -8,8 +8,8 @@ To browse open api docs run the app and visit http://localhost:8081/swagger url.
 
 ### Run inside docker
 
-Run the app with docker using *docker-compose*:
-```
-docker-compose up
-```
-To run this command you must be in the exact same folder as the `docker-compose.yaml` file.
+Running the app using *docker-compose*:
+1. `docker-compose build` - this ensures the codebase is refreshed and up-to-date
+2. `docker-compose up`
+
+To run those commands you must be in the exact same folder as the `docker-compose.yaml` file.
