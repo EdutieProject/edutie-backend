@@ -7,6 +7,8 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
+import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
+import com.edutie.backend.domain.studyprogram.course.tag.persistence.CourseTagPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
@@ -38,12 +40,13 @@ public class Seeding {
 	private final LessonPersistence lessonPersistence;
 	private final SegmentPersistence segmentPersistence;
 	private final AdminPersistence adminPersistence;
-	private final EducatorPersistence educatorPersistence;
-//	private final ExerciseTypePersistence exerciseTypePersistence;
-//	private final LearningRequirementPersistence learningRequirementPersistence;
+	private final EducatorPersistence educatorPersistence;//	private final ExerciseTypePersistence exerciseTypePersistence;
+	//	private final LearningRequirementPersistence learningRequirementPersistence;
+	private final CourseTagPersistence courseTagPersistence;
 
 	private final UserId uid = new UserId();
 	private Educator educator;
+	private CourseTag courseTag;
 
 	/**
 	 * Seed database with sample study program
@@ -131,6 +134,13 @@ public class Seeding {
 		course.setName("Course" + i);
 		course.setDescription("Description of Course" + i);
 		course.setAccessible(true);
+
+		if (courseTag != null)
+			course.addTag(courseTag);
+		courseTag = CourseTag.create("Course Tag " + i);
+		courseTagPersistence.save(courseTag);
+		course.addTag(courseTag);
+
 		course.update(uid);
 		coursePersistence.save(course);
 		seedLessons(course);

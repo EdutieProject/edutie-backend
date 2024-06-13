@@ -1,4 +1,4 @@
 package com.edutie.backend.application.learning.science.queries;
 
-public record AccessibleSciencesQuery() {
+public final class AccessibleSciencesQuery {
 }

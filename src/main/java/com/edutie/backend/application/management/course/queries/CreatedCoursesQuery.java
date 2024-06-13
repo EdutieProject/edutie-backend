@@ -1,18 +1,22 @@
 package com.edutie.backend.application.management.course.queries;
 
+import com.edutie.backend.application.common.actions.EducatorAction;
 import com.edutie.backend.domain.administration.UserId;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.Objects;
-
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Accessors(fluent = true)
-public final class CreatedCoursesQuery {
-    private @NonNull UserId educatorUserId;
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+public final class CreatedCoursesQuery extends EducatorAction<CreatedCoursesQuery> {
+    @Override
+    protected CreatedCoursesQuery getThis() {
+        return this;
+    }
 }
