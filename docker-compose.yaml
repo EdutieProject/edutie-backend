@@ -15,9 +15,16 @@ services:
     env_file:
       - .env
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
+      args:
+        - MAVEN_REPO=/maven-repo
     ports:
       - "8081:8081"
+    volumes:
+      - maven-repo:/root/.m2/repository
     depends_on:
       - db
+
+volumes:
+  maven-repo:
