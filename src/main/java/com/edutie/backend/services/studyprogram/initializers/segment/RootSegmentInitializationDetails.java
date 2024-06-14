@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(fluent = true)
-public class SegmentInitializationDetails {
+public class RootSegmentInitializationDetails {
     private Educator educator;
     private Lesson lesson;
     private String name;

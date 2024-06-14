@@ -4,6 +4,6 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import validation.WrapperResult;
 
 @FunctionalInterface
-public interface SegmentInitializer {
-    WrapperResult<Segment> initializeSegment(SegmentInitializationDetails initializationDetails);
+public interface RootSegmentInitializer {
+    WrapperResult<Segment> initializeSegment(RootSegmentInitializationDetails initializationDetails);
 }

@@ -55,6 +55,23 @@ public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
         return lesson;
     }
 
+    /**
+     * Recommended constructor associating Lesson with a creator, course and a previous lesson
+     *
+     * @param educator creator reference
+     * @param previousLesson   previous lesson reference
+     * @return Lesson
+     */
+    public static Lesson create(Educator educator, Lesson previousLesson) {
+        Lesson lesson = new Lesson();
+        lesson.setId(new LessonId());
+        lesson.setCreatedBy(educator.getOwnerUserId());
+        lesson.setEducator(educator);
+        lesson.setCourse(previousLesson.getCourse());
+        lesson.setPreviousElement(previousLesson);
+        return lesson;
+    }
+
 
     /**
      * Adds next element. Does nothing if element is not encompassed within

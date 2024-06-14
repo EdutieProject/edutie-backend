@@ -122,4 +122,16 @@ public class LessonPersistenceImplementation implements LessonPersistence {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
         }
     }
+
+    /**
+     * Retrieves lessons with given ids
+     *
+     * @param lessonIds list of lesson ids
+     * @return Wrapper result of lesson list
+     */
+    @Override
+    public WrapperResult<List<Lesson>> getManyById(List<LessonId> lessonIds) {
+
+        return null;
+    }
 }

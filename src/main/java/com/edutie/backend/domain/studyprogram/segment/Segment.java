@@ -68,6 +68,23 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     }
 
     /**
+     * Recommended constructor associating Lesson Segment with a creator, lesson and a previous element
+     *
+     * @param educator creator reference
+     * @param previousSegment   previous segment reference
+     * @return Lesson Segment
+     */
+    public static Segment create(Educator educator, Segment previousSegment) {
+        Segment segment = new Segment();
+        segment.setId(new SegmentId());
+        segment.setCreatedBy(educator.getOwnerUserId());
+        segment.setEducator(educator);
+        segment.setLesson(previousSegment.getLesson());
+        segment.setPreviousElement(previousSegment);
+        return segment;
+    }
+
+    /**
      * Adds learning requirement association
      *
      * @param learningRequirement learning requirement
