@@ -20,10 +20,14 @@ import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -51,14 +55,16 @@ public class LessonManagementTests {
     private final UserId userId = new UserId();
     private final AdminId adminId = new AdminId();
     private Lesson previousLesson;
+    private Educator educator;
+    private Course course;
 
     @BeforeEach
     public void testSetup() {
-        Educator educator = Educator.create(userId, adminId);
+        educator = Educator.create(userId, adminId);
         educatorPersistence.save(educator);
         Science science = Science.create(userId);
         sciencePersistence.save(science);
-        Course course = Course.create(educator, science);
+        course = Course.create(educator, science);
         coursePersistence.save(course);
         previousLesson = Lesson.create(educator, course);
         lessonPersistence.save(previousLesson);
@@ -79,7 +85,47 @@ public class LessonManagementTests {
 
         assert lessonWrapperResult.getValue().getName().equals("Lesson!");
         assert lessonPersistence.getById(lessonWrapperResult.getValue().getId()).isSuccess();
+    }
 
+    @Test
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void lessonInBetweenPlaygroundTest() {
+        Lesson lesson = Lesson.create(educator, course);
+        lessonPersistence.save(lesson);
+        Lesson nextLesson = Lesson.create(educator, lesson);
+        Result res = lessonPersistence.save(nextLesson);
+
+        assert res.isSuccess();
+
+        Lesson fetchedNext = lessonPersistence.getById(nextLesson.getId()).getValue();
+        for (Lesson a : fetchedNext.getNextElements()) {
+            System.out.println("Next element");
+        }
+    }
+
+    @Test
+    public void createLessonInBetweenTest() {
+        // Run this once to have 2 lessons in the beginning
+        CreateLessonCommand command1 = new CreateLessonCommand()
+                .educatorUserId(userId)
+                .lessonName("Lesson!")
+                .previousLessonId(previousLesson.getId());
+        Lesson alreadyPresent = createLessonCommandHandler.handle(command1).getValue();
+
+        LessonId prevLessonId = alreadyPresent.getPreviousElement().getId();
+        LessonId nextLessonId = alreadyPresent.getId();
+
+        CreateLessonCommand command2 = new CreateLessonCommand()
+                .educatorUserId(userId)
+                .lessonName("Lesson in between")
+                .previousLessonId(prevLessonId)
+                .nextLessonId(nextLessonId);
+        WrapperResult<Lesson> lessonWrapperResult = createLessonCommandHandler.handle(command2);
+        assert lessonWrapperResult.isSuccess();
+        Lesson lessonInBetween = lessonWrapperResult.getValue();
+
+        assert lessonInBetween.getPreviousElement().getId().equals(prevLessonId);
+        assert lessonInBetween.getNextElements().stream().anyMatch(o->o.getId().equals(nextLessonId));
     }
 
     @Test

@@ -50,20 +50,25 @@ public class LessonPersistenceImplementation implements LessonPersistence {
     }
 
     /**
-     * Persists the provided entity into the database. If it is already present,
+     * Persists the provided lesson into the database. If it is already present,
      * updates its state to the provided object's state. Returns result indicating whether
      * the operation was successful or not
      *
-     * @param entity
+     * @param lesson
      * @return Result object
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public Result save(Lesson entity) {
+    public Result save(Lesson lesson) {
         try {
-            lessonRepository.saveAndFlush(entity);
+            lessonRepository.saveAndFlush(lesson);
+//            for (Lesson nextLesson : lesson.getNextElements()) {
+//                nextLesson.setPreviousElement(lesson);
+//                lessonRepository.save(nextLesson);
+//            }
             return Result.success();
         } catch (Exception exception) {
+            System.out.println("Exception occurred in persistence!");
             return Result.failure(PersistenceError.exceptionEncountered(exception));
         }
     }
@@ -121,17 +126,5 @@ public class LessonPersistenceImplementation implements LessonPersistence {
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
         }
-    }
-
-    /**
-     * Retrieves lessons with given ids
-     *
-     * @param lessonIds list of lesson ids
-     * @return Wrapper result of lesson list
-     */
-    @Override
-    public WrapperResult<List<Lesson>> getManyById(List<LessonId> lessonIds) {
-
-        return null;
     }
 }

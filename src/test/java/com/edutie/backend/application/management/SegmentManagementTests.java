@@ -95,6 +95,35 @@ public class SegmentManagementTests {
     }
 
     @Test
+    public void createSegmentInBetweenTest() {
+        // Create as in default case to create 2 connected segments
+        CreateSegmentCommand command1 = new CreateSegmentCommand()
+                .educatorUserId(userId)
+                .previousSegmentId(previousSegment.getId())
+                .segmentName("Hello World!")
+                .segmentTheoryDescription("Desc");
+        Segment alreadyPresent = createSegmentCommandHandler.handle(command1).getValue();
+
+        SegmentId prevSegmentId = alreadyPresent.getPreviousElement().getId();
+        SegmentId nextSegmentId = alreadyPresent.getId();
+
+        CreateSegmentCommand command2 = new CreateSegmentCommand()
+                .educatorUserId(userId)
+                .segmentName("Segment in between")
+                .previousSegmentId(prevSegmentId)
+                .nextSegmentId(nextSegmentId);
+
+        WrapperResult<Segment> createdSegmentResult = createSegmentCommandHandler.handle(command2);
+
+        assert createdSegmentResult.isSuccess();
+
+        Segment previousFetched = segmentPersistence.getById(prevSegmentId).getValue();
+        assert createdSegmentResult.getValue().getPreviousElement().getId().equals(previousFetched.getId());
+        assert createdSegmentResult.getValue().getNextElements().stream().anyMatch(o->o.getId().equals(nextSegmentId));
+
+    }
+
+    @Test
     public void getCreatedSegmentsTest() {
         CreatedSegmentsQuery query = new CreatedSegmentsQuery()
                 .educatorUserId(userId);

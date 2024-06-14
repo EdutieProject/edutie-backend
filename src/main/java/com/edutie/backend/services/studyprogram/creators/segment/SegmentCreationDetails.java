@@ -6,14 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Accessors(fluent = true)
 public class SegmentCreationDetails {
     private Educator educator;
     private Segment previousSegment;
-    private List<Segment> nextSegments;
+    private Segment nextSegment;
     private String name;
 }

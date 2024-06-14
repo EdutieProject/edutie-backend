@@ -24,11 +24,4 @@ public interface LessonPersistence extends Persistence<Lesson, LessonId> {
      * @return Wrapper result of lesson list
      */
     WrapperResult<List<Lesson>> getAllOfEducatorId(EducatorId educatorId);
-
-    /**
-     * Retrieves lessons with given ids
-     * @param lessonIds list of lesson ids
-     * @return Wrapper result of lesson list
-     */
-    WrapperResult<List<Lesson>> getManyById(List<LessonId> lessonIds);
 }

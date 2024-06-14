@@ -44,6 +44,8 @@ public class CreateLessonCommandHandlerImplementation extends HandlerBase implem
         if (nextLessonWrapperResult.isFailure())
             return ExternalFailureLog.persistenceFailure(nextLessonWrapperResult, LOGGER).map(() -> null);
 
-        return lessonCreator.createLesson(creationDetails.nextLesson(nextLessonWrapperResult.getValue()));
+        return lessonCreator.createLesson(
+                creationDetails.nextLesson(nextLessonWrapperResult.getValue())
+        );
     }
 }
