@@ -11,12 +11,11 @@ import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersisten
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import com.edutie.backend.services.studyprogram.creators.course.CourseCreationDetails;
-import com.edutie.backend.services.studyprogram.creators.course.CourseCreator;
-import com.edutie.backend.services.studyprogram.initializers.lesson.RootLessonInitializer;
-import com.edutie.backend.services.studyprogram.initializers.segment.RootSegmentInitializer;
+import com.edutie.backend.services.common.logging.ExternalFailureLog;
+import com.edutie.backend.services.studyprogram.initializers.course.CourseInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import validation.Result;
 import validation.WrapperResult;
 
 @Component
@@ -25,25 +24,27 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
     private final EducatorPersistence educatorPersistence;
     private final SciencePersistence sciencePersistence;
     private final CoursePersistence coursePersistence;
-    private final LessonPersistence lessonPersistence;
-    private final SegmentPersistence segmentPersistence;
 
-    private final CourseCreator courseCreator;
-    private final RootLessonInitializer rootLessonInitializer;
-    private final RootSegmentInitializer rootSegmentInitializer;
+    private final CourseInitializer courseInitializer;
 
     @Override
     public WrapperResult<Course> handle(CreateCourseCommand command) {
         LOGGER.info("Creating course by user of id {} ", command.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         Science science = sciencePersistence.getById(command.scienceId()).getValue();
-        WrapperResult<Course> courseInitializationResult = courseCreator.initializeCourse(
-                new CourseCreationDetails().educator(educator).science(science)
-                        .name(command.courseName()).description(command.courseDescription())
-        );
-        if (courseInitializationResult.isFailure())
-            return courseInitializationResult;
+        LOGGER.info("Creating course...");
+        Course course = Course.create(educator, science);
+        course.setName(command.courseName());
+        course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
+        Result courseSaveResult = coursePersistence.save(course);
+        if (courseSaveResult.isFailure())
+            return ExternalFailureLog.persistenceFailure(courseSaveResult, LOGGER).map(() -> null);
+        Result initializationResult = courseInitializer.initializeCourse(course);
+        if (initializationResult.isFailure()) {
+            LOGGER.warn("Course initialization failed!");
+            return initializationResult.map(() -> null);
+        }
         LOGGER.info("Course creation & initialization success.");
-        return WrapperResult.successWrapper(courseInitializationResult.getValue());
+        return WrapperResult.successWrapper(course);
     }
 }
