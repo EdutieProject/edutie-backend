@@ -11,7 +11,7 @@ import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import validation.Error;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -20,14 +20,16 @@ import validation.WrapperResult;
 public class ModifyLessonCommandHandlerImplementation extends HandlerBase implements ModifyLessonCommandHandler {
     private final LessonPersistence lessonPersistence;
     private final EducatorPersistence educatorPersistence;
+
     @Override
+    @Transactional
     public Result handle(ModifyLessonCommand command) {
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(command.lessonId());
         if (lessonWrapperResult.isFailure())
             return lessonWrapperResult;
         Lesson lesson = lessonWrapperResult.getValue();
-        if(!lesson.getEducator().equals(educator)) {
+        if (!lesson.getEducator().equals(educator)) {
             LOGGER.info("Educator has insufficient permissions to modify this lesson");
             return Result.failure(EducatorError.mustBeOwnerError(Lesson.class));
         }

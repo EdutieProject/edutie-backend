@@ -11,6 +11,8 @@ import com.edutie.backend.services.common.logging.ExternalFailureLog;
 import com.edutie.backend.services.studyprogram.initializers.lesson.LessonInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -23,6 +25,7 @@ public class CreateLessonCommandHandlerImplementation extends HandlerBase implem
     private final LessonInitializer lessonInitializer;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public WrapperResult<Lesson> handle(CreateLessonCommand command) {
         LOGGER.info("Creating lesson by educator of id {} with previous lesson id {}",
                 command.educatorUserId().identifierValue(),

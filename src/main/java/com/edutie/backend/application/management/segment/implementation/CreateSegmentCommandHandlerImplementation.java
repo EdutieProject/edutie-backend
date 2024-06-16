@@ -13,6 +13,8 @@ import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersist
 import com.edutie.backend.services.common.logging.ExternalFailureLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -24,16 +26,17 @@ public class CreateSegmentCommandHandlerImplementation extends HandlerBase imple
     private final ExerciseTypePersistence exerciseTypePersistence;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public WrapperResult<Segment> handle(CreateSegmentCommand command) {
         LOGGER.info("Creating segment by user of id {} with previous lesson of id {}",
                 command.educatorUserId().identifierValue(),
                 command.previousSegmentId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
-        WrapperResult<Segment> previousSegmentWrapperResult = segmentPersistence.getById(command.previousSegmentId());
-        if (previousSegmentWrapperResult.isFailure()) {
-            return ExternalFailureLog.persistenceFailure(previousSegmentWrapperResult, LOGGER);
+        WrapperResult<Segment> previousSegmentResult = segmentPersistence.getById(command.previousSegmentId());
+        if (previousSegmentResult.isFailure()) {
+            return ExternalFailureLog.persistenceFailure(previousSegmentResult, LOGGER);
         }
-        Segment segment = Segment.create(educator, previousSegmentWrapperResult.getValue());
+        Segment segment = Segment.create(educator, previousSegmentResult.getValue());
         segment.setName(command.segmentName());
         segment.setSnippetDescription(command.snippetDescription() != null ? command.snippetDescription() : "");
         segment.setTheoryDescription(PromptFragment.of(command.segmentTheoryDescription()));
