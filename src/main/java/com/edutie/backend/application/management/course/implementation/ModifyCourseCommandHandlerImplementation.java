@@ -10,6 +10,8 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -19,6 +21,7 @@ public class ModifyCourseCommandHandlerImplementation extends HandlerBase implem
     private final CoursePersistence coursePersistence;
     private final EducatorPersistence educatorPersistence;
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Result handle(ModifyCourseCommand command) {
         LOGGER.info("Modifying course of id {} by educator of id {}",
                 command.courseId().identifierValue(),

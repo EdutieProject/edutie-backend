@@ -7,14 +7,16 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
-import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
+import com.edutie.backend.services.common.logging.ExternalFailureLog;
+import com.edutie.backend.services.studyprogram.initializers.course.CourseInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -24,37 +26,28 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
     private final EducatorPersistence educatorPersistence;
     private final SciencePersistence sciencePersistence;
     private final CoursePersistence coursePersistence;
-    private final LessonPersistence lessonPersistence;
-    private final SegmentPersistence segmentPersistence;
+
+    private final CourseInitializer courseInitializer;
+
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public WrapperResult<Course> handle(CreateCourseCommand command) {
         LOGGER.info("Creating course by user of id {} ", command.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         Science science = sciencePersistence.getById(command.scienceId()).getValue();
+        LOGGER.info("Creating course...");
         Course course = Course.create(educator, science);
         course.setName(command.courseName());
         course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
         Result courseSaveResult = coursePersistence.save(course);
-        if (courseSaveResult.isFailure()) {
-            LOGGER.info("Persistence failure while saving course. Error: " + courseSaveResult.getError().toString());
-            return courseSaveResult.map(() -> null);
+        if (courseSaveResult.isFailure())
+            return ExternalFailureLog.persistenceFailure(courseSaveResult, LOGGER).map(() -> null);
+        Result initializationResult = courseInitializer.initializeCourse(course);
+        if (initializationResult.isFailure()) {
+            LOGGER.warn("Course initialization failed!");
+            return initializationResult.map(() -> null);
         }
-        Lesson lesson = Lesson.create(educator, course);
-        lesson.setName("First lesson");
-        lesson.setDescription("This is the first lesson in this course with a placeholder description.");
-        Result lessonSaveResult = lessonPersistence.save(lesson);
-        if (lessonSaveResult.isFailure()) {
-            LOGGER.info("Persistence failure while saving initial lesson. Error: " + lessonSaveResult.getError().toString());
-            return lessonSaveResult.map(() -> null);
-        }
-        Segment segment = Segment.create(educator, lesson);
-        segment.setName("First segment. Start designing it now!");
-        Result segmentSaveResult = segmentPersistence.save(segment);
-        if (segmentSaveResult.isFailure()) {
-            LOGGER.info("Persistence failure while saving initial segment. Error: " + segmentSaveResult.getError().toString());
-            return segmentSaveResult.map(() -> null);
-        }
-        LOGGER.info("Creating course success.");
+        LOGGER.info("Course creation & initialization success.");
         return WrapperResult.successWrapper(course);
     }
 }

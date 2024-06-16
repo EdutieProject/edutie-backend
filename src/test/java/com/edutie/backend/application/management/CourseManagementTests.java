@@ -70,7 +70,6 @@ public class CourseManagementTests {
 
         Course createdCourse = courses.getFirst();
         assert createdCourse.getName().equals("sample course");
-        //TODO: db loader fix
         assert !createdCourse.getLessons().isEmpty();
         assert !createdCourse.getLessons().stream().flatMap(o -> o.getSegments().stream()).toList().isEmpty();
     }

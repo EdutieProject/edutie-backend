@@ -55,6 +55,10 @@ public class SegmentPersistenceImplementation implements SegmentPersistence {
     @Override
     public Result save(Segment entity) {
         try {
+            for (Segment seg : entity.getNextElements()) {
+                seg.setPreviousElement(entity);
+                segmentRepository.save(seg);
+            }
             segmentRepository.saveAndFlush(entity);
             return Result.success();
         } catch (Exception exception) {

@@ -31,4 +31,9 @@ public abstract class Identifier<TId> implements Serializable {
     public int hashCode() {
         return Objects.hash(identifierValue);
     }
+
+    @Override
+    public String toString() {
+        return identifierValue.toString();
+    }
 }

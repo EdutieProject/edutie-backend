@@ -10,6 +10,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter
 @Setter

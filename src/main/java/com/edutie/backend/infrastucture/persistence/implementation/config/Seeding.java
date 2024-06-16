@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class Seeding {
 	final int MAX_SEEDED_COURSES = 2;
-	final int MAX_SEEDED_SCIENCES = 2;
+	final int MAX_SEEDED_SCIENCES = 0;
 
 	private final SciencePersistence sciencePersistence;
 	private final CoursePersistence coursePersistence;

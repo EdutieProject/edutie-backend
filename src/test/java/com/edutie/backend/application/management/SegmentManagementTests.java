@@ -74,6 +74,7 @@ public class SegmentManagementTests {
     }
 
     @Test
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void createSegmentTest() {
         SegmentId previousSegmentId = previousSegment.getId();
 
@@ -85,13 +86,48 @@ public class SegmentManagementTests {
 
         WrapperResult<Segment> segmentWrapperResult = createSegmentCommandHandler.handle(command);
 
-        if (segmentWrapperResult.isFailure()) {
-            throw new AssertionError(segmentWrapperResult.getError().toString());
-        }
+        assert segmentWrapperResult.isSuccess();
 
-        assert segmentWrapperResult.getValue().getName().equals("Hello World!");
-        assert segmentWrapperResult.getValue().getTheoryDescription().text().equals("Desc");
+        Segment createdSegment = segmentWrapperResult.getValue();
+
+        assert createdSegment.getName().equals("Hello World!");
+        assert createdSegment.getTheoryDescription().text().equals("Desc");
+        assert createdSegment.getPreviousElement().getId().equals(previousSegmentId);
+        assert createdSegment.getNextElements().isEmpty();
+
         assert segmentPersistence.getById(segmentWrapperResult.getValue().getId()).isSuccess();
+        Segment fetchedSegment = segmentPersistence.getById(segmentWrapperResult.getValue().getId()).getValue();
+        assert fetchedSegment.getPreviousElement().getId().equals(previousSegmentId);
+        assert fetchedSegment.getNextElements().isEmpty();
+    }
+
+    @Test
+    public void createSegmentInBetweenTest() {
+        // Create as in default case to create 2 connected segments
+        CreateSegmentCommand command1 = new CreateSegmentCommand()
+                .educatorUserId(userId)
+                .previousSegmentId(previousSegment.getId())
+                .segmentName("Hello World!")
+                .segmentTheoryDescription("Desc");
+        Segment alreadyPresent = createSegmentCommandHandler.handle(command1).getValue();
+
+        SegmentId prevSegmentId = alreadyPresent.getPreviousElement().getId();
+        SegmentId nextSegmentId = alreadyPresent.getId();
+
+        CreateSegmentCommand command2 = new CreateSegmentCommand()
+                .educatorUserId(userId)
+                .segmentName("Segment in between")
+                .previousSegmentId(prevSegmentId)
+                .nextSegmentId(nextSegmentId);
+
+        WrapperResult<Segment> createdSegmentResult = createSegmentCommandHandler.handle(command2);
+
+        assert createdSegmentResult.isSuccess();
+
+        Segment previousFetched = segmentPersistence.getById(prevSegmentId).getValue();
+        assert createdSegmentResult.getValue().getPreviousElement().getId().equals(previousFetched.getId());
+        assert createdSegmentResult.getValue().getNextElements().stream().anyMatch(o->o.getId().equals(nextSegmentId));
+
     }
 
     @Test

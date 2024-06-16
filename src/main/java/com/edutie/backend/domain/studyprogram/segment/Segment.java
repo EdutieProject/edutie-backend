@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.studyprogram.segment;
 
-import com.edutie.backend.domain.common.base.NavigableEntityBase;
+import com.edutie.backend.domain.common.base.TreeElementEntityBase;
 import com.edutie.backend.domain.common.errors.NavigationErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -29,7 +29,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-public class Segment extends NavigableEntityBase<Segment, SegmentId> {
+public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     private String name;
     private String snippetDescription;
     @Embedded
@@ -50,9 +50,6 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
     @JsonIgnore
     @Setter(AccessLevel.PRIVATE)
     private Lesson lesson;
-    @ManyToOne
-    @Setter(AccessLevel.PRIVATE)
-    private Educator educator;
 
     /**
      * Recommended constructor associating Lesson Segment with a creator and lesson
@@ -67,6 +64,23 @@ public class Segment extends NavigableEntityBase<Segment, SegmentId> {
         segment.setCreatedBy(educator.getOwnerUserId());
         segment.setEducator(educator);
         segment.setLesson(lesson);
+        return segment;
+    }
+
+    /**
+     * Recommended constructor associating Lesson Segment with a creator, lesson and a previous element
+     *
+     * @param educator creator reference
+     * @param previousSegment   previous segment reference
+     * @return Lesson Segment
+     */
+    public static Segment create(Educator educator, Segment previousSegment) {
+        Segment segment = new Segment();
+        segment.setId(new SegmentId());
+        segment.setCreatedBy(educator.getOwnerUserId());
+        segment.setEducator(educator);
+        segment.setLesson(previousSegment.getLesson());
+        segment.setPreviousElement(previousSegment);
         return segment;
     }
 

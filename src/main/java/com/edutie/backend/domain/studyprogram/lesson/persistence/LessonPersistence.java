@@ -14,14 +14,14 @@ public interface LessonPersistence extends Persistence<Lesson, LessonId> {
     /**
      * Retrieve all lessons associated with given course
      * @param courseId course id
-     * @return Lesson list
+     * @return Wrapper result of lesson list
      */
     WrapperResult<List<Lesson>> getAllOfCourseId(CourseId courseId);
 
     /**
      * Retrieve all lessons associated with given creator
      * @param educatorId educator id
-     * @return Lesson list
+     * @return Wrapper result of lesson list
      */
     WrapperResult<List<Lesson>> getAllOfEducatorId(EducatorId educatorId);
 }
