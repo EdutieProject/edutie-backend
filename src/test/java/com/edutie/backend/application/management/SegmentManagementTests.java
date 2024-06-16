@@ -74,6 +74,7 @@ public class SegmentManagementTests {
     }
 
     @Test
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void createSegmentTest() {
         SegmentId previousSegmentId = previousSegment.getId();
 

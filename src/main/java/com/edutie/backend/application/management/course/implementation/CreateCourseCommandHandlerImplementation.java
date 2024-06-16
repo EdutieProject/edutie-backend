@@ -15,6 +15,8 @@ import com.edutie.backend.services.common.logging.ExternalFailureLog;
 import com.edutie.backend.services.studyprogram.initializers.course.CourseInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -28,6 +30,7 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
     private final CourseInitializer courseInitializer;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public WrapperResult<Course> handle(CreateCourseCommand command) {
         LOGGER.info("Creating course by user of id {} ", command.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());

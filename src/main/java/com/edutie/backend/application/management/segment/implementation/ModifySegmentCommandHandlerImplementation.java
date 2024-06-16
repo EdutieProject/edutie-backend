@@ -14,7 +14,8 @@ import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import validation.Error;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -26,6 +27,7 @@ public class ModifySegmentCommandHandlerImplementation extends HandlerBase imple
     private final ExerciseTypePersistence exerciseTypePersistence;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public WrapperResult<Segment> handle(ModifySegmentCommand command) {
         Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
         WrapperResult<Segment> segmentWrapperResult = segmentPersistence.getById(command.segmentId());

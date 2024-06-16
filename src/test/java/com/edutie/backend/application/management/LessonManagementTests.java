@@ -134,8 +134,7 @@ public class LessonManagementTests {
 
         assert lessonInBetween.getPreviousElement().getId().equals(prevLessonId);
         assert lessonInBetween.getNextElements().stream().anyMatch(o -> o.getId().equals(nextLessonId));
-
-        //TODO: add initializaiton check
+        assert !segmentPersistence.getAllOfLessonId(lessonInBetween.getId()).getValue().isEmpty();
     }
 
     @Test
@@ -170,7 +169,6 @@ public class LessonManagementTests {
         RemoveLessonCommand command = new RemoveLessonCommand()
                 .educatorUserId(userId)
                 .lessonId(previousLesson.getId());
-        //TODO: fix
         Result result = removeLessonCommandHandler.handle(command);
 
         assert result.isSuccess();
