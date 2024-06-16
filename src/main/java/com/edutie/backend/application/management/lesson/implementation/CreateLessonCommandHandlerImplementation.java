@@ -8,6 +8,7 @@ import com.edutie.backend.domain.education.educator.persistence.EducatorPersiste
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.services.common.logging.ExternalFailureLog;
+import com.edutie.backend.services.studyprogram.initializers.lesson.LessonInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.Result;
@@ -18,6 +19,8 @@ import validation.WrapperResult;
 public class CreateLessonCommandHandlerImplementation extends HandlerBase implements CreateLessonCommandHandler {
     private final LessonPersistence lessonPersistence;
     private final EducatorPersistence educatorPersistence;
+
+    private final LessonInitializer lessonInitializer;
 
     @Override
     public WrapperResult<Lesson> handle(CreateLessonCommand command) {
@@ -37,7 +40,11 @@ public class CreateLessonCommandHandlerImplementation extends HandlerBase implem
         Result saveResult = lessonPersistence.save(lesson);
         if (saveResult.isFailure())
             return ExternalFailureLog.persistenceFailure(saveResult, LOGGER).map(() -> null);
-        //TODO: add root element initialization
+        Result lessonInitialization = lessonInitializer.initializeLesson(lesson);
+        if (lessonInitialization.isFailure()) {
+            LOGGER.warn("Lesson initialization failure");
+            return lessonInitialization.map(() -> null);
+        }
         if (command.nextLessonId() == null) {
             LOGGER.info("Next lesson not specified. Lesson successfully created as the learning tree leaf.");
             return WrapperResult.successWrapper(lesson);

@@ -19,6 +19,7 @@ import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
+import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class LessonManagementTests {
     SciencePersistence sciencePersistence;
     @Autowired
     EducatorPersistence educatorPersistence;
+    @Autowired
+    SegmentPersistence segmentPersistence;
 
     @Autowired
     CreateLessonCommandHandler createLessonCommandHandler;
@@ -83,7 +86,7 @@ public class LessonManagementTests {
         assert createdLesson.getName().equals("Lesson!");
         assert createdLesson.getPreviousElement().getId().equals(prevLessonId);
         assert createdLesson.getNextElements().isEmpty();
-        //TODO: initialization check
+        assert !segmentPersistence.getAllOfLessonId(createdLesson.getId()).getValue().isEmpty();
 
         assert lessonPersistence.getById(lessonWrapperResult.getValue().getId()).isSuccess();
         Lesson fetched = lessonPersistence.getById(lessonWrapperResult.getValue().getId()).getValue();
