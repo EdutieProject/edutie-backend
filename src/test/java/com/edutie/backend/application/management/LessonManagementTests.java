@@ -11,7 +11,6 @@ import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQu
 import com.edutie.backend.domain.administration.AdminId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -20,8 +19,6 @@ import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,16 +77,23 @@ public class LessonManagementTests {
                 .previousLessonId(prevLessonId);
 
         WrapperResult<Lesson> lessonWrapperResult = createLessonCommandHandler.handle(command);
-
         assert lessonWrapperResult.isSuccess();
 
-        assert lessonWrapperResult.getValue().getName().equals("Lesson!");
+        Lesson createdLesson = lessonWrapperResult.getValue();
+        assert createdLesson.getName().equals("Lesson!");
+        assert createdLesson.getPreviousElement().getId().equals(prevLessonId);
+        assert createdLesson.getNextElements().isEmpty();
+        //TODO: initialization check
+
         assert lessonPersistence.getById(lessonWrapperResult.getValue().getId()).isSuccess();
+        Lesson fetched = lessonPersistence.getById(lessonWrapperResult.getValue().getId()).getValue();
+        assert fetched.getPreviousElement().getId().equals(prevLessonId);
     }
 
     @Test
     @Transactional(propagation = Propagation.SUPPORTS)
     public void lessonInBetweenPlaygroundTest() {
+        //TODO: this does not work - what the fuck?
         Lesson lesson = Lesson.create(educator, course);
         lessonPersistence.save(lesson);
         Lesson nextLesson = Lesson.create(educator, lesson);
@@ -104,6 +108,7 @@ public class LessonManagementTests {
     }
 
     @Test
+    //TODO: fix this automated test - (it works regarding DB)
     public void createLessonInBetweenTest() {
         // Run this once to have 2 lessons in the beginning
         CreateLessonCommand command1 = new CreateLessonCommand()
@@ -125,7 +130,9 @@ public class LessonManagementTests {
         Lesson lessonInBetween = lessonWrapperResult.getValue();
 
         assert lessonInBetween.getPreviousElement().getId().equals(prevLessonId);
-        assert lessonInBetween.getNextElements().stream().anyMatch(o->o.getId().equals(nextLessonId));
+        assert lessonInBetween.getNextElements().stream().anyMatch(o -> o.getId().equals(nextLessonId));
+
+        //TODO: add initializaiton check
     }
 
     @Test

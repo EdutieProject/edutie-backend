@@ -85,13 +85,19 @@ public class SegmentManagementTests {
 
         WrapperResult<Segment> segmentWrapperResult = createSegmentCommandHandler.handle(command);
 
-        if (segmentWrapperResult.isFailure()) {
-            throw new AssertionError(segmentWrapperResult.getError().toString());
-        }
+        assert segmentWrapperResult.isSuccess();
 
-        assert segmentWrapperResult.getValue().getName().equals("Hello World!");
-        assert segmentWrapperResult.getValue().getTheoryDescription().text().equals("Desc");
+        Segment createdSegment = segmentWrapperResult.getValue();
+
+        assert createdSegment.getName().equals("Hello World!");
+        assert createdSegment.getTheoryDescription().text().equals("Desc");
+        assert createdSegment.getPreviousElement().getId().equals(previousSegmentId);
+        assert createdSegment.getNextElements().isEmpty();
+
         assert segmentPersistence.getById(segmentWrapperResult.getValue().getId()).isSuccess();
+        Segment fetchedSegment = segmentPersistence.getById(segmentWrapperResult.getValue().getId()).getValue();
+        assert fetchedSegment.getPreviousElement().getId().equals(previousSegmentId);
+        assert fetchedSegment.getNextElements().isEmpty();
     }
 
     @Test
