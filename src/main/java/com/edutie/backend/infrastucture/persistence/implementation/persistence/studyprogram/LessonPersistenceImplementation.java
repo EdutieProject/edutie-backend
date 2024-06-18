@@ -7,13 +7,12 @@ import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
-import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.SegmentRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,24 +28,26 @@ public class LessonPersistenceImplementation implements LessonPersistence {
     private final LessonRepository lessonRepository;
     private final CourseRepository courseRepository;
     private final EducatorRepository educatorRepository;
-    private final SegmentRepository segmentRepository;
+
+
     /**
-     * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
-     * it might not be present based on the identifier presence in the database.
+     * Override this to provide repository for default methods
      *
-     * @param lessonId entity id
-     * @return Optional entity
+     * @return crud jpa repository
      */
     @Override
-    public WrapperResult<Lesson> getById(LessonId lessonId) {
-        try {
-            Optional<Lesson> lessonOptional = lessonRepository.findById(lessonId);
-            return lessonOptional
-                    .map(WrapperResult::successWrapper)
-                    .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Lesson.class)));
-        } catch (Exception exception) {
-            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(exception));
-        }
+    public JpaRepository<Lesson, LessonId> getRepository() {
+        return lessonRepository;
+    }
+
+    /**
+     * Override this to provide entity class for default methods
+     *
+     * @return class of persistence entity
+     */
+    @Override
+    public Class<Lesson> entityClass() {
+        return Lesson.class;
     }
 
     /**
@@ -54,7 +55,7 @@ public class LessonPersistenceImplementation implements LessonPersistence {
      * updates its state to the provided object's state. Returns result indicating whether
      * the operation was successful or not
      *
-     * @param lesson
+     * @param lesson lesson to be saved
      * @return Result object
      */
     @Override
@@ -65,27 +66,10 @@ public class LessonPersistenceImplementation implements LessonPersistence {
 //            for (Lesson nextLesson : lesson.getNextElements()) {
 //                nextLesson.setPreviousElement(lesson);
 //                lessonRepository.save(nextLesson);
-//            }
+//            }/TODO:#98
             return Result.success();
         } catch (Exception exception) {
             System.out.println("Exception occurred in persistence!");
-            return Result.failure(PersistenceError.exceptionEncountered(exception));
-        }
-    }
-
-    /**
-     * Removes the entity of the provided id from the database. If the entity is not preset or could not be
-     * deleted, does nothing and returns failure result.
-     *
-     * @param lessonId entity id
-     * @return Result object
-     */
-    @Override
-    public Result removeById(LessonId lessonId) {
-        try {
-            lessonRepository.deleteById(lessonId);
-            return Result.success();
-        } catch (Exception exception) {
             return Result.failure(PersistenceError.exceptionEncountered(exception));
         }
     }
