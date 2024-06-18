@@ -25,7 +25,7 @@ public class LessonsForStudentFromCourseQueryHandlerImplementation extends Handl
         LOGGER.info("Retrieving lessons for course of id {} for student of id {}",
                 query.courseId().identifierValue(),
                 query.studentUserId().identifierValue());
-        Student student = studentPersistence.getByUserId(query.studentUserId());
+        Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         WrapperResult<List<Lesson>> lessonsResult = lessonPersistence.getAllOfCourseId(query.courseId());
         if (lessonsResult.isFailure()) {
             LOGGER.info("Persistence error: " + lessonsResult.getError().toString());

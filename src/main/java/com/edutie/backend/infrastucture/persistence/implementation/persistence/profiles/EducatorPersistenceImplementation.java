@@ -63,7 +63,7 @@ public class EducatorPersistenceImplementation implements EducatorPersistence {
      * @return Role profile of a user
      */
     @Override
-    public Educator getByUserId(UserId userId) {
+    public Educator getByAuthorizedUserId(UserId userId) {
         List<Educator> educator = educatorRepository.findEducatorsByOwnerUserId(userId);
         return educator.stream().findFirst().get();
     }

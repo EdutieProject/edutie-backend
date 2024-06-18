@@ -13,16 +13,7 @@ public interface RolePersistence<TEntity extends EntityBase<TId>, TId extends Id
      * @param userId id of a user
      * @return Role profile of a user
      */
-    TEntity getByUserId(UserId userId);
-
-    /**
-     * Persists the provided role profile into the database. If it is already present,
-     * updates its state to the provided object's state. Returns result indicating whether
-     * the operation was successful or not
-     *
-     * @return Result object
-     */
-    Result save(TEntity entity);
+    TEntity getByAuthorizedUserId(UserId userId);
 
     /**
      * Removes the role for the user of specified id from the database. Success is returned even

@@ -63,7 +63,7 @@ public class StudentPersistenceImplementation implements StudentPersistence {
      * @return Role profile of a user
      */
     @Override
-    public Student getByUserId(UserId userId) {
+    public Student getByAuthorizedUserId(UserId userId) {
         List<Student> students = studentRepository.findStudentsByOwnerUserId(userId);
         return students.stream().findFirst().get();
     }

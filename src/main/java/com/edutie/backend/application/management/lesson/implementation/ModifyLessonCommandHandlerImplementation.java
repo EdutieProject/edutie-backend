@@ -24,7 +24,7 @@ public class ModifyLessonCommandHandlerImplementation extends HandlerBase implem
     @Override
     @Transactional
     public Result handle(ModifyLessonCommand command) {
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(command.lessonId());
         if (lessonWrapperResult.isFailure())
             return lessonWrapperResult;
