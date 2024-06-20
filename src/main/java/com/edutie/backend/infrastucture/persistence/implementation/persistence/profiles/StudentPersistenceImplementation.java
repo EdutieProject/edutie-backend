@@ -7,13 +7,12 @@ import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -21,39 +20,25 @@ public class StudentPersistenceImplementation implements StudentPersistence {
     private final StudentRepository studentRepository;
 
     /**
-     * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
-     * it might not be present based on the identifier presence in the database.
+     * Override this to provide repository for default methods
      *
-     * @param studentId entity id
-     * @return Optional entity
+     * @return crud jpa repository
      */
     @Override
-    public WrapperResult<Student> getById(StudentId studentId) {
-        try {
-            Optional<Student> studentOptional = studentRepository.findById(studentId);
-            return studentOptional.map(WrapperResult::successWrapper)
-                    .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
-        } catch (Exception exception) {
-            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(exception));
-        }
+    public JpaRepository<Student, StudentId> getRepository() {
+        return studentRepository;
     }
 
     /**
-     * Removes the entity of the provided id from the database. If the entity is not preset or could not be
-     * deleted, does nothing and returns failure result.
+     * Override this to provide entity class for default methods
      *
-     * @param studentId entity id
-     * @return Result object
+     * @return class of persistence entity
      */
     @Override
-    public Result removeById(StudentId studentId) {
-        try {
-            studentRepository.deleteById(studentId);
-            return Result.success();
-        } catch (Exception exception) {
-            return Result.failure(PersistenceError.exceptionEncountered(exception));
-        }
+    public Class<Student> entityClass() {
+        return Student.class;
     }
+
 
     /**
      * Retrieves role profile for the given user. The presence of the role profile should be checked
@@ -66,24 +51,6 @@ public class StudentPersistenceImplementation implements StudentPersistence {
     public Student getByAuthorizedUserId(UserId userId) {
         List<Student> students = studentRepository.findStudentsByOwnerUserId(userId);
         return students.stream().findFirst().get();
-    }
-
-    /**
-     * Persists the provided role profile into the database. If it is already present,
-     * updates its state to the provided object's state. Returns result indicating whether
-     * the operation was successful or not
-     *
-     * @param student
-     * @return Result object
-     */
-    @Override
-    public Result save(Student student) {
-        try {
-            studentRepository.save(student);
-            return Result.success();
-        } catch (Exception exception) {
-            return Result.failure(PersistenceError.exceptionEncountered(exception));
-        }
     }
 
     /**
