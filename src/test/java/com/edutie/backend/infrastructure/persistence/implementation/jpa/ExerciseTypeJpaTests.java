@@ -1,4 +1,4 @@
-package com.edutie.backend.infra.persistence.jpa;
+package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
 import com.edutie.backend.domain.administration.AdminId;
 import com.edutie.backend.domain.administration.UserId;
@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class ExerciseTypeTests {
+public class ExerciseTypeJpaTests {
     private final UserId testUserId = new UserId();
     private final AdminId adminId = new AdminId();
     private ExerciseType exerciseType;

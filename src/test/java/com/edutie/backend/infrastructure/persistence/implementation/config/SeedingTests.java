@@ -1,4 +1,4 @@
-package com.edutie.backend.infra.persistence.config;
+package com.edutie.backend.infrastructure.persistence.implementation.config;
 
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;

@@ -1,4 +1,4 @@
-package com.edutie.backend.infra.persistence.jpa;
+package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.administration.AdminId;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class LearningRequirementTests {
+public class LearningRequirementJpaTests {
     private final UserId testUserId = new UserId();
     private final AdminId adminId = new AdminId();
     private Educator creator;
