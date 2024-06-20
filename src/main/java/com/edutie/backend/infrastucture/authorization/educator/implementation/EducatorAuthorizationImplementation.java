@@ -14,7 +14,7 @@ public class EducatorAuthorizationImplementation implements EducatorAuthorizatio
     private final EducatorRepository educatorRepository;
     @Override
     public Result authorize(UserId userId) {
-        return educatorRepository.findByOwnerUserId(userId).isEmpty() ?
+        return educatorRepository.findEducatorsByOwnerUserId(userId).isEmpty() ?
                 Result.failure(AuthorizationError.educatorRoleExpected())
                 : Result.success();
     }
