@@ -5,7 +5,6 @@ import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.learner.student.identities.StudentId;
 import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.common.RoleRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,7 +25,7 @@ public class StudentPersistenceImplementation implements StudentPersistence {
      * @return crud jpa repository
      */
     @Override
-    public RoleRepository<Student, StudentId> getRepository() {
+    public JpaRepository<Student, StudentId> getRepository() {
         return studentRepository;
     }
 
@@ -38,5 +37,40 @@ public class StudentPersistenceImplementation implements StudentPersistence {
     @Override
     public Class<Student> entityClass() {
         return Student.class;
+    }
+
+
+    /**
+     * Retrieves role profile for the given user. The presence of the role profile should be checked
+     * using authorization before using this function.
+     *
+     * @param userId id of a user
+     * @return Role profile of a user
+     */
+    @Override
+    public Student getByAuthorizedUserId(UserId userId) {
+        List<Student> students = studentRepository.findStudentsByOwnerUserId(userId);
+        return students.stream().findFirst().get();
+    }
+
+    /**
+     * Removes the role for the user of specified id from the database. Success is returned even
+     * when the role is not present at first in the database. Failure is returned only when something goes
+     * wrong
+     *
+     * @param userId entity id
+     * @return Result object
+     */
+    @Override
+    public Result removeForUser(UserId userId) {
+        try {
+            Student student = studentRepository.findStudentsByOwnerUserId(userId).getFirst();
+            studentRepository.delete(student);
+            return Result.success();
+        } catch (NoSuchElementException ignored) {
+            return Result.failure(PersistenceError.notFound(Student.class));
+        } catch (Exception exception) {
+            return Result.failure(PersistenceError.exceptionEncountered(exception));
+        }
     }
 }
