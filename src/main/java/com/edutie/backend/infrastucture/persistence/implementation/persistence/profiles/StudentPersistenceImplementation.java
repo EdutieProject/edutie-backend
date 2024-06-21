@@ -49,8 +49,7 @@ public class StudentPersistenceImplementation implements StudentPersistence {
      */
     @Override
     public Student getByAuthorizedUserId(UserId userId) {
-        List<Student> students = studentRepository.findStudentsByOwnerUserId(userId);
-        return students.stream().findFirst().get();
+        return studentRepository.findByOwnerUserId(userId).get();
     }
 
     /**
@@ -64,7 +63,7 @@ public class StudentPersistenceImplementation implements StudentPersistence {
     @Override
     public Result removeForUser(UserId userId) {
         try {
-            Student student = studentRepository.findStudentsByOwnerUserId(userId).getFirst();
+            Student student = studentRepository.findByOwnerUserId(userId).get();
             studentRepository.delete(student);
             return Result.success();
         } catch (NoSuchElementException ignored) {

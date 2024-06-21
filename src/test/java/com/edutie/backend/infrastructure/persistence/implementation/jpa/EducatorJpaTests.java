@@ -26,4 +26,12 @@ public class EducatorJpaTests {
         educatorRepository.save(creator);
         assertEquals(educatorRepository.findById(creator.getId()).orElseThrow(), creator);
     }
+
+    @Test
+    public void findByOwnerUserIdTest() {
+        Educator creator = Educator.create(testUserId, adminId);
+        educatorRepository.save(creator);
+
+        assert educatorRepository.findByOwnerUserId(testUserId).isPresent();
+    }
 }

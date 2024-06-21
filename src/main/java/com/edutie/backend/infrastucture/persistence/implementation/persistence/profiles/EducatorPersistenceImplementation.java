@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import validation.Result;
 
-import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -48,8 +48,7 @@ public class EducatorPersistenceImplementation implements EducatorPersistence {
      */
     @Override
     public Educator getByAuthorizedUserId(UserId userId) {
-        List<Educator> educator = educatorRepository.findEducatorsByOwnerUserId(userId);
-        return educator.stream().findFirst().get();
+        return educatorRepository.findByOwnerUserId(userId).get();
     }
 
     /**
@@ -63,7 +62,7 @@ public class EducatorPersistenceImplementation implements EducatorPersistence {
     @Override
     public Result removeForUser(UserId userId) {
         try {
-            Educator educator = educatorRepository.findEducatorsByOwnerUserId(userId).getFirst();
+            Educator educator = educatorRepository.findByOwnerUserId(userId).get();
             educatorRepository.delete(educator);
             return Result.success();
         } catch (NoSuchElementException ignored) {
