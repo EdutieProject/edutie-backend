@@ -31,7 +31,7 @@ public class CreateSegmentCommandHandlerImplementation extends HandlerBase imple
         LOGGER.info("Creating segment by user of id {} with previous lesson of id {}",
                 command.educatorUserId().identifierValue(),
                 command.previousSegmentId().identifierValue());
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Segment> previousSegmentResult = segmentPersistence.getById(command.previousSegmentId());
         if (previousSegmentResult.isFailure()) {
             return ExternalFailureLog.persistenceFailure(previousSegmentResult, LOGGER);

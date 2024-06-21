@@ -10,7 +10,6 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -22,7 +21,7 @@ public class RemoveCourseCommandHandlerImplementation extends HandlerBase implem
     @Override
     public Result handle(RemoveCourseCommand command) {
         LOGGER.info("Removing course of id {}", command.courseId().identifierValue());
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Course> courseWrapperResult = coursePersistence.getById(command.courseId());
         if (courseWrapperResult.isFailure()) {
             LOGGER.info("Persistence error occurred. Error: " + courseWrapperResult.getError().toString());

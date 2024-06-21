@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PROTECTED)
 @Getter
 @MappedSuperclass
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public abstract class Role<TId extends Identifier<?>> extends EntityBase<TId> {
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "user_id"))

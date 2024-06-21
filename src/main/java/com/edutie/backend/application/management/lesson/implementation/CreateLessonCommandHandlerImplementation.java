@@ -30,7 +30,7 @@ public class CreateLessonCommandHandlerImplementation extends HandlerBase implem
         LOGGER.info("Creating lesson by educator of id {} with previous lesson id {}",
                 command.educatorUserId().identifierValue(),
                 command.previousLessonId().identifierValue());
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Lesson> previousLessonWrapperResult = lessonPersistence.getById(command.previousLessonId());
         if (previousLessonWrapperResult.isFailure()) {
             return ExternalFailureLog.persistenceFailure(previousLessonWrapperResult, LOGGER);

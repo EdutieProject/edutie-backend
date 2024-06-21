@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -27,7 +26,7 @@ public class RemoveLessonCommandHandlerImplementation extends HandlerBase implem
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Result handle(RemoveLessonCommand command) {
         LOGGER.info("Removing lesson of id " + command.lessonId().identifierValue());
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(command.lessonId());
         if (lessonWrapperResult.isFailure()) {
             LOGGER.info("Persistence error occurred. Error: " + lessonWrapperResult.getError().toString());

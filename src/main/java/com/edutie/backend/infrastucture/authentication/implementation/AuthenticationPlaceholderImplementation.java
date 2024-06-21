@@ -24,7 +24,7 @@ public class AuthenticationPlaceholderImplementation implements AuthenticationPl
 
     private boolean profilesExist(UserId userId) {
         LOGGER.info("Checking if profiles for the user exist...");
-        return !studentRepository.findStudentsByOwnerUserId(userId).isEmpty() || !educatorRepository.findEducatorsByOwnerUserId(userId).isEmpty();
+        return !studentRepository.findByOwnerUserId(userId).isEmpty() || !educatorRepository.findByOwnerUserId(userId).isEmpty();
     }
 
     private void initializeProfiles(UserId userId) {
