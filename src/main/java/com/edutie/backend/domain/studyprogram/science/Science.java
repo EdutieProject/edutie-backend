@@ -18,11 +18,12 @@ import lombok.*;
 public class Science extends AuditableEntityBase<ScienceId> {
     private String name;
     private String description;
+    private String imageSource;
 
     /**
-     * Recommended constructor associating science with a creator - user.
+     * Recommended constructor associating science with a creator user.
      * Science may be only added by administrators thus it is not related with
-     * creators.
+     * educators.
      *
      * @param userId user id
      * @return Science

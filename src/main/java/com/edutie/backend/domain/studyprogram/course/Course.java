@@ -32,6 +32,7 @@ public class Course extends EducatorCreatedAuditableEntity<CourseId> {
     private String name;
     private String description;
     private boolean accessible = false;
+    private String imageSource;
     @OneToMany(mappedBy = "course")
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
