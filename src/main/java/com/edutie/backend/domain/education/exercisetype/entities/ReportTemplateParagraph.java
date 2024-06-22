@@ -19,6 +19,7 @@ public class ReportTemplateParagraph extends OrderedParagraph<ReportTemplatePara
     public static ReportTemplateParagraph create(String title, String text) {
         ReportTemplateParagraph paragraph = new ReportTemplateParagraph();
         paragraph.setId(new ReportTemplateParagraphId());
+        paragraph.setTitle(title);
         paragraph.setText(text);
         paragraph.setOrdinal(0);
         return paragraph;
