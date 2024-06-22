@@ -28,7 +28,7 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description;
-    @OneToMany
+    @OneToMany(targetEntity = ReportTemplateParagraph.class, fetch = FetchType.EAGER)
     @OrderBy("ordinal")
     @Setter(AccessLevel.PRIVATE)
     List<ReportTemplateParagraph> reportTemplate = new ArrayList<>();

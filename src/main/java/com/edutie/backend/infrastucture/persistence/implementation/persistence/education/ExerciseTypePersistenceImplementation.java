@@ -1,12 +1,16 @@
 package com.edutie.backend.infrastucture.persistence.implementation.persistence.education;
 
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
+import com.edutie.backend.domain.education.exercisetype.entities.ReportTemplateParagraph;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ExerciseTypeRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ReportTemplateParagraphRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import validation.Result;
 import validation.WrapperResult;
 
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExerciseTypePersistenceImplementation implements ExerciseTypePersistence {
     private final ExerciseTypeRepository exerciseTypeRepository;
+    private final ReportTemplateParagraphRepository reportTemplateParagraphRepository;
 
     /**
      * Override this to provide repository for default methods
@@ -23,7 +28,7 @@ public class ExerciseTypePersistenceImplementation implements ExerciseTypePersis
      */
     @Override
     public JpaRepository<ExerciseType, ExerciseTypeId> getRepository() {
-        return null;
+        return exerciseTypeRepository;
     }
 
     /**
@@ -33,7 +38,7 @@ public class ExerciseTypePersistenceImplementation implements ExerciseTypePersis
      */
     @Override
     public Class<ExerciseType> entityClass() {
-        return null;
+        return ExerciseType.class;
     }
 
     /**
@@ -44,5 +49,16 @@ public class ExerciseTypePersistenceImplementation implements ExerciseTypePersis
     @Override
     public WrapperResult<List<ExerciseType>> getAll() {
         return WrapperResult.successWrapper(exerciseTypeRepository.findAll());
+    }
+
+    @Override
+    public Result save(ExerciseType exerciseType) {
+        try {
+            reportTemplateParagraphRepository.saveAll(exerciseType.getReportTemplate());
+            exerciseTypeRepository.save(exerciseType);
+            return Result.success();
+        } catch (Exception exception) {
+            return Result.failure(PersistenceError.exceptionEncountered(exception));
+        }
     }
 }
