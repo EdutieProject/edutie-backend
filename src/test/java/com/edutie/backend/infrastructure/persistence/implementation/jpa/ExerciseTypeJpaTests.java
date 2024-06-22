@@ -29,13 +29,13 @@ public class ExerciseTypeJpaTests {
     public void testSetup() {
         educator = Educator.create(testUserId, adminId);
         educatorRepository.save(educator);
-        exerciseType = ExerciseType.create(educator).getValue();
+        exerciseType = ExerciseType.create(educator);
         exerciseTypeRepository.save(exerciseType);
     }
 
     @Test
     public void testCreate() {
-        exerciseType = ExerciseType.create(educator).getValue();
+        exerciseType = ExerciseType.create(educator);
         exerciseTypeRepository.save(exerciseType);
 
         assertEquals(exerciseTypeRepository.findById(exerciseType.getId()).orElseThrow(), exerciseType);
