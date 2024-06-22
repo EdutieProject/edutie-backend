@@ -1,7 +1,6 @@
 package com.edutie.backend.application.learning.segment.queries;
 
 import com.edutie.backend.application.common.actions.StudentAction;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
@@ -9,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.util.Objects;
 
 @NoArgsConstructor
 @Getter

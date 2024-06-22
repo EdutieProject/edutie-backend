@@ -1,7 +1,6 @@
 package com.edutie.backend.application.learning.lesson.queries;
 
 import com.edutie.backend.application.common.actions.StudentAction;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
