@@ -1,13 +1,19 @@
 package com.edutie.backend.domain.education.exercisetype;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
+import com.edutie.backend.domain.education.exercisetype.entities.ReportTemplateParagraph;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import validation.WrapperResult;
@@ -24,6 +30,9 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description;
+    @OneToMany
+    @OrderBy("ordinal")
+    List<ReportTemplateParagraph> reportTemplate = new ArrayList<>();
 
     /**
      * Recommended constructor for exercise type associating it with an educator
