@@ -10,5 +10,5 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 public abstract class OrderedParagraph<TId extends Identifier<?>> extends Paragraph<TId> {
-    private short ordinal = 0;
+    private int ordinal = 0;
 }

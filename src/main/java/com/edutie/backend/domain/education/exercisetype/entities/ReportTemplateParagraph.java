@@ -16,11 +16,11 @@ import lombok.Setter;
 @Entity
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class ReportTemplateParagraph extends OrderedParagraph<ReportTemplateParagraphId> {
-    public static ReportTemplateParagraph create(Educator educator, String title, String text, short ordinal) {
+    public static ReportTemplateParagraph create(String title, String text) {
         ReportTemplateParagraph paragraph = new ReportTemplateParagraph();
         paragraph.setId(new ReportTemplateParagraphId());
         paragraph.setText(text);
-        paragraph.setOrdinal(ordinal);
+        paragraph.setOrdinal(0);
         return paragraph;
     }
 }
