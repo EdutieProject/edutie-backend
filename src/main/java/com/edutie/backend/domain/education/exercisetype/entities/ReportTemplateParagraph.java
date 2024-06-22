@@ -4,7 +4,6 @@ import com.edutie.backend.domain.common.paragraph.OrderedParagraph;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.identities.ReportTemplateParagraphId;
 
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@DiscriminatorValue("report_template")
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class ReportTemplateParagraph extends OrderedParagraph<ReportTemplateParagraphId> {
     public static ReportTemplateParagraph create(Educator educator, String title, String text, short ordinal) {
