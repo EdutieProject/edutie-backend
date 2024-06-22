@@ -1,10 +1,8 @@
 package com.edutie.backend.application.management.segment.commands;
 
 import com.edutie.backend.application.common.actions.EducatorAction;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

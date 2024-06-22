@@ -76,7 +76,7 @@ public class CourseManagementTests {
 
     @Test
     public void modifyCourseTest() {
-        Educator educator = educatorPersistence.getByUserId(userId);
+        Educator educator = educatorPersistence.getByAuthorizedUserId(userId);
         Science science = sciencePersistence.getById(scienceId).getValue();
         Course course = Course.create(educator, science);
         coursePersistence.save(course);
@@ -97,7 +97,7 @@ public class CourseManagementTests {
 
     @Test
     public void getCreatedCoursesTest() {
-        Educator educator = educatorPersistence.getByUserId(userId);
+        Educator educator = educatorPersistence.getByAuthorizedUserId(userId);
         Science science = sciencePersistence.getById(scienceId).getValue();
         Course course1 = Course.create(educator, science);
         Course course2 = Course.create(educator, science);
@@ -115,7 +115,7 @@ public class CourseManagementTests {
 
     @Test
     public void removeCourseTest() {
-        Educator educator = educatorPersistence.getByUserId(userId);
+        Educator educator = educatorPersistence.getByAuthorizedUserId(userId);
         Science science = sciencePersistence.getById(scienceId).getValue();
         Course course = Course.create(educator, science);
         coursePersistence.save(course);

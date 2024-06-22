@@ -2,7 +2,6 @@ package com.edutie.backend.application.learning.course.queries;
 
 import com.edutie.backend.application.common.actions.StudentAction;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

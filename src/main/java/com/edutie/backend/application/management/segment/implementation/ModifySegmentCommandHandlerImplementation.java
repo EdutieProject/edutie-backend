@@ -29,7 +29,7 @@ public class ModifySegmentCommandHandlerImplementation extends HandlerBase imple
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public WrapperResult<Segment> handle(ModifySegmentCommand command) {
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Segment> segmentWrapperResult = segmentPersistence.getById(command.segmentId());
         if (segmentWrapperResult.isFailure()) {
             LOGGER.info("Persistence error occurred. Error: {}", segmentWrapperResult.getError().toString());

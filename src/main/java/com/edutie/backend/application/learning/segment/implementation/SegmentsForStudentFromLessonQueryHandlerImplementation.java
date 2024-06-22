@@ -10,8 +10,6 @@ import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import validation.WrapperResult;
 
 import java.util.List;
@@ -32,7 +30,7 @@ public class SegmentsForStudentFromLessonQueryHandlerImplementation extends Hand
             LOGGER.info("Persistence error occurred: " + lessonWrapperResult.getError().toString());
             return lessonWrapperResult.map(o -> null);
         }
-        Student student = studentPersistence.getByUserId(query.studentUserId());
+        Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         Lesson lesson = lessonWrapperResult.getValue();
         return WrapperResult.successWrapper(
                 lesson.getSegments().stream().map(o ->

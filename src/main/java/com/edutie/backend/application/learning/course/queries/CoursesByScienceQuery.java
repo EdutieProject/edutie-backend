@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import java.util.Objects;
-
 @NoArgsConstructor
 @Getter
 @Setter

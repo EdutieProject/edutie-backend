@@ -1,4 +1,4 @@
-package com.edutie.backend.infra.persistence.jpa;
+package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
 import com.edutie.backend.domain.administration.AdminId;
 import com.edutie.backend.domain.administration.UserId;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RequiredArgsConstructor
-public class CourseTests {
+public class CourseJpaTests {
     private final UserId testUserId = new UserId();
     private final AdminId adminId = new AdminId();
     private Course course;

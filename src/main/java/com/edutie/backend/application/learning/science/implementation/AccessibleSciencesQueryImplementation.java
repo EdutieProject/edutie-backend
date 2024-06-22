@@ -3,7 +3,6 @@ package com.edutie.backend.application.learning.science.implementation;
 import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.learning.science.AccessibleSciencesQueryHandler;
 import com.edutie.backend.application.learning.science.queries.AccessibleSciencesQuery;
-import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import lombok.RequiredArgsConstructor;

@@ -20,7 +20,7 @@ public class CoursesByStudentProgressQueryHandlerImplementation extends HandlerB
     @Override
     public WrapperResult<List<Course>> handle(CoursesByStudentProgressQuery query) {
         LOGGER.info("Retrieving all courses in progress for user of id {}", query.studentUserId().identifierValue());
-        Student student = studentPersistence.getByUserId(query.studentUserId());
+        Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         List<Course> coursesInProgress = student
                 .getLearningHistory().stream()
                 .map(o -> o.getSegment().getLesson().getCourse())

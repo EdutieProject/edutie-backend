@@ -12,6 +12,7 @@ import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositor
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.SegmentRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import validation.Result;
 import validation.WrapperResult;
@@ -27,21 +28,23 @@ public class SegmentPersistenceImplementation implements SegmentPersistence {
     private final EducatorRepository educatorRepository;
 
     /**
-     * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
-     * it might not be present based on the identifier presence in the database.
+     * Override this to provide repository for default methods
      *
-     * @param segmentId entity id
-     * @return Optional entity
+     * @return crud jpa repository
      */
     @Override
-    public WrapperResult<Segment> getById(SegmentId segmentId) {
-        try {
-            Optional<Segment> segmentOptional = segmentRepository.findById(segmentId);
-            return segmentOptional.map(WrapperResult::successWrapper)
-                    .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Segment.class)));
-        } catch (Exception exception) {
-            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(exception));
-        }
+    public JpaRepository<Segment, SegmentId> getRepository() {
+        return segmentRepository;
+    }
+
+    /**
+     * Override this to provide entity class for default methods
+     *
+     * @return class of persistence entity
+     */
+    @Override
+    public Class<Segment> entityClass() {
+        return Segment.class;
     }
 
     /**
@@ -55,28 +58,11 @@ public class SegmentPersistenceImplementation implements SegmentPersistence {
     @Override
     public Result save(Segment entity) {
         try {
-            for (Segment seg : entity.getNextElements()) {
-                seg.setPreviousElement(entity);
-                segmentRepository.save(seg);
-            }
             segmentRepository.saveAndFlush(entity);
-            return Result.success();
-        } catch (Exception exception) {
-            return Result.failure(PersistenceError.exceptionEncountered(exception));
-        }
-    }
-
-    /**
-     * Removes the entity of the provided id from the database. If the entity is not preset or could not be
-     * deleted, does nothing and returns failure result.
-     *
-     * @param segmentId entity id
-     * @return Result object
-     */
-    @Override
-    public Result removeById(SegmentId segmentId) {
-        try {
-            segmentRepository.deleteById(segmentId);
+//            for (Segment seg : entity.getNextElements()) {
+//                seg.setPreviousElement(entity);
+//                segmentRepository.save(seg);
+//            } //TODO: #98
             return Result.success();
         } catch (Exception exception) {
             return Result.failure(PersistenceError.exceptionEncountered(exception));

@@ -2,11 +2,28 @@ package com.edutie.backend.domain.common.persistence;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.base.identity.Identifier;
+import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
+import org.springframework.data.jpa.repository.JpaRepository;
 import validation.Result;
 import validation.WrapperResult;
 
+import java.util.Optional;
+
 
 public interface Persistence<T extends EntityBase<TId>, TId extends Identifier<?>> {
+    /**
+     * Override this to provide repository for default methods
+     * @return crud jpa repository
+     */
+    JpaRepository<T, TId> getRepository();
+
+    /**
+     * Override this to provide entity class for default methods
+     * @return class of persistence entity
+     */
+    Class<T> entityClass();
+
+
     /**
      * Retrieves the entity using its identifier. Entity is wrapped in optional, therefore
      * it might not be present based on the identifier presence in the database.
@@ -14,7 +31,15 @@ public interface Persistence<T extends EntityBase<TId>, TId extends Identifier<?
      * @param id entity id
      * @return Optional entity
      */
-    WrapperResult<T> getById(TId id);
+    default WrapperResult<T> getById(TId id) {
+        try {
+            Optional<T> fetchedEntity = getRepository().findById(id);
+            return fetchedEntity.map(WrapperResult::successWrapper)
+                    .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(entityClass())));
+        } catch (Exception exception) {
+            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(exception));
+        }
+    }
 
     /**
      * Persists the provided entity into the database. If it is already present,
@@ -23,7 +48,14 @@ public interface Persistence<T extends EntityBase<TId>, TId extends Identifier<?
      *
      * @return Result object
      */
-    Result save(T entity);
+    default Result save(T entity) {
+        try {
+            getRepository().saveAndFlush(entity);
+            return Result.success();
+        } catch (Exception exception) {
+            return Result.failure(PersistenceError.exceptionEncountered(exception));
+        }
+    }
 
     /**
      * Removes the entity of the provided id from the database. If the entity is not preset or could not be
@@ -32,7 +64,14 @@ public interface Persistence<T extends EntityBase<TId>, TId extends Identifier<?
      * @param id entity id
      * @return Result object
      */
-    Result removeById(TId id);
+    default Result removeById(TId id) {
+        try {
+            getRepository().deleteById(id);
+            return Result.success();
+        } catch (Exception exception) {
+            return Result.failure(PersistenceError.exceptionEncountered(exception));
+        }
+    }
 
     /**
      * Removes the following entity from the database. This is a default method, which when not
@@ -44,6 +83,4 @@ public interface Persistence<T extends EntityBase<TId>, TId extends Identifier<?
     default Result remove(T entity) {
         return removeById(entity.getId());
     }
-
-    ;
 }

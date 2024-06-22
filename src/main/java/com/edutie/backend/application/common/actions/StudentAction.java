@@ -3,7 +3,6 @@ package com.edutie.backend.application.common.actions;
 import com.edutie.backend.domain.administration.UserId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

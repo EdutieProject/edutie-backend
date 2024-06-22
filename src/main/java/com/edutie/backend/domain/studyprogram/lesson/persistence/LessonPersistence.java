@@ -5,7 +5,6 @@ import com.edutie.backend.domain.education.educator.identities.EducatorId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.common.persistence.Persistence;
-import validation.Result;
 import validation.WrapperResult;
 
 import java.util.List;

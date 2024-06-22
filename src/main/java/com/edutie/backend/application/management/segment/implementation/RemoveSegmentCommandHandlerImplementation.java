@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -27,7 +26,7 @@ public class RemoveSegmentCommandHandlerImplementation extends HandlerBase imple
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Result handle(RemoveSegmentCommand command) {
-        Educator educator = educatorPersistence.getByUserId(command.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         WrapperResult<Segment> segmentWrapperResult = segmentPersistence.getById(command.segmentId());
         if (segmentWrapperResult.isFailure())
             return segmentWrapperResult;

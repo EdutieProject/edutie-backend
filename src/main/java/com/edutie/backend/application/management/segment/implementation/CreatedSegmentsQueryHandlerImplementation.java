@@ -9,8 +9,6 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import validation.Error;
-import validation.Result;
 import validation.WrapperResult;
 
 import java.util.List;
@@ -22,7 +20,7 @@ public class CreatedSegmentsQueryHandlerImplementation extends HandlerBase imple
     @Override
     public WrapperResult<List<Segment>> handle(CreatedSegmentsQuery query) {
         LOGGER.info("Retrieving segments created by educator of id {}", query.educatorUserId().identifierValue());
-        Educator educator = educatorPersistence.getByUserId(query.educatorUserId());
+        Educator educator = educatorPersistence.getByAuthorizedUserId(query.educatorUserId());
         return segmentPersistence.getAllOfEducatorId(educator.getId());
     }
 }
