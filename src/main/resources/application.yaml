@@ -1,7 +1,20 @@
+# ==== GENERAL
+scheme: http
+hostname: localhost
+reverse-proxy-port: 7080
+reverse-proxy-uri: ${scheme}://${hostname}:${reverse-proxy-port}
+authorization-server-prefix: /auth
+issuer: ${reverse-proxy-uri}${authorization-server-prefix}/realms/edutie
+username-claim-json-path: $.preferred_username
+authorities-json-path: $.realm_access.roles
+edutie-backend-port: 8081
+audience:
+
+# ==== SERVER CONFIG
 server:
-  port: 8081
+  port: ${edutie-backend-port}
 
-
+# ==== SPRING BOOT CONFIG
 spring:
   cert: http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs
   datasource:
@@ -16,24 +29,25 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: login-app
-            authorization-grant-type: authorization_code
-            scope: openid
-            client-name: keycloak
-            provider: keycloak
-        provider:
-          keycloak:
-            issuer-uri: http://52.32.178.153:8080/realms/SpringBootKeycloak
-            user-name-attribute: preferred_username
-      resource-server:
-        jwt:
-          issuer-uri: http://52.32.178.153:8080/realms/SpringBootKeycloak
 
+# ==== AUTH CONFIG
+com:
+  c4-soft:
+    springaddons:
+      oidc:
+        ops:
+          - iss: ${issuer}
+            username-claim: ${username-claim-json-path}
+            authorities:
+              - path: ${authorities-json-path}
+            aud: ${audience}
+        resourceserver:
+          permit-all:
+            - /me
+          cors:
+            - todo
+
+# ==== SWAGGER CONFIG
 springdoc:
   api-docs:
     enabled: true
