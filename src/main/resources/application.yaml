@@ -43,9 +43,11 @@ com:
             aud: ${audience}
         resourceserver:
           permit-all:
-            - /me
+            - /**
           cors:
-            - todo
+            - allowed-origin-patterns:
+                - todo?
+
 
 # ==== SWAGGER CONFIG
 springdoc:
@@ -60,11 +62,12 @@ springdoc:
     enabled: true
   writer-with-default-pretty-printer: true
   group-configs:
-    -
-      group: Learning
+    - group: Learning
       packages-to-scan:
         - com.edutie.backend.api.v1.learning
-    -
-      group: Management
+    - group: Management
       packages-to-scan:
         - com.edutie.backend.api.v1.management
+    - group: Authentication - Tests
+      packages-to-scan:
+        - com.edutie.backend.api.v1.authentication
