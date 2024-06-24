@@ -1,4 +1,4 @@
-# ==== GENERAL
+# ==== GENERAL - move this to .env?
 scheme: http
 hostname: localhost
 reverse-proxy-port: 7080
@@ -8,7 +8,6 @@ issuer: ${reverse-proxy-uri}${authorization-server-prefix}/realms/edutie
 username-claim-json-path: $.preferred_username
 authorities-json-path: $.realm_access.roles
 edutie-backend-port: 8081
-audience:
 
 # ==== SERVER CONFIG
 server:
@@ -43,10 +42,14 @@ com:
             aud: ${audience}
         resourceserver:
           permit-all:
-            - /**
-          cors:
-            - allowed-origin-patterns:
-                - todo?
+            - /me
+            - /v3/api-docs/**
+            - /v1/docs/**
+            - /swagger-ui/**
+            - /swagger-resources/*
+            - /Management/**
+            - /Learning/**
+            - /Authentication-Tests/**
 
 
 # ==== SWAGGER CONFIG
@@ -68,6 +71,10 @@ springdoc:
     - group: Management
       packages-to-scan:
         - com.edutie.backend.api.v1.management
-    - group: Authentication - Tests
+    - group: Authentication-Tests
       packages-to-scan:
         - com.edutie.backend.api.v1.authentication
+  show-actuator: true
+  show-login-endpoint: true
+  show-oauth2-endpoints: true
+  show-spring-cloud-functions: true

@@ -2,6 +2,8 @@ package com.edutie.backend.api.v1.authentication;
 
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.JsonWebToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,10 @@ public class Controller {
     }
 
     @GetMapping("/authenticated-endpoint")
-    public String authenticated() {
+    public String authenticated(Authentication authentication) {
+        if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
+            return jwtAuthenticationToken.getName();
+        }
         return "This endpoint should NOT be accessible without authentication.";
     }
 }
