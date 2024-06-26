@@ -1,8 +1,8 @@
 package com.edutie.backend.api.v1.authentication;
 
 import com.edutie.backend.domain.administration.UserId;
-import org.keycloak.representations.JsonWebToken;
+import org.springframework.security.core.Authentication;
 
 public interface AuthenticationPlaceholder {
-    UserId authenticateUser(JsonWebToken jwt);
+    UserId authenticateUser(Authentication jwt);
 }

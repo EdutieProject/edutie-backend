@@ -42,7 +42,7 @@ com:
             aud: ${audience}
         resourceserver:
           permit-all:
-            - /me
+            - /swagger
             - /v3/api-docs/**
             - /v1/docs/**
             - /swagger-ui/**

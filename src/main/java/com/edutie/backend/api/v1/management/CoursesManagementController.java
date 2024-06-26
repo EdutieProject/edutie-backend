@@ -2,6 +2,7 @@ package com.edutie.backend.api.v1.management;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
+import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.management.course.CreateCourseCommandHandler;
 import com.edutie.backend.application.management.course.CreatedCoursesQueryHandler;
 import com.edutie.backend.application.management.course.ModifyCourseCommandHandler;
@@ -11,16 +12,14 @@ import com.edutie.backend.application.management.course.commands.ModifyCourseCom
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.application.management.course.queries.CreatedCoursesQuery;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.List;
 
@@ -37,34 +36,32 @@ public class CoursesManagementController {
     private final EducatorAuthorization educatorAuthorization;
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Course>>> getCreatedCourses() {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+    public ResponseEntity<ApiResult<List<Course>>> getCreatedCourses(Authentication auth) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<List<Course>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery().educatorUserId(actionUserId)));
     }
 
     @PostMapping
-    public ResponseEntity<ApiResult<Course>> createCourse(@RequestBody CreateCourseCommand command) {
-        JsonWebToken jwt = new JsonWebToken();
-        UserId actionUserId = authentication.authenticateUser(jwt);
+    public ResponseEntity<ApiResult<Course>> createCourse(Authentication auth, @RequestBody CreateCourseCommand command) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<Course, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @PatchMapping
-    public ResponseEntity<ApiResult<Result>> modifyCourse(@RequestBody ModifyCourseCommand command) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<Result>> modifyCourse(Authentication auth, @RequestBody ModifyCourseCommand command) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> modifyCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @DeleteMapping
-    public ResponseEntity<ApiResult<Result>> removeCourse(@RequestBody RemoveCourseCommand command) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<Result>> removeCourse(Authentication auth, @RequestBody RemoveCourseCommand command) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> removeCourseCommandHandler.handle(command.educatorUserId(actionUserId)));

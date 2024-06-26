@@ -11,8 +11,8 @@ import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,8 +30,8 @@ public class LessonsLearningController {
     private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(@RequestParam CourseId courseId) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); //TODO: middleware
+    public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(Authentication auth, @RequestParam CourseId courseId) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<List<LessonView>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(

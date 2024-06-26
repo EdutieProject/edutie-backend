@@ -1,7 +1,6 @@
 package com.edutie.backend.api.v1.authentication;
 
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ public class Controller {
 
     @PostMapping("/token")
     public String token() {
-        return new JsonWebToken().toString() + "This endpoint should return a JWT (?)";
+        return "This endpoint should return a JWT (?)";
     }
 
     @GetMapping("/authenticated-endpoint")

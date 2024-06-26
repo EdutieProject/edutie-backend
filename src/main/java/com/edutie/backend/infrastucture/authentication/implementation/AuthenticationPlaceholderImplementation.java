@@ -8,9 +8,9 @@ import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -24,7 +24,7 @@ public class AuthenticationPlaceholderImplementation implements AuthenticationPl
 
     private boolean profilesExist(UserId userId) {
         LOGGER.info("Checking if profiles for the user exist...");
-        return !studentRepository.findByOwnerUserId(userId).isEmpty() || !educatorRepository.findByOwnerUserId(userId).isEmpty();
+        return studentRepository.findByOwnerUserId(userId).isPresent() && educatorRepository.findByOwnerUserId(userId).isPresent();
     }
 
     private void initializeProfiles(UserId userId) {
@@ -36,7 +36,7 @@ public class AuthenticationPlaceholderImplementation implements AuthenticationPl
     }
 
     @Override
-    public UserId authenticateUser(JsonWebToken jwt) {
+    public UserId authenticateUser(Authentication jwt) {
         UserId userId = new UserId(UUID.fromString("6e6fbfaf-5711-44fd-aec8-a0ea8148272c"));
         if (!profilesExist(userId)) {
             LOGGER.info("Profiles for {} user do not exist.", userId.identifierValue());

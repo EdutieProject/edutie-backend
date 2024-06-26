@@ -13,8 +13,8 @@ import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,8 +34,8 @@ public class CoursesLearningController {
 
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(@RequestParam ScienceId scienceId) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
+    public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(Authentication auth, @RequestParam ScienceId scienceId) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> coursesByScienceQueryHandler.handle(
@@ -44,8 +44,8 @@ public class CoursesLearningController {
     }
 
     @GetMapping("/progressed")
-    public ResponseEntity<ApiResult<List<Course>>> getCoursesByStudentProgress() {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken()); // TODO: middleware?
+    public ResponseEntity<ApiResult<List<Course>>> getCoursesByStudentProgress(Authentication auth) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<List<Course>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> coursesByStudentProgressQueryHandler.handle(

@@ -16,11 +16,10 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.List;
 
@@ -37,32 +36,32 @@ public class SegmentsManagementController {
     private final EducatorAuthorization educatorAuthorization;
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Segment>>> getCreatedSegments() {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<List<Segment>>> getCreatedSegments(Authentication auth) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<List<Segment>, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery().educatorUserId(actionUserId)));
     }
 
     @PostMapping
-    public ResponseEntity<ApiResult<Segment>> createSegment(@RequestBody CreateSegmentCommand command) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<Segment>> createSegment(Authentication auth, @RequestBody CreateSegmentCommand command) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<Segment, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> createSegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @PatchMapping
-    public ResponseEntity<ApiResult<Result>> modifySegment(@RequestBody ModifySegmentCommand command) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody ModifySegmentCommand command) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> modifySegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
     }
 
     @DeleteMapping
-    public ResponseEntity<ApiResult<Result>> modifySegment(@RequestBody RemoveSegmentCommand command) {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody RemoveSegmentCommand command) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<Result, EducatorAuthorization>()
                 .authorize(actionUserId, educatorAuthorization)
                 .handle(() -> removeSegmentCommandHandler.handle(command.educatorUserId(actionUserId)));

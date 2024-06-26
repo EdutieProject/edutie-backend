@@ -11,8 +11,8 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.representations.JsonWebToken;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +29,8 @@ public class ScienceLearningController {
     private final StudentAuthorization studentAuthorization;
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<Science>>> getAllSciences() {
-        UserId actionUserId = authentication.authenticateUser(new JsonWebToken());
+    public ResponseEntity<ApiResult<List<Science>>> getAllSciences(Authentication auth) {
+        UserId actionUserId = authentication.authenticateUser(auth);
         return new GenericRequestHandler<List<Science>, StudentAuthorization>()
                 .authorize(actionUserId, studentAuthorization)
                 .handle(() -> accessibleSciencesQueryHandler.handle(new AccessibleSciencesQuery()));
