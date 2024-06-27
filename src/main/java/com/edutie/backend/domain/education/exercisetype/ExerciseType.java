@@ -68,16 +68,16 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
      * Moves report template paragraph & restructures the paragraph order.
      *
      * @param paragraphIndex index of a selected paragraph to be moved
-     * @param newIndex       desired index of a paragraph
+     * @param desiredIndex       desired index of a paragraph
      * @return Result object
      */
-    public Result moveReportTemplateParagraph(int paragraphIndex, int newIndex) {
-        if (paragraphIndex < 0 || newIndex < 0 || paragraphIndex > reportTemplate.size() - 1 || newIndex > reportTemplate.size() - 1)
+    public Result moveReportTemplateParagraph(int paragraphIndex, int desiredIndex) {
+        if (paragraphIndex < 0 || desiredIndex < 0 || paragraphIndex > reportTemplate.size() - 1 || desiredIndex > reportTemplate.size() - 1)
             //TODO!
             return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
         ReportTemplateParagraph paragraphToMove = reportTemplate.get(paragraphIndex);
         reportTemplate.remove(paragraphToMove);
-        reportTemplate.add(newIndex, paragraphToMove);
+        reportTemplate.add(desiredIndex, paragraphToMove);
         for (int i = 0; i < reportTemplate.size(); i++) {
             reportTemplate.get(i).setOrdinal(i);
         }

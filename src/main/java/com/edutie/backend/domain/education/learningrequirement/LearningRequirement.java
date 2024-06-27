@@ -12,9 +12,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import validation.Error;
+import validation.Result;
 import validation.WrapperResult;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -30,7 +34,8 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
     private Science science;
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER)
-    private Set<SubRequirement> subRequirements = new HashSet<>();
+    @OrderBy("ordinal")
+    private List<SubRequirement> subRequirements = new ArrayList<>();
 
     /**
      * Recommended constructor associating Learning Requirement with an educator and a science
@@ -47,13 +52,45 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
         return WrapperResult.successWrapper(learningRequirement);
     }
 
-    public void addSubRequirement(String name, String description, int orderIndex) {
-        subRequirements.stream().filter(o -> o.getOrderIndex() >= orderIndex).forEach(o -> o.setOrderIndex(o.getOrderIndex() + 1));
-        subRequirements.add(SubRequirement.create(name, PromptFragment.of(description), orderIndex));
+    /**
+     * Appends sub requirement at the end of the sub requirement list
+     * @param name sub requirement name
+     * @param description sub requirement description
+     */
+    public void appendSubRequirement(String name, String description) {
+        subRequirements.add(SubRequirement.create(name, PromptFragment.of(description), subRequirements.size()));
     }
 
+    /**
+     * Moves sub requirement in the list to the desired index
+     * @param currentIndex current sub requirement index
+     * @param desiredIndex desired sub requirement index
+     * @return Result object
+     */
+    public Result moveSubRequirement(int currentIndex, int desiredIndex) {
+        if (currentIndex < 0 || currentIndex >= subRequirements.size() || desiredIndex < 0 || desiredIndex >= subRequirements.size())
+            //TODO
+            return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
+        SubRequirement subRequirement = subRequirements.get(currentIndex);
+        subRequirements.remove(subRequirement);
+        subRequirements.add(desiredIndex, subRequirement);
+        for (int i = 0; i < subRequirements.size(); i++) {
+            subRequirements.get(i).setOrdinal(i);
+        }
+        return Result.success();
+    }
 
-    public void removeSubRequirement(SubRequirementId subRequirementId) {
-        subRequirements.removeIf(o -> o.getId().equals(subRequirementId));
+    /**
+     * Removes sub requirement at given index
+     * @param index index
+     * @return Result object
+     */
+    public Result removeSubRequirement(int index) {
+        if (subRequirements.remove(index) == null)
+            return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
+        for (int i = 0; i < subRequirements.size(); i++) {
+            subRequirements.get(i).setOrdinal(i);
+        }
+        return Result.success();
     }
 }

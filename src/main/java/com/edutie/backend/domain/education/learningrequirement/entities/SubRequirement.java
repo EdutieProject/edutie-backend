@@ -22,13 +22,13 @@ public class SubRequirement extends EntityBase<SubRequirementId> {
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description;
-    private Integer orderIndex;
+    private Integer ordinal;
 
     public static SubRequirement create(String name, PromptFragment desc, int orderIndex) {
         SubRequirement subRequirement = new SubRequirement();
         subRequirement.name = name;
         subRequirement.description = desc;
-        subRequirement.orderIndex = orderIndex;
+        subRequirement.ordinal = orderIndex;
         return subRequirement;
     }
 }
