@@ -26,4 +26,13 @@ public class Educator extends RestrictedRole<EducatorId> {
         educator.setAssignedBy(adminId);
         return educator;
     }
+
+    /**
+     * Returns whether this educator has permissions as high as provided educator type
+     * or higher.
+     * @param educatorType educator type to compare
+     */
+    public boolean hasPermissionsOf(EducatorType educatorType) {
+        return this.type.ordinal() >= educatorType.ordinal() ;
+    }
 }
