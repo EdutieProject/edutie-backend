@@ -3,9 +3,9 @@ package com.edutie.backend.domain.education.learningrequirement;
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.education.learningrequirement.identities.SubRequirementId;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -17,9 +17,7 @@ import validation.Result;
 import validation.WrapperResult;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -32,6 +30,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description = new PromptFragment();
     @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
+    // TODO > ? is this relevant? if yes, add it to general docs
     private Science science;
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER)
     @OrderBy("ordinal")
@@ -44,6 +43,8 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @return Learning Requirement
      */
     public static WrapperResult<LearningRequirement> create(Educator educator, Science science) {
+        if (!educator.hasPermissionsOf(EducatorType.PEDAGOGUE))
+            return WrapperResult.failureWrapper(new Error("TODO!", ""));
         LearningRequirement learningRequirement = new LearningRequirement();
         learningRequirement.setId(new LearningRequirementId());
         learningRequirement.setCreatedBy(educator.getOwnerUserId());
@@ -54,7 +55,8 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
 
     /**
      * Appends sub requirement at the end of the sub requirement list
-     * @param name sub requirement name
+     *
+     * @param name        sub requirement name
      * @param description sub requirement description
      */
     public void appendSubRequirement(String name, String description) {
@@ -62,7 +64,22 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     }
 
     /**
+     * Inserts sub requirement into given index, moving all the next sub requirements forward and
+     * updating their ordinal
+     *
+     * @param name         sub requirement name
+     * @param description  sub requirement description
+     * @param desiredIndex desired index
+     * @return Result object
+     */
+    public Result insertSubRequirement(String name, String description, int desiredIndex) {
+        appendSubRequirement(name, description);
+        return moveSubRequirement(subRequirements.size() - 1, desiredIndex);
+    }
+
+    /**
      * Moves sub requirement in the list to the desired index
+     *
      * @param currentIndex current sub requirement index
      * @param desiredIndex desired sub requirement index
      * @return Result object
@@ -82,6 +99,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
 
     /**
      * Removes sub requirement at given index
+     *
      * @param index index
      * @return Result object
      */
