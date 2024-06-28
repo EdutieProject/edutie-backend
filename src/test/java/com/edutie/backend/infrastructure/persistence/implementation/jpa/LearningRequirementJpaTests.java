@@ -48,7 +48,7 @@ public class LearningRequirementJpaTests {
     public void testLearningRequirementCreation() {
 
         assertNotNull(learningRequirement);
-        assertEquals(creator, learningRequirement.getEducator());
+        assertEquals(creator, learningRequirement.getAuthorEducator());
         assertEquals(science, learningRequirement.getScience());
 
         learningRequirementRepository.save(learningRequirement);

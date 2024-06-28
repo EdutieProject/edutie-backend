@@ -4,7 +4,7 @@ import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.lesson.RemoveLessonCommandHandler;
 import com.edutie.backend.application.management.lesson.commands.RemoveLessonCommand;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.errors.EducatorError;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
@@ -33,9 +33,9 @@ public class RemoveLessonCommandHandlerImplementation extends HandlerBase implem
             return lessonWrapperResult;
         }
         Lesson lesson = lessonWrapperResult.getValue();
-        if (!lesson.getEducator().equals(educator)) {
+        if (!lesson.getAuthorEducator().equals(educator)) {
             LOGGER.info("Insufficient permissions to remove this lesson");
-            return Result.failure(EducatorError.mustBeOwnerError(Lesson.class));
+            return Result.failure(EducationError.educatorMustBeAuthorError(Lesson.class));
         }
         Lesson previousLesson = lesson.getPreviousElement();
         Set<Lesson> nextLessons = lesson.getNextElements();

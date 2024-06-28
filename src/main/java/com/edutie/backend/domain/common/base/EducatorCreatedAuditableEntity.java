@@ -16,5 +16,5 @@ import lombok.Setter;
 public abstract class EducatorCreatedAuditableEntity<TId extends Identifier<?>> extends AuditableEntityBase<TId> {
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PROTECTED)
-    private Educator educator;
+    private Educator authorEducator;
 }

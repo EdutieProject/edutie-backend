@@ -2,12 +2,12 @@ package com.edutie.backend.domain.education.exercisetype;
 
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.entities.ReportTemplateParagraph;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import jakarta.persistence.*;
 import lombok.*;
-import validation.Error;
 import validation.Result;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
         ExerciseType exerciseType = new ExerciseType();
         exerciseType.setId(new ExerciseTypeId());
         exerciseType.setCreatedBy(educator.getOwnerUserId());
-        exerciseType.setEducator(educator);
+        exerciseType.setAuthorEducator(educator);
         return exerciseType;
     }
 
@@ -68,13 +68,12 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
      * Moves report template paragraph & restructures the paragraph order.
      *
      * @param paragraphIndex index of a selected paragraph to be moved
-     * @param desiredIndex       desired index of a paragraph
+     * @param desiredIndex   desired index of a paragraph
      * @return Result object
      */
     public Result moveReportTemplateParagraph(int paragraphIndex, int desiredIndex) {
         if (paragraphIndex < 0 || desiredIndex < 0 || paragraphIndex > reportTemplate.size() - 1 || desiredIndex > reportTemplate.size() - 1)
-            //TODO!
-            return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
+            return Result.failure(EducationError.reportTemplateParagraphInvalidIndex());
         ReportTemplateParagraph paragraphToMove = reportTemplate.get(paragraphIndex);
         reportTemplate.remove(paragraphToMove);
         reportTemplate.add(desiredIndex, paragraphToMove);
@@ -92,7 +91,7 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
      */
     public Result removeReportTemplateParagraph(int paragraphIndex) {
         if (reportTemplate.remove(paragraphIndex) == null)
-            return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
+            return Result.failure(EducationError.reportTemplateParagraphInvalidIndex());
         for (int i = paragraphIndex; i < reportTemplate.size(); i++) {
             reportTemplate.get(i).setOrdinal(i);
         }

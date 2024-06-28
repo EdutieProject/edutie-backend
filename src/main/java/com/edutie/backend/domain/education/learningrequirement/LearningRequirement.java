@@ -2,6 +2,7 @@ package com.edutie.backend.domain.education.learningrequirement;
 
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
@@ -12,7 +13,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import validation.Error;
 import validation.Result;
 import validation.WrapperResult;
 
@@ -30,7 +30,6 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description = new PromptFragment();
     @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
-    // TODO > ? is this relevant? if yes, add it to general docs
     private Science science;
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER)
     @OrderBy("ordinal")
@@ -44,11 +43,11 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      */
     public static WrapperResult<LearningRequirement> create(Educator educator, Science science) {
         if (!educator.hasPermissionsOf(EducatorType.PEDAGOGUE))
-            return WrapperResult.failureWrapper(new Error("TODO!", ""));
+            return WrapperResult.failureWrapper(EducationError.educatorInsufficientPermissions());
         LearningRequirement learningRequirement = new LearningRequirement();
         learningRequirement.setId(new LearningRequirementId());
         learningRequirement.setCreatedBy(educator.getOwnerUserId());
-        learningRequirement.setEducator(educator);
+        learningRequirement.setAuthorEducator(educator);
         learningRequirement.setScience(science);
         return WrapperResult.successWrapper(learningRequirement);
     }
@@ -86,8 +85,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      */
     public Result moveSubRequirement(int currentIndex, int desiredIndex) {
         if (currentIndex < 0 || currentIndex >= subRequirements.size() || desiredIndex < 0 || desiredIndex >= subRequirements.size())
-            //TODO
-            return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
+            return Result.failure(EducationError.subRequirementsInvalidIndex());
         SubRequirement subRequirement = subRequirements.get(currentIndex);
         subRequirements.remove(subRequirement);
         subRequirements.add(desiredIndex, subRequirement);
@@ -105,7 +103,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      */
     public Result removeSubRequirement(int index) {
         if (subRequirements.remove(index) == null)
-            return Result.failure(new Error("TODO!", this.getClass().getSimpleName()));
+            return Result.failure(EducationError.subRequirementsInvalidIndex());
         for (int i = 0; i < subRequirements.size(); i++) {
             subRequirements.get(i).setOrdinal(i);
         }

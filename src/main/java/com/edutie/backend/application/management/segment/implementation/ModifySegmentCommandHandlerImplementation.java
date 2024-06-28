@@ -5,7 +5,7 @@ import com.edutie.backend.application.management.segment.ModifySegmentCommandHan
 import com.edutie.backend.application.management.segment.commands.ModifySegmentCommand;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.errors.EducatorError;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
@@ -35,9 +35,9 @@ public class ModifySegmentCommandHandlerImplementation extends HandlerBase imple
             LOGGER.info("Persistence error occurred. Error: {}", segmentWrapperResult.getError().toString());
             return segmentWrapperResult;
         }
-        if (!segmentWrapperResult.getValue().getEducator().equals(educator)) {
+        if (!segmentWrapperResult.getValue().getAuthorEducator().equals(educator)) {
             LOGGER.info("Educator has insufficient permissions to modify the segment");
-            return Result.failureWrapper(EducatorError.mustBeOwnerError(Segment.class));
+            return Result.failureWrapper(EducationError.educatorMustBeAuthorError(Segment.class));
         }
         Segment segment = segmentWrapperResult.getValue();
         if (command.segmentName() != null) {

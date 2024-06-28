@@ -56,7 +56,7 @@ public class Course extends EducatorCreatedAuditableEntity<CourseId> {
         Course course = new Course();
         course.setId(new CourseId());
         course.setCreatedBy(educator.getOwnerUserId());
-        course.setEducator(educator);
+        course.setAuthorEducator(educator);
         course.setScience(science);
         return course;
     }

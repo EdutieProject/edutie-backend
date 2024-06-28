@@ -62,7 +62,7 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
         Segment segment = new Segment();
         segment.setId(new SegmentId());
         segment.setCreatedBy(educator.getOwnerUserId());
-        segment.setEducator(educator);
+        segment.setAuthorEducator(educator);
         segment.setLesson(lesson);
         return segment;
     }
@@ -78,7 +78,7 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
         Segment segment = new Segment();
         segment.setId(new SegmentId());
         segment.setCreatedBy(educator.getOwnerUserId());
-        segment.setEducator(educator);
+        segment.setAuthorEducator(educator);
         segment.setLesson(previousSegment.getLesson());
         segment.setPreviousElement(previousSegment);
         return segment;
