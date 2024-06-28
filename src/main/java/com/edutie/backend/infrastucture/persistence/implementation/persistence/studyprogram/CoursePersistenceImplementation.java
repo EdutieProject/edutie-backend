@@ -97,7 +97,7 @@ public class CoursePersistenceImplementation implements CoursePersistence {
             Optional<Educator> educatorOptional = educatorRepository.findById(educatorId);
             if (educatorOptional.isEmpty())
                 return Result.failureWrapper(PersistenceError.notFound(Educator.class));
-            List<Course> courses = courseRepository.findCoursesByEducator(educatorOptional.get());
+            List<Course> courses = courseRepository.findCoursesByAuthorEducator(educatorOptional.get());
             return WrapperResult.successWrapper(courses);
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));

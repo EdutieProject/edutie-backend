@@ -98,7 +98,7 @@ public class SegmentPersistenceImplementation implements SegmentPersistence {
         try {
             Optional<Educator> optionalEducator = educatorRepository.findById(educatorId);
             return optionalEducator
-                    .map(educator -> WrapperResult.successWrapper(segmentRepository.findSegmentsByEducator(educator)))
+                    .map(educator -> WrapperResult.successWrapper(segmentRepository.findSegmentsByAuthorEducator(educator)))
                     .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Lesson.class)));
         } catch (Exception exception) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(exception));

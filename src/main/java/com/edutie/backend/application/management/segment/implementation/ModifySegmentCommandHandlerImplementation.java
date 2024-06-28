@@ -35,11 +35,12 @@ public class ModifySegmentCommandHandlerImplementation extends HandlerBase imple
             LOGGER.info("Persistence error occurred. Error: {}", segmentWrapperResult.getError().toString());
             return segmentWrapperResult;
         }
-        if (!segmentWrapperResult.getValue().getAuthorEducator().equals(educator)) {
+        Segment segment = segmentWrapperResult.getValue();
+        if (!educator.isAuthorOf(segment)) {
             LOGGER.info("Educator has insufficient permissions to modify the segment");
             return Result.failureWrapper(EducationError.educatorMustBeAuthorError(Segment.class));
         }
-        Segment segment = segmentWrapperResult.getValue();
+
         if (command.segmentName() != null) {
             segment.setName(command.segmentName());
         }

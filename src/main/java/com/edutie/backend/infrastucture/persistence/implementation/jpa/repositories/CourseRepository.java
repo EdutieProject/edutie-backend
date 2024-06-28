@@ -13,5 +13,5 @@ public interface CourseRepository extends JpaRepository<Course, CourseId> {
 
 	List<Course> findCoursesByScienceAndAccessible(Science science, boolean accessible);
 
-	List<Course> findCoursesByEducator(Educator educator);
+	List<Course> findCoursesByAuthorEducator(Educator educator);
 }

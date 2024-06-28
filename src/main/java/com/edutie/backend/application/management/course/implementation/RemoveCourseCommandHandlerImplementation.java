@@ -28,7 +28,7 @@ public class RemoveCourseCommandHandlerImplementation extends HandlerBase implem
             return courseWrapperResult;
         }
         Course course = courseWrapperResult.getValue();
-        if (!course.getAuthorEducator().equals(educator)) {
+        if (!educator.isAuthorOf(course)) {
             LOGGER.info("Educator does not have sufficient permissions to modify this course");
             return Result.failure(EducationError.educatorMustBeAuthorError(Course.class));
         }

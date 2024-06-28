@@ -11,6 +11,6 @@ import java.util.List;
 public interface SegmentRepository extends JpaRepository<Segment, SegmentId> {
     List<Segment> findSegmentsByLesson(Lesson lesson);
 
-    List<Segment> findSegmentsByEducator(Educator educator);
+    List<Segment> findSegmentsByAuthorEducator(Educator educator);
 }
 

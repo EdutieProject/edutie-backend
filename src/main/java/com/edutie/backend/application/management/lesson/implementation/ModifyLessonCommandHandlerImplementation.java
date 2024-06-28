@@ -29,7 +29,7 @@ public class ModifyLessonCommandHandlerImplementation extends HandlerBase implem
         if (lessonWrapperResult.isFailure())
             return lessonWrapperResult;
         Lesson lesson = lessonWrapperResult.getValue();
-        if (!lesson.getAuthorEducator().equals(educator)) {
+        if (!educator.isAuthorOf(lesson)) {
             LOGGER.info("Educator has insufficient permissions to modify this lesson");
             return Result.failure(EducationError.educatorMustBeAuthorError(Lesson.class));
         }

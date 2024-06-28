@@ -33,7 +33,7 @@ public class RemoveLessonCommandHandlerImplementation extends HandlerBase implem
             return lessonWrapperResult;
         }
         Lesson lesson = lessonWrapperResult.getValue();
-        if (!lesson.getAuthorEducator().equals(educator)) {
+        if (!educator.isAuthorOf(lesson)) {
             LOGGER.info("Insufficient permissions to remove this lesson");
             return Result.failure(EducationError.educatorMustBeAuthorError(Lesson.class));
         }

@@ -33,7 +33,7 @@ public class ModifyCourseCommandHandlerImplementation extends HandlerBase implem
         }
         Course course = courseWrapperResult.getValue();
         Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
-        if (!course.getAuthorEducator().equals(educator)) {
+        if (!educator.isAuthorOf(course)) {
             LOGGER.info("Educator does not have sufficient permissions to modify this course");
             return Result.failure(EducationError.educatorMustBeAuthorError(Course.class));
         }

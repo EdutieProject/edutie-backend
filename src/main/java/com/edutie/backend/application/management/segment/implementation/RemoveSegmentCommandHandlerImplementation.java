@@ -31,7 +31,7 @@ public class RemoveSegmentCommandHandlerImplementation extends HandlerBase imple
         if (segmentWrapperResult.isFailure())
             return segmentWrapperResult;
         Segment segment = segmentWrapperResult.getValue();
-        if (!segment.getAuthorEducator().equals(educator)) {
+        if (!educator.isAuthorOf(segment)) {
             LOGGER.info("Educator has insufficient permissions to remove this segment");
             return Result.failure(EducationError.educatorMustBeAuthorError(Segment.class));
         }
