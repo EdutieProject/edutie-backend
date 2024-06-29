@@ -39,8 +39,37 @@ public class Result {
         return error == null;
     }
 
+    /**
+     * Builder-like function returning this result unchanged, but throwing {@code OperationFailureException}
+     * when the result is failure.
+     * @return this result.
+     */
+    public Result throwIfFails() {
+        if (isFailure())
+            throw new OperationFailureException(this.getError().toString());
+        return this;
+    }
+
+    /**
+     * Creates new wrapper result out of this result containing the value
+     * provided as the supplier function return value.
+     * @param mapper function providing value.
+     * @return Wrapper Result object
+     * @param <T> type of new wrapper result
+     */
     public <T> WrapperResult<T> map(Supplier<T> mapper) {
         return new WrapperResult<>(mapper.get(), error);
+    }
+
+    /**
+     * Creates new wrapper result with blank null object as value. New wrapper result is of type
+     * provided as the class object.
+     * @param clazz class object of the desired type
+     * @return Wrapper Result object
+     * @param <U> type of new wrapper result
+     */
+    public <U> WrapperResult<U> into(Class<U> clazz) {
+        return this.map(() -> null);
     }
 
     /**
