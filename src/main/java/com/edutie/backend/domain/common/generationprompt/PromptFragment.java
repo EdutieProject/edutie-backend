@@ -17,7 +17,7 @@ public record PromptFragment(@JsonValue String text) {
      */
     public PromptFragment()
     {
-        this("DEFAULT");
+        this("");
     }
     public static PromptFragment of(String text)
     {

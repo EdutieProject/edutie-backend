@@ -1,9 +1,7 @@
 package com.edutie.backend.domain.education.exercisetype.entities;
 
 import com.edutie.backend.domain.common.paragraph.OrderedParagraph;
-import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.identities.ReportTemplateParagraphId;
-
 import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
