@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, LessonId> {
     List<Lesson> getLessonsByCourse(Course course);
-    List<Lesson> getLessonsByEducator(Educator educator);
+    List<Lesson> getLessonsByAuthorEducator(Educator educator);
 }

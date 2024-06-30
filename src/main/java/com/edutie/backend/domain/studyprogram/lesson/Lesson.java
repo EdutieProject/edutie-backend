@@ -50,7 +50,7 @@ public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
         lesson.setCreatedBy(educator.getOwnerUserId());
-        lesson.setEducator(educator);
+        lesson.setAuthorEducator(educator);
         lesson.setCourse(course);
         return lesson;
     }
@@ -66,7 +66,7 @@ public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
         Lesson lesson = new Lesson();
         lesson.setId(new LessonId());
         lesson.setCreatedBy(educator.getOwnerUserId());
-        lesson.setEducator(educator);
+        lesson.setAuthorEducator(educator);
         lesson.setCourse(previousLesson.getCourse());
         lesson.setPreviousElement(previousLesson);
         return lesson;

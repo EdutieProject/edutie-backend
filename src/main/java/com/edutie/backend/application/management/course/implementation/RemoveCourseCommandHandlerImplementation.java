@@ -4,7 +4,7 @@ import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.course.RemoveCourseCommandHandler;
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.errors.EducatorError;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -28,9 +28,9 @@ public class RemoveCourseCommandHandlerImplementation extends HandlerBase implem
             return courseWrapperResult;
         }
         Course course = courseWrapperResult.getValue();
-        if (!course.getEducator().equals(educator)) {
+        if (!educator.isAuthorOf(course)) {
             LOGGER.info("Educator does not have sufficient permissions to modify this course");
-            return Result.failure(EducatorError.mustBeOwnerError(Course.class));
+            return Result.failure(EducationError.educatorMustBeAuthorError(Course.class));
         }
         coursePersistence.remove(course);
         LOGGER.info("Course removed successfully");

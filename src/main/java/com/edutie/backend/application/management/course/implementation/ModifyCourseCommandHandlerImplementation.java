@@ -4,7 +4,7 @@ import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.course.ModifyCourseCommandHandler;
 import com.edutie.backend.application.management.course.commands.ModifyCourseCommand;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.errors.EducatorError;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -33,9 +33,9 @@ public class ModifyCourseCommandHandlerImplementation extends HandlerBase implem
         }
         Course course = courseWrapperResult.getValue();
         Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
-        if (!course.getEducator().equals(educator)) {
+        if (!educator.isAuthorOf(course)) {
             LOGGER.info("Educator does not have sufficient permissions to modify this course");
-            return Result.failure(EducatorError.mustBeOwnerError(Course.class));
+            return Result.failure(EducationError.educatorMustBeAuthorError(Course.class));
         }
         if (command.courseName() != null) course.setName(command.courseName());
         if (command.courseDescription() != null) course.setDescription(command.courseDescription());

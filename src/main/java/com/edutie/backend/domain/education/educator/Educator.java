@@ -3,6 +3,7 @@ package com.edutie.backend.domain.education.educator;
 import com.edutie.backend.domain.administration.RestrictedRole;
 import com.edutie.backend.domain.administration.AdminId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
 
@@ -25,5 +26,18 @@ public class Educator extends RestrictedRole<EducatorId> {
         educator.setOwnerUserId(userId);
         educator.setAssignedBy(adminId);
         return educator;
+    }
+
+    /**
+     * Returns whether this educator has permissions as high as provided educator type
+     * or higher.
+     * @param educatorType educator type to compare
+     */
+    public boolean hasPermissionsOf(EducatorType educatorType) {
+        return this.type.ordinal() >= educatorType.ordinal() ;
+    }
+
+    public boolean isAuthorOf(EducatorCreatedAuditableEntity<?> entity) {
+        return entity.getAuthorEducator().equals(this);
     }
 }

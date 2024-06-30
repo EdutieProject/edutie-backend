@@ -4,7 +4,7 @@ import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.segment.RemoveSegmentCommandHandler;
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.errors.EducatorError;
+import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
@@ -31,9 +31,9 @@ public class RemoveSegmentCommandHandlerImplementation extends HandlerBase imple
         if (segmentWrapperResult.isFailure())
             return segmentWrapperResult;
         Segment segment = segmentWrapperResult.getValue();
-        if (!segment.getEducator().equals(educator)) {
+        if (!educator.isAuthorOf(segment)) {
             LOGGER.info("Educator has insufficient permissions to remove this segment");
-            return Result.failure(EducatorError.mustBeOwnerError(Segment.class));
+            return Result.failure(EducationError.educatorMustBeAuthorError(Segment.class));
         }
         Segment previousLesson = segment.getPreviousElement();
         Set<Segment> nextSegments = segment.getNextElements();

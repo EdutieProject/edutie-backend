@@ -4,11 +4,16 @@ import com.edutie.backend.domain.common.enums.AbstractEnumConverter;
 import com.edutie.backend.domain.common.enums.PersistableEnum;
 import lombok.Getter;
 
+/**
+ * Enum describing educator type.
+ * @implNote Ordinal matters as the higher the ordinal the highest permission level.
+ */
 @Getter
 public enum EducatorType implements PersistableEnum<String> {
     CONTRIBUTOR("Contributor"),
     TUTOR("Tutor"),
-    PEDAGOGUE("Pedagogue");
+    PEDAGOGUE("Pedagogue"),
+    ADMINISTRATOR("Administrator");
 
     final String code;
 

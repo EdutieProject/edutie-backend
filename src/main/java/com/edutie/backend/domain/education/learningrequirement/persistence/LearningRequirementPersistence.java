@@ -16,7 +16,7 @@ public interface LearningRequirementPersistence extends Persistence<LearningRequ
      * @param educatorId educator id
      * @return Wrapper result of desired list
      */
-    WrapperResult<List<LearningRequirement>> getAllOfCreatorId(EducatorId educatorId);
+    WrapperResult<List<LearningRequirement>> getAllOfEducatorId(EducatorId educatorId);
 
     /**
      * Retrieve all learning requirements associated with given science

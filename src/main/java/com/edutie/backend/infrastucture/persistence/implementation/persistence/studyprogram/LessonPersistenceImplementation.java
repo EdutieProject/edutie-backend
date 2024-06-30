@@ -105,7 +105,7 @@ public class LessonPersistenceImplementation implements LessonPersistence {
             Optional<Educator> educator = educatorRepository.findById(educatorId);
             if (educator.isEmpty())
                 return Result.failureWrapper(PersistenceError.notFound(Course.class));
-            List<Lesson> lessons = lessonRepository.getLessonsByEducator(educator.get());
+            List<Lesson> lessons = lessonRepository.getLessonsByAuthorEducator(educator.get());
             return WrapperResult.successWrapper(lessons);
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
