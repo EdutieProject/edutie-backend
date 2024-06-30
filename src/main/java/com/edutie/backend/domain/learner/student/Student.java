@@ -25,7 +25,7 @@ import java.util.Set;
  * Note that the relationship with the user is maintained by createdBy field in the base class.
  */
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Getter
 @Setter
 @Entity
