@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.studyprogram;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -35,14 +35,14 @@ public class SegmentPersistenceTests {
     @Autowired
     private EducatorRepository educatorRepository;
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private Lesson lesson;
     private Educator educator;
     private Segment segment;
     @BeforeEach
     public void testSetup() {
         Science science = Science.create(userId);
-        educator = Educator.create(userId, adminId);
+        educator = Educator.create(userId, administratorId);
         Course course = Course.create(educator, science);
         lesson = Lesson.create(educator, course);
         segment = Segment.create(educator, lesson);

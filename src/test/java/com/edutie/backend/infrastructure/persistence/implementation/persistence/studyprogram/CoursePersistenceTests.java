@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.studyprogram;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -27,7 +27,7 @@ public class CoursePersistenceTests {
     @Autowired
     private ScienceRepository scienceRepository;
     private final UserId userId = new UserId();
-    private final Educator educator = Educator.create(userId, new AdminId());
+    private final Educator educator = Educator.create(userId, new AdministratorId());
     private final Science science = Science.create(userId);
     private Course course;
 

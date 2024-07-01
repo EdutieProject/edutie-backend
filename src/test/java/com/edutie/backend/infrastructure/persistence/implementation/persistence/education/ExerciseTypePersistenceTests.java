@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.education;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
@@ -19,7 +19,7 @@ public class ExerciseTypePersistenceTests {
     private ExerciseTypePersistence exerciseTypePersistence;
     @Autowired
     private EducatorRepository educatorRepository;
-    private final Educator educator = Educator.create(new UserId(), new AdminId());
+    private final Educator educator = Educator.create(new UserId(), new AdministratorId());
 
     @BeforeEach
     public void testSetup() {

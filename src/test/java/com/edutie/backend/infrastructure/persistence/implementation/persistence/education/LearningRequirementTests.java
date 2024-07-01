@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.education;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
@@ -24,9 +24,9 @@ public class LearningRequirementTests {
     @Autowired
     ScienceRepository scienceRepository;
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private final Science science = Science.create(userId);
-    private final Educator educator = Educator.create(userId, adminId);
+    private final Educator educator = Educator.create(userId, administratorId);
 
     @BeforeEach
     public void testSetup() {

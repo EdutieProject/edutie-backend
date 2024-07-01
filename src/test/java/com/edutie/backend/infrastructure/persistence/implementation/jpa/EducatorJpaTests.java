@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
@@ -15,21 +15,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 public class EducatorJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
 
     @Autowired
     private EducatorRepository educatorRepository;
 
     @Test
     public void testCreate() {
-        Educator creator = Educator.create(testUserId, adminId);
+        Educator creator = Educator.create(testUserId, administratorId);
         educatorRepository.save(creator);
         assertEquals(educatorRepository.findById(creator.getId()).orElseThrow(), creator);
     }
 
     @Test
     public void findByOwnerUserIdTest() {
-        Educator creator = Educator.create(testUserId, adminId);
+        Educator creator = Educator.create(testUserId, administratorId);
         educatorRepository.save(creator);
 
         assert educatorRepository.findByOwnerUserId(testUserId).isPresent();

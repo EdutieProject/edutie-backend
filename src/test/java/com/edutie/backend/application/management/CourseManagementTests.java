@@ -8,7 +8,7 @@ import com.edutie.backend.application.management.course.commands.CreateCourseCom
 import com.edutie.backend.application.management.course.commands.ModifyCourseCommand;
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.application.management.course.queries.CreatedCoursesQuery;
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
@@ -45,12 +45,12 @@ public class CourseManagementTests {
     @Autowired
     private CoursePersistence coursePersistence;
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private ScienceId scienceId;
 
     @BeforeEach
     public void testSetup() {
-        educatorPersistence.save(Educator.create(userId, adminId));
+        educatorPersistence.save(Educator.create(userId, administratorId));
         Science science = Science.create(userId);
         scienceId = science.getId();
         sciencePersistence.save(science);

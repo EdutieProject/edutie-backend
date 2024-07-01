@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastucture.authentication.implementation;
 
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.learner.student.Student;
@@ -31,7 +31,7 @@ public class AuthenticationPlaceholderImplementation implements AuthenticationPl
         LOGGER.info("Initializing profiles for user {}", userId.identifierValue());
         Student studentProfile = Student.create(userId);
         studentRepository.save(studentProfile);
-        Educator educatorProfile = Educator.create(userId, new AdminId());
+        Educator educatorProfile = Educator.create(userId, new AdministratorId());
         educatorRepository.save(educatorProfile);
     }
 

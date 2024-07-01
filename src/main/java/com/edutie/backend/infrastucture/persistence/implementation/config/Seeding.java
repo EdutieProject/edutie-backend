@@ -1,6 +1,7 @@
 package com.edutie.backend.infrastucture.persistence.implementation.config;
 
-import com.edutie.backend.domain.administration.AdminPersistence;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
+import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -39,7 +40,7 @@ public class Seeding {
 	private final CoursePersistence coursePersistence;
 	private final LessonPersistence lessonPersistence;
 	private final SegmentPersistence segmentPersistence;
-	private final AdminPersistence adminPersistence;
+	private final AdministratorPersistence administratorPersistence;
 	private final EducatorPersistence educatorPersistence;//	private final ExerciseTypePersistence exerciseTypePersistence;
 	//	private final LearningRequirementPersistence learningRequirementPersistence;
 	private final CourseTagPersistence courseTagPersistence;
@@ -61,7 +62,7 @@ public class Seeding {
 		log.info("====================================");
 		log.info("  STUDY PROGRAM DB SEEDING - START  ");
 		log.info("====================================");
-		educator = Educator.create(uid, adminPersistence.getAdminId(new UserId()));
+		educator = Educator.create(uid, new AdministratorId());
 		educatorPersistence.save(educator);
 		seedSciences();
 		log.info("====================================");

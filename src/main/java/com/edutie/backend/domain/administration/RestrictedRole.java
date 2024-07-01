@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.administration;
 
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.common.base.identity.Identifier;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -15,5 +16,5 @@ import lombok.Setter;
 public abstract class RestrictedRole<TId extends Identifier<?>> extends Role<TId> {
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "assigned_by_admin_id", nullable = false))
-    protected AdminId assignedBy;
+    protected AdministratorId assignedBy;
 }

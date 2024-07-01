@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @NoArgsConstructor
 public class LessonJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private Educator educator;
     private Course course;
     private Lesson lesson;
@@ -39,7 +39,7 @@ public class LessonJpaTests {
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(testUserId, adminId);
+        educator = Educator.create(testUserId, administratorId);
         educatorRepository.save(educator);
 
         Science science = Science.create(testUserId);

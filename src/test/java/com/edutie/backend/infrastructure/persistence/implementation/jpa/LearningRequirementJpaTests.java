@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class LearningRequirementJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private Educator creator;
     private Science science;
     private LearningRequirement learningRequirement;
@@ -35,7 +35,7 @@ public class LearningRequirementJpaTests {
 
     @BeforeEach
     public void testSetup() {
-        creator = Educator.create(testUserId, adminId);
+        creator = Educator.create(testUserId, administratorId);
         educatorRepository.save(creator);
 
         science = Science.create(testUserId);

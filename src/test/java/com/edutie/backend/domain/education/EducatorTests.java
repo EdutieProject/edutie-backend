@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.education;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
@@ -11,11 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class EducatorTests {
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
 
     @Test
     public void hasPermissionsOfTest() {
-        Educator educator = Educator.create(userId, adminId);
+        Educator educator = Educator.create(userId, administratorId);
         educator.setType(EducatorType.TUTOR);
         assert educator.hasPermissionsOf(EducatorType.CONTRIBUTOR);
         assert educator.hasPermissionsOf(EducatorType.TUTOR);
@@ -24,9 +24,9 @@ public class EducatorTests {
 
     @Test
     public void isAuthorOfTest() {
-        Educator educator = Educator.create(userId, adminId);
+        Educator educator = Educator.create(userId, administratorId);
         ExerciseType exerciseType = ExerciseType.create(educator);
-        ExerciseType exerciseType2 = ExerciseType.create(Educator.create(userId, adminId));
+        ExerciseType exerciseType2 = ExerciseType.create(Educator.create(userId, administratorId));
         
         assert educator.isAuthorOf(exerciseType);
         assert !educator.isAuthorOf(exerciseType2);

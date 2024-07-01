@@ -8,7 +8,7 @@ import com.edutie.backend.application.management.lesson.commands.CreateLessonCom
 import com.edutie.backend.application.management.lesson.commands.ModifyLessonCommand;
 import com.edutie.backend.application.management.lesson.commands.RemoveLessonCommand;
 import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQuery;
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
@@ -53,14 +53,14 @@ public class LessonManagementTests {
     @Autowired
     RemoveLessonCommandHandler removeLessonCommandHandler;
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private Lesson previousLesson;
     private Educator educator;
     private Course course;
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(userId, adminId);
+        educator = Educator.create(userId, administratorId);
         educatorPersistence.save(educator);
         Science science = Science.create(userId);
         sciencePersistence.save(science);

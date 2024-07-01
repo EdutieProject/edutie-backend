@@ -1,13 +1,12 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.studyprogram;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
@@ -15,8 +14,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 
 import java.util.List;
@@ -35,7 +32,7 @@ public class LessonPersistenceTests {
     @Autowired
     private ScienceRepository scienceRepository;
     private final UserId userId = new UserId();
-    private final Educator educator = Educator.create(userId, new AdminId());
+    private final Educator educator = Educator.create(userId, new AdministratorId());
     private final Science science = Science.create(userId);
     private final Course course = Course.create(educator, science);
     private Lesson lesson;

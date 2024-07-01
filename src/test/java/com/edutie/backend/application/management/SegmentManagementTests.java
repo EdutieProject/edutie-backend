@@ -8,7 +8,7 @@ import com.edutie.backend.application.management.segment.commands.CreateSegmentC
 import com.edutie.backend.application.management.segment.commands.ModifySegmentCommand;
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
@@ -31,7 +31,6 @@ import validation.Result;
 import validation.WrapperResult;
 
 import java.util.List;
-import java.util.UUID;
 
 @SpringBootTest
 public class SegmentManagementTests {
@@ -56,12 +55,12 @@ public class SegmentManagementTests {
     EducatorPersistence educatorPersistence;
 
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
+    private final AdministratorId administratorId = new AdministratorId();
     private Segment previousSegment;
 
     @BeforeEach
     public void testSetup() {
-        Educator educator = Educator.create(userId, adminId);
+        Educator educator = Educator.create(userId, administratorId);
         educatorPersistence.save(educator);
         Science science = Science.create(userId);
         sciencePersistence.save(science);

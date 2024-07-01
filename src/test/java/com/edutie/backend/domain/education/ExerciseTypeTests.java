@@ -3,7 +3,7 @@ package com.edutie.backend.domain.education;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.edutie.backend.domain.administration.AdminId;
+import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class ExerciseTypeTests {
     private final UserId userId = new UserId();
-    private final AdminId adminId = new AdminId();
-    private final Educator educator = Educator.create(userId, adminId);
+    private final AdministratorId administratorId = new AdministratorId();
+    private final Educator educator = Educator.create(userId, administratorId);
 
     @Test
     public void paragraphAppendTest() {
