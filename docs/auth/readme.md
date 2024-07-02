@@ -32,6 +32,22 @@ To access endpoints one must be authenticated & authorized. The flow is more sop
 
 From now on, API layer issues internal authorization mechanisms described below.
 
+```mermaid
+---
+title: Resource endpoint access flow
+---
+sequenceDiagram
+    Client->>Spring Cloud Gateway: Authenticated request with sessionId cookie
+    Spring Cloud Gateway->>BFF: Authenticated request with sessionId cookie
+    BFF->>KeyCloak: Authenticated request with sessionId cookie
+    KeyCloak->>BFF: JSON Web Token
+    BFF->>Edutie Backend: Authenticated request with JWT
+    Edutie Backend->>BFF: API Response
+    BFF->>Spring Cloud Gateway: API Response
+    Spring Cloud Gateway->>Client: API Response
+```
+
+
 ## Internal authorization
 
 Edutie Backend Application stores data in its database regarding edutie context about the user. Thus, Edutie stores users role profiles and let them.
