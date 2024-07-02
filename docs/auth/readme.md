@@ -41,10 +41,11 @@ sequenceDiagram
     Spring Cloud Gateway->>BFF: Authenticated request with sessionId cookie
     BFF->>KeyCloak: Authenticated request with sessionId cookie
     KeyCloak->>BFF: JSON Web Token
+    BFF->>BFF: Replace sessionId cookie with JWT
     BFF->>Edutie Backend: Authenticated request with JWT
-    Edutie Backend->>BFF: API Response
-    BFF->>Spring Cloud Gateway: API Response
-    Spring Cloud Gateway->>Client: API Response
+    Edutie Backend->>BFF: Backend Response
+    BFF->>Spring Cloud Gateway: Backend Response
+    Spring Cloud Gateway->>Client: Backend Response
 ```
 
 
