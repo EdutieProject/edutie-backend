@@ -12,29 +12,28 @@ is done on the Client-Keycloak line through the middleman systems.
 title: Login flow (successful)
 ---
 sequenceDiagram
-    participant KeyCloak Frontend
+   participant KeyCloak Frontend
     participant Edutie Frontend
     participant Spring Cloud Gateway
     participant BFF
     participant KeyCloak
     
     Edutie Frontend->>Spring Cloud Gateway: Request for log in possibility
-    Spring Cloud Gateway->>BFF: Request for log in possibility
-    BFF->>KeyCloak: Request for log in possibility
-    KeyCloak->>BFF: Redirect response
-    BFF->>Spring Cloud Gateway : Redirect response
-    Spring Cloud Gateway->>Edutie Frontend: Redirect response
-    Edutie Frontend->>KeyCloak Frontend: Log-in endpoint redirect
-    KeyCloak Frontend->>KeyCloak Frontend: Enter credentials in redirected window
-    KeyCloak Frontend->>Edutie Frontend: Post authorization redirect <br/>with ?post_login_success_uri
+    Spring Cloud Gateway->>KeyCloak: Request for log in possibility
+    KeyCloak->>Spring Cloud Gateway : Pass redirect
+    Spring Cloud Gateway->>Edutie Frontend: Pass redirect
+    Edutie Frontend->>KeyCloak Frontend: Redirect to KeyCloak Frontend
+    KeyCloak Frontend->>KeyCloak Frontend: Enter credentials
+    KeyCloak Frontend->>Edutie Frontend: Post authorization redirect<br/> containing authorization code
 %% TODO: verify networking in below authentication %%
-    Edutie Frontend->>Spring Cloud Gateway: Request with authorization code
-    Spring Cloud Gateway->>BFF: Request with authorization code
+    Edutie Frontend->>Spring Cloud Gateway: Request with authorization code <br/>and post-login redirect url
+    Spring Cloud Gateway->>BFF: Request with authorization code <br/>and post-login redirect url
     BFF->>KeyCloak: Request token pair using authorization code
     KeyCloak->>BFF: Token pair response
     BFF->>BFF: Associate token pair with sessionId
-    BFF->>Spring Cloud Gateway: Set session cookie response
-    Spring Cloud Gateway->>Edutie Frontend: Set session cookie response
+    BFF->>Spring Cloud Gateway: Set session cookie response<br/> and pass redirect
+    Spring Cloud Gateway->>Edutie Frontend: Set session cookie response<br/> and pass redirect
+    Edutie Frontend->>Edutie Frontend: Set cookie & redirect to homepage
 ```
 
 ## Resource endpoint access
