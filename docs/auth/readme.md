@@ -4,18 +4,38 @@ Authentication of the users is handled by external system in the BFF authenticat
 
 ## Logging in
 
-Sample login flow:
-1. Request with login credentials is sent by a client
-2. Request passes through a Spring cloud gateway tunnel
-3. Request is handled regarding user authentication by a BFF system
-   1. Credentials are passed to KeyCloak system
-   2. Credentials are verified. If verification is successful session details are stored in KeyCloak DB and session id is returned to BFF system
-4. BFF system establishes a session cookie with the client regarding the provided sessionId 
-
 Logging in as well as registering does not invoke any endpoints in the EdutieBackend (this) Application. All authentication handling
 is done on the Client-Keycloak line through the middleman systems. 
 
-<!-- TODO: Verify login flow -->
+```mermaid
+---
+title: Login flow (successful)
+---
+sequenceDiagram
+    participant KeyCloak Frontend
+    participant Edutie Frontend
+    participant Spring Cloud Gateway
+    participant BFF
+    participant KeyCloak
+    
+    Edutie Frontend->>Spring Cloud Gateway: Request for log in possibility
+    Spring Cloud Gateway->>BFF: Request for log in possibility
+    BFF->>KeyCloak: Request for log in possibility
+    KeyCloak->>BFF: Redirect response
+    BFF->>Spring Cloud Gateway : Redirect response
+    Spring Cloud Gateway->>Edutie Frontend: Redirect response
+    Edutie Frontend->>KeyCloak Frontend: Log-in endpoint redirect
+    KeyCloak Frontend->>KeyCloak Frontend: Enter credentials in redirected window
+    KeyCloak Frontend->>Edutie Frontend: Post authorization redirect <br/>with ?post_login_success_uri
+%% TODO: verify networking in below authentication %%
+    Edutie Frontend->>Spring Cloud Gateway: Request with authorization code
+    Spring Cloud Gateway->>BFF: Request with authorization code
+    BFF->>KeyCloak: Request token pair using authorization code
+    KeyCloak->>BFF: Token pair response
+    BFF->>BFF: Associate token pair with sessionId
+    BFF->>Spring Cloud Gateway: Set session cookie response
+    Spring Cloud Gateway->>Edutie Frontend: Set session cookie response
+```
 
 ## Resource endpoint access
 
@@ -37,7 +57,7 @@ From now on, API layer issues internal authorization mechanisms described below.
 title: Resource endpoint access flow
 ---
 sequenceDiagram
-    Client->>Spring Cloud Gateway: Authenticated request with sessionId cookie
+    Edutie Frontend->>Spring Cloud Gateway: Authenticated request with sessionId cookie
     Spring Cloud Gateway->>BFF: Authenticated request with sessionId cookie
     BFF->>KeyCloak: Authenticated request with sessionId cookie
     KeyCloak->>BFF: JSON Web Token
@@ -45,7 +65,7 @@ sequenceDiagram
     BFF->>Edutie Backend: Authenticated request with JWT
     Edutie Backend->>BFF: Backend Response
     BFF->>Spring Cloud Gateway: Backend Response
-    Spring Cloud Gateway->>Client: Backend Response
+    Spring Cloud Gateway->>Edutie Frontend: Backend Response
 ```
 
 
