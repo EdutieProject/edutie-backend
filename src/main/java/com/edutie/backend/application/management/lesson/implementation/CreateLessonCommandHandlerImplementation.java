@@ -37,7 +37,6 @@ public class CreateLessonCommandHandlerImplementation extends HandlerBase implem
         }
         Lesson previousLesson = previousLessonWrapperResult.getValue();
         Lesson lesson = Lesson.create(educator, previousLesson);
-        lesson.setPreviousElement(previousLesson);
         lesson.setName(command.lessonName());
         lesson.setDescription(command.lessonDescription() != null ? command.lessonDescription() : "");
         Result saveResult = lessonPersistence.save(lesson);
