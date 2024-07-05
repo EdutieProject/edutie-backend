@@ -19,9 +19,10 @@ sequenceDiagram
     Client->>Rest API: Create Course Command
     Rest API->>Rest API: Authorize Educator
     Rest API->>Application: Create Course Command
-    Application->>Application: Load Data
-    Application->>Domain: Initialize Course
-    Domain->>Domain: Initialize First lesson
+    Application->>Persistence: Load Data
+    Persistence->>Application: Loaded entities
+    Application->>Domain: Initialize Course with root lesson
+    Domain->>Domain: Initialize first lesson with root segment
     Domain->>Application: Wrapper Result
     Application->>Persistence: Deep save course
     Persistence->>Application: Result
@@ -41,10 +42,11 @@ sequenceDiagram
 ## Description
 
 Flow creates a course using provided command.
-1. Course has its own properties provided in the command
-2. Course is related to the Science provided by id in the command
-3. Course is by default inaccessible
-4. Course is initialized
-   1. Course has the initial "root" lesson already created
-   2. Initial lesson has the initial "root" segment already created
-5. Course is associated with the educator that created it
+- Course uses name and description provided in the command
+- Course is related to the Science provided by id in the command
+- Course is related to the educator profile of a user that invoked this flow. User must have educator profile to invoke this flow and that is ensured by step 2 of the sequence diagram
+- Course is by default inaccessible
+- Course is initialized
+   - Course has the initial "root" lesson already created
+   - Initial lesson has the initial "root" segment already created
+6. Course is associated with the educator that created it
