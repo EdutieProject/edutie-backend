@@ -1,10 +1,12 @@
-# ==== GENERAL - move this to .env?
+# ==== GENERAL - TODO: move this to .env?
 scheme: http
 hostname: localhost
 reverse-proxy-port: 7080
 reverse-proxy-uri: ${scheme}://${hostname}:${reverse-proxy-port}
 authorization-server-prefix: /auth
-issuer: ${reverse-proxy-uri}${authorization-server-prefix}/realms/baeldung
+#issuer: ${reverse-proxy-uri}${authorization-server-prefix}/realms/baeldung
+issuer: http://localhost:8080/auth/realms/baeldung
+jwt-key-location: http://keycloak:8080/auth/realms/baeldung/protocol/openid-connect/certs
 username-claim-json-path: $.preferred_username
 authorities-json-path: $.realm_access.roles
 edutie-backend-port: 8081
@@ -16,7 +18,6 @@ server:
 
 # ==== SPRING BOOT CONFIG
 spring:
-  cert: http://localhost:8080/auth/realms/edutie/protocol/openid-connect/certs
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
@@ -29,6 +30,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${issuer}
 
 # ==== AUTH CONFIG
 com:
@@ -37,12 +43,15 @@ com:
       oidc:
         ops:
           - iss: ${issuer}
+            jwk-set-uri: ${jwt-key-location}
             username-claim: ${username-claim-json-path}
             authorities:
               - path: ${authorities-json-path}
             aud: ${audience}
+
         resourceserver:
           permit-all:
+            - /**
             - /swagger
             - /v3/api-docs/**
             - /v1/docs/**

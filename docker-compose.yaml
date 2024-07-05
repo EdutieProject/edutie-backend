@@ -1,14 +1,17 @@
 version: "3.0"
 services:
   db:
+    container_name: db
     image: postgres:latest
     env_file:
       - .env
     ports:
       - '5435:5432'
-    container_name: db
+    networks:
+      - backendnetwork
 
-  service:
+  backendapp:
+    container_name: backendapp
     env_file:
       - .env
     build:
@@ -22,6 +25,17 @@ services:
       - maven-repo:/root/.m2/repository
     depends_on:
       - db
+#     TODO: networks should be managed by collective compose later on (?)
+    networks:
+      - authnetwork
+      - backendnetwork
+
+# TODO: networks should be managed by collective compose later on (?)
+networks:
+  backendnetwork:
+    driver: bridge
+  authnetwork:
+    name: authnetwork
 
 volumes:
   maven-repo:
