@@ -46,7 +46,6 @@ Flow creates a course using provided command.
 - Course is related to the Science provided by id in the command
 - Course is related to the educator profile of a user that invoked this flow. User must have educator profile to invoke this flow and that is ensured by step 2 of the sequence diagram
 - Course is by default inaccessible
-- Course is initialized
+- Course must be initialized in this flow
    - Course has the initial "root" lesson already created
    - Initial lesson has the initial "root" segment already created
-6. Course is associated with the educator that created it
