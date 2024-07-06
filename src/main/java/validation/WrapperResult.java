@@ -49,7 +49,7 @@ public class WrapperResult<T> extends Result {
      * @return this result.
      */
     @Override
-    public WrapperResult<T> throwIfFails() {
+    public WrapperResult<T> throwIfFailure() {
         if (isFailure())
             throw new OperationFailureException(this.getError().toString());
         return this;

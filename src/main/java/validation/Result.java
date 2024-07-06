@@ -44,10 +44,16 @@ public class Result {
      * when the result is failure.
      * @return this result.
      */
-    public Result throwIfFails() {
+    public Result throwIfFailure() {
         if (isFailure())
             throw new OperationFailureException(this.getError().toString());
         return this;
+    }
+
+    @Override
+    public String toString() {
+        String className = this.getClass().getSimpleName();
+        return className + "[" + (this.isSuccess() ? "SUCCESS" : this.getError()) + "]";
     }
 
     /**
