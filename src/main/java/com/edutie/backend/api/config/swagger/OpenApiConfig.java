@@ -13,6 +13,10 @@ import java.util.List;
 @Component
 public class OpenApiConfig {
 
+    /**
+     * Following function adds JWT auth to swagger
+     * @return OpenAPI config
+     */
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()

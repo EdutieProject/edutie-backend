@@ -2,11 +2,9 @@ package com.edutie.backend.api.v1.learning;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCourseQueryHandler;
 import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
 import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;

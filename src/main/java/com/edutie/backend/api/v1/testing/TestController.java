@@ -5,6 +5,7 @@ import com.edutie.backend.domain.administration.UserId;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import validation.Result;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/auth-test")
@@ -27,6 +29,18 @@ public class TestController {
         if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
             UserId userId = new UserId(UUID.fromString(jwtAuthenticationToken.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
             return "AUTH SUCCESS! Look, its you: " + userId;
+        }
+        return Result.failure(AuthenticationError.noJwtAuthentication()).toString();
+    }
+
+    @GetMapping("/test-roles")
+    public String getRoles(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Result.failure(AuthenticationError.invalidAuthentication()).toString();
+        }
+        if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
+            return "AUTH SUCCESS! Look, your roles: " + jwtAuthenticationToken.getAuthorities()
+                    .stream().map(o -> o.getAuthority() + ", ").collect(Collectors.joining());
         }
         return Result.failure(AuthenticationError.noJwtAuthentication()).toString();
     }

@@ -2,7 +2,6 @@ package com.edutie.backend.api.v1.management;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.management.course.CreateCourseCommandHandler;
 import com.edutie.backend.application.management.course.CreatedCoursesQueryHandler;
 import com.edutie.backend.application.management.course.ModifyCourseCommandHandler;
@@ -11,7 +10,6 @@ import com.edutie.backend.application.management.course.commands.CreateCourseCom
 import com.edutie.backend.application.management.course.commands.ModifyCourseCommand;
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.application.management.course.queries.CreatedCoursesQuery;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
