@@ -23,7 +23,7 @@ public class GenericRequestHandler<TResponseBody> {
     private UserId actionUserId = null;
 
     public GenericRequestHandler<TResponseBody> authenticate(Authentication authentication) {
-        if (!authentication.isAuthenticated()) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             LOGGER.info("Incoming request has no valid authentication");
             authenticationResult = Result.failure(AuthenticationError.invalidAuthentication());
             return this;

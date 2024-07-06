@@ -21,7 +21,7 @@ import java.util.UUID;
 public class TestController {
     @GetMapping("/test-authentication")
     public String authenticated(Authentication authentication) {
-        if (!authentication.isAuthenticated()) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             return Result.failure(AuthenticationError.invalidAuthentication()).toString();
         }
         if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {

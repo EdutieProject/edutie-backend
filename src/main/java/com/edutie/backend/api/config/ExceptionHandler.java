@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-//import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import validation.Error;
 import validation.Result;
@@ -21,7 +20,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     public final ResponseEntity<ApiResult<Error>> handleAllExceptions(Exception exception){
         LOGGER.error("EXCEPTION CAUGHT: " + exception.getClass().getSimpleName() + "\nMessage: " + exception.getMessage());
-        LOGGER.info("DISPLAYING STACK TRACE: \n" + Arrays.stream(exception.getStackTrace()).map(o -> o.toString() + "\n").collect(Collectors.joining()));
+        LOGGER.debug("STACK TRACE: \n" + Arrays.stream(exception.getStackTrace()).map(o -> o.toString() + "\n").collect(Collectors.joining()));
         Error error = new Error(
                 "SERVER-ERROR-500",
                 exception.getClass().getSimpleName() + " occurred. Message: " + exception.getMessage()
