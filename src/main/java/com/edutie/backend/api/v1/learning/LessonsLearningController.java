@@ -25,17 +25,16 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Lessons Learning Controller", description = "Provides operations regarding lessons in the learning context")
 public class LessonsLearningController {
-    private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
     private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;
 
     @GetMapping
     public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(Authentication auth, @RequestParam CourseId courseId) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<List<LessonView>, StudentAuthorization>()
-                .authorize(actionUserId, studentAuthorization)
-                .handle(() -> lessonsForStudentFromCourseQueryHandler.handle(
-                        new LessonsForStudentFromCourseQuery().studentUserId(actionUserId).courseId(courseId)
+        return new GenericRequestHandler<List<LessonView>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> lessonsForStudentFromCourseQueryHandler.handle(
+                        new LessonsForStudentFromCourseQuery().studentUserId(userId).courseId(courseId)
                 ));
     }
 }

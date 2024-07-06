@@ -10,8 +10,6 @@ import com.edutie.backend.application.management.segment.commands.CreateSegmentC
 import com.edutie.backend.application.management.segment.commands.ModifySegmentCommand;
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
-import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +26,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Segments Management Controller", description = "Provides operations regarding segments in the management context")
 public class SegmentsManagementController {
-    private final AuthenticationPlaceholder authentication;
     private final CreateSegmentCommandHandler createSegmentCommandHandler;
     private final ModifySegmentCommandHandler modifySegmentCommandHandler;
     private final RemoveSegmentCommandHandler removeSegmentCommandHandler;
@@ -37,33 +34,35 @@ public class SegmentsManagementController {
 
     @GetMapping
     public ResponseEntity<ApiResult<List<Segment>>> getCreatedSegments(Authentication auth) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<List<Segment>, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery().educatorUserId(actionUserId)));
+        return new GenericRequestHandler<List<Segment>>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> createdSegmentsQueryHandler.handle(
+                        new CreatedSegmentsQuery().educatorUserId(userId)
+                ));
     }
 
     @PostMapping
     public ResponseEntity<ApiResult<Segment>> createSegment(Authentication auth, @RequestBody CreateSegmentCommand command) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<Segment, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createSegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
+        return new GenericRequestHandler<Segment>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> createSegmentCommandHandler.handle(command.educatorUserId(userId)));
     }
 
     @PatchMapping
     public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody ModifySegmentCommand command) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<Result, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> modifySegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
+        return new GenericRequestHandler<Result>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> modifySegmentCommandHandler.handle(command.educatorUserId(userId)));
     }
 
     @DeleteMapping
     public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody RemoveSegmentCommand command) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<Result, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> removeSegmentCommandHandler.handle(command.educatorUserId(actionUserId)));
+        return new GenericRequestHandler<Result>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> removeSegmentCommandHandler.handle(command.educatorUserId(userId)));
     }
 }
