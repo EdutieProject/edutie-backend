@@ -81,9 +81,9 @@ springdoc:
     - group: Management
       packages-to-scan:
         - com.edutie.backend.api.v1.management
-    - group: Authentication-Tests
+    - group: Testing
       packages-to-scan:
-        - com.edutie.backend.api.v1.authentication
+        - com.edutie.backend.api.v1.testing
   show-actuator: true
   show-login-endpoint: true
   show-oauth2-endpoints: true

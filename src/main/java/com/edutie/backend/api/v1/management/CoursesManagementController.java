@@ -28,7 +28,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Courses Management Controller", description = "Provides operations regarding courses in the management context")
 public class CoursesManagementController {
-    private final AuthenticationPlaceholder authentication;
     private final CreateCourseCommandHandler createCourseCommandHandler;
     private final ModifyCourseCommandHandler modifyCourseCommandHandler;
     private final RemoveCourseCommandHandler removeCourseCommandHandler;
@@ -37,34 +36,34 @@ public class CoursesManagementController {
 
     @GetMapping
     public ResponseEntity<ApiResult<List<Course>>> getCreatedCourses(Authentication auth) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<List<Course>, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery().educatorUserId(actionUserId)));
+        return new GenericRequestHandler<List<Course>>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery().educatorUserId(userId)));
     }
 
     @PostMapping
     public ResponseEntity<ApiResult<Course>> createCourse(Authentication auth, @RequestBody CreateCourseCommand command) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<Course, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> createCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
+        return new GenericRequestHandler<Course>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> createCourseCommandHandler.handle(command.educatorUserId(userId)));
     }
 
     @PatchMapping
     public ResponseEntity<ApiResult<Result>> modifyCourse(Authentication auth, @RequestBody ModifyCourseCommand command) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<Result, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> modifyCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
+        return new GenericRequestHandler<Result>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> modifyCourseCommandHandler.handle(command.educatorUserId(userId)));
     }
 
     @DeleteMapping
     public ResponseEntity<ApiResult<Result>> removeCourse(Authentication auth, @RequestBody RemoveCourseCommand command) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<Result, EducatorAuthorization>()
-                .authorize(actionUserId, educatorAuthorization)
-                .handle(() -> removeCourseCommandHandler.handle(command.educatorUserId(actionUserId)));
+        return new GenericRequestHandler<Result>()
+                .authenticate(auth)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> removeCourseCommandHandler.handle(command.educatorUserId(userId)));
     }
 
 }
