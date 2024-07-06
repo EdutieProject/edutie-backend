@@ -9,7 +9,6 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import validation.WrapperResult;
 
 @SpringBootTest
 public class LearningRequirementTests {
@@ -24,15 +23,8 @@ public class LearningRequirementTests {
     }
 
     @Test
-    public void learningRequirementCreationTest() {
-        educator.setType(EducatorType.CONTRIBUTOR);
-        WrapperResult<LearningRequirement> creationResult = LearningRequirement.create(educator, science);
-        assert creationResult.isFailure();
-    }
-
-    @Test
     public void subRequirementsAppendTest() {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator, science).getValue();
+        LearningRequirement learningRequirement = LearningRequirement.create(educator, science);
         learningRequirement.appendSubRequirement("R1", "");
         learningRequirement.appendSubRequirement("R2", "");
         learningRequirement.appendSubRequirement("R3", "");
@@ -43,18 +35,18 @@ public class LearningRequirementTests {
 
     @Test
     public void subRequirementsInsertTest() {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator, science).getValue();
+        LearningRequirement learningRequirement = LearningRequirement.create(educator, science);
         learningRequirement.appendSubRequirement("R1", "");
         learningRequirement.appendSubRequirement("R2", "");
         learningRequirement.appendSubRequirement("R3", "");
-        assert learningRequirement.insertSubRequirement("Hello!","", 1).isSuccess();
+        assert learningRequirement.insertSubRequirement("Hello!", "", 1).isSuccess();
 
         assert learningRequirement.getSubRequirements().get(1).getName().equals("Hello!");
     }
 
     @Test
     public void subRequirementDeleteTest() {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator, science).getValue();
+        LearningRequirement learningRequirement = LearningRequirement.create(educator, science);
         learningRequirement.appendSubRequirement("R1", "");
         learningRequirement.appendSubRequirement("R2", "");
         learningRequirement.appendSubRequirement("R3", "");
