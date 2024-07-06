@@ -1,10 +1,12 @@
 package com.edutie.backend.infrastucture.persistence.implementation.config;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -16,11 +18,13 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -41,12 +45,14 @@ public class Seeding {
 	private final LessonPersistence lessonPersistence;
 	private final SegmentPersistence segmentPersistence;
 	private final AdministratorPersistence administratorPersistence;
-	private final EducatorPersistence educatorPersistence;//	private final ExerciseTypePersistence exerciseTypePersistence;
+	private final EducatorPersistence educatorPersistence;
+	//	private final ExerciseTypePersistence exerciseTypePersistence;
 	//	private final LearningRequirementPersistence learningRequirementPersistence;
 	private final CourseTagPersistence courseTagPersistence;
 
 	private final UserId uid = new UserId();
-	private Educator educator;
+	private final Administrator administrator = Administrator.create(uid);
+	private final Educator educator = Educator.create(uid, administrator);
 	private CourseTag courseTag;
 
 	/**
@@ -62,7 +68,7 @@ public class Seeding {
 		log.info("====================================");
 		log.info("  STUDY PROGRAM DB SEEDING - START  ");
 		log.info("====================================");
-		educator = Educator.create(uid, new AdministratorId());
+		administratorPersistence.save(administrator);
 		educatorPersistence.save(educator);
 		seedSciences();
 		log.info("====================================");
@@ -101,7 +107,7 @@ public class Seeding {
 	 * @since 0.5
 	 */
 	private void seedScience(int i) {
-		Science science = Science.create(uid);
+		Science science = Science.create(educator).getValue();
 		science.setName("Science" + i);
 		science.setDescription("Description of Science" + i);
 		science.update(uid);

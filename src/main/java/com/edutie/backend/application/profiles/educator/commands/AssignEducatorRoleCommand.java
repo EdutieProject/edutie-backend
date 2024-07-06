@@ -5,6 +5,6 @@ import lombok.NonNull;
 
 public record AssignEducatorRoleCommand(
         @NonNull UserId adminUserId,
-        @NonNull UserId educatorUserId
+        @NonNull UserId userToBeEducatorId
 ) {
 }

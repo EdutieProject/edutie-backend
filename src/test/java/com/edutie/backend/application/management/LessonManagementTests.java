@@ -8,9 +8,12 @@ import com.edutie.backend.application.management.lesson.commands.CreateLessonCom
 import com.edutie.backend.application.management.lesson.commands.ModifyLessonCommand;
 import com.edutie.backend.application.management.lesson.commands.RemoveLessonCommand;
 import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQuery;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -43,7 +46,8 @@ public class LessonManagementTests {
     EducatorPersistence educatorPersistence;
     @Autowired
     SegmentPersistence segmentPersistence;
-
+    @Autowired
+    AdministratorPersistence administratorPersistence;
     @Autowired
     CreateLessonCommandHandler createLessonCommandHandler;
     @Autowired
@@ -53,16 +57,18 @@ public class LessonManagementTests {
     @Autowired
     RemoveLessonCommandHandler removeLessonCommandHandler;
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(new UserId());
     private Lesson previousLesson;
     private Educator educator;
     private Course course;
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(userId, administratorId);
+        administratorPersistence.save(administrator);
+        educator = Educator.create(userId, administrator);
+        educator.setType(EducatorType.ADMINISTRATOR);
         educatorPersistence.save(educator);
-        Science science = Science.create(userId);
+        Science science = Science.create(educator).getValue();
         sciencePersistence.save(science);
         course = Course.create(educator, science);
         coursePersistence.save(course);

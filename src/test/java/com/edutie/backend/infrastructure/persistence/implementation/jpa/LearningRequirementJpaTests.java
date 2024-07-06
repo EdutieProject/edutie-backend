@@ -1,11 +1,13 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.science.Science;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AdministratorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LearningRequirementRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
@@ -20,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class LearningRequirementJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(testUserId);
     private Educator creator;
     private Science science;
     private LearningRequirement learningRequirement;
@@ -32,15 +34,15 @@ public class LearningRequirementJpaTests {
     private LearningRequirementRepository learningRequirementRepository;
     @Autowired
     private ScienceRepository scienceRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
     @BeforeEach
     public void testSetup() {
-        creator = Educator.create(testUserId, administratorId);
+        creator = Educator.create(testUserId, administrator);
         educatorRepository.save(creator);
-
-        science = Science.create(testUserId);
+        science = Science.create(creator).getValue();
         scienceRepository.save(science);
-
         learningRequirement = LearningRequirement.create(creator, science).getValue();
     }
 

@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.studyprogram;
 
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -16,7 +16,7 @@ import validation.Result;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class CoursePersistenceTests {
@@ -27,13 +27,14 @@ public class CoursePersistenceTests {
     @Autowired
     private ScienceRepository scienceRepository;
     private final UserId userId = new UserId();
-    private final Educator educator = Educator.create(userId, new AdministratorId());
-    private final Science science = Science.create(userId);
+    private final Educator educator = Educator.create(userId, Administrator.create(userId));
+    private Science science;
     private Course course;
 
     @BeforeEach
     public void testSetup() {
         educatorRepository.save(educator);
+        science = Science.create(educator).getValue();
         scienceRepository.save(science);
         course = Course.create(educator, science);
         saveAndAssert();

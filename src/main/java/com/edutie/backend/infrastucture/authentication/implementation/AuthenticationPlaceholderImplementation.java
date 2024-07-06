@@ -1,10 +1,12 @@
 package com.edutie.backend.infrastucture.authentication.implementation;
 
 import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.learner.student.Student;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AdministratorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class AuthenticationPlaceholderImplementation implements AuthenticationPl
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final StudentRepository studentRepository;
     private final EducatorRepository educatorRepository;
+    private final AdministratorRepository administratorRepository;
 
     private boolean profilesExist(UserId userId) {
         LOGGER.info("Checking if profiles for the user exist...");
@@ -29,9 +32,11 @@ public class AuthenticationPlaceholderImplementation implements AuthenticationPl
 
     private void initializeProfiles(UserId userId) {
         LOGGER.info("Initializing profiles for user {}", userId.identifierValue());
+        Administrator administrator = Administrator.create(userId);
+        administratorRepository.save(administrator);
         Student studentProfile = Student.create(userId);
         studentRepository.save(studentProfile);
-        Educator educatorProfile = Educator.create(userId, new AdministratorId());
+        Educator educatorProfile = Educator.create(userId, administrator);
         educatorRepository.save(educatorProfile);
     }
 

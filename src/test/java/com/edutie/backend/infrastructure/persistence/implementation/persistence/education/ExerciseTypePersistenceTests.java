@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.education;
 
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class ExerciseTypePersistenceTests {
@@ -19,7 +19,7 @@ public class ExerciseTypePersistenceTests {
     private ExerciseTypePersistence exerciseTypePersistence;
     @Autowired
     private EducatorRepository educatorRepository;
-    private final Educator educator = Educator.create(new UserId(), new AdministratorId());
+    private final Educator educator = Educator.create(new UserId(), Administrator.create(new UserId()));
 
     @BeforeEach
     public void testSetup() {

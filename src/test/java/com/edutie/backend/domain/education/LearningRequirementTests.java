@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.education;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -14,13 +15,14 @@ import validation.WrapperResult;
 @SpringBootTest
 public class LearningRequirementTests {
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
-    private final Science science = Science.create(userId);
-    private final Educator educator = Educator.create(userId, administratorId);
+    private final Administrator administrator = Administrator.create(new UserId());
+    private Science science;
+    private final Educator educator = Educator.create(userId, administrator);
 
     @BeforeEach
     public void testSetup() {
-        educator.setType(EducatorType.PEDAGOGUE);
+        educator.setType(EducatorType.ADMINISTRATOR);
+        science = Science.create(educator).getValue();
     }
 
     @Test

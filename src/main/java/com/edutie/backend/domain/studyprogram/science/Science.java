@@ -2,9 +2,14 @@ package com.edutie.backend.domain.studyprogram.science;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
+import com.edutie.backend.domain.education.EducationError;
+import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import jakarta.persistence.Entity;
 import lombok.*;
+import validation.WrapperResult;
 
 /**
  * Science entity - the category that each course is assigned to.
@@ -15,7 +20,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class Science extends AuditableEntityBase<ScienceId> {
+public class Science extends EducatorCreatedAuditableEntity<ScienceId> {
     private String name;
     private String description;
     private String imageSource;
@@ -25,13 +30,16 @@ public class Science extends AuditableEntityBase<ScienceId> {
      * Science may be only added by administrators thus it is not related with
      * educators.
      *
-     * @param userId user id
+     * @param educator educator creating entity
      * @return Science
      */
-    public static Science create(UserId userId) {
+    public static WrapperResult<Science> create(Educator educator) {
+        if (!educator.hasPermissionsOf(EducatorType.ADMINISTRATOR))
+            return WrapperResult.failureWrapper(EducationError.educatorInsufficientPermissions());
         Science science = new Science();
         science.setId(new ScienceId());
-        science.setCreatedBy(userId);
-        return science;
+        science.setAuthorEducator(educator);
+        science.setCreatedBy(educator.getOwnerUserId());
+        return WrapperResult.successWrapper(science);
     }
 }

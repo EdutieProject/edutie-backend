@@ -1,15 +1,13 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.CourseRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.LessonRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.*;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @NoArgsConstructor
 public class LessonJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(testUserId);
     private Educator educator;
     private Course course;
     private Lesson lesson;
@@ -36,13 +34,16 @@ public class LessonJpaTests {
     private CourseRepository courseRepository;
     @Autowired
     private ScienceRepository scienceRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(testUserId, administratorId);
+        administratorRepository.save(administrator);
+        educator = Educator.create(testUserId, administrator);
         educatorRepository.save(educator);
 
-        Science science = Science.create(testUserId);
+        Science science = Science.create(educator).getValue();
         scienceRepository.save(science);
 
         course = Course.create(educator, science);

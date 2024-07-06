@@ -4,18 +4,17 @@ import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AdministratorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.common.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class AdministratorPersistenceImplementation implements AdministratorPersistence {
-    @Override
-    public AdministratorId getAdminId(UserId userId) {
-        return new AdministratorId(UUID.fromString("3643fc24-fa3c-46b5-b09b-5d601801f920"));
-    }
-
+    private final AdministratorRepository administratorRepository;
     /**
      * Override this to provide entity class for default methods
      *
@@ -28,6 +27,6 @@ public class AdministratorPersistenceImplementation implements AdministratorPers
 
     @Override
     public RoleRepository<Administrator, AdministratorId> getRepository() {
-        return null;
+        return administratorRepository;
     }
 }

@@ -8,9 +8,12 @@ import com.edutie.backend.application.management.segment.commands.CreateSegmentC
 import com.edutie.backend.application.management.segment.commands.ModifySegmentCommand;
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -53,16 +56,20 @@ public class SegmentManagementTests {
     SegmentPersistence segmentPersistence;
     @Autowired
     EducatorPersistence educatorPersistence;
+    @Autowired
+    AdministratorPersistence administratorPersistence;
 
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(new UserId());
     private Segment previousSegment;
 
     @BeforeEach
     public void testSetup() {
-        Educator educator = Educator.create(userId, administratorId);
+        administratorPersistence.save(administrator);
+        Educator educator = Educator.create(userId, administrator);
+        educator.setType(EducatorType.ADMINISTRATOR);
         educatorPersistence.save(educator);
-        Science science = Science.create(userId);
+        Science science = Science.create(educator).getValue();
         sciencePersistence.save(science);
         Course course = Course.create(educator, science);
         coursePersistence.save(course);

@@ -1,11 +1,9 @@
 package com.edutie.backend.domain.administration;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
@@ -14,7 +12,6 @@ import lombok.Setter;
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public abstract class RestrictedRole<TId extends Identifier<?>> extends Role<TId> {
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "assigned_by_admin_id", nullable = false))
-    protected AdministratorId assignedBy;
+    @ManyToOne(targetEntity = Administrator.class, fetch = FetchType.EAGER)
+    protected Administrator assignedBy;
 }

@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.studyprogram;
 
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
@@ -20,7 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class SegmentPersistenceTests {
@@ -35,14 +36,14 @@ public class SegmentPersistenceTests {
     @Autowired
     private EducatorRepository educatorRepository;
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(userId);
     private Lesson lesson;
-    private Educator educator;
+    private final Educator educator = Educator.create(userId, administrator);
     private Segment segment;
+
     @BeforeEach
     public void testSetup() {
-        Science science = Science.create(userId);
-        educator = Educator.create(userId, administratorId);
+        Science science = Science.create(educator).getValue();
         Course course = Course.create(educator, science);
         lesson = Lesson.create(educator, course);
         segment = Segment.create(educator, lesson);

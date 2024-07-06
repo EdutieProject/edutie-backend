@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.education;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class ExerciseTypeTests {
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
-    private final Educator educator = Educator.create(userId, administratorId);
+    private final Administrator administrator = Administrator.create(new UserId());
+    private final Educator educator = Educator.create(userId, administrator);
 
     @Test
     public void paragraphAppendTest() {

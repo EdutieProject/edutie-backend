@@ -1,9 +1,8 @@
 package com.edutie.backend.infrastructure.persistence.implementation.persistence.education;
 
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
@@ -16,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import validation.Result;
 
 @SpringBootTest
-public class LearningRequirementTests {
+public class LearningRequirementPersistenceTests {
     @Autowired
     LearningRequirementPersistence learningRequirementPersistence;
     @Autowired
@@ -24,13 +23,12 @@ public class LearningRequirementTests {
     @Autowired
     ScienceRepository scienceRepository;
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
-    private final Science science = Science.create(userId);
-    private final Educator educator = Educator.create(userId, administratorId);
+    private final Administrator administrator = Administrator.create(userId);
+    private final Educator educator = Educator.create(userId, administrator);
+    private final Science science = Science.create(educator).getValue();
 
     @BeforeEach
     public void testSetup() {
-        educator.setType(EducatorType.PEDAGOGUE);
         educatorRepository.save(educator);
         scienceRepository.save(science);
     }

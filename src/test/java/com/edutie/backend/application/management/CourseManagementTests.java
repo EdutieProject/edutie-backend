@@ -8,9 +8,11 @@ import com.edutie.backend.application.management.course.commands.CreateCourseCom
 import com.edutie.backend.application.management.course.commands.ModifyCourseCommand;
 import com.edutie.backend.application.management.course.commands.RemoveCourseCommand;
 import com.edutie.backend.application.management.course.queries.CreatedCoursesQuery;
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
+import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -44,14 +46,19 @@ public class CourseManagementTests {
     private SciencePersistence sciencePersistence;
     @Autowired
     private CoursePersistence coursePersistence;
+    @Autowired
+    private AdministratorPersistence administratorPersistence;
     private final UserId userId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(new UserId());
     private ScienceId scienceId;
 
     @BeforeEach
     public void testSetup() {
-        educatorPersistence.save(Educator.create(userId, administratorId));
-        Science science = Science.create(userId);
+        administratorPersistence.save(administrator);
+        Educator educator = Educator.create(userId, administrator);
+        educator.setType(EducatorType.ADMINISTRATOR);
+        educatorPersistence.save(educator);
+        Science science = Science.create(educator).getValue();
         scienceId = science.getId();
         sciencePersistence.save(science);
     }

@@ -1,5 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @NoArgsConstructor
 public class SegmentJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(testUserId);
     private Lesson lesson;
     private Segment segment;
     private Educator educator;
@@ -39,13 +40,16 @@ public class SegmentJpaTests {
     private ScienceRepository scienceRepository;
     @Autowired
     private SegmentRepository segmentRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(testUserId, administratorId);
+        administratorRepository.save(administrator);
+        educator = Educator.create(testUserId, administrator);
         educatorRepository.save(educator);
 
-        Science science = Science.create(testUserId);
+        Science science = Science.create(educator).getValue();
         scienceRepository.save(science);
 
         Course course = Course.create(educator, science);

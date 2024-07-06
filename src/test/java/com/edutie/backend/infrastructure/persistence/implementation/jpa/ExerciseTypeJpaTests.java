@@ -1,9 +1,11 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
+import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AdministratorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ExerciseTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class ExerciseTypeJpaTests {
     private final UserId testUserId = new UserId();
-    private final AdministratorId administratorId = new AdministratorId();
+    private final Administrator administrator = Administrator.create(testUserId);
     private ExerciseType exerciseType;
     private Educator educator;
     private final UserId testUserId_2 = new UserId();
@@ -24,10 +26,13 @@ public class ExerciseTypeJpaTests {
     private ExerciseTypeRepository exerciseTypeRepository;
     @Autowired
     private EducatorRepository educatorRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(testUserId, administratorId);
+        administratorRepository.save(administrator);
+        educator = Educator.create(testUserId, administrator);
         educatorRepository.save(educator);
         exerciseType = ExerciseType.create(educator);
         exerciseTypeRepository.save(exerciseType);

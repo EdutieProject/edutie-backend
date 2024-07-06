@@ -1,5 +1,6 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -22,6 +23,7 @@ public class CourseJpaTests {
     private Course course;
     private Educator educator;
     private Science science;
+    private Administrator administrator;
 
 
     @Autowired
@@ -30,12 +32,16 @@ public class CourseJpaTests {
     private CourseRepository courseRepository;
     @Autowired
     private ScienceRepository scienceRepository;
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
     @BeforeEach
     public void testSetup() {
-        educator = Educator.create(testUserId, administratorId);
+        administrator = Administrator.create(testUserId);
+        administratorRepository.save(administrator);
+        educator = Educator.create(testUserId, administrator);
         educatorRepository.save(educator);
-        science = Science.create(testUserId);
+        science = Science.create(educator).getValue();
         scienceRepository.save(science);
         course = Course.create(educator, science);
         courseRepository.save(course);
@@ -65,7 +71,7 @@ public class CourseJpaTests {
 
     @Test
     public void testOneToManyRelationship() {
-        Science science1 = Science.create(testUserId);
+        Science science1 = Science.create(educator).getValue();
         scienceRepository.save(science1);
 
         Course course1 = Course.create(educator, science);
