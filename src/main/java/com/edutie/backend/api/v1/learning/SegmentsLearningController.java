@@ -2,7 +2,7 @@ package com.edutie.backend.api.v1.learning;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLessonQueryHandler;
 import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
 import com.edutie.backend.application.learning.segment.viewmodels.SegmentView;

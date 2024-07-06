@@ -1,8 +1,7 @@
 package com.edutie.backend.infrastucture.authentication.implementation;
 
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.domain.administration.administrator.Administrator;
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.learner.student.Student;

@@ -2,12 +2,10 @@ package com.edutie.backend.api.v1.learning;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.learning.course.CoursesByScienceQueryHandler;
 import com.edutie.backend.application.learning.course.CoursesByStudentProgressQueryHandler;
 import com.edutie.backend.application.learning.course.queries.CoursesByScienceQuery;
 import com.edutie.backend.application.learning.course.queries.CoursesByStudentProgressQuery;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
@@ -27,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Courses Learning Controller", description = "Provides operations regarding courses in the learning context")
 public class CoursesLearningController {
-    private final AuthenticationPlaceholder authentication;
     private final StudentAuthorization studentAuthorization;
     private final CoursesByScienceQueryHandler coursesByScienceQueryHandler;
     private final CoursesByStudentProgressQueryHandler coursesByStudentProgressQueryHandler;
@@ -35,21 +32,21 @@ public class CoursesLearningController {
 
     @GetMapping
     public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(Authentication auth, @RequestParam ScienceId scienceId) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<List<Course>, StudentAuthorization>()
-                .authorize(actionUserId, studentAuthorization)
-                .handle(() -> coursesByScienceQueryHandler.handle(
+        return new GenericRequestHandler<List<Course>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> coursesByScienceQueryHandler.handle(
                         new CoursesByScienceQuery().scienceId(scienceId)
                 ));
     }
 
     @GetMapping("/progressed")
     public ResponseEntity<ApiResult<List<Course>>> getCoursesByStudentProgress(Authentication auth) {
-        UserId actionUserId = authentication.authenticateUser(auth);
-        return new GenericRequestHandler<List<Course>, StudentAuthorization>()
-                .authorize(actionUserId, studentAuthorization)
-                .handle(() -> coursesByStudentProgressQueryHandler.handle(
-                        new CoursesByStudentProgressQuery().studentUserId(actionUserId)
+        return new GenericRequestHandler<List<Course>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> coursesByStudentProgressQueryHandler.handle(
+                        new CoursesByStudentProgressQuery().studentUserId(userId)
                 ));
     }
 }

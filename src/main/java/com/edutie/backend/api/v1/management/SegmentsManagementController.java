@@ -11,7 +11,7 @@ import com.edutie.backend.application.management.segment.commands.ModifySegmentC
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;

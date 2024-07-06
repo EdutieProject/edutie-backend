@@ -1,4 +1,4 @@
-package com.edutie.backend.api.v1.authentication;
+package com.edutie.backend.api.v1.temporary;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

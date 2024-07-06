@@ -2,7 +2,7 @@ package com.edutie.backend.api.v1.management;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.api.v1.authentication.AuthenticationPlaceholder;
+import com.edutie.backend.api.authentication.AuthenticationPlaceholder;
 import com.edutie.backend.application.management.course.CreateCourseCommandHandler;
 import com.edutie.backend.application.management.course.CreatedCoursesQueryHandler;
 import com.edutie.backend.application.management.course.ModifyCourseCommandHandler;
