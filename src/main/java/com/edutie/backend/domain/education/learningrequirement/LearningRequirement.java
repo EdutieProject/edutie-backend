@@ -3,9 +3,7 @@ package com.edutie.backend.domain.education.learningrequirement;
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.errors.CommonErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.KnowledgeNodeId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
@@ -16,9 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import validation.Error;
 import validation.Result;
-import validation.WrapperResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +42,13 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @param educator creator reference
      * @return Learning Requirement
      */
-    public static WrapperResult<LearningRequirement> create(Educator educator, Science science) {
-        if (!educator.hasPermissionsOf(EducatorType.PEDAGOGUE))
-            return WrapperResult.failureWrapper(EducationError.educatorInsufficientPermissions());
+    public static LearningRequirement create(Educator educator, Science science) {
         LearningRequirement learningRequirement = new LearningRequirement();
         learningRequirement.setId(new LearningRequirementId());
         learningRequirement.setCreatedBy(educator.getOwnerUserId());
         learningRequirement.setAuthorEducator(educator);
         learningRequirement.setScience(science);
-        return WrapperResult.successWrapper(learningRequirement);
+        return learningRequirement;
     }
 
     /**

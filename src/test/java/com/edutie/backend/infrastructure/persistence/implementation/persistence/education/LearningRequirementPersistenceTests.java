@@ -35,7 +35,7 @@ public class LearningRequirementPersistenceTests {
 
     @Test
     public void defaultSaveTest() {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator, science).getValue();
+        LearningRequirement learningRequirement = LearningRequirement.create(educator, science);
         assert learningRequirementPersistence.save(learningRequirement).isSuccess();
 
         LearningRequirement fetched = learningRequirementPersistence.getById(learningRequirement.getId()).getValue();
@@ -44,7 +44,7 @@ public class LearningRequirementPersistenceTests {
 
     @Test
     public void wholeSaveTest() {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator, science).getValue();
+        LearningRequirement learningRequirement = LearningRequirement.create(educator, science);
         learningRequirement.appendSubRequirement("hello", "world!");
         learningRequirement.appendSubRequirement("hello", "universe!");
         Result result = learningRequirementPersistence.save(learningRequirement);
