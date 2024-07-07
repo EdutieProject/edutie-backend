@@ -1,12 +1,12 @@
-# Create course flow
+# Modify course flow
 
-This flow creates a course. This may be performed by any educator.
+This flow modifies a course. This may be performed by any educator which is a course author.
 
 ## Sequence diagram
 
 ```mermaid
 ---
-title: Course creation
+title: Course modification
 ---
 sequenceDiagram
     participant Client
@@ -16,12 +16,14 @@ sequenceDiagram
     participant Persistence
     autonumber
     
-    Client->>Rest API: Modify Course Command
+    Client->>Rest API: Modify Course Request
     Rest API->>Rest API: Authorize Educator
     Rest API->>Application: Modify Course Command
     Application->>Persistence: Load Data
     Persistence->>Application: Loaded entities
-    loop For every command property
+    Application->>Domain: Check if educator is author
+    Domain->>Application: true/false
+    opt For every command property
         Application->>Domain: Assign value to course
         Domain->>Application: Result of assignment
     end

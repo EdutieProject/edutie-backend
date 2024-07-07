@@ -16,7 +16,7 @@ sequenceDiagram
     participant Persistence
     autonumber
     
-    Client->>Rest API: Create Course Command
+    Client->>Rest API: Create Course Request
     Rest API->>Rest API: Authorize Educator
     Rest API->>Application: Create Course Command
     Application->>Persistence: Load Data
