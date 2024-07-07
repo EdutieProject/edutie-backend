@@ -6,6 +6,7 @@ import com.edutie.backend.infrastucture.authorization.AuthorizationError;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 import validation.Result;
 
@@ -19,5 +20,15 @@ public class EducatorAuthorizationImplementation implements EducatorAuthorizatio
         return educatorRepository.findByOwnerUserId(userId).isEmpty() ?
                 Result.failure(AuthorizationError.roleExpected(Educator.class))
                 : Result.success();
+    }
+
+    /**
+     * Pre-inject roles if any injectable exist in authentication token.
+     *
+     * @param authentication authentication token
+     */
+    @Override
+    public void injectRoles(JwtAuthenticationToken authentication) {
+        // NO ROLE INJECTION FOR EDUCATOR
     }
 }

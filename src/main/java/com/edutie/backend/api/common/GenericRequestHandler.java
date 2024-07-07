@@ -21,24 +21,27 @@ public class GenericRequestHandler<TResponseBody> {
     private Result authenticationResult = null;
     private Result authorizationResult = null;
     private UserId actionUserId = null;
+    private JwtAuthenticationToken authenticationToken = null;
 
     public GenericRequestHandler<TResponseBody> authenticate(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             LOGGER.info("Incoming request has no valid authentication");
-            authenticationResult = Result.failure(AuthenticationError.invalidAuthentication());
+            this.authenticationResult = Result.failure(AuthenticationError.invalidAuthentication());
             return this;
         }
         if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
+            this.authenticationToken = jwtAuthenticationToken;
             this.actionUserId = new UserId(UUID.fromString(jwtAuthenticationToken.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
-            authenticationResult = Result.success();
+            this.authenticationResult = Result.success();
             return this;
         }
         LOGGER.warn("Authentication of provided request is valid, but could not be resolved as a JWT");
-        authenticationResult = Result.failure(AuthenticationError.noJwtAuthentication());
+        this.authenticationResult = Result.failure(AuthenticationError.noJwtAuthentication());
         return this;
     }
 
     public <TAuthorization extends AuthorizationBase> GenericRequestHandler<TResponseBody> authorize(TAuthorization authorization) {
+        authorization.injectRoles(this.authenticationToken);
         this.authorizationResult = authorization.authorize(actionUserId);
         return this;
     }
