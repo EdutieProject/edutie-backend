@@ -16,7 +16,7 @@ sequenceDiagram
     participant Persistence
     autonumber
     
-    Client->>Rest API: Create Course Command
+    Client->>Rest API: Create Course Request
     Rest API->>Rest API: Authorize Educator
     Rest API->>Application: Create Course Command
     Application->>Persistence: Load Data
@@ -32,12 +32,12 @@ sequenceDiagram
 
 ## Input data
 
-| Input              | Type            | Required |
-|--------------------|-----------------|----------|
-| Educator User Id   | UUID Identifier | ✅        |
-| Course Name        | String          | ✅        |
-| Course Description | String          | ❌        |
-| Science Id         | UUID Identifier | ✅        |
+| Input              | Type        | Required |
+|--------------------|-------------|----------|
+| Educator User Id   | Educator Id | ✅        |
+| Course Name        | String      | ✅        |
+| Course Description | String      | ❌        |
+| Science Id         | Science Id  | ✅        |
 
 ## Description
 
