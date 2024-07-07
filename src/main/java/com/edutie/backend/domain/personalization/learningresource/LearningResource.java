@@ -3,6 +3,7 @@ package com.edutie.backend.domain.personalization.learningresource;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.learner.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
@@ -49,7 +50,21 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setCreatedBy(student.getOwnerUserId());
         learningResource.setStudent(student);
         learningResource.setSegment(segment);
+        learningResource.activity.setExerciseType(segment.getExerciseType());
         return learningResource;
+    }
+
+    public void addActivityHint(String hintText) {
+        activity.addHint(hintText);
+    }
+
+    public void assignActivityDetails(String activityText) {
+        activity.setActivityText(activityText);
+    }
+
+    public void assignTheoryDetails(String theoryOverview, String theorySummary) {
+        theory.setOverview(theoryOverview);
+        theory.setSummary(theorySummary);
     }
 
 }

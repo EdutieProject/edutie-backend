@@ -14,6 +14,8 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Theory extends EntityBase<TheoryId> {
+    private String overview = "No overview here?";
+    private String summary = "No summary here?";
     public static Theory create() {
         Theory theory = new Theory();
         theory.setId(new TheoryId());
