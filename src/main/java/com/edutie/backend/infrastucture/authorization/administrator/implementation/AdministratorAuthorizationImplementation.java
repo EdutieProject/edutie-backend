@@ -6,6 +6,8 @@ import com.edutie.backend.infrastucture.authorization.AuthorizationError;
 import com.edutie.backend.infrastucture.authorization.administrator.AdministratorAuthorization;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AdministratorRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class AdministratorAuthorizationImplementation implements AdministratorAuthorization {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final AdministratorRepository administratorRepository;
 
     @Override
@@ -38,8 +41,11 @@ public class AdministratorAuthorizationImplementation implements AdministratorAu
         boolean noAdminRoleInEdutie = administratorRepository.findByOwnerUserId(userId).isEmpty();
 
         if (tokenHasAdminRole && noAdminRoleInEdutie) {
+            LOGGER.info("Admin role spotted inside the jwt. Injecting admin role in the edutie db.");
             Administrator administratorProfile = Administrator.create(userId);
             administratorRepository.save(administratorProfile);
+            return;
         }
+        LOGGER.debug("Role injection conditions not met. Proceeding without any operations regarding roles.");
     }
 }

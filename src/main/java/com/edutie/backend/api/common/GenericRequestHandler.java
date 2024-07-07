@@ -41,7 +41,8 @@ public class GenericRequestHandler<TResponseBody> {
     }
 
     public <TAuthorization extends AuthorizationBase> GenericRequestHandler<TResponseBody> authorize(TAuthorization authorization) {
-        authorization.injectRoles(this.authenticationToken);
+        if (authenticationToken != null)
+            authorization.injectRoles(this.authenticationToken);
         this.authorizationResult = authorization.authorize(actionUserId);
         return this;
     }

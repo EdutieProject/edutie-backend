@@ -1,17 +1,23 @@
 package com.edutie.backend.api.v1.testing;
 
+import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.AuthenticationError;
+import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.infrastucture.authorization.administrator.AdministratorAuthorization;
+import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import validation.Result;
+import validation.WrapperResult;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -21,6 +27,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Tag(name = "Test Controller", description = "Controller made for playground & testing purposes.")
 public class TestController {
+    private final AdministratorAuthorization administratorAuthorization;
+    private final EducatorAuthorization educatorAuthorization;
+    private final StudentAuthorization studentAuthorization;
+
     @GetMapping("/test-authentication")
     public String authenticated(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -43,5 +53,30 @@ public class TestController {
                     .stream().map(o -> o.getAuthority() + ", ").collect(Collectors.joining());
         }
         return Result.failure(AuthenticationError.noJwtAuthentication()).toString();
+    }
+
+    @GetMapping("/authorization-student")
+    public ResponseEntity<ApiResult<String>> studentEndpoint(Authentication authentication) {
+         return new GenericRequestHandler<String>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle(()-> WrapperResult.successWrapper("Hello world!"));
+    }
+
+
+    @GetMapping("/authorization-educator")
+    public ResponseEntity<ApiResult<String>> educatorEndpoint(Authentication authentication) {
+        return new GenericRequestHandler<String>()
+                .authenticate(authentication)
+                .authorize(educatorAuthorization)
+                .handle(()-> WrapperResult.successWrapper("Hello world!"));
+    }
+
+    @GetMapping("/authorization-administrator")
+    public ResponseEntity<ApiResult<String>> administratorEndpoint(Authentication authentication) {
+        return new GenericRequestHandler<String>()
+                .authenticate(authentication)
+                .authorize(administratorAuthorization)
+                .handle(()-> WrapperResult.successWrapper("Hello world!"));
     }
 }
