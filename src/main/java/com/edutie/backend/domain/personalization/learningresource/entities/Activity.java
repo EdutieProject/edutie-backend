@@ -1,0 +1,22 @@
+package com.edutie.backend.domain.personalization.learningresource.entities;
+
+import com.edutie.backend.domain.common.base.EntityBase;
+import com.edutie.backend.domain.personalization.learningresource.identities.ActivityId;
+import jakarta.persistence.Entity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@Entity
+public class Activity extends EntityBase<ActivityId> {
+    public static Activity create() {
+        Activity activity = new Activity();
+        activity.setId(new ActivityId());
+        return activity;
+    }
+}
