@@ -21,7 +21,7 @@ public class LearningResourceGenerationSchema {
     private LearningResourceDefinition learningResourceDefinition;
     private List<PersonalizationRule> personalizationRules = new ArrayList<>();
 
-    public LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition) {
+    public static LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition) {
         LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
         learningResourceGenerationSchema.setLearningResourceDefinition(learningResourceDefinition);
         return learningResourceGenerationSchema;
