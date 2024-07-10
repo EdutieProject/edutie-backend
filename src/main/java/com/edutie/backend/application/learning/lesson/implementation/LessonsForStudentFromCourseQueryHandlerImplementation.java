@@ -34,9 +34,7 @@ public class LessonsForStudentFromCourseQueryHandlerImplementation extends Handl
 
         //TODO: note that current implementation signs which lesson is "touched".
         return lessonsResult.map(primaryResult -> primaryResult.stream().map(o ->
-                        new LessonView(o, student.getLearningHistory().stream().map(
-                                res -> res.getSegment().getLesson()).collect(Collectors.toSet()).contains(o)
-                        )
+                        new LessonView(o, false)
                 ).collect(Collectors.toList()));
     }
 }

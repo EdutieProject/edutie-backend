@@ -8,6 +8,7 @@ import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
+import com.edutie.backend.services.common.logging.ExternalFailureLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class SegmentsForStudentFromLessonQueryHandlerImplementation extends HandlerBase implements SegmentsForStudentFromLessonQueryHandler {
     private final StudentPersistence studentPersistence;
     private final LessonPersistence lessonPersistence;
+
     @Override
     public WrapperResult<List<SegmentView>> handle(SegmentsForStudentFromLessonQuery query) {
         LOGGER.info("Retrieving segments from lesson of id {} for student of id {}",
@@ -27,14 +29,12 @@ public class SegmentsForStudentFromLessonQueryHandlerImplementation extends Hand
                 query.studentUserId().identifierValue());
         WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(query.lessonId());
         if (lessonWrapperResult.isFailure()) {
-            LOGGER.info("Persistence error occurred: " + lessonWrapperResult.getError().toString());
-            return lessonWrapperResult.map(o -> null);
+            return ExternalFailureLog.persistenceFailure(lessonWrapperResult, LOGGER).map(o -> null);
         }
-        Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         Lesson lesson = lessonWrapperResult.getValue();
         return WrapperResult.successWrapper(
                 lesson.getSegments().stream().map(o ->
-                        new SegmentView(o, 2, 1, student.getLearningHistory().stream().anyMatch(res -> res.getSegment().equals(o)))
+                        new SegmentView(o, 2, 1, false)
                 ).collect(Collectors.toList())
         );
     }
