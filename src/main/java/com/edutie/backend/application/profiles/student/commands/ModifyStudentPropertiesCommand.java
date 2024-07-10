@@ -1,7 +1,7 @@
 package com.edutie.backend.application.profiles.student.commands;
 
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.domain.learner.student.valueobjects.SchoolStage;
+import com.edutie.backend.domain.personalization.student.valueobjects.SchoolStage;
 import lombok.NonNull;
 import org.openapitools.jackson.nullable.JsonNullable;
 

@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastucture.authorization.student.implementation;
 
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.domain.learner.student.Student;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.infrastucture.authorization.AuthorizationError;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;

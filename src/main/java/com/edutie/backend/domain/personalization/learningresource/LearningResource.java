@@ -1,9 +1,8 @@
 package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.learner.student.Student;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
@@ -58,7 +57,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         activity.addHint(hintText);
     }
 
-    public void assignActivityDetails(String activityText) {
+    public void assignActivityDetails(String activityText, String hintAdditionalDescription) {
         activity.setActivityText(activityText);
     }
 

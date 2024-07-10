@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.personalization.learningresource.persistence;
 
-import com.edutie.backend.domain.learner.student.identities.StudentId;
+import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;

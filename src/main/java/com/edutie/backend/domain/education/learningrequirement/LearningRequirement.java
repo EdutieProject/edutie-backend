@@ -5,7 +5,7 @@ import com.edutie.backend.domain.common.errors.CommonErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
-import com.edutie.backend.domain.education.learningrequirement.identities.KnowledgeNodeId;
+import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.education.learningrequirement.identities.SubRequirementId;
 import com.edutie.backend.domain.studyprogram.science.Science;
@@ -109,12 +109,12 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
         return Result.success();
     }
 
-    public Result assignKnowledgeNodeId(SubRequirementId subRequirementId, KnowledgeNodeId knowledgeNodeId) {
+    public Result assignKnowledgeNodeId(SubRequirementId subRequirementId, KnowledgeSubjectId knowledgeSubjectId) {
         Optional<SubRequirement> subRequirement = subRequirements.stream()
                 .filter(o -> o.getId().equals(subRequirementId)).findFirst();
         if (subRequirement.isEmpty())
             return Result.failure(CommonErrors.invalidIdentifier());
-        subRequirement.get().setKnowledgeNodeId(knowledgeNodeId);
+        subRequirement.get().setKnowledgeSubjectId(knowledgeSubjectId);
         return Result.success();
     }
 }

@@ -1,8 +1,8 @@
 package com.edutie.backend.infrastucture.persistence.implementation.persistence.profiles;
 
-import com.edutie.backend.domain.learner.student.Student;
-import com.edutie.backend.domain.learner.student.identities.StudentId;
-import com.edutie.backend.domain.learner.student.persistence.StudentPersistence;
+import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domain.personalization.student.identities.StudentId;
+import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.StudentRepository;
 import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.common.RoleRepository;
 import lombok.RequiredArgsConstructor;
