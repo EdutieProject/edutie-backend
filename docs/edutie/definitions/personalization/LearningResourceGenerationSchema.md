@@ -24,7 +24,7 @@ Personalization rules are the descriptors of personalization that is to be made 
 Each personalization rule correspond to the knowledge correlation previously provided by Wikimap 
 
 They are compounded of:
- - Knowledge Subject Id (referencing the "related" Knowledge subject)
+ - Related Knowledge Subject Id (referencing the related Knowledge subject)
  - Knowledge Correlation Factor
  - Source learning requirement Id (should overlap with some LR Definition learning requirement) - this is the learning requirement for which this personalization rule is created
  - Qualified sub-requirements - those indicate what amount of sub requirements are qualified to be implemented from the referenced source learning requirement
@@ -62,4 +62,4 @@ classDiagram
 ```
 
 ## References
-Find more information on LRD in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md
+Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md

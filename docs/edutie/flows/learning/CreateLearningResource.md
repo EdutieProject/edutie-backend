@@ -27,7 +27,7 @@ sequenceDiagram
         Wikimap->>Application: Knowledge correlations
     end
     Application->>Domain: Create LR Generation Schema using:<br/> LR Definition,<br/>Student profile (learning history) <br/>and Knowledge Correlations
-    loop For every L.Req. in LR Def
+    loop For every knowledge correlation
       Domain->>Domain: Create personalization rule
     end
     Domain->>Application: Learning Resource Generation Schema

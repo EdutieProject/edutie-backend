@@ -33,4 +33,4 @@ Assessment indicate the scale of knowledge student has regarding the given learn
  - Number of assessments should be equal to number of LRD learning requirements, since every Learning Requirement is assessed
 
 ## References
-Find more information on LRD in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md
+Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md

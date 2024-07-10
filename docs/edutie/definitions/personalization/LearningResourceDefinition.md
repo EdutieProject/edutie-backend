@@ -32,4 +32,4 @@ The contents of this part are:
  - hints description additions - an additional description used for hint generation
 
 ## References
-Find more information on LRD in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md
+Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md
