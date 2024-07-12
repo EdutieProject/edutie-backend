@@ -1,8 +1,5 @@
 package validation;
 
-import lombok.NonNull;
-
-import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 /**
@@ -15,11 +12,6 @@ import java.util.function.Function;
  */
 public class WrapperResult<T> extends Result {
     T value;
-
-    private void throwIfNoValue() {
-        if (value == null)
-            throw new NoSuchElementException("The value of the result was null! Could not proceed with the operation.");
-    }
 
     /**
      * Converts the wrapper result to the wrapper result of a different.
@@ -37,6 +29,7 @@ public class WrapperResult<T> extends Result {
     /**
      * Forces wrapper result conversion into the other type, omitting the value. Use this
      * function only with the failure wrapper.
+     *
      * @return Wrapper result converted into other type.
      */
     public <U> WrapperResult<U> into(Class<U> ignored) {
@@ -46,12 +39,13 @@ public class WrapperResult<T> extends Result {
     /**
      * Builder-like function returning this result unchanged, but throwing {@code OperationFailureException}
      * when the result is failure.
+     *
      * @return this result.
      */
     @Override
     public WrapperResult<T> throwIfFailure() {
         if (isFailure())
-            throw new OperationFailureException(this.getError().toString());
+            throw new OperationFailureException(this.getError());
         return this;
     }
 
@@ -73,7 +67,8 @@ public class WrapperResult<T> extends Result {
      * @return Wrapped Value
      */
     public T getValue() {
-        throwIfNoValue();
+        if (value == null)
+            throw new OperationFailureException(this.getError());
         return value;
     }
 
