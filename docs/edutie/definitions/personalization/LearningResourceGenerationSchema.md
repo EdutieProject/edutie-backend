@@ -2,7 +2,8 @@
 * [Learning Resource Generation Schema](#learning-resource-generation-schema)
   * [Contained data:](#contained-data)
     * [Learning Resource Definition](#learning-resource-definition)
-    * [Personalization Rules](#personalization-rules-)
+    * [Problem Descriptors](#problem-descriptors)
+      * [Personalization Rules](#personalization-rules-)
   * [Visual representation](#visual-representation)
   * [References](#references)
 <!-- TOC -->
@@ -18,16 +19,24 @@ This entity embeds learning resource definition as the LR definition contains th
 
 Learning resource definition also contains all learning requirements which are essential in LR generation.
 
-### Personalization Rules 
-Personalization rules are the descriptors of personalization that is to be made by LLM.
+### Problem Descriptors
+During the generation process Learning Requirements form Learning Resource Definition are being considered as a 
+problem source. Therefore, every Learning Requirement produces a Problem Descriptor. 
 
-Each personalization rule correspond to the knowledge correlation previously provided by Wikimap 
+Problem descriptors contain information about the sub-requirements that are qualified to be a part of the problem. Thus, 
+they are not constant and are a part of personalization.
+
+Problems have personalization rules.
+
+#### Personalization Rules 
+Personalization rules are the descriptors of personalization that is to be made by LLM under the problem construction.
+
+Personalization rules correspond to knowledge correlations provided by Wikimap. Those are requested using
+the knowledge subject identity of the problem descriptor L.Req.
 
 They are compounded of:
- - Related Knowledge Subject Id (referencing the related Knowledge subject)
+ - Related Knowledge Subject Id (referencing the related Knowledge Subject)
  - Knowledge Correlation Factor
- - Source learning requirement Id (should overlap with some LR Definition learning requirement) - this is the learning requirement for which this personalization rule is created
- - Qualified sub-requirements - those indicate what amount of sub requirements are qualified to be implemented from the referenced source learning requirement
  - List of Learning Results that correspond to the knowledge subject. Those should be represented as a LRGS-specific view. Thus, their contents would be:
    - Learning result's feedback
    - Learning result's assessments
@@ -43,6 +52,10 @@ classDiagram
     }
     class LearningResourceGenerationSchema {
         Learning Resource Definition
+        List of Problem Descriptors
+    }
+    class ProblemDescriptor {
+        Qualfied sub reqs
         List of Personalization Rules
     }
     class PersonalizationRule {
@@ -54,9 +67,10 @@ classDiagram
     class Student {
         List of Learning Results [Learning History]
     }
-    LearningResourceDefinition--|>LearningResourceGenerationSchema: 1 - 1
-    LearningResourceGenerationSchema<|--PersonalizationRule: aggregates
-    PersonalizationRule<..Student: reference (copies)
+    LearningResourceGenerationSchema<--LearningResourceDefinition
+    LearningResourceGenerationSchema<--ProblemDescriptor: 1 - N / aggregates
+    ProblemDescriptor<--PersonalizationRule: 1 - N 
+    PersonalizationRule<..Student: student provides L.History
     
   
 ```
