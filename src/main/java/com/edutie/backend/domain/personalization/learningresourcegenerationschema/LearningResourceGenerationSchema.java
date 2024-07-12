@@ -27,19 +27,7 @@ public class LearningResourceGenerationSchema {
         return learningResourceGenerationSchema;
     }
 
-    public void addPersonalizationRule(
-            KnowledgeCorrelation knowledgeCorrelation,
-            LearningRequirementId learningRequirementId,
-            int qualifiedSubRequirementsAmount,
-            Student student
-    ) {
-        PersonalizationRule personalizationRule = new PersonalizationRule(knowledgeCorrelation, learningRequirementId, qualifiedSubRequirementsAmount);
-        for (LearningResult learningResult : student.getLearningHistory()) {
-            if (learningResult.getSolutionSubmission()
-                    .getLearningResourceDefinition().getLearningRequirements()
-                    .stream().anyMatch(o -> o.getId().equals(learningRequirementId))) {
-                personalizationRule.addLearningResultReference(learningResult);
-            }
-        }
+    public void addPersonalizationRule(PersonalizationRule personalizationRule) {
+        personalizationRules.add(personalizationRule);
     }
 }

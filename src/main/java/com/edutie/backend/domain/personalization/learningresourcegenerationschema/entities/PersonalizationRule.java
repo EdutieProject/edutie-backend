@@ -17,13 +17,17 @@ public class PersonalizationRule {
     private final int knowledgeCorrelationFactor;
     private final LearningRequirementId learningRequirementId;
     private final int qualifiedSubRequirementsAmount;
-    private final List<LearningResult> learningResults = new ArrayList<>();
+    private final List<LearningResult> learningResults;
 
-    public PersonalizationRule(KnowledgeCorrelation knowledgeCorrelation, LearningRequirementId learningRequirementId, int qualifiedSubRequirementsAmount) {
+    public PersonalizationRule(KnowledgeCorrelation knowledgeCorrelation, LearningRequirementId learningRequirementId, List<LearningResult> learningResults, int subRequirementsAmount) {
         relatedKnowledgeSubjectId = knowledgeCorrelation.getKnowledgeSubjectId();
         knowledgeCorrelationFactor = knowledgeCorrelation.getCorrelationFactor();
         this.learningRequirementId = learningRequirementId;
+        this.learningResults = learningResults;
+
+        int allSubRequirementsSize =
         this.qualifiedSubRequirementsAmount = qualifiedSubRequirementsAmount;
+
     }
 
     public void addLearningResultReference(LearningResult learningResult) {

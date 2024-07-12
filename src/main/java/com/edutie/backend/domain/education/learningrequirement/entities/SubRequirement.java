@@ -24,9 +24,6 @@ public class SubRequirement extends EntityBase<SubRequirementId> {
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description;
     private Integer ordinal;
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_node_id"))
-    private KnowledgeSubjectId knowledgeSubjectId;
 
     public static SubRequirement create(String name, PromptFragment desc, int orderIndex) {
         SubRequirement subRequirement = new SubRequirement();

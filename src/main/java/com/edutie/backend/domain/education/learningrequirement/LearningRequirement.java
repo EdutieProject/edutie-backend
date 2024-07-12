@@ -35,6 +35,9 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("ordinal")
     private List<SubRequirement> subRequirements = new ArrayList<>();
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_node_id"))
+    private KnowledgeSubjectId knowledgeSubjectId;
 
     /**
      * Recommended constructor associating Learning Requirement with an educator and a science
@@ -106,15 +109,6 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
         for (int i = 0; i < subRequirements.size(); i++) {
             subRequirements.get(i).setOrdinal(i);
         }
-        return Result.success();
-    }
-
-    public Result assignKnowledgeNodeId(SubRequirementId subRequirementId, KnowledgeSubjectId knowledgeSubjectId) {
-        Optional<SubRequirement> subRequirement = subRequirements.stream()
-                .filter(o -> o.getId().equals(subRequirementId)).findFirst();
-        if (subRequirement.isEmpty())
-            return Result.failure(CommonErrors.invalidIdentifier());
-        subRequirement.get().setKnowledgeSubjectId(knowledgeSubjectId);
         return Result.success();
     }
 }
