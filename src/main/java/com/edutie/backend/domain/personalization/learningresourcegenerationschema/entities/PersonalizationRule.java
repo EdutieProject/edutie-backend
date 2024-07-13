@@ -22,6 +22,7 @@ public class PersonalizationRule extends EntityBase<PersonalizationRuleId> {
 
     public static PersonalizationRule create(LearningRequirementId sourceLearningReqId, KnowledgeCorrelation knowledgeCorrelation, Student student) {
         PersonalizationRule personalizationRule = new PersonalizationRule();
+        personalizationRule.setId(new PersonalizationRuleId());
         personalizationRule.setLearningResults(student.getLearningHistoryByLearningRequirement(sourceLearningReqId));
         personalizationRule.setRelatedKnowledgeSubjectId(knowledgeCorrelation.getKnowledgeSubjectId());
         personalizationRule.setKnowledgeCorrelationFactor(knowledgeCorrelation.getCorrelationFactor());

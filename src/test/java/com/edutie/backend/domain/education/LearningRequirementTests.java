@@ -29,8 +29,8 @@ public class LearningRequirementTests {
         learningRequirement.appendSubRequirement("R2");
         learningRequirement.appendSubRequirement("R3");
 
-        assert learningRequirement.getSubRequirements().get(0).getName().equals("R1");
-        assert learningRequirement.getSubRequirements().get(2).getName().equals("R3");
+        assert learningRequirement.getSubRequirements().get(0).getDescription().text().equals("R1");
+        assert learningRequirement.getSubRequirements().get(2).getDescription().text().equals("R3");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class LearningRequirementTests {
         learningRequirement.appendSubRequirement("R3");
         assert learningRequirement.insertSubRequirement("Hello!", 1).isSuccess();
 
-        assert learningRequirement.getSubRequirements().get(1).getName().equals("Hello!");
+        assert learningRequirement.getSubRequirements().get(1).getDescription().text().equals("Hello!");
     }
 
     @Test
@@ -53,7 +53,7 @@ public class LearningRequirementTests {
         assert learningRequirement.getSubRequirements().size() == 3;
 
         assert learningRequirement.removeSubRequirement(0).isSuccess();
-        assert learningRequirement.getSubRequirements().get(0).getName().equals("R2");
+        assert learningRequirement.getSubRequirements().get(0).getDescription().text().equals("R2");
     }
 
 }

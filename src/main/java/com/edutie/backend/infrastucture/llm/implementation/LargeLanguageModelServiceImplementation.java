@@ -14,8 +14,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
         LearningResource learningResource = LearningResource.create(
-                learningResourceGenerationSchema.getStudentId(),
-                learningResourceGenerationSchema.getLearningResourceDefinition().getId(),
+                learningResourceGenerationSchema,
                 learningResourceGenerationSchema.getLearningResourceDefinition().getExerciseDescription().text(),
                 Set.of(Hint.create("Hello!"), Hint.create("World!")),
                 learningResourceGenerationSchema.getLearningResourceDefinition().getTheoryDescription().text(),

@@ -4,6 +4,7 @@ import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
@@ -48,8 +49,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
      * @param definitionId resource definition reference
      * @return Learning Resource
      */
-    public static LearningResource create(StudentId studentId,
-                                          LearningResourceDefinitionId definitionId,
+    public static LearningResource create(LearningResourceGenerationSchema generationSchema,
                                           String activityText,
                                           Set<Hint> hints,
                                           String theoryOverviewText,
@@ -57,8 +57,9 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     ) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
-        learningResource.setStudentId(studentId);
-        learningResource.setDefinitionId(definitionId);
+        learningResource.setCreatedBy(generationSchema.getStudent().getOwnerUserId());
+        learningResource.setStudentId(generationSchema.getStudent().getId());
+        learningResource.setDefinitionId(generationSchema.getLearningResourceDefinition().getId());
         learningResource.setActivity(Activity.create(activityText, hints));
         learningResource.setTheory(Theory.create(theoryOverviewText, theorySummaryText));
         return learningResource;

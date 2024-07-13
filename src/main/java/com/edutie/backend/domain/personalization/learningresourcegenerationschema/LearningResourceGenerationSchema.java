@@ -1,13 +1,13 @@
 package com.edutie.backend.domain.personalization.learningresourcegenerationschema;
 
-import com.edutie.backend.domain.common.base.EntityBase;
+import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
+import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.ProblemDescriptor;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.LearningResourceGenerationSchemaId;
-import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.edutie.backend.domain.personalization.student.identities.StudentId;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,19 +19,24 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Setter
-public class LearningResourceGenerationSchema extends EntityBase<LearningResourceGenerationSchemaId> {
-    private StudentId studentId;
+public class LearningResourceGenerationSchema extends AuditableEntityBase<LearningResourceGenerationSchemaId> {
+    @JsonSerialize(using = IdOnlySerializer.class)
+    private Student student;
     private LearningResourceDefinition learningResourceDefinition;
     private List<ProblemDescriptor> problemDescriptors = new ArrayList<>();
 
     /**
      * Initialize Learning Resource Generation Schema with empty problem descriptors
+     *
      * @param learningResourceDefinition learning resource definition
      * @return LearningResourceGenerationSchema
      */
-    public static LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition, StudentId studentId) {
+    public static LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition, Student student) {
         LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
+        learningResourceGenerationSchema.setId(new LearningResourceGenerationSchemaId());
         learningResourceGenerationSchema.setLearningResourceDefinition(learningResourceDefinition);
+        learningResourceGenerationSchema.setStudent(student);
+        learningResourceGenerationSchema.setCreatedBy(student.getOwnerUserId());
         for (LearningRequirement learningRequirement : learningResourceDefinition.getLearningRequirements()) {
             learningResourceGenerationSchema.addProblemDescriptor(new ProblemDescriptor(learningRequirement));
         }

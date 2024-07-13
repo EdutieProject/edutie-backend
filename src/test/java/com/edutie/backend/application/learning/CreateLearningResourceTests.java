@@ -10,6 +10,7 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
+import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
@@ -56,6 +57,7 @@ public class CreateLearningResourceTests {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setName("Integration by parts");
         learningRequirement.setDescription(PromptFragment.of("Here would go the description of integration by parts"));
+        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
         learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions");
         learningRequirement.appendSubRequirement("Proper formula usage");
         learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
