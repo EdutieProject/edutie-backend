@@ -1,8 +1,10 @@
 package com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities;
 
+import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.PersonalizationRuleId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.student.Student;
 import lombok.AccessLevel;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @Getter
 @Setter(AccessLevel.PRIVATE)
-public class PersonalizationRule {
+public class PersonalizationRule extends EntityBase<PersonalizationRuleId> {
     private KnowledgeSubjectId relatedKnowledgeSubjectId;
     private int knowledgeCorrelationFactor;
     private List<LearningResult> learningResults;

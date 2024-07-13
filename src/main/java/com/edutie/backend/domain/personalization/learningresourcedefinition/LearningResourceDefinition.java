@@ -33,8 +33,6 @@ public class LearningResourceDefinition extends AuditableEntityBase<LearningReso
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "hints_description"))
     private PromptFragment hintsAdditionalDescription;
-    @ManyToOne
-    private ExerciseType exerciseType;
     @ManyToMany
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
 }

@@ -32,7 +32,7 @@ public abstract class AuditableEntityBase<TId extends Identifier<?>> extends Ent
     @AttributeOverride(name = "identifierValue", column = @Column(name = "update_user_id"))
     private UserId updatedBy;
     @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id", nullable = false))
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "create_user_id"))
     private UserId createdBy;
 
     /**

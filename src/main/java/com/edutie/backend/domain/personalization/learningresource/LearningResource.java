@@ -1,14 +1,21 @@
 package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * A singular form of learning in the application.
@@ -21,49 +28,41 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
-    @ManyToOne(targetEntity = Segment.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "lesson_segment_id")
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
     @Setter(AccessLevel.PRIVATE)
-    @JsonIgnore
-    private Segment segment;
-    @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "student_id")
+    private LearningResourceDefinitionId definitionId;
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
     @Setter(AccessLevel.PRIVATE)
-    @JsonIgnore
-    private Student student;
+    private StudentId studentId;
     @OneToOne(targetEntity = Activity.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Activity activity = Activity.create();
+    private Activity activity;
     @OneToOne(targetEntity = Theory.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Theory theory = Theory.create();
+    private Theory theory;
 
     /**
      * Recommended constructor associating learning resource with a student (creation invoker) and a lesson segment.
      *
-     * @param student student profile reference
-     * @param segment lesson segment reference
+     * @param studentId student profile identity
+     * @param definitionId resource definition reference
      * @return Learning Resource
      */
-    public static LearningResource create(Student student, Segment segment) {
+    public static LearningResource create(StudentId studentId,
+                                          LearningResourceDefinitionId definitionId,
+                                          String activityText,
+                                          Set<Hint> hints,
+                                          String theoryOverviewText,
+                                          String theorySummaryText
+    ) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
-        learningResource.setCreatedBy(student.getOwnerUserId());
-        learningResource.setStudent(student);
-        learningResource.setSegment(segment);
-        learningResource.activity.setExerciseType(segment.getExerciseType());
+        learningResource.setStudentId(studentId);
+        learningResource.setDefinitionId(definitionId);
+        learningResource.setActivity(Activity.create(activityText, hints));
+        learningResource.setTheory(Theory.create(theoryOverviewText, theorySummaryText));
         return learningResource;
     }
 
-    public void addActivityHint(String hintText) {
-        activity.addHint(hintText);
-    }
-
-    public void assignActivityDetails(String activityText, String hintAdditionalDescription) {
-        activity.setActivityText(activityText);
-    }
-
-    public void assignTheoryDetails(String theoryOverview, String theorySummary) {
-        theory.setOverview(theoryOverview);
-        theory.setSummary(theorySummary);
-    }
 
 }

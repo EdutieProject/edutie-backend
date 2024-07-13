@@ -22,18 +22,20 @@ sequenceDiagram
     Rest API->>Application: Create learning resource command
     Application->>Persistence: Fetch entities
     Persistence->>Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
+    Application->>Domain: Create Learning Resource Domain Service
+   note left of Domain: First, create an LRGS
     loop For every learning requirement in LRD
-        Application->>Wikimap: Get knowledge correlations
-        Wikimap->>Application: Knowledge correlations
+        Domain->>Domain: Create Problem descriptor
+        Domain->>Wikimap: Get knowledge correlations
+        Wikimap->>Domain: Knowledge correlations
+        loop For every knowledge correlation
+            Domain->>Domain: Create personalization rule
+        end
+        Domain->>Domain: Calculate qualified sub-requirements
     end
-    Application->>Domain: Create LR Generation Schema using:<br/> LR Definition,<br/>Student profile (learning history) <br/>and Knowledge Correlations
-    loop For every knowledge correlation
-      Domain->>Domain: Create personalization rule
-    end
-    Domain->>Application: Learning Resource Generation Schema
-    Application->>LLM: Request Learning Resource using LRGS
-    LLM->>Application: Learning Resource LLM View (DTO)
-    Application->>Domain: Create Learning Resource using LLM View
+    note left of Domain: Now, let LLM generate LR from LRGS
+    Domain->>LLM: Learning Resource Generation Schema
+    LLM->>Domain: Learning Resource
     Domain->>Application: Learning Resource
     Application->>Persistence: Save Learning Resource
     Persistence->>Application: Save Result
@@ -57,12 +59,12 @@ Let's describe the algorithm behind the LRGS creation:
 1. Input data: Student id and Learning Resource Definition id
 2. Load the data - student profile and LR Definition
 3. For each Learning Requirement in LR Definition:
-   1. Get Knowledge Subject Id from learning requirement
-   2. Using Knowledge Subject Id, retrieve Knowledge Correlations from Wikimap
+   1. Create Problem descriptor
+   2. Fetch Knowledge correlations related to the problem descriptor's knowledge subject id
    3. For each knowledge correlation create Personalization Rule
       - using the knowledge correlation (spread properties)
-      - using the student's learning history learning results
-      - calculating qualified sub-requirements
-4. Using the created Personalization Rules and the LR Definition create Learning Resource Generation Schema
+      - using the student's learning history learning results that are filtered using this knowledge subject id
+   4. Calculate qualified sub-requirements utilizing personalization rules
+4. Using the created Problem descriptors and the LR Definition create Learning Resource Generation Schema
 
 The LRGS is sent to the LLM and the response is being restructured to match Learning Resource.
