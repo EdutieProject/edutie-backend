@@ -44,7 +44,7 @@ public class LearningRequirementJpaTests {
         science = Science.create(creator).getValue();
         scienceRepository.save(science);
 
-        learningRequirement = LearningRequirement.create(creator, science);
+        learningRequirement = LearningRequirement.create(creator);
     }
 
     @Test
@@ -52,7 +52,6 @@ public class LearningRequirementJpaTests {
 
         assertNotNull(learningRequirement);
         assertEquals(creator, learningRequirement.getAuthorEducator());
-        assertEquals(science, learningRequirement.getScience());
 
         learningRequirementRepository.save(learningRequirement);
 
@@ -72,8 +71,8 @@ public class LearningRequirementJpaTests {
     @Test
     public void testOneToManyRelationship() {
 
-        LearningRequirement learningRequirement1 = LearningRequirement.create(creator, science);
-        LearningRequirement learningRequirement2 = LearningRequirement.create(creator, science);
+        LearningRequirement learningRequirement1 = LearningRequirement.create(creator);
+        LearningRequirement learningRequirement2 = LearningRequirement.create(creator);
 
         learningRequirementRepository.save(learningRequirement);
         learningRequirementRepository.save(learningRequirement1);

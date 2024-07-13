@@ -10,12 +10,6 @@ import validation.WrapperResult;
 import java.util.List;
 
 public interface LearningResourcePersistence extends Persistence<LearningResource, LearningResourceId> {
-    /**
-     * Retrieve all learning resources associated with given lesson segment
-     * @param segmentId lesson segment id
-     * @return Wrapper result of desired list
-     */
-    WrapperResult<List<LearningResource>> getAllOfLessonSegmentId(SegmentId segmentId);
 
     /**
      * Retrieve all Learning Resources associated with given student

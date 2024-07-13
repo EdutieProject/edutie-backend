@@ -32,7 +32,7 @@ public class LearningResourceDefinition extends AuditableEntityBase<LearningReso
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "hints_description"))
     private PromptFragment hintsAdditionalDescription;
-    @ManyToMany
+    @ManyToMany(targetEntity = LearningRequirement.class, fetch = FetchType.EAGER)
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
 
     public static LearningResourceDefinition create(
@@ -41,6 +41,7 @@ public class LearningResourceDefinition extends AuditableEntityBase<LearningReso
             Set<LearningRequirement> learningRequirements
     ) {
         LearningResourceDefinition learningResourceDefinition = new LearningResourceDefinition();
+        learningResourceDefinition.setId(new LearningResourceDefinitionId());
         learningResourceDefinition.setTheoryDescription(theoryDescription);
         learningResourceDefinition.setExerciseDescription(exerciseDescription);
         learningResourceDefinition.learningRequirements.addAll(learningRequirements);
