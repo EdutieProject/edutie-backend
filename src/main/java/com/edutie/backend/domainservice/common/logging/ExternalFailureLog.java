@@ -1,4 +1,4 @@
-package com.edutie.backend.services.common.logging;
+package com.edutie.backend.domainservice.common.logging;
 
 import org.slf4j.Logger;
 import validation.Result;

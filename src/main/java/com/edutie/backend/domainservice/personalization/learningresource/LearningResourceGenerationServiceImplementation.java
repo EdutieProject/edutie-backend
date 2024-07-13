@@ -1,4 +1,4 @@
-package com.edutie.backend.services.personalization.learningresource;
+package com.edutie.backend.domainservice.personalization.learningresource;
 
 import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
@@ -20,7 +20,7 @@ import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor
-public class LearningResourceGenerationSchemaServiceImplementation implements LearningResourceGenerationSchemaService {
+public class LearningResourceGenerationServiceImplementation implements LearningResourceGenerationService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
     private final KnowledgeMapService knowledgeMapService;
     private final LargeLanguageModelService largeLanguageModelService;

@@ -1,4 +1,4 @@
-package com.edutie.backend.services.common;
+package com.edutie.backend.domainservice.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

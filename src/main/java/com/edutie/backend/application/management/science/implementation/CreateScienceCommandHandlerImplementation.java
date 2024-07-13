@@ -7,7 +7,7 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import com.edutie.backend.services.common.logging.ExternalFailureLog;
+import com.edutie.backend.domainservice.common.logging.ExternalFailureLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.Result;
