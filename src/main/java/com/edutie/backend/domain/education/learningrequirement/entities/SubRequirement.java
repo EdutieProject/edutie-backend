@@ -25,10 +25,9 @@ public class SubRequirement extends EntityBase<SubRequirementId> {
     private PromptFragment description;
     private Integer ordinal;
 
-    public static SubRequirement create(String name, PromptFragment desc, int orderIndex) {
+    public static SubRequirement create(PromptFragment desc, int orderIndex) {
         SubRequirement subRequirement = new SubRequirement();
         subRequirement.setId(new SubRequirementId());
-        subRequirement.name = name;
         subRequirement.description = desc;
         subRequirement.ordinal = orderIndex;
         return subRequirement;

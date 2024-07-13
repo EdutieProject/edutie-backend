@@ -5,10 +5,8 @@ import com.edutie.backend.domain.common.errors.CommonErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.education.learningrequirement.identities.SubRequirementId;
-import com.edutie.backend.domain.studyprogram.science.Science;
+import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +16,6 @@ import validation.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @NoArgsConstructor
 @Getter
@@ -30,8 +27,6 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "description"))
     private PromptFragment description = new PromptFragment();
-    @ManyToOne(targetEntity = Science.class, fetch = FetchType.EAGER)
-    private Science science;
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("ordinal")
     private List<SubRequirement> subRequirements = new ArrayList<>();
@@ -45,36 +40,33 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @param educator creator reference
      * @return Learning Requirement
      */
-    public static LearningRequirement create(Educator educator, Science science) {
+    public static LearningRequirement create(Educator educator) {
         LearningRequirement learningRequirement = new LearningRequirement();
         learningRequirement.setId(new LearningRequirementId());
         learningRequirement.setCreatedBy(educator.getOwnerUserId());
         learningRequirement.setAuthorEducator(educator);
-        learningRequirement.setScience(science);
         return learningRequirement;
     }
 
     /**
      * Appends sub requirement at the end of the sub requirement list
      *
-     * @param name        sub requirement name
-     * @param description sub requirement description
+     * @param subRequirementDescriptor sub requirement descriptor
      */
-    public void appendSubRequirement(String name, String description) {
-        subRequirements.add(SubRequirement.create(name, PromptFragment.of(description), subRequirements.size()));
+    public void appendSubRequirement(String subRequirementDescriptor) {
+        subRequirements.add(SubRequirement.create(PromptFragment.of(subRequirementDescriptor), subRequirements.size()));
     }
 
     /**
      * Inserts sub requirement into given index, moving all the next sub requirements forward and
      * updating their ordinal
      *
-     * @param name         sub requirement name
-     * @param description  sub requirement description
-     * @param desiredIndex desired index
+     * @param subRequirementDescriptor sub requirement descriptor
+     * @param desiredIndex             desired index
      * @return Result object
      */
-    public Result insertSubRequirement(String name, String description, int desiredIndex) {
-        appendSubRequirement(name, description);
+    public Result insertSubRequirement(String subRequirementDescriptor, int desiredIndex) {
+        appendSubRequirement(subRequirementDescriptor);
         return moveSubRequirement(subRequirements.size() - 1, desiredIndex);
     }
 

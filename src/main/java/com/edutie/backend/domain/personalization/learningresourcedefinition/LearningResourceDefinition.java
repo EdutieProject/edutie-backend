@@ -2,10 +2,9 @@ package com.edutie.backend.domain.personalization.learningresourcedefinition;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,4 +34,24 @@ public class LearningResourceDefinition extends AuditableEntityBase<LearningReso
     private PromptFragment hintsAdditionalDescription;
     @ManyToMany
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
+
+    public static LearningResourceDefinition create(
+            PromptFragment theoryDescription,
+            PromptFragment exerciseDescription,
+            Set<LearningRequirement> learningRequirements
+    ) {
+        LearningResourceDefinition learningResourceDefinition = new LearningResourceDefinition();
+        learningResourceDefinition.setTheoryDescription(theoryDescription);
+        learningResourceDefinition.setExerciseDescription(exerciseDescription);
+        learningResourceDefinition.learningRequirements.addAll(learningRequirements);
+        return learningResourceDefinition;
+    }
+
+    public void addLearningRequirement(LearningRequirement learningRequirement) {
+        learningRequirements.add(learningRequirement);
+    }
+
+    public void removeLearningRequirement(LearningRequirementId learningRequirementId) {
+        learningRequirements.removeIf(o -> o.getId().equals(learningRequirementId));
+    }
 }
