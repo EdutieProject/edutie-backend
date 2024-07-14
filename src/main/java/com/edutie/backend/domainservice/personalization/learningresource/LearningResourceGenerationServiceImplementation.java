@@ -37,6 +37,11 @@ public class LearningResourceGenerationServiceImplementation implements Learning
             }
             problemDescriptor.calculateQualifiedSubRequirements(lResDef.getLearningRequirements().size());
         }
+        try {
+            LOGGER.info("STUDENT LEARNING HISTORY:\n" + new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writeValueAsString(student.getLearningHistory()));
+        } catch (Exception exception) {
+            LOGGER.info(exception.getMessage());
+        }
         //TODO: abstract logger away
         String lrgsLogInfo;
         try {

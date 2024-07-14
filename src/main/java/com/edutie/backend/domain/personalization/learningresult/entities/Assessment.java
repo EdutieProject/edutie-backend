@@ -26,7 +26,7 @@ public class Assessment extends EntityBase<AssessmentId> {
     @AttributeOverride(name = "gradeNumber", column = @Column(name = "grade_number"))
     Grade grade;
 
-    public Assessment create(LearningRequirementId learningRequirementId, Grade grade) {
+    public static Assessment create(LearningRequirementId learningRequirementId, Grade grade) {
         Assessment assessment = new Assessment();
         assessment.setId(new AssessmentId());
         assessment.setLearningRequirementId(learningRequirementId);

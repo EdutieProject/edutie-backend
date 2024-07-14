@@ -18,10 +18,19 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
+import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
+import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
+import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
+import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
+import com.edutie.backend.domain.personalization.solutionsubmission.persistence.SolutionSubmissionPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourceGenerationService;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourceGenerationServiceImplementation;
+import com.edutie.backend.mocks.LearningMocks;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +58,10 @@ public class CreateLearningResourceTests {
     LearningResourcePersistence learningResourcePersistence;
     @Autowired
     LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
+    @Autowired
+    SolutionSubmissionPersistence solutionSubmissionPersistence;
+    @Autowired
+    LearningResultPersistence learningResultPersistence;
 
     LearningResourceGenerationService learningResourceGenerationService;
 
@@ -57,22 +70,8 @@ public class CreateLearningResourceTests {
     @BeforeEach
     public void testSetup() {
         learningResourceGenerationService = new LearningResourceGenerationServiceImplementation(
-                knowledgeSubjectId -> WrapperResult.successWrapper(List.of(
-                        new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")), 2),
-                        new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("4e92752a-5ef8-420e-ba45-260b6b7af5fe")), 4),
-                        new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("201b3e63-5340-4a35-8f51-8de8275dae1e")), 7),
-                        new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("7ad5fd80-6337-4b69-8048-8a97e39aa963")), 8)
-                )),
-                learningResourceGenerationSchema -> {
-                    LearningResource learningResource = LearningResource.create(
-                            learningResourceGenerationSchema,
-                            learningResourceGenerationSchema.getLearningResourceDefinition().getExerciseDescription().text(),
-                            Set.of(Hint.create("Hello!"), Hint.create("World!")),
-                            learningResourceGenerationSchema.getLearningResourceDefinition().getTheoryDescription().text(),
-                            learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription().text()
-                    );
-                    return WrapperResult.successWrapper(learningResource);
-                }
+                LearningMocks.knowledgeMapServiceMock(),
+                LearningMocks.largeLanguageModelServiceMock()
         );
 
         createLearningResourceCommandHandler = new CreateLearningResourceCommandHandlerImplementation(
@@ -112,6 +111,61 @@ public class CreateLearningResourceTests {
 
         CreateLearningResourceCommand command = new CreateLearningResourceCommand()
                 .learningResourceDefinitionId(learningResourceDefinition.getId())
+                .studentUserId(userId);
+        WrapperResult<LearningResource> learningResourceWrapperResult = createLearningResourceCommandHandler.handle(command).throwIfFailure();
+
+        assert learningResourceWrapperResult.isSuccess();
+    }
+
+    @Test
+    public void createLearningResourceWithLearningHistory() {
+        // Create learning history
+        Student student = Student.create(userId);
+        studentPersistence.save(student).throwIfFailure();
+
+        LearningRequirement learningRequirement = LearningRequirement.create(educator);
+        learningRequirement.setName("Integration by parts");
+        learningRequirement.setDescription(PromptFragment.of("Here would go the description of integration by parts"));
+        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")));
+        learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions");
+        learningRequirement.appendSubRequirement("Proper formula usage");
+        learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
+        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
+
+        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+                PromptFragment.of("Theory description"),
+                PromptFragment.of("Exercise description"),
+                Set.of(learningRequirement)
+        );
+        learningResourceDefinition.setTheorySummaryAdditionalDescription(PromptFragment.of("Theory summary additional desc"));
+        learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
+        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+
+        SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResourceDefinition, "My report!", 0);
+        solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
+        LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("Feedback!", FeedbackType.NEUTRAL));
+        learningResult.addAssessment(Assessment.create(learningRequirement.getId(), new Grade(5)));
+        learningResultPersistence.save(learningResult).throwIfFailure();
+
+        // Create a resource definition
+        LearningRequirement requirement = LearningRequirement.create(educator);
+        requirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
+        requirement.appendSubRequirement("SUBREQ1");
+        requirement.appendSubRequirement("SUBREQ2");
+        requirement.appendSubRequirement("SUBREQ3");
+        learningRequirementPersistence.save(requirement).throwIfFailure();
+        LearningResourceDefinition definition = LearningResourceDefinition.create(
+                PromptFragment.of("Theory DESC!"),
+                PromptFragment.of("Exercise DESC!"),
+                Set.of(requirement)
+        );
+        definition.setHintsAdditionalDescription(PromptFragment.of("ADDITIONAL DESC FOR HINTS"));
+        definition.setTheorySummaryAdditionalDescription(PromptFragment.of("ADDITIONAL SUMMARY DESC"));
+        learningResourceDefinitionPersistence.save(definition).throwIfFailure();
+
+
+        CreateLearningResourceCommand command = new CreateLearningResourceCommand()
+                .learningResourceDefinitionId(definition.getId())
                 .studentUserId(userId);
         WrapperResult<LearningResource> learningResourceWrapperResult = createLearningResourceCommandHandler.handle(command).throwIfFailure();
     }

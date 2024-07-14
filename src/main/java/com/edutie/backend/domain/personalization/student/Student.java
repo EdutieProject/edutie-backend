@@ -5,6 +5,7 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -27,7 +28,8 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 public class Student extends Role<StudentId> {
-    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.EAGER) //TODO: lazy load
+    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //TODO: lazy load
     private final List<LearningResult> learningHistory = new ArrayList<>();
 
     public static Student create(UserId userId) {

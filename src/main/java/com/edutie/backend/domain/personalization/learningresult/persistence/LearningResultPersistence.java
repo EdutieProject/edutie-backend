@@ -10,17 +10,4 @@ import validation.WrapperResult;
 import java.util.List;
 
 public interface LearningResultPersistence extends Persistence<LearningResult, LearningResultId> {
-    /**
-     * Retrieve all learning results associated with given lesson segment
-     * @param segmentId lesson segment identifier
-     * @return Wrapper result of desired list
-     */
-    WrapperResult<List<LearningResult>> getAllOfLessonSegmentId(SegmentId segmentId);
-
-    /**
-     * Retrieve all learning results associated with given student
-     * @param studentId student identifier
-     * @return Wrapper result of desired list
-     */
-    WrapperResult<List<LearningResult>> getAllOfStudentId(StudentId studentId);
 }

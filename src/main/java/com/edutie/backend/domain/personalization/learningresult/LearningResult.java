@@ -37,7 +37,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     private Student student;
     @Embedded
     private Feedback feedback = new Feedback();
-    @OneToMany(targetEntity = Assessment.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Assessment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final Set<Assessment> assessments = new HashSet<>();
 
     /**
