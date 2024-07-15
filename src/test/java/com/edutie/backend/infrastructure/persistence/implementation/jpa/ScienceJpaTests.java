@@ -1,13 +1,12 @@
 package com.edutie.backend.infrastructure.persistence.implementation.jpa;
 
 import com.edutie.backend.domain.administration.administrator.Administrator;
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.AdministratorRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.ScienceRepository;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.AdministratorRepository;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.ScienceRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

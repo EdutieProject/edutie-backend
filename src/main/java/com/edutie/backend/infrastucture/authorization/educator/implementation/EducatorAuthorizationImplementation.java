@@ -4,7 +4,7 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.infrastucture.authorization.AuthorizationError;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

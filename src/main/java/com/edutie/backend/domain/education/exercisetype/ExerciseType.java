@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.education.exercisetype;
 
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
-import com.edutie.backend.domain.common.errors.CommonErrors;
+import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.entities.ReportTemplateParagraph;
@@ -73,7 +73,7 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
      */
     public Result moveReportTemplateParagraph(int paragraphIndex, int desiredIndex) {
         if (paragraphIndex < 0 || desiredIndex < 0 || paragraphIndex > reportTemplate.size() - 1 || desiredIndex > reportTemplate.size() - 1)
-            return Result.failure(CommonErrors.invalidIndex(ExerciseType.class));
+            return Result.failure(DomainErrors.invalidIndex(ExerciseType.class));
         ReportTemplateParagraph paragraphToMove = reportTemplate.get(paragraphIndex);
         reportTemplate.remove(paragraphToMove);
         reportTemplate.add(desiredIndex, paragraphToMove);
@@ -91,7 +91,7 @@ public class ExerciseType extends EducatorCreatedAuditableEntity<ExerciseTypeId>
      */
     public Result removeReportTemplateParagraph(int paragraphIndex) {
         if (reportTemplate.remove(paragraphIndex) == null)
-            return Result.failure(CommonErrors.invalidIndex(ExerciseType.class));
+            return Result.failure(DomainErrors.invalidIndex(ExerciseType.class));
         for (int i = paragraphIndex; i < reportTemplate.size(); i++) {
             reportTemplate.get(i).setOrdinal(i);
         }

@@ -5,7 +5,7 @@ import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
-import com.edutie.backend.infrastucture.persistence.implementation.jpa.repositories.EducatorRepository;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

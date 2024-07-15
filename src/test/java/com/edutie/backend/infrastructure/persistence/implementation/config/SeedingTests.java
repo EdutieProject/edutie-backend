@@ -4,7 +4,7 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
-import com.edutie.backend.infrastucture.persistence.implementation.config.Seeding;
+import com.edutie.backend.infrastucture.persistence.config.Seeding;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.Test;

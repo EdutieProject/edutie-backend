@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.education.learningrequirement;
 
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
-import com.edutie.backend.domain.common.errors.CommonErrors;
+import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
@@ -79,7 +79,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      */
     public Result moveSubRequirement(int currentIndex, int desiredIndex) {
         if (currentIndex < 0 || currentIndex >= subRequirements.size() || desiredIndex < 0 || desiredIndex >= subRequirements.size())
-            return Result.failure(CommonErrors.invalidIndex(SubRequirement.class));
+            return Result.failure(DomainErrors.invalidIndex(SubRequirement.class));
         SubRequirement subRequirement = subRequirements.get(currentIndex);
         subRequirements.remove(subRequirement);
         subRequirements.add(desiredIndex, subRequirement);
@@ -97,7 +97,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      */
     public Result removeSubRequirement(int index) {
         if (subRequirements.remove(index) == null)
-            return Result.failure(CommonErrors.invalidIndex(SubRequirement.class));
+            return Result.failure(DomainErrors.invalidIndex(SubRequirement.class));
         for (int i = 0; i < subRequirements.size(); i++) {
             subRequirements.get(i).setOrdinal(i);
         }

@@ -2,7 +2,7 @@ package com.edutie.backend.domain.common.persistence;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import com.edutie.backend.infrastucture.persistence.implementation.persistence.common.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.persistence.common.PersistenceError;
 import org.springframework.data.jpa.repository.JpaRepository;
 import validation.Result;
 import validation.WrapperResult;
