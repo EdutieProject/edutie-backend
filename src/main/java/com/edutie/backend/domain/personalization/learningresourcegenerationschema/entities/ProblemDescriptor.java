@@ -20,6 +20,7 @@ public class ProblemDescriptor extends EntityBase<ProblemDescriptorId> {
     private final List<PersonalizationRule> personalizationRules = new ArrayList<>();
 
     public ProblemDescriptor(LearningRequirement learningRequirement) {
+        this.setId(new ProblemDescriptorId());
         this.learningRequirementId = learningRequirement.getId();
         this.knowledgeSubjectId = learningRequirement.getKnowledgeSubjectId();
     }

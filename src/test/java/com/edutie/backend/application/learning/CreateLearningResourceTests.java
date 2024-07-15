@@ -11,10 +11,8 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
-import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
@@ -28,8 +26,8 @@ import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubm
 import com.edutie.backend.domain.personalization.solutionsubmission.persistence.SolutionSubmissionPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
-import com.edutie.backend.domainservice.personalization.learningresource.LearningResourceGenerationService;
-import com.edutie.backend.domainservice.personalization.learningresource.LearningResourceGenerationServiceImplementation;
+import com.edutie.backend.domainservice.personalization.learningresource.LearningResourceGenerationSchemaService;
+import com.edutie.backend.domainservice.personalization.learningresource.LearningResourceGenerationSchemaServiceImplementation;
 import com.edutie.backend.mocks.LearningMocks;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import validation.WrapperResult;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,22 +60,22 @@ public class CreateLearningResourceTests {
     @Autowired
     LearningResultPersistence learningResultPersistence;
 
-    LearningResourceGenerationService learningResourceGenerationService;
+    LearningResourceGenerationSchemaService learningResourceGenerationSchemaService;
 
     CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
 
     @BeforeEach
     public void testSetup() {
-        learningResourceGenerationService = new LearningResourceGenerationServiceImplementation(
-                LearningMocks.knowledgeMapServiceMock(),
-                LearningMocks.largeLanguageModelServiceMock()
+        learningResourceGenerationSchemaService = new LearningResourceGenerationSchemaServiceImplementation(
+                LearningMocks.knowledgeMapServiceMock()
         );
 
         createLearningResourceCommandHandler = new CreateLearningResourceCommandHandlerImplementation(
                 studentPersistence,
                 learningResourceDefinitionPersistence,
                 learningResourcePersistence,
-                learningResourceGenerationService
+                learningResourceGenerationSchemaService,
+                LearningMocks.largeLanguageModelServiceMock()
         );
 
         administratorPersistence.save(administrator);
@@ -167,6 +164,7 @@ public class CreateLearningResourceTests {
         CreateLearningResourceCommand command = new CreateLearningResourceCommand()
                 .learningResourceDefinitionId(definition.getId())
                 .studentUserId(userId);
-        WrapperResult<LearningResource> learningResourceWrapperResult = createLearningResourceCommandHandler.handle(command).throwIfFailure();
+
+        createLearningResourceCommandHandler.handle(command).throwIfFailure();
     }
 }

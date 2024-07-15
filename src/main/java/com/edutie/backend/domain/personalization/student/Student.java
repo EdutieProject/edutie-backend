@@ -3,6 +3,7 @@ package com.edutie.backend.domain.personalization.student;
 import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import jakarta.persistence.CascadeType;
@@ -28,8 +29,7 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 public class Student extends Role<StudentId> {
-    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    //TODO: lazy load
+    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.EAGER, mappedBy = "student")    //TODO: lazy load
     private final List<LearningResult> learningHistory = new ArrayList<>();
 
     public static Student create(UserId userId) {
@@ -39,10 +39,10 @@ public class Student extends Role<StudentId> {
         return student;
     }
 
-    public List<LearningResult> getLearningHistoryByLearningRequirement(LearningRequirementId learningRequirementId) {
+    public List<LearningResult> getLearningHistoryByKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
         return learningHistory.stream()
                 .filter(o -> o.getSolutionSubmission().getLearningResourceDefinition().getLearningRequirements()
-                        .stream().anyMatch(x -> x.getId().equals(learningRequirementId)))
+                        .stream().anyMatch(x->x.getKnowledgeSubjectId().equals(knowledgeSubjectId)))
                 .collect(Collectors.toList());
     }
 }
