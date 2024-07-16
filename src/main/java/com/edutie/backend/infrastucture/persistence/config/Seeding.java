@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.implementation.config;
+package com.edutie.backend.infrastucture.persistence.config;
 
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
@@ -8,6 +8,8 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
+import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
+import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
@@ -46,8 +48,8 @@ public class Seeding {
 	private final SegmentPersistence segmentPersistence;
 	private final AdministratorPersistence administratorPersistence;
 	private final EducatorPersistence educatorPersistence;
-	//	private final ExerciseTypePersistence exerciseTypePersistence;
-	//	private final LearningRequirementPersistence learningRequirementPersistence;
+	private final ExerciseTypePersistence exerciseTypePersistence;
+	private final LearningRequirementPersistence learningRequirementPersistence;
 	private final CourseTagPersistence courseTagPersistence;
 
 	private final UserId uid = new UserId();

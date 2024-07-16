@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -25,7 +26,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
                     .writeValueAsString(learningResourceGenerationSchema);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://edutie-llm:10000/learning-resource"))
+                    .uri(new URI("http://edutie-llm:10000/learning-resource")) ///* TODO: env property
                     .POST(HttpRequest.BodyPublishers.ofString(serializedBody))
                     .build();
 
@@ -34,7 +35,10 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
             LearningResource learningResource = new ObjectMapper().readValue(response.body(), LearningResource.class);
 
             return WrapperResult.successWrapper(learningResource);
-        } catch (Exception e) {
+        } catch (IOException e) {
+            return WrapperResult.failureWrapper(LlmServiceErrors.connectionError(e));
+        }
+        catch (Exception e) {
             return WrapperResult.failureWrapper(LlmServiceErrors.exceptionOccurred(e));
         }
     }
