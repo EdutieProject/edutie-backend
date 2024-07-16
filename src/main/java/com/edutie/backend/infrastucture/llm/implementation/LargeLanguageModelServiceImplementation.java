@@ -2,7 +2,9 @@ package com.edutie.backend.infrastucture.llm.implementation;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.infrastucture.knowledgemap.implementation.KnowledgeMapServiceErrors;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
+import com.edutie.backend.infrastucture.llm.dto.LearningResourceDetailsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -32,14 +34,13 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
 
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-            LearningResource learningResource = new ObjectMapper().readValue(response.body(), LearningResource.class);
+            LearningResourceDetailsDto learningResourceDetailsDto = new ObjectMapper().readValue(response.body(), LearningResourceDetailsDto.class);
 
-            return WrapperResult.successWrapper(learningResource);
+            return WrapperResult.successWrapper(learningResourceDetailsDto.intoLearningResource(learningResourceGenerationSchema));
         } catch (IOException e) {
-            return WrapperResult.failureWrapper(LlmServiceErrors.connectionError(e));
-        }
-        catch (Exception e) {
-            return WrapperResult.failureWrapper(LlmServiceErrors.exceptionOccurred(e));
+            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.connectionError(e));
+        } catch (Exception e) {
+            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.exceptionEncountered(e));
         }
     }
 }

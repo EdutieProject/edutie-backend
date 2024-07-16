@@ -10,7 +10,7 @@ import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersisten
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LessonRepository;
-import com.edutie.backend.infrastucture.persistence.persistence.common.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.persistence.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;

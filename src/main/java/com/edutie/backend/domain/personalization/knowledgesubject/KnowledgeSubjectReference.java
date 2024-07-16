@@ -13,4 +13,9 @@ import lombok.Setter;
 @Setter
 @Entity
 public class KnowledgeSubjectReference extends EntityBase<KnowledgeSubjectId> {
+    public static KnowledgeSubjectReference create(KnowledgeSubjectId id) {
+        KnowledgeSubjectReference knowledgeSubjectReference = new KnowledgeSubjectReference();
+        knowledgeSubjectReference.setId(id);
+        return knowledgeSubjectReference;
+    }
 }

@@ -6,7 +6,7 @@ import com.edutie.backend.domain.education.learningrequirement.identities.Learni
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningRequirementRepository;
-import com.edutie.backend.infrastucture.persistence.persistence.common.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.persistence.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
