@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public class LlmServiceErrors {
 
-    public static Error exceptionOccurred(Exception exception) {
+    public static Error exceptionEncountered(Exception exception) {
         return new Error(
-                "LLM-SERVICE-500",
+                "LLM-SERVICE-EXCEPTION-500",
                 "Exception occurred. " + exception.getMessage()
         );
     }
@@ -16,7 +16,7 @@ public class LlmServiceErrors {
     public static Error connectionError(IOException exception) {
         return new Error(
                 "LLM-SERVICE-CONNECT-503",
-                "Service unavailable due to internal connectivity errors. More: " + exception.getMessage()
+                "Could not connect to external llm service. More: " + exception.getMessage()
         );
     }
 }

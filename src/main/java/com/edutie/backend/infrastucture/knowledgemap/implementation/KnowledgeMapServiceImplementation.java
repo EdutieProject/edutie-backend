@@ -2,22 +2,46 @@ package com.edutie.backend.infrastucture.knowledgemap.implementation;
 
 import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
     @Override
     public WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId) {
-        return WrapperResult.successWrapper(List.of(
-                new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")), 2),
-                new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("4e92752a-5ef8-420e-ba45-260b6b7af5fe")), 4),
-                new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("201b3e63-5340-4a35-8f51-8de8275dae1e")), 7),
-                new KnowledgeCorrelation(new KnowledgeSubjectId(UUID.fromString("7ad5fd80-6337-4b69-8048-8a97e39aa963")), 9)
-        ));
+        try {
+            String serializedBody = new ObjectMapper()
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                    .registerModule(new JavaTimeModule())
+                    .writeValueAsString(KnowledgeSubjectReference.create(knowledgeSubjectId));
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI("http://edutie-knowledge-map:10000/correlations")) ///* TODO: env property
+                    .POST(HttpRequest.BodyPublishers.ofString(serializedBody))
+                    .build();
+
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+            KnowledgeCorrelation[] knowledgeCorrelations = new ObjectMapper().readValue(response.body(), KnowledgeCorrelation[].class);
+
+            return WrapperResult.successWrapper(Arrays.stream(knowledgeCorrelations).toList());
+        } catch (IOException e) {
+            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.connectionError(e));
+        } catch (Exception e) {
+            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.exceptionEncountered(e));
+        }
     }
 }
