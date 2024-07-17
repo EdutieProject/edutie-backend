@@ -15,13 +15,12 @@ public class LearningResourceDetailsDto {
     private Set<HintDto> hints;
 
 
-    @Getter
     public static class HintDto {
         private String hintText;
     }
 
     public LearningResource intoLearningResource(LearningResourceGenerationSchema generationSchema) {
-        Set<Hint> hints = this.hints.stream().map(o -> Hint.create(o.getHintText())).collect(Collectors.toSet());
+        Set<Hint> hints = this.hints.stream().map(o -> Hint.create(o.hintText)).collect(Collectors.toSet());
         return LearningResource.create(generationSchema, activityText, hints, theoryOverviewText, theorySummaryText);
     }
 }

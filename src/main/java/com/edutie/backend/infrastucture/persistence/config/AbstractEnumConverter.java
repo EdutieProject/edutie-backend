@@ -1,5 +1,6 @@
-package com.edutie.backend.domain.common.enums;
+package com.edutie.backend.infrastucture.persistence.config;
 
+import com.edutie.backend.domain.common.enums.PersistableEnum;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

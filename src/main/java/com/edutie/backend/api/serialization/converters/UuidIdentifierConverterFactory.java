@@ -15,7 +15,7 @@ public class UuidIdentifierConverterFactory implements ConverterFactory<String, 
 
     private static class StringToUuidIdentifierConverter<T extends UuidIdentifier> implements Converter<String, T> {
         private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-        private Class<T> idType;
+        private final Class<T> idType;
 
         public StringToUuidIdentifierConverter(Class<T> idType) {
             this.idType = idType;

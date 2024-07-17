@@ -11,6 +11,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /**
  * Base class for a role
  *
@@ -24,4 +26,5 @@ public abstract class Role<TId extends Identifier<?>> extends EntityBase<TId> {
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "user_id"))
     protected UserId ownerUserId;
+    protected final LocalDateTime assignedOn = LocalDateTime.now();
 }
