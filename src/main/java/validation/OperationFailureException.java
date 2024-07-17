@@ -1,9 +1,13 @@
 package validation;
 
+import lombok.Getter;
+
 /**
  * Exception that can be thrown when the operation result is failure.
  */
+@Getter
 public class OperationFailureException extends RuntimeException {
+    private final Error error;
     /**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
@@ -14,5 +18,6 @@ public class OperationFailureException extends RuntimeException {
      */
     public OperationFailureException(Error error) {
         super(error.toString());
+        this.error = error;
     }
 }
