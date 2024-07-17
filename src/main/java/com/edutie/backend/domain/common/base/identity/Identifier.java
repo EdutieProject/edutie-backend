@@ -8,13 +8,13 @@ import java.util.Objects;
 
 @MappedSuperclass
 public abstract class Identifier<TId> implements Serializable {
-    @JsonValue
     protected TId identifierValue;
 
     public Identifier(TId value) {
         identifierValue = value;
     }
 
+    @JsonValue
     public TId identifierValue() {
         return identifierValue;
     }
