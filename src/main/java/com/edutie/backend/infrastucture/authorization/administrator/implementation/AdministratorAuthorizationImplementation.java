@@ -37,7 +37,7 @@ public class AdministratorAuthorizationImplementation implements AdministratorAu
     public void injectRoles(JwtAuthenticationToken authentication) {
         UserId userId = new UserId(UUID.fromString(authentication.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
 
-        boolean tokenHasAdminRole = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(o -> o.equals("admin"));
+        boolean tokenHasAdminRole = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(o -> o.equals("edutie-admin"));
         boolean noAdminRoleInEdutie = administratorRepository.findByOwnerUserId(userId).isEmpty();
 
         if (tokenHasAdminRole && noAdminRoleInEdutie) {
