@@ -17,7 +17,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class GenericRequestHandler<TResponseBody> {
-    protected Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    protected static Logger LOGGER = LoggerFactory.getLogger(GenericRequestHandler.class);
     private Result authenticationResult = null;
     private Result authorizationResult = null;
     private UserId actionUserId = null;
@@ -82,7 +82,7 @@ public class GenericRequestHandler<TResponseBody> {
                 .body(ApiResult.fromResult(result));
     }
 
-    private int inferStatusCode(Error error) {
+    public static int inferStatusCode(Error error) {
         try {
             String[] errorCodeSplit = error.code().split("-");
             return Integer.parseInt(errorCodeSplit[errorCodeSplit.length - 1]);
