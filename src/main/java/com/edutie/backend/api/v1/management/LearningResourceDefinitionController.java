@@ -1,0 +1,33 @@
+package com.edutie.backend.api.v1.management;
+
+import com.edutie.backend.api.common.ApiResult;
+import com.edutie.backend.api.common.GenericRequestHandler;
+import com.edutie.backend.application.management.learningresourcedefinition.CreateLearningResourceDefinitionCommandHandler;
+import com.edutie.backend.application.management.learningresourcedefinition.commands.CreateLearningResourceDefinitionCommand;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v1/management/learning-resource")
+@RequiredArgsConstructor
+public class LearningResourceDefinitionController {
+    private final EducatorAuthorization educatorAuthorization;
+    private final CreateLearningResourceDefinitionCommandHandler createLearningResourceDefinitionCommandHandler;
+    @PostMapping("/definitions")
+    public ResponseEntity<ApiResult<LearningResourceDefinition>> createLearningResource(
+            Authentication authentication,
+            @RequestBody CreateLearningResourceDefinitionCommand command) {
+        return new GenericRequestHandler<LearningResourceDefinition>()
+                .authenticate(authentication)
+                .authorize(educatorAuthorization)
+                .handle(userId -> createLearningResourceDefinitionCommandHandler.handle(command.educatorUserId(userId)));
+    }
+}
