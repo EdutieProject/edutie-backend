@@ -19,8 +19,9 @@ public record PromptFragment(@JsonValue String text) {
     {
         this("");
     }
+
     public static PromptFragment of(String text)
     {
-        return new PromptFragment(text);
+        return text != null ? new PromptFragment(text) : null;
     }
 }

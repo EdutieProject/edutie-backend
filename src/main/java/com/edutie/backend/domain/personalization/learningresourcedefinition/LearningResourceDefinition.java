@@ -1,7 +1,9 @@
 package com.edutie.backend.domain.personalization.learningresourcedefinition;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
@@ -19,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-public class LearningResourceDefinition extends AuditableEntityBase<LearningResourceDefinitionId> {
+public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<LearningResourceDefinitionId> {
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "theory_description"))
     private PromptFragment theoryDescription;
@@ -34,6 +36,24 @@ public class LearningResourceDefinition extends AuditableEntityBase<LearningReso
     private PromptFragment hintsAdditionalDescription;
     @ManyToMany(targetEntity = LearningRequirement.class, fetch = FetchType.EAGER)
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
+
+    public static LearningResourceDefinition create(
+            Educator educator,
+            PromptFragment theoryDescription,
+            PromptFragment exerciseDescription,
+            PromptFragment theorySummaryAdditionalDescription,
+            PromptFragment hintsAdditionalDescription
+    ) {
+        LearningResourceDefinition lrd = new LearningResourceDefinition();
+        lrd.setId(new LearningResourceDefinitionId());
+        lrd.setAuthorEducator(educator);
+        lrd.setCreatedBy(educator.getOwnerUserId());
+        lrd.setTheoryDescription(theoryDescription);
+        lrd.setExerciseDescription(exerciseDescription);
+        lrd.setTheorySummaryAdditionalDescription(theorySummaryAdditionalDescription);
+        lrd.setHintsAdditionalDescription(hintsAdditionalDescription);
+        return lrd;
+    }
 
     public static LearningResourceDefinition create(
             PromptFragment theoryDescription,
