@@ -6,6 +6,7 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
@@ -14,6 +15,7 @@ import validation.WrapperResult;
 @RequiredArgsConstructor
 public class CreateLearningResourceDefinitionCommandHandlerImplementation implements CreateLearningResourceDefinitionCommandHandler {
     private final EducatorPersistence educatorPersistence;
+    private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
 
     @Override
     public WrapperResult<LearningResourceDefinition> handle(CreateLearningResourceDefinitionCommand command) {
@@ -25,6 +27,7 @@ public class CreateLearningResourceDefinitionCommandHandlerImplementation implem
                 PromptFragment.of(command.additionalSummaryDescription()),
                 PromptFragment.of(command.additionalHintsDescription())
         );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
         return WrapperResult.successWrapper(learningResourceDefinition);
     }
 }
