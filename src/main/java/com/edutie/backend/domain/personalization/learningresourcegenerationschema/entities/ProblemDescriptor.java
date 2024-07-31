@@ -5,6 +5,7 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.ProblemDescriptorId;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +35,12 @@ public class ProblemDescriptor extends EntityBase<ProblemDescriptorId> {
      * amount.
      */
     public void calculateQualifiedSubRequirements(int subRequirementsSize) {
-        //TODO
+        double meanOverallGrade = personalizationRules.stream()
+                .flatMap(o -> o.getLearningResults().stream())
+                .flatMap(o-> o.getAssessments().stream())
+                .map(o-> o.getGrade().gradeNumber()).mapToInt(Integer::intValue)
+                .average().orElse(0.0);
+        double gradePercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
+        this.qualifiedSubRequirements = (int) Math.ceil(gradePercentage * subRequirementsSize);
     }
 }
