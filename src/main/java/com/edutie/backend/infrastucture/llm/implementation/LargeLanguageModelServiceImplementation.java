@@ -27,7 +27,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
                     .writeValueAsString(learningResourceGenerationSchema);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://edutie-llm:10000/learning-resource")) ///* TODO: env property
+                    .uri(new URI("http://llmservice/learning-resource")) ///* TODO: env property
                     .POST(HttpRequest.BodyPublishers.ofString(serializedBody))
                     .build();
 
