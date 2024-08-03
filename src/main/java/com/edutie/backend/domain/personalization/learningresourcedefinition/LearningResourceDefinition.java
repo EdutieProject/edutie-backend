@@ -34,7 +34,7 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "hints_description"))
     private PromptFragment hintsAdditionalDescription;
-    @ManyToMany(targetEntity = LearningRequirement.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = LearningRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
 
     public static LearningResourceDefinition create(

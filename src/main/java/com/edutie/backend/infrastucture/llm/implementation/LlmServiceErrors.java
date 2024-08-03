@@ -6,6 +6,13 @@ import java.io.IOException;
 
 public class LlmServiceErrors {
 
+    public static Error invalidStatus(int status, String message) {
+        return new Error(
+            "LLM-SERVICE-INVALID-STATUS-" + status,
+            message
+        );
+    }
+
     public static Error exceptionEncountered(Exception exception) {
         return new Error(
                 "LLM-SERVICE-EXCEPTION-500",

@@ -7,17 +7,22 @@ import com.edutie.backend.infrastucture.llm.dto.LearningResourceDetailsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-
 @Component
 public class LargeLanguageModelServiceImplementation implements LargeLanguageModelService {
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final String LLM_SERVICE_URL = "http://llmservice/learning-resource";
+
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
         try {
@@ -25,21 +30,37 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
                     .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                     .registerModule(new JavaTimeModule())
                     .writeValueAsString(learningResourceGenerationSchema);
+            LOGGER.info("===== Sending request to LLM service: ====\n" + serializedBody);
+            // Create an instance of HttpClient
+            try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+                // Create a POST request with the target URL
+                HttpPost postRequest = new HttpPost(LLM_SERVICE_URL); // Replace with your URL
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://llmservice/learning-resource")) ///* TODO: env property
-                    .POST(HttpRequest.BodyPublishers.ofString(serializedBody))
-                    .build();
+                StringEntity entity = new StringEntity(serializedBody);
+                postRequest.setEntity(entity);
+                // Set headers (if needed)
+                postRequest.setHeader("Content-Type", "application/json");
+                postRequest.setHeader("Accept", "application/json");
 
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+                // Execute the request and get the response
+                try (CloseableHttpResponse response = httpClient.execute(postRequest)) {
+                    // Check the status code
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    LOGGER.info("Response status: " + statusCode);
+                    // Get the response body
+                    String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    LOGGER.info("Response body: " + responseBody);
 
-            LearningResourceDetailsDto learningResourceDetailsDto = new ObjectMapper().readValue(response.body(), LearningResourceDetailsDto.class);
+                    if (statusCode != 200) {
+                        return WrapperResult.failureWrapper(LlmServiceErrors.invalidStatus(statusCode, responseBody));
+                    }
 
-            return WrapperResult.successWrapper(learningResourceDetailsDto.intoLearningResource(learningResourceGenerationSchema));
-        } catch (IOException e) {
-            return WrapperResult.failureWrapper(LlmServiceErrors.connectionError(e));
-        } catch (Exception e) {
-            return WrapperResult.failureWrapper(LlmServiceErrors.exceptionEncountered(e));
+                    LearningResourceDetailsDto learningResourceDetailsDto = new ObjectMapper().readValue(responseBody, LearningResourceDetailsDto.class);
+                    return WrapperResult.successWrapper(learningResourceDetailsDto.intoLearningResource(learningResourceGenerationSchema));
+                }
+            }
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(LlmServiceErrors.exceptionEncountered(ex));
         }
     }
 }

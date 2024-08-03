@@ -3,24 +3,26 @@ package com.edutie.backend.infrastucture.llm.dto;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LearningResourceDetailsDto {
+    @JsonProperty
     private String activityText;
+    @JsonProperty
     private String theoryOverviewText;
+    @JsonProperty
     private String theorySummaryText;
-    private Set<HintDto> hints;
+    @JsonProperty
+    private Set<String> hints;
 
-
-    public static class HintDto {
-        private String hintText;
-    }
 
     public LearningResource intoLearningResource(LearningResourceGenerationSchema generationSchema) {
-        Set<Hint> hints = this.hints.stream().map(o -> Hint.create(o.hintText)).collect(Collectors.toSet());
+        Set<Hint> hints = this.hints.stream().map(Hint::create).collect(Collectors.toSet());
         return LearningResource.create(generationSchema, activityText, hints, theoryOverviewText, theorySummaryText);
     }
 }
