@@ -20,9 +20,13 @@ import java.util.List;
 
 @Component
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
+    private final boolean MOCKED = true;
     @Override
     public WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId) {
         try {
+            if (MOCKED)
+                return WrapperResult.successWrapper(List.of());
+
             String serializedBody = new ObjectMapper()
                     .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                     .registerModule(new JavaTimeModule())
