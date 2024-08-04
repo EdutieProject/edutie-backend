@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private static final String KNOWLEDGE_MAP_URL = "http://wikimap/correlations"; //TODO: env prop
+    private static final String KNOWLEDGE_MAP_URL = "http://wikimapservice/correlations"; //TODO: env prop
 
     @Override
     public WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId) {
