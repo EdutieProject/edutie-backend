@@ -8,8 +8,8 @@ public class LlmServiceErrors {
 
     public static Error invalidStatus(int status, String message) {
         return new Error(
-            "LLM-SERVICE-INVALID-STATUS-" + status,
-            message
+                "LLM-SERVICE-INVALID-STATUS-" + status,
+                message
         );
     }
 

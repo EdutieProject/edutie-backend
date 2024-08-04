@@ -5,47 +5,63 @@ import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubje
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
-    private final boolean MOCKED = true;
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private static final String KNOWLEDGE_MAP_URL = "http://wikimap/correlations"; //TODO: env prop
+
     @Override
     public WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId) {
         try {
-            if (MOCKED)
-                return WrapperResult.successWrapper(List.of());
+            LOGGER.info("===== Sending request to KM service: ====\n" + "Knowledge subject id: " + knowledgeSubjectId.toString());
+            // Create an instance of HttpClient
+            try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+                // Create a POST request with the target URL
+                HttpPost postRequest = new HttpPost(KNOWLEDGE_MAP_URL); // Replace with your URL
 
-            String serializedBody = new ObjectMapper()
-                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                    .registerModule(new JavaTimeModule())
-                    .writeValueAsString(KnowledgeSubjectReference.create(knowledgeSubjectId));
+                String serializedBody = new ObjectMapper().writeValueAsString(
+                        // Create knowledge sub ref for request body purpose
+                        KnowledgeSubjectReference.create(knowledgeSubjectId)
+                );
+                StringEntity entity = new StringEntity(serializedBody);
+                postRequest.setEntity(entity);
+                // Set headers (if needed)
+                postRequest.setHeader("Content-Type", "application/json");
+                postRequest.setHeader("Accept", "application/json");
 
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI("http://edutie-knowledge-map:10000/correlations")) ///* TODO: env property
-                    .POST(HttpRequest.BodyPublishers.ofString(serializedBody))
-                    .build();
+                // Execute the request and get the response
+                try (CloseableHttpResponse response = httpClient.execute(postRequest)) {
+                    // Check the status code
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    LOGGER.info("Response status: " + statusCode);
+                    // Get the response body
+                    String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    LOGGER.info("Response body: " + responseBody);
 
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+                    if (statusCode != 200) {
+                        return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.invalidStatus(statusCode, responseBody));
+                    }
 
-            KnowledgeCorrelation[] knowledgeCorrelations = new ObjectMapper().readValue(response.body(), KnowledgeCorrelation[].class);
-
-            return WrapperResult.successWrapper(Arrays.stream(knowledgeCorrelations).toList());
-        } catch (IOException e) {
-            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.connectionError(e));
-        } catch (Exception e) {
-            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.exceptionEncountered(e));
+                    KnowledgeCorrelation[] knowledgeCorrelations = new ObjectMapper().readValue(responseBody, KnowledgeCorrelation[].class);
+                    return WrapperResult.successWrapper(Arrays.stream(knowledgeCorrelations).toList());
+                }
+            }
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.exceptionEncountered(ex));
         }
     }
 }

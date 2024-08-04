@@ -21,7 +21,7 @@ import validation.WrapperResult;
 @Component
 public class LargeLanguageModelServiceImplementation implements LargeLanguageModelService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private final String LLM_SERVICE_URL = "http://llmservice/learning-resource";
+    private final static String LLM_SERVICE_URL = "http://llmservice/learning-resource"; //TODO: env prop
 
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {

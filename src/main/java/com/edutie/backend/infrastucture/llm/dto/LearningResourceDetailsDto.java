@@ -3,9 +3,7 @@ package com.edutie.backend.infrastucture.llm.dto;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 
 import java.util.Set;
 import java.util.stream.Collectors;
