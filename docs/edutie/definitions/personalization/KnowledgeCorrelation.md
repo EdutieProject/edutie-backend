@@ -20,7 +20,8 @@ The identity of correlated knowledge subject
 ### Correlation Factor
 The factor that represents how much given subject is correlated.
 
-[TODO: define correlation factor] 
+The less the correlation factor, the more the subject represented by above identity is correlated to the subject that
+invoked the flow.
 
 ## Sample visualisation:
 ```mermaid
