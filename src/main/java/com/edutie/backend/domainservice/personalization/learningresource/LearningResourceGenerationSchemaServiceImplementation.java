@@ -7,7 +7,6 @@ import com.edutie.backend.domain.personalization.learningresourcegenerationschem
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.ProblemDescriptor;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
-import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,10 @@ public class LearningResourceGenerationSchemaServiceImplementation implements Le
                 if (!personalizationRule.getLearningResults().isEmpty())
                     problemDescriptor.addPersonalizationRule(personalizationRule);
             }
-            problemDescriptor.calculateQualifiedSubRequirements(lResDef.getLearningRequirements().size());
+            problemDescriptor.calculateQualifiedSubRequirements(lResDef
+                    .getLearningRequirements().stream().filter(o -> o.getId().equals(problemDescriptor.getLearningRequirementId()))
+                    .findFirst().orElseThrow().getSubRequirements().size()
+            );
         }
         return WrapperResult.successWrapper(learningResourceGenerationSchema);
     }

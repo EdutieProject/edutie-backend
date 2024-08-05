@@ -27,6 +27,8 @@ public class LearningResourceGenerationSchema extends AuditableEntityBase<Learni
 
     /**
      * Initialize Learning Resource Generation Schema with empty problem descriptors
+     * Valid Learning Resource Generation Schema creation requires usage of external system, thus
+     * to create a valid L.R.G.S. LearningResourceGenerationSchemaService must be used.
      *
      * @param learningResourceDefinition learning resource definition
      * @return LearningResourceGenerationSchema

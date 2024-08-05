@@ -9,8 +9,10 @@ import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubje
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.mocks.LearningMocks;
@@ -23,6 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 public class LearningResourceGenerationSchemaServiceTests {
     LearningResourceGenerationSchemaService learningResourceGenerationSchemaService = new LearningResourceGenerationSchemaServiceImplementation(
@@ -30,6 +34,7 @@ public class LearningResourceGenerationSchemaServiceTests {
     );
     private final UserId userId = new UserId();
     private final Educator educator = Educator.create(userId, Administrator.create(userId));
+
     @Test
     public void learningResourceGenerationServiceNoLearningHistoryTest() {
         Student student = Student.create(userId);
@@ -52,7 +57,9 @@ public class LearningResourceGenerationSchemaServiceTests {
 
         LearningResourceGenerationSchema generationSchema = learningResourceGenerationSchemaService.createSchema(learningResourceDefinition, student).getValue();
 
-        assert generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty();
+        assertFalse(generationSchema.getProblemDescriptors().isEmpty());
+        assertEquals(1, generationSchema.getProblemDescriptors().get(0).getQualifiedSubRequirements());
+        assertTrue(generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty());
     }
 
     @Test
@@ -70,6 +77,7 @@ public class LearningResourceGenerationSchemaServiceTests {
         LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("1"), PromptFragment.of("2"), Set.of(primaryLearningRequirement));
         SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResourceDefinition, "Thats my report!", 0);
         LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("HEllo, World!", FeedbackType.NEUTRAL));
+        learningResult.addAssessment(Assessment.create(primaryLearningRequirement.getId(), new Grade(5)));
 
         student.getLearningHistory().add(learningResult);
 
@@ -77,7 +85,7 @@ public class LearningResourceGenerationSchemaServiceTests {
         learningRequirement.setName("U substitution integration");
         learningRequirement.setDescription(PromptFragment.of("Req1"));
         learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningRequirement.appendSubRequirement("SUBREQ");
+        learningRequirement.appendSubRequirement("SUBREQ1");
         learningRequirement.appendSubRequirement("SUBREQ2");
         learningRequirement.appendSubRequirement("SUBREQ3");
 
@@ -100,9 +108,10 @@ public class LearningResourceGenerationSchemaServiceTests {
             System.out.println(ex.getMessage());
         }
 
-        assert !generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty();
+        assertFalse(generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty());
         // 4 value is from mock
-        assert generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().getFirst().getKnowledgeCorrelationFactor() == 4;
+        assertEquals(4, generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().getFirst().getKnowledgeCorrelationFactor());
+        assertEquals(3, generationSchema.getProblemDescriptors().getFirst().getQualifiedSubRequirements());
 
     }
 }
