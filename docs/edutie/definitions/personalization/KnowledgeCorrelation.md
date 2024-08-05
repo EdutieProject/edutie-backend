@@ -8,14 +8,14 @@
 <!-- TOC -->
 
 # Knowledge Correlation
-Knowledge Correlation is an entity indicating of learning requirement's knowledge subject (wiki page) relation to other knowledge subjects.
-It does not occur in the singular form. It is used as a response for getting knowledge correlations using given knowledge subject id.
-
-Each relation is graded with 1-10 scale.
+Knowledge Correlation is an entity indicating learning requirement's knowledge subject (wiki page) relation to other knowledge subjects.
+It does not typically occur in the singular form. It is used as a response from knowledge map system for getting knowledge 
+correlations using given knowledge subject id.
 
 ## Contained data:
 ### Knowledge subject Id
-The identity of correlated knowledge subject
+The identity of correlated knowledge subject. As Learning Requirements are related with a knowledge subject, the correlation
+is also about the learning requirement that is related to knowledge subject of this id.
 
 ### Correlation Factor
 The factor that represents how much given subject is correlated.
