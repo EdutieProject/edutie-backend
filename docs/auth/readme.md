@@ -8,6 +8,7 @@
     * [Administrator](#administrator)
     * [Educator](#educator)
     * [Student](#student)
+* [References](#references)
 <!-- TOC -->
 
 # Authentication
@@ -108,3 +109,6 @@ Educator role can be assigned to user by an administrator, therefore it is a **r
 ### Student
 
 Student is a default role for users. It is assigned automatically to every user, if the flow requiring this role is invoked.
+
+# References
+Learn more about authorization code flow here: https://datatracker.ietf.org/doc/html/rfc6749#section-4.1

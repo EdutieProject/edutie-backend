@@ -20,7 +20,7 @@ This entity embeds learning resource definition as the LR definition contains th
 Learning resource definition also contains all learning requirements which are essential in LR generation.
 
 ### Problem Descriptors
-During the generation process Learning Requirements form Learning Resource Definition are being considered as a 
+During the generation process Learning Requirements from Learning Resource Definition are being considered as a 
 problem source. Therefore, every Learning Requirement produces a Problem Descriptor. 
 
 Problem descriptors contain information about the sub-requirements that are qualified to be a part of the problem. Thus, 

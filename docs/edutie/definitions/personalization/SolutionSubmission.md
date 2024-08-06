@@ -9,6 +9,7 @@
 
 # Solution submission
 The solution submission entity represents the submitted solution of the learning resource's activity. \
+Solution submission contains all data that correspond to a submitted learning resource activity.
 This entity is read-only, as the submission may not be modified.
 
 ## Contained data:
