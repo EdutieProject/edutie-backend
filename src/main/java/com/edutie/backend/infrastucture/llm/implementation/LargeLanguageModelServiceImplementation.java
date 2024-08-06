@@ -15,13 +15,17 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
 @Component
 public class LargeLanguageModelServiceImplementation implements LargeLanguageModelService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private final static String LLM_SERVICE_URL = "http://llmservice/learning-resource"; //TODO: env prop
+
+    @Value("${llm-service-host}")
+    private String LLM_SERVICE_HOST;
+    private final String LEARNING_RESOURCE_LLM_URL = LLM_SERVICE_HOST + "/learning-resource";
 
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
@@ -34,7 +38,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
             // Create an instance of HttpClient
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
                 // Create a POST request with the target URL
-                HttpPost postRequest = new HttpPost(LLM_SERVICE_URL); // Replace with your URL
+                HttpPost postRequest = new HttpPost(LEARNING_RESOURCE_LLM_URL);
 
                 StringEntity entity = new StringEntity(serializedBody);
                 postRequest.setEntity(entity);
