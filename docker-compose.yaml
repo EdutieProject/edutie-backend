@@ -14,11 +14,6 @@ services:
     container_name: backendapp
     env_file:
       - .env
-    environment:
-      - KNOWLEDGE_MAP_HOST=${KNOWLEDGE_MAP_HOST}
-      - LLM_SERVICE_HOST=${LLM_SERVICE_HOST}
-      - TOKEN_ISSUER=${TOKEN_ISSUER}
-      - JWT_KEY_LOCATION=${JWT_KEY_LOCATION}
     build:
       context: .
       dockerfile: Dockerfile
