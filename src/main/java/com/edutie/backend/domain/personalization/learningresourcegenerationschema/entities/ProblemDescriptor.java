@@ -37,9 +37,9 @@ public class ProblemDescriptor extends EntityBase<ProblemDescriptorId> {
     public void calculateQualifiedSubRequirements(int subRequirementsSize) {
         double meanOverallGrade = personalizationRules.stream()
                 .flatMap(o -> o.getLearningResults().stream())
-                .flatMap(o-> o.getAssessments().stream())
-                .map(o-> o.getGrade().gradeNumber()).mapToInt(Integer::intValue)
-                .average().orElse(0.0);
+                .flatMap(o -> o.getAssessments().stream())
+                .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue)
+                .average().orElse(1);
         double gradePercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
         this.qualifiedSubRequirements = (int) Math.ceil(gradePercentage * subRequirementsSize);
     }
