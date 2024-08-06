@@ -26,12 +26,15 @@ public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
 
     @Value("${knowledge-map-host}")
     private String KNOWLEDGE_MAP_HOST;
-    private final String CORRELATIONS_URL =  KNOWLEDGE_MAP_HOST + "/correlations";
+
 
     @Override
     public WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId) {
+        final String CORRELATIONS_URL = KNOWLEDGE_MAP_HOST + "/correlations";
         try {
-            LOGGER.info("===== Sending request to KM service: ====\n" + "Knowledge subject id: " + knowledgeSubjectId.toString());
+            LOGGER.info("===== Sending request to KM service: ====" +
+                    "\nTarget HOST: " + CORRELATIONS_URL +
+                    "\nKnowledge subject id: " + knowledgeSubjectId.toString());
             // Create an instance of HttpClient
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
                 // Create a POST request with the target URL

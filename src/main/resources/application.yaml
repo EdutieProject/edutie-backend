@@ -1,25 +1,12 @@
-# ==== GENERAL - TODO: move this to .env?
-scheme: http
-hostname: localhost
-reverse-proxy-port: 7080
-reverse-proxy-uri: ${scheme}://${hostname}:${reverse-proxy-port}
-authorization-server-prefix: /auth
-#issuer: ${reverse-proxy-uri}${authorization-server-prefix}/realms/baeldung
-issuer: http://localhost:8080/auth/realms/baeldung
-jwt-key-location: http://keycloak:8080/auth/realms/baeldung/protocol/openid-connect/certs
-username-claim-json-path: $.preferred_username
-authorities-json-path: $.realm_access.roles
+# ==== EXTERNAL SERVICES URLs ====
+knowledge-map-host: ${KNOWLEDGE_MAP_HOST}
+llm-service-host: ${LLM_SERVICE_HOST}
 
-# ==== architecture URLs
-knowledge-map-host: http://wikimapservice
-llm-service-host: http://llmservice
-
-
-# ==== SERVER CONFIG
+# ==== SERVER CONFIG ====
 server:
   port: 8081
 
-# ==== SPRING BOOT CONFIG
+# ==== SPRING BOOT CONFIG ====
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -37,35 +24,25 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${issuer}
+          issuer-uri: ${TOKEN_ISSUER}
 
-# ==== AUTH CONFIG
+# ==== AUTH CONFIG ====
 com:
   c4-soft:
     springaddons:
       oidc:
         ops:
-          - iss: ${issuer}
-            jwk-set-uri: ${jwt-key-location}
-            username-claim: ${username-claim-json-path}
+          - iss: ${TOKEN_ISSUER}
+            jwk-set-uri: ${JWT_KEY_LOCATION}
+            username-claim: $.preferred_username
             authorities:
-              - path: ${authorities-json-path}
+              - path: $.realm_access.roles
             aud:
-
         resourceserver:
           permit-all:
             - /**
-            - /swagger
-            - /v3/api-docs/**
-            - /v1/docs/**
-            - /swagger-ui/**
-            - /swagger-resources/*
-            - /Management/**
-            - /Learning/**
-            - /Authentication-Tests/**
 
-
-# ==== SWAGGER CONFIG
+# ==== SWAGGER CONFIG ====
 springdoc:
   api-docs:
     enabled: true

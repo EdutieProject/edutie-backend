@@ -25,16 +25,18 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
 
     @Value("${llm-service-host}")
     private String LLM_SERVICE_HOST;
-    private final String LEARNING_RESOURCE_LLM_URL = LLM_SERVICE_HOST + "/learning-resource";
 
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
+        final String LEARNING_RESOURCE_LLM_URL = LLM_SERVICE_HOST + "/learning-resource";
         try {
             String serializedBody = new ObjectMapper()
                     .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                     .registerModule(new JavaTimeModule())
                     .writeValueAsString(learningResourceGenerationSchema);
-            LOGGER.info("===== Sending request to LLM service: ====\n" + serializedBody);
+            LOGGER.info("===== Sending request to LLM service: ====" +
+                    "\nTarget URL: " + LEARNING_RESOURCE_LLM_URL +
+                    "\nBody sent: " + serializedBody);
             // Create an instance of HttpClient
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
                 // Create a POST request with the target URL
