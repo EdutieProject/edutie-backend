@@ -9,12 +9,15 @@ issuer: http://localhost:8080/auth/realms/baeldung
 jwt-key-location: http://keycloak:8080/auth/realms/baeldung/protocol/openid-connect/certs
 username-claim-json-path: $.preferred_username
 authorities-json-path: $.realm_access.roles
-edutie-backend-port: 8081
-audience:
+
+# ==== architecture URLs
+knowledge-map-host: http://wikimapservice
+llm-service-host: http://llmservice
+
 
 # ==== SERVER CONFIG
 server:
-  port: ${edutie-backend-port}
+  port: 8081
 
 # ==== SPRING BOOT CONFIG
 spring:
@@ -47,7 +50,7 @@ com:
             username-claim: ${username-claim-json-path}
             authorities:
               - path: ${authorities-json-path}
-            aud: ${audience}
+            aud:
 
         resourceserver:
           permit-all:
