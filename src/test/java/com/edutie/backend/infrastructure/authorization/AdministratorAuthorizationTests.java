@@ -1,8 +1,8 @@
 package com.edutie.backend.infrastructure.authorization;
 
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
-import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
+import com.edutie.backend.infrastucture.authorization.administrator.AdministratorAuthorization;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +18,18 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class EducatorAuthorizationTests {
+public class AdministratorAuthorizationTests {
     @Autowired
-    EducatorAuthorization educatorAuthorization;
+    AdministratorAuthorization administratorAuthorization;
 
     @Autowired
-    EducatorPersistence educatorPersistence;
+    AdministratorPersistence administratorPersistence;
 
     private final UserId userId = new UserId(UUID.fromString("6f3ed855-4716-4f8e-a42e-adf7a0c3273c"));
 
     @Test
     public void authorizeFailureTest() {
-        assert educatorAuthorization.authorize(new UserId()).isFailure();
+        assert administratorAuthorization.authorize(new UserId()).isFailure();
     }
 
     @Test
@@ -40,9 +40,9 @@ public class EducatorAuthorizationTests {
                 .build();
         var authorities = AuthorityUtils.createAuthorityList("edutie-admin");
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, authorities);
-        educatorAuthorization.injectRoles(jwtAuthenticationToken);
+        administratorAuthorization.injectRoles(jwtAuthenticationToken);
 
-        assert educatorPersistence.getByAuthorizedUserId(userId) != null;
+        assert administratorPersistence.getByAuthorizedUserId(userId) != null;
     }
 
     @Test
@@ -52,9 +52,9 @@ public class EducatorAuthorizationTests {
                 .claim("sub", userId.identifierValue().toString())
                 .build();
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt);
-        educatorAuthorization.injectRoles(jwtAuthenticationToken);
+        administratorAuthorization.injectRoles(jwtAuthenticationToken);
 
-        assertThrows(Exception.class, () -> educatorPersistence.getByAuthorizedUserId(userId));
+        assertThrows(Exception.class, () -> administratorPersistence.getByAuthorizedUserId(userId));
     }
 
 }
