@@ -4,7 +4,9 @@ Welcome to the edutie backend application.
 
 ### OpenApi docs
 
-To browse open api docs run the app and visit http://localhost:8081/swagger url.
+To browse open api docs run the app and visit http://localhost:8081/docs url.
+
+The JSON OpenApi specification is present under http://localhost:8081/docs/spec 
 
 ### Run inside docker
 

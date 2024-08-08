@@ -15,7 +15,7 @@ spring:
     username: ${POSTGRES_USER}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: ${DB_MODE}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -47,11 +47,11 @@ springdoc:
   api-docs:
     enabled: true
     resolve-schema-properties: true
-    path: /v1/docs
+    path: /docs/spec
     groups:
       enabled: true
   swagger-ui:
-    path: /swagger
+    path: /docs
     enabled: true
   writer-with-default-pretty-printer: true
   group-configs:
