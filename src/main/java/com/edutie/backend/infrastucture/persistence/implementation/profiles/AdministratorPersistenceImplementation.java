@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.persistence.profiles;
+package com.edutie.backend.infrastucture.persistence.implementation.profiles;
 
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;

@@ -1,10 +1,10 @@
-package com.edutie.backend.infrastucture.persistence.persistence.studyprogram;
+package com.edutie.backend.infrastucture.persistence.implementation.studyprogram;
 
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.ScienceRepository;
-import com.edutie.backend.infrastucture.persistence.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;

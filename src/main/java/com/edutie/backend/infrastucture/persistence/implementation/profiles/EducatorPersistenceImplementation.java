@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.persistence.profiles;
+package com.edutie.backend.infrastucture.persistence.implementation.profiles;
 
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;

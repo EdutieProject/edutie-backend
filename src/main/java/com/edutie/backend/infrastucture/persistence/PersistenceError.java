@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.persistence;
+package com.edutie.backend.infrastucture.persistence;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import validation.Error;

@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.persistence.personalization;
+package com.edutie.backend.infrastucture.persistence.implementation.personalization;
 
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.solutionsubmission.identities.SolutionSubmissionId;

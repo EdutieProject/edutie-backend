@@ -1,11 +1,11 @@
-package com.edutie.backend.infrastucture.persistence.persistence.education;
+package com.edutie.backend.infrastucture.persistence.implementation.education;
 
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.education.exercisetype.persistence.ExerciseTypePersistence;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.ExerciseTypeRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.ReportTemplateParagraphRepository;
-import com.edutie.backend.infrastucture.persistence.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.PersistenceError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.persistence.studyprogram.course;
+package com.edutie.backend.infrastucture.persistence.implementation.studyprogram.course;
 
 import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
 import com.edutie.backend.domain.studyprogram.course.tag.indentities.CourseTagId;

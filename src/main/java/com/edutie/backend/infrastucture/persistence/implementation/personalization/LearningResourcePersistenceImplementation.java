@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.persistence.personalization;
+package com.edutie.backend.infrastucture.persistence.implementation.personalization;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
