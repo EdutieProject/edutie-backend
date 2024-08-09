@@ -1,13 +1,11 @@
-package com.edutie.backend.infrastructure.persistence.implementation.persistence.studyprogram;
+package com.edutie.backend.infrastructure.persistence.implementation.studyprogram;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.lesson.Lesson;
-import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
+import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.ScienceRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,33 +19,29 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-
-public class LessonPersistenceTests {
+public class CoursePersistenceTests {
     @Autowired
-    LessonPersistence lessonPersistence;
+    private CoursePersistence coursePersistence;
     @Autowired
     private EducatorRepository educatorRepository;
-    @Autowired
-    private CourseRepository courseRepository;
     @Autowired
     private ScienceRepository scienceRepository;
     private final UserId userId = new UserId();
     private final Educator educator = Educator.create(userId, Administrator.create(userId));
-    private final Science science = Science.create(educator).getValue();
-    private final Course course = Course.create(educator, science);
-    private Lesson lesson;
+    private Science science;
+    private Course course;
 
     @BeforeEach
     public void testSetup() {
         educatorRepository.save(educator);
+        science = Science.create(educator).getValue();
         scienceRepository.save(science);
-        courseRepository.save(course);
-        lesson = Lesson.create(educator, course);
+        course = Course.create(educator, science);
         saveAndAssert();
     }
 
     public void saveAndAssert() {
-        Result res = lessonPersistence.save(lesson);
+        Result res = coursePersistence.save(course);
         if (res.isFailure()) {
             System.out.println(res.getError());
             throw new AssertionError();
@@ -55,14 +49,23 @@ public class LessonPersistenceTests {
     }
 
     @Test
-    public void getByCourse() {
-        List<Lesson> lessons = lessonPersistence.getAllOfCourseId(course.getId()).getValue();
-        assertTrue(lessons.contains(lesson));
+    public void gndGetByScienceTest() {
+        List<Course> courses = coursePersistence.getAllOfScienceId(science.getId()).getValue();
+        assertTrue(courses.contains(course));
     }
 
     @Test
-    public void getByEducator() {
-        List<Lesson> lessons = lessonPersistence.getAllOfEducatorId(educator.getId()).getValue();
-        assertTrue(lessons.contains(lesson));
+    public void getByEducatorTest() {
+        List<Course> courses = coursePersistence.getAllOfEducatorId(educator.getId()).getValue();
+        assertTrue(courses.contains(course));
     }
+
+    @Test
+    public void getAllAccessibleOfScienceId() {
+        course.setAccessible(true);
+        saveAndAssert();
+        List<Course> courses = coursePersistence.getAllAccessibleOfScienceId(science.getId()).getValue();
+        assertTrue(courses.contains(course));
+    }
+
 }

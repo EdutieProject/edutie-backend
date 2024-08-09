@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastructure.persistence.implementation.persistence.personalization;
+package com.edutie.backend.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;

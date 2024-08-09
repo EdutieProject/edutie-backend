@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastructure.persistence.implementation.persistence.education;
+package com.edutie.backend.infrastructure.persistence.implementation.education;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;

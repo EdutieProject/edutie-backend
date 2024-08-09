@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastructure.persistence.implementation.jpa;
+package com.edutie.backend.infrastructure.persistence.jpa;
 
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
