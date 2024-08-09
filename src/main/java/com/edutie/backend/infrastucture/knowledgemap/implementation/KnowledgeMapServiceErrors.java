@@ -8,7 +8,7 @@ public class KnowledgeMapServiceErrors {
     public static Error exceptionEncountered(Exception exception) {
         return new Error(
                 "KNOWLEDGE-MAP-EXCEPTION-500",
-                "Exception occurred in knowledge map infrastructure"
+                "Exception occurred in knowledge map infrastructure. More: " + exception.getMessage()
         );
     }
 

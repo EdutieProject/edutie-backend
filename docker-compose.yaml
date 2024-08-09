@@ -28,7 +28,6 @@ services:
     networks:
       - backendnetwork
 
-# TODO: networks should be managed by collective compose later on (?)
 networks:
   backendnetwork:
     name: backendnetwork

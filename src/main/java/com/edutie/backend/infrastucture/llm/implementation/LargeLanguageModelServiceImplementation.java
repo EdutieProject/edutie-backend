@@ -15,26 +15,32 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
 @Component
 public class LargeLanguageModelServiceImplementation implements LargeLanguageModelService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private final static String LLM_SERVICE_URL = "http://llmservice/learning-resource"; //TODO: env prop
+
+    @Value("${llm-service-host}")
+    private String LLM_SERVICE_HOST;
 
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
+        final String LEARNING_RESOURCE_LLM_URL = LLM_SERVICE_HOST + "/learning-resource";
         try {
             String serializedBody = new ObjectMapper()
                     .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                     .registerModule(new JavaTimeModule())
                     .writeValueAsString(learningResourceGenerationSchema);
-            LOGGER.info("===== Sending request to LLM service: ====\n" + serializedBody);
+            LOGGER.info("===== Sending request to LLM service: ====" +
+                    "\nTarget URL: " + LEARNING_RESOURCE_LLM_URL +
+                    "\nBody sent: " + serializedBody);
             // Create an instance of HttpClient
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
                 // Create a POST request with the target URL
-                HttpPost postRequest = new HttpPost(LLM_SERVICE_URL); // Replace with your URL
+                HttpPost postRequest = new HttpPost(LEARNING_RESOURCE_LLM_URL);
 
                 StringEntity entity = new StringEntity(serializedBody);
                 postRequest.setEntity(entity);

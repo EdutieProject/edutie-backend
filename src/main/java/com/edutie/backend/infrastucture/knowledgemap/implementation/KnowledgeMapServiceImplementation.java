@@ -13,6 +13,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
@@ -22,16 +23,22 @@ import java.util.List;
 @Component
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-    private static final String KNOWLEDGE_MAP_URL = "http://wikimapservice/correlations"; //TODO: env prop
+
+    @Value("${knowledge-map-host}")
+    private String KNOWLEDGE_MAP_HOST;
+
 
     @Override
     public WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId) {
+        final String CORRELATIONS_URL = KNOWLEDGE_MAP_HOST + "/correlations";
         try {
-            LOGGER.info("===== Sending request to KM service: ====\n" + "Knowledge subject id: " + knowledgeSubjectId.toString());
+            LOGGER.info("===== Sending request to KM service: ====" +
+                    "\nTarget HOST: " + CORRELATIONS_URL +
+                    "\nKnowledge subject id: " + knowledgeSubjectId.toString());
             // Create an instance of HttpClient
             try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
                 // Create a POST request with the target URL
-                HttpPost postRequest = new HttpPost(KNOWLEDGE_MAP_URL); // Replace with your URL
+                HttpPost postRequest = new HttpPost(CORRELATIONS_URL); // Replace with your URL
 
                 String serializedBody = new ObjectMapper().writeValueAsString(
                         // Create knowledge sub ref for request body purpose

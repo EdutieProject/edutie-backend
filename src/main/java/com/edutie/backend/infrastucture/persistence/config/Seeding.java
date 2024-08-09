@@ -26,6 +26,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,7 @@ import java.util.UUID;
  * Seeding class for seeding database with sample data
  *
  * @author Kjur0
- * @version 0.5
+ * @version 0.6
  */
 @Component
 @RequiredArgsConstructor
@@ -544,6 +545,7 @@ public class Seeding {
 
         learningResourceDefinition.addLearningRequirement(learningRequirement);
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
+        log.info("Seeded LRD with id: " + learningResourceDefinition.getId().identifierValue().toString());
     }
 
 }

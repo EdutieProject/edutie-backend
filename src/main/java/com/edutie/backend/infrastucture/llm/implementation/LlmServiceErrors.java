@@ -16,7 +16,7 @@ public class LlmServiceErrors {
     public static Error exceptionEncountered(Exception exception) {
         return new Error(
                 "LLM-SERVICE-EXCEPTION-500",
-                "Exception occurred. " + exception.getMessage()
+                "Exception occurred in LLM service infrastructure. " + exception.getMessage()
         );
     }
 
