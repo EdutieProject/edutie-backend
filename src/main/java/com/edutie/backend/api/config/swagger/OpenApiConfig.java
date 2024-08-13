@@ -40,9 +40,6 @@ public class OpenApiConfig {
                                                 )
                                         ))
                 )
-                .info(new Info()
-                        .title("Edutie Backend APP Authentication & Authorization")
-                )
                 //setting global security
                 .security(List.of(new SecurityRequirement().addList("OAuth2")));
     }
