@@ -27,6 +27,8 @@ spring:
           issuer-uri: ${TOKEN_ISSUER}
 
 # ==== AUTH CONFIG ====
+authorization-url: ${AUTHORIZATION_URL}
+token-url: ${TOKEN_URL}
 com:
   c4-soft:
     springaddons:
@@ -53,6 +55,11 @@ springdoc:
   swagger-ui:
     path: /docs
     enabled: true
+    oauth:
+      client-id: ${CLIENT_ID}
+      client-secret: ${CLIENT_SECRET}
+      scopes:
+       - openid
   writer-with-default-pretty-printer: true
   group-configs:
     - group: Learning
