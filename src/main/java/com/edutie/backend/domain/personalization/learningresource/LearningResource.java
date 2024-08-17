@@ -2,7 +2,6 @@ package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
@@ -44,19 +43,15 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     /**
      * Recommended constructor that creates learning resource from L.R.G.S. and other different details.
      *
-     * @param generationSchema   generation schema
-     * @param activityText       text of activity
-     * @param hints              hints set
-     * @param theoryOverviewText theory overview text
-     * @param theorySummaryText  theory summary text
-     * @param problemDetails     problem details text
+     * @param generationSchema generation schema
+     * @param activity         activity
+     * @param theory           theory
+     * @param problemDetails   problem details text
      * @return new Learning Resource
      */
     public static LearningResource create(LearningResourceGenerationSchema generationSchema,
-                                          String activityText,
-                                          Set<Hint> hints,
-                                          String theoryOverviewText,
-                                          String theorySummaryText,
+                                          Activity activity,
+                                          Theory theory,
                                           Set<ProblemDetail> problemDetails
     ) {
         LearningResource learningResource = new LearningResource();
@@ -64,8 +59,8 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setCreatedBy(generationSchema.getStudent().getOwnerUserId());
         learningResource.setStudentId(generationSchema.getStudent().getId());
         learningResource.setDefinitionId(generationSchema.getLearningResourceDefinition().getId());
-        learningResource.setActivity(Activity.create(activityText, hints));
-        learningResource.setTheory(Theory.create(theoryOverviewText, theorySummaryText));
+        learningResource.setActivity(activity);
+        learningResource.setTheory(theory);
         learningResource.setProblemDetails(problemDetails);
         return learningResource;
     }

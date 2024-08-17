@@ -1,12 +1,12 @@
 package com.edutie.backend.infrastucture.llm.dto;
 
-import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
+import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,22 +27,19 @@ public class LearningResourceCreationDto {
     @JsonProperty
     private Set<ProblemDetailDto> problemDetails;
 
-    @AllArgsConstructor
-    public static class ProblemDetailDto {
-        LearningRequirementId learningRequirementId;
-        int qualifiedSubRequirements;
-    }
-
-
+    /**
+     * Converts DTO into domain Learning Resource entity
+     *
+     * @param generationSchema L.R.G.S.
+     * @return Learning Resource
+     */
     public LearningResource intoLearningResource(LearningResourceGenerationSchema generationSchema) {
         Set<Hint> hints = this.hints.stream().map(Hint::create).collect(Collectors.toSet());
         return LearningResource.create(
                 generationSchema,
-                activityText,
-                hints,
-                theoryOverviewText,
-                theorySummaryText,
-                problemDetails.stream().map(o-> ProblemDetail.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet())
+                Activity.create(activityText, hints),
+                Theory.create(theoryOverviewText, theorySummaryText),
+                problemDetails.stream().map(o -> ProblemDetail.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet())
         );
     }
 }
