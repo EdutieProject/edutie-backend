@@ -1,21 +1,18 @@
 package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
-import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
+import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
-import com.edutie.backend.domain.studyprogram.segment.Segment;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -41,19 +38,26 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private Activity activity;
     @OneToOne(targetEntity = Theory.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Theory theory;
+    @OneToMany(targetEntity = ProblemDetail.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<ProblemDetail> problemDetails = new HashSet<>();
 
     /**
-     * Recommended constructor associating learning resource with a student (creation invoker) and a lesson segment.
+     * Recommended constructor that creates learning resource from L.R.G.S. and other different details.
      *
-     * @param studentId student profile identity
-     * @param definitionId resource definition reference
-     * @return Learning Resource
+     * @param generationSchema   generation schema
+     * @param activityText       text of activity
+     * @param hints              hints set
+     * @param theoryOverviewText theory overview text
+     * @param theorySummaryText  theory summary text
+     * @param problemDetails     problem details text
+     * @return new Learning Resource
      */
     public static LearningResource create(LearningResourceGenerationSchema generationSchema,
                                           String activityText,
                                           Set<Hint> hints,
                                           String theoryOverviewText,
-                                          String theorySummaryText
+                                          String theorySummaryText,
+                                          Set<ProblemDetail> problemDetails
     ) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
@@ -62,8 +66,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setDefinitionId(generationSchema.getLearningResourceDefinition().getId());
         learningResource.setActivity(Activity.create(activityText, hints));
         learningResource.setTheory(Theory.create(theoryOverviewText, theorySummaryText));
+        learningResource.setProblemDetails(problemDetails);
         return learningResource;
     }
-
-
 }
