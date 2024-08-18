@@ -21,7 +21,8 @@ Learning resource definition also contains all learning requirements which are e
 
 ### Problem Descriptors
 During the generation process Learning Requirements from Learning Resource Definition are being considered as a 
-problem source. Therefore, every Learning Requirement produces a Problem Descriptor. 
+problem source. Therefore, every Learning Requirement produces a Problem Descriptor. The reference is kept using both
+the corresponding learning requirement id and its knowledge subject id as well.
 
 Problem descriptors contain information about the sub-requirements that are qualified to be a part of the problem. Thus, 
 they are not constant and are a part of personalization.
@@ -56,6 +57,8 @@ classDiagram
     }
     class ProblemDescriptor {
         Qualfied sub reqs
+        Corresponding Learning Requirement Id
+        Knowledge Subject Id - metadata
         List of Personalization Rules
     }
     class PersonalizationRule {
