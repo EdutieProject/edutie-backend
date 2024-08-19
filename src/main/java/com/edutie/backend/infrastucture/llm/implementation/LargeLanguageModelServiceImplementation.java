@@ -3,7 +3,7 @@ package com.edutie.backend.infrastucture.llm.implementation;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
-import com.edutie.backend.infrastucture.llm.dto.LearningResourceDetailsDto;
+import com.edutie.backend.infrastucture.llm.dto.LearningResourceCreationDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -61,8 +61,8 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
                         return WrapperResult.failureWrapper(LlmServiceErrors.invalidStatus(statusCode, responseBody));
                     }
 
-                    LearningResourceDetailsDto learningResourceDetailsDto = new ObjectMapper().readValue(responseBody, LearningResourceDetailsDto.class);
-                    return WrapperResult.successWrapper(learningResourceDetailsDto.intoLearningResource(learningResourceGenerationSchema));
+                    LearningResourceCreationDto learningResourceCreationDto = new ObjectMapper().readValue(responseBody, LearningResourceCreationDto.class);
+                    return WrapperResult.successWrapper(learningResourceCreationDto.intoLearningResource(learningResourceGenerationSchema));
                 }
             }
         } catch (Exception ex) {

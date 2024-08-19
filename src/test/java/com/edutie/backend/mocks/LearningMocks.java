@@ -3,7 +3,10 @@ package com.edutie.backend.mocks;
 import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
+import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
+import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
 import validation.WrapperResult;
@@ -11,6 +14,7 @@ import validation.WrapperResult;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class LearningMocks {
     public static KnowledgeMapService knowledgeMapServiceMock() {
@@ -26,10 +30,9 @@ public class LearningMocks {
         return learningResourceGenerationSchema -> {
             LearningResource learningResource = LearningResource.create(
                     learningResourceGenerationSchema,
-                    learningResourceGenerationSchema.getLearningResourceDefinition().getExerciseDescription().text(),
-                    Set.of(Hint.create("Hello!"), Hint.create("World!")),
-                    learningResourceGenerationSchema.getLearningResourceDefinition().getTheoryDescription() != null ? learningResourceGenerationSchema.getLearningResourceDefinition().getTheoryDescription().text() : null,
-                    learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription() != null ? learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription().text() : null
+                    Activity.create(learningResourceGenerationSchema.getLearningResourceDefinition().getExerciseDescription().text(), Set.of(Hint.create("Hello!"), Hint.create("World!"))),
+                    Theory.create(learningResourceGenerationSchema.getLearningResourceDefinition().getTheoryDescription().text(), learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription() != null ? learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription().text() : null),
+                    learningResourceGenerationSchema.getLearningResourceDefinition().getLearningRequirements().stream().map(o -> ProblemDetail.create(o.getId(), 1)).collect(Collectors.toSet())
             );
             return WrapperResult.successWrapper(learningResource);
         };
