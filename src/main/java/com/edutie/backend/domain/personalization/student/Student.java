@@ -40,7 +40,7 @@ public class Student extends Role<StudentId> {
     public List<LearningResult> getLearningHistoryByKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
         return learningHistory.stream()
                 .filter(o -> o.getSolutionSubmission().getLearningResource().getDefinition().getLearningRequirements()
-                        .stream().anyMatch(x->x.getKnowledgeSubjectId().equals(knowledgeSubjectId)))
+                        .stream().anyMatch(x -> x.getKnowledgeSubjectId().equals(knowledgeSubjectId)))
                 .collect(Collectors.toList());
     }
 }
