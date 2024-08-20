@@ -1,7 +1,9 @@
 package com.edutie.backend.infrastucture.llm.implementation;
 
+import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
 import com.edutie.backend.infrastucture.llm.dto.LearningResourceCreationDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import validation.Error;
 import validation.WrapperResult;
 
 @Component
@@ -68,5 +71,10 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(LlmServiceErrors.exceptionEncountered(ex));
         }
+    }
+
+    @Override
+    public WrapperResult<LearningResult> assessStudentsWork(AssessmentSchema assessmentSchema) {
+        return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED-596", "Not implemented yet"));
     }
 }
