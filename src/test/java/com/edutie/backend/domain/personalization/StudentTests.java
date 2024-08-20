@@ -6,7 +6,11 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -30,10 +34,16 @@ public class StudentTests {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setKnowledgeSubjectId(knowledgeSubjectId);
         LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
+        LearningResource learningResource = LearningResource.create(
+                LearningResourceGenerationSchema.create(learningResourceDefinition, student),
+                Activity.create("", Set.of()),
+                Theory.create("",""),
+                Set.of()
+        );
 
         LearningResult learningResult = LearningResult.create(
                 student,
-                SolutionSubmission.create(student, learningResourceDefinition, "My report", 0),
+                SolutionSubmission.create(student, learningResource, "My report", 0),
                 new Feedback("My feedback", FeedbackType.NEUTRAL)
         );
         student.getLearningHistory().add(learningResult);
@@ -48,10 +58,15 @@ public class StudentTests {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
         LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
-
+        LearningResource learningResource = LearningResource.create(
+                LearningResourceGenerationSchema.create(learningResourceDefinition, student),
+                Activity.create("", Set.of()),
+                Theory.create("",""),
+                Set.of()
+        );
         LearningResult learningResult = LearningResult.create(
                 student,
-                SolutionSubmission.create(student, learningResourceDefinition, "My report", 0),
+                SolutionSubmission.create(student, learningResource, "My report", 0),
                 new Feedback("My feedback", FeedbackType.NEUTRAL)
         );
         student.getLearningHistory().add(learningResult);
