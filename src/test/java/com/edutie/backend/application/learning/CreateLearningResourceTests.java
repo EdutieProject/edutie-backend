@@ -13,9 +13,12 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
@@ -137,8 +140,14 @@ public class CreateLearningResourceTests {
         learningResourceDefinition.setTheorySummaryAdditionalDescription(PromptFragment.of("Theory summary additional desc"));
         learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
         learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        LearningResource learningResource = LearningResource.create(
+                LearningResourceGenerationSchema.create(learningResourceDefinition, student),
+                Activity.create("", Set.of()),
+                Theory.create("", ""),
+                Set.of()
+        );
 
-        SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResourceDefinition, "My report!", 0);
+        SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "My report!", 0);
         solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
         LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("Feedback!", FeedbackType.NEUTRAL));
         learningResult.addAssessment(Assessment.create(learningRequirement.getId(), new Grade(5)));
