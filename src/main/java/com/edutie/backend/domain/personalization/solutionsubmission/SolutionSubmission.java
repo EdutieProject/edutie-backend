@@ -18,6 +18,7 @@ import lombok.*;
 public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId> {
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
+    @JsonIgnore
     private Student student;
     @ManyToOne(targetEntity = LearningResource.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
