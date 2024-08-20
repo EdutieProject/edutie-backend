@@ -33,7 +33,7 @@ public class AssessSolutionCommandHandlerImplementation extends HandlerBase impl
         LearningResource learningResource = learningResourcePersistence.getById(command.learningResourceId()).getValue();
         SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, command.solutionSubmissionText(), command.hintsRevealedCount());
         solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
-        LearningResult learningResult = largeLanguageModelService.assessStudentsWork(AssessmentSchema.create(student, solutionSubmission, learningResource)).getValue();
+        LearningResult learningResult = largeLanguageModelService.assessStudentsSolution(AssessmentSchema.create(student, solutionSubmission, learningResource)).getValue();
         learningResultPersistence.save(learningResult).throwIfFailure();
         return WrapperResult.successWrapper(learningResult);
     }

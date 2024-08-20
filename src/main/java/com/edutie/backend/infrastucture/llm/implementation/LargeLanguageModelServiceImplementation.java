@@ -74,7 +74,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
     }
 
     @Override
-    public WrapperResult<LearningResult> assessStudentsWork(AssessmentSchema assessmentSchema) {
+    public WrapperResult<LearningResult> assessStudentsSolution(AssessmentSchema assessmentSchema) {
         final String LEARNING_RESULT_LLM_URL = LLM_SERVICE_HOST + "/learning-result";
         try {
             String serializedBody = new ObjectMapper()
