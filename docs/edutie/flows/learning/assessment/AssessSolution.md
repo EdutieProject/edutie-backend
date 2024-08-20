@@ -1,4 +1,4 @@
-# Assessment flow
+# Assess Solution flow
 This flow is responsible for student's work assessment. It creates Solution Submission as well as corresponding 
 Learning Result.
 
@@ -17,9 +17,9 @@ sequenceDiagram
     participant LLM
     autonumber
     
-    Client->>Rest API: Assessment request
+    Client->>Rest API: Assess Solution request
     Rest API->>Rest API: Authorize student
-    Rest API->>Application: Assessment command
+    Rest API->>Application: Assess Solution command
     Application->>Persistence: Fetch entities
     Persistence->>Application: Persisted entities:<br/>Learning Resource<br/>Student profile<br/>Related LRD
     critical Transaction - to make sure both Solution Submission and Learning result are persisted

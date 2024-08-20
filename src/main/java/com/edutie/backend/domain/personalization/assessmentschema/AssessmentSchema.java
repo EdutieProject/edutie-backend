@@ -7,7 +7,6 @@ import com.edutie.backend.domain.personalization.learningresource.LearningResour
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@Entity
 public class AssessmentSchema extends AuditableEntityBase<AssessmentSchemaId> {
     @JsonIgnore
     private Student student;

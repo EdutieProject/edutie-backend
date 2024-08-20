@@ -1,8 +1,8 @@
 package com.edutie.backend.application.learning.assessment.implementation;
 
 import com.edutie.backend.application.common.HandlerBase;
-import com.edutie.backend.application.learning.assessment.AssessmentCommandHandler;
-import com.edutie.backend.application.learning.assessment.commands.AssessmentCommand;
+import com.edutie.backend.application.learning.assessment.AssessSolutionCommandHandler;
+import com.edutie.backend.application.learning.assessment.commands.AssessSolutionCommand;
 import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
@@ -19,7 +19,7 @@ import validation.WrapperResult;
 
 @Component
 @RequiredArgsConstructor
-public class AssessmentCommandHandlerImplementation extends HandlerBase implements AssessmentCommandHandler {
+public class AssessSolutionCommandHandlerImplementation extends HandlerBase implements AssessSolutionCommandHandler {
     private final LearningResourcePersistence learningResourcePersistence;
     private final StudentPersistence studentPersistence;
     private final SolutionSubmissionPersistence solutionSubmissionPersistence;
@@ -27,7 +27,7 @@ public class AssessmentCommandHandlerImplementation extends HandlerBase implemen
     private final LearningResultPersistence learningResultPersistence;
 
     @Override
-    public WrapperResult<LearningResult> handle(AssessmentCommand command) {
+    public WrapperResult<LearningResult> handle(AssessSolutionCommand command) {
         LOGGER.info("Handling assessment for student of id {} and learning resource of id {}", command.studentUserId(), command.learningResourceId());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
         LearningResource learningResource = learningResourcePersistence.getById(command.learningResourceId()).getValue();

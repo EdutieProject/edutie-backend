@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class AssessmentCommand extends StudentAction<AssessmentCommand> {
+public final class AssessSolutionCommand extends StudentAction<AssessSolutionCommand> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private @NonNull LearningResourceId learningResourceId;
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
@@ -24,7 +24,7 @@ public final class AssessmentCommand extends StudentAction<AssessmentCommand> {
     private @NonNull int hintsRevealedCount;
 
     @Override
-    protected AssessmentCommand getThis() {
+    protected AssessSolutionCommand getThis() {
         return this;
     }
 }
