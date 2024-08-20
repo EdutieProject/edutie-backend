@@ -8,5 +8,5 @@ import validation.WrapperResult;
 
 public interface LargeLanguageModelService {
     WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema);
-    WrapperResult<LearningResult> assessStudentsSolution(AssessmentSchema assessmentSchema);
+    WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema);
 }

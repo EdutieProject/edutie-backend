@@ -49,7 +49,7 @@ public class LearningMocks {
 
 
             @Override
-            public WrapperResult<LearningResult> assessStudentsSolution(AssessmentSchema assessmentSchema) {
+            public WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema) {
                 LearningResult learningResult = LearningResult.create(
                         assessmentSchema.getStudent(),
                         assessmentSchema.getSolutionSubmission(),
