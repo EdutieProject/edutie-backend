@@ -4,6 +4,7 @@
     * [Report text](#report-text)
     * [Revealed hints count](#revealed-hints-count)
     * [Student relationship](#student-relationship)
+    * [Learning Resource relationship](#learning-resource-relationship)
   * [References](#references)
 <!-- TOC -->
 
@@ -21,6 +22,10 @@ The amount of revealed hints
 
 ### Student relationship
 Student relationship indicates which student submitted the relationship
+
+### Learning Resource relationship
+As the solution submission corresponds to the given learning resource, it contains the reference to it.
+It is N to 1 type of relationship, meaning multiple Solution Submission can be related to one Learning Resource.
 
 ## References
 No references as of now.
