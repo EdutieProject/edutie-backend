@@ -35,6 +35,8 @@ public class AssessmentSchemaTests {
 
         SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "This is my report", 0);
 
-        AssessmentSchema assessmentSchema = AssessmentSchema.create(solutionSubmission, learningResource);
+        AssessmentSchema assessmentSchema = AssessmentSchema.create(student, solutionSubmission, learningResource);
+        //TODO: test problem descriptors once #135 is resolved
+
     }
 }
