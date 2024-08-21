@@ -10,6 +10,10 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains data about the problems that should be generated for the Learning Resource.
+ * This problem descriptor describes a problem for the LLM.
+ */
 @Getter
 public class GenerationSchemaProblemDescriptor extends ProblemDescriptor {
     private final KnowledgeSubjectId knowledgeSubjectId;

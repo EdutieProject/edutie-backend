@@ -5,6 +5,10 @@ import com.edutie.backend.domain.personalization.common.problemdescriptor.identi
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * Provides problem descriptors for assessment schema with necessary information about
+ * the problem encompassed in Learning Resource that is being assessed.
+ */
 @Getter
 @EqualsAndHashCode(callSuper = true)
 public class AssessmentSchemaProblemDescriptor extends ProblemDescriptor {

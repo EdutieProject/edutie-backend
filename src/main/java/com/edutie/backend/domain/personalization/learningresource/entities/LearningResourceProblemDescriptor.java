@@ -6,6 +6,10 @@ import com.edutie.backend.domain.personalization.common.problemdescriptor.identi
 import jakarta.persistence.Entity;
 import lombok.*;
 
+/**
+ * Contains metadata about the problem specified in the learning resource.
+ * This metadata may be used later in assessment.
+ */
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(callSuper = true)
