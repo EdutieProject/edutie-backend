@@ -7,7 +7,7 @@ import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubje
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
-import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
+import com.edutie.backend.domain.personalization.learningresource.entities.LearningResourceProblemDescriptor;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
@@ -42,7 +42,7 @@ public class LearningMocks {
                         learningResourceGenerationSchema,
                         Activity.create(learningResourceGenerationSchema.getLearningResourceDefinition().getExerciseDescription().text(), Set.of(Hint.create("Hello!"), Hint.create("World!"))),
                         Theory.create(learningResourceGenerationSchema.getLearningResourceDefinition().getTheoryDescription().text(), learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription() != null ? learningResourceGenerationSchema.getLearningResourceDefinition().getTheorySummaryAdditionalDescription().text() : null),
-                        learningResourceGenerationSchema.getLearningResourceDefinition().getLearningRequirements().stream().map(o -> ProblemDetail.create(o.getId(), 1)).collect(Collectors.toSet())
+                        learningResourceGenerationSchema.getLearningResourceDefinition().getLearningRequirements().stream().map(o -> LearningResourceProblemDescriptor.create(o.getId(), 1)).collect(Collectors.toSet())
                 );
                 return WrapperResult.successWrapper(learningResource);
             }

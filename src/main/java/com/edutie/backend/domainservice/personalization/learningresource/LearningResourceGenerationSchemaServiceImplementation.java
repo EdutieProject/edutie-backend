@@ -4,7 +4,7 @@ import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeC
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.PersonalizationRule;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.ProblemDescriptor;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.GenerationSchemaProblemDescriptor;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class LearningResourceGenerationSchemaServiceImplementation implements Le
     public WrapperResult<LearningResourceGenerationSchema> createSchema(LearningResourceDefinition lResDef, Student student) {
         LOGGER.info("Creating L.Res. Generation Schema with definition of id {} for student of id {}", lResDef.getId(), student.getId());
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(lResDef, student);
-        for (ProblemDescriptor problemDescriptor : learningResourceGenerationSchema.getProblemDescriptors()) {
+        for (GenerationSchemaProblemDescriptor problemDescriptor : learningResourceGenerationSchema.getProblemDescriptors()) {
             LOGGER.info("Creating problem descriptor...");
             for (KnowledgeCorrelation knowledgeCorrelation : knowledgeMapService.getKnowledgeCorrelations(problemDescriptor.getKnowledgeSubjectId()).getValue()) {
                 PersonalizationRule personalizationRule = PersonalizationRule.create(knowledgeCorrelation, student);

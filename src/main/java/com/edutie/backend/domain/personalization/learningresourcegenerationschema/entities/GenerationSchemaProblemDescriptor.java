@@ -1,28 +1,23 @@
 package com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities;
 
-import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.common.problemdescriptor.ProblemDescriptor;
+import com.edutie.backend.domain.personalization.common.problemdescriptor.identities.ProblemDescriptorId;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.ProblemDescriptorId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class ProblemDescriptor extends EntityBase<ProblemDescriptorId> {
-    private final LearningRequirementId learningRequirementId;
+public class GenerationSchemaProblemDescriptor extends ProblemDescriptor {
     private final KnowledgeSubjectId knowledgeSubjectId;
-    @Setter
-    private int qualifiedSubRequirements = 0;
     private final List<PersonalizationRule> personalizationRules = new ArrayList<>();
 
-    public ProblemDescriptor(LearningRequirement learningRequirement) {
+    public GenerationSchemaProblemDescriptor(LearningRequirement learningRequirement) {
         this.setId(new ProblemDescriptorId());
-        this.learningRequirementId = learningRequirement.getId();
+        this.setLearningRequirementId(learningRequirement.getId());
         this.knowledgeSubjectId = learningRequirement.getKnowledgeSubjectId();
     }
 
@@ -41,6 +36,6 @@ public class ProblemDescriptor extends EntityBase<ProblemDescriptorId> {
                 .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue)
                 .average().orElse(1);
         double gradePercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
-        this.qualifiedSubRequirements = (int) Math.ceil(gradePercentage * subRequirementsSize);
+        this.setQualifiedSubRequirementOrdinal((int) Math.ceil(gradePercentage * subRequirementsSize));
     }
 }

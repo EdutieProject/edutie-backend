@@ -4,7 +4,7 @@ import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.ProblemDescriptor;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.GenerationSchemaProblemDescriptor;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.LearningResourceGenerationSchemaId;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -23,7 +23,7 @@ public class LearningResourceGenerationSchema extends AuditableEntityBase<Learni
     @JsonSerialize(using = IdOnlySerializer.class)
     private Student student;
     private LearningResourceDefinition learningResourceDefinition;
-    private List<ProblemDescriptor> problemDescriptors = new ArrayList<>();
+    private List<GenerationSchemaProblemDescriptor> problemDescriptors = new ArrayList<>();
 
     /**
      * Initialize Learning Resource Generation Schema with empty problem descriptors
@@ -40,12 +40,12 @@ public class LearningResourceGenerationSchema extends AuditableEntityBase<Learni
         learningResourceGenerationSchema.setStudent(student);
         learningResourceGenerationSchema.setCreatedBy(student.getOwnerUserId());
         for (LearningRequirement learningRequirement : learningResourceDefinition.getLearningRequirements()) {
-            learningResourceGenerationSchema.addProblemDescriptor(new ProblemDescriptor(learningRequirement));
+            learningResourceGenerationSchema.addProblemDescriptor(new GenerationSchemaProblemDescriptor(learningRequirement));
         }
         return learningResourceGenerationSchema;
     }
 
-    private void addProblemDescriptor(ProblemDescriptor problemDescriptor) {
+    private void addProblemDescriptor(GenerationSchemaProblemDescriptor problemDescriptor) {
         problemDescriptors.add(problemDescriptor);
     }
 }
