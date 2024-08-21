@@ -5,7 +5,7 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Activ
 import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import jakarta.persistence.*;
@@ -25,10 +25,9 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
+    @ManyToOne(targetEntity = LearningResourceDefinition.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
-    private LearningResourceDefinitionId definitionId;
+    private LearningResourceDefinition definition;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
     @Setter(AccessLevel.PRIVATE)
@@ -58,7 +57,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setId(new LearningResourceId());
         learningResource.setCreatedBy(generationSchema.getStudent().getOwnerUserId());
         learningResource.setStudentId(generationSchema.getStudent().getId());
-        learningResource.setDefinitionId(generationSchema.getLearningResourceDefinition().getId());
+        learningResource.setDefinition(generationSchema.getLearningResourceDefinition());
         learningResource.setActivity(activity);
         learningResource.setTheory(theory);
         learningResource.setProblemDetails(problemDetails);

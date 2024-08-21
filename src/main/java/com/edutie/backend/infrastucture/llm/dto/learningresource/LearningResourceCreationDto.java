@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.llm.dto;
+package com.edutie.backend.infrastucture.llm.dto.learningresource;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;

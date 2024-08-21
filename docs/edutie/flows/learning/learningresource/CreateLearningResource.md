@@ -5,7 +5,7 @@ This flow creates personalized, dedicated learning resource for a student.
 
 ```mermaid
 ---
-title: Course creation
+title: Learning Resource creation
 ---
 sequenceDiagram
     participant Client

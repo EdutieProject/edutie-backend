@@ -9,8 +9,14 @@ import com.edutie.backend.domain.education.educator.persistence.EducatorPersiste
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
@@ -28,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -53,6 +60,7 @@ public class Seeding {
 	private final LearningRequirementPersistence learningRequirementPersistence;
 	private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
 	private final CourseTagPersistence courseTagPersistence;
+	private final LearningResourcePersistence learningResourcePersistence;
 
 	private final UserId uid = new UserId();
 	private final Administrator administrator = Administrator.create(uid);
@@ -186,6 +194,18 @@ public class Seeding {
 		learningResourceDefinition.addLearningRequirement(learningRequirement);
 		learningResourceDefinitionPersistence.save(learningResourceDefinition);
 		log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
+
+		LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
+				learningResourceDefinition,
+				Student.create(new UserId())
+		);
+		LearningResource learningResource = LearningResource.create(learningResourceGenerationSchema,
+				Activity.create("Please calculate the hypotenuse in the right triangle of sides lengths: 6 and 8", Set.of()),
+				Theory.create("Pythagoras theorem is...", "Pythagoras helps to calculate hypotenuses"),
+				Set.of()
+		);
+		learningResourcePersistence.save(learningResource).throwIfFailure();
+		log.info("Seeded Learning Resource with id: {}", learningResource.getId().identifierValue().toString());
 	}
 
 	/**
