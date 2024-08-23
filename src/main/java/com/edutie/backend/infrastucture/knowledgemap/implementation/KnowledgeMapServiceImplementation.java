@@ -1,8 +1,8 @@
 package com.edutie.backend.infrastucture.knowledgemap.implementation;
 
-import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectReference;
+import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.methods.CloseableHttpResponse;

@@ -3,7 +3,7 @@ package com.edutie.backend.domain.personalization.learningresourcegenerationsche
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.common.problemdescriptor.ProblemDescriptor;
 import com.edutie.backend.domain.personalization.common.problemdescriptor.identities.ProblemDescriptorId;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import lombok.Getter;
 

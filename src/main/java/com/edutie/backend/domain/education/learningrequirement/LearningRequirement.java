@@ -6,7 +6,7 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
