@@ -36,4 +36,4 @@ classDiagram
 ```
 
 ## References
-Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md
+Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Edukacja.md

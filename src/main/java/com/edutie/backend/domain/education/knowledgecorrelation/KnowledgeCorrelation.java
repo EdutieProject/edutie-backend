@@ -4,6 +4,9 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Knowledge correlation represents knowledge subject and its relation importance as correlation factor
+ */
 @Getter
 @Setter
 public class KnowledgeCorrelation {
