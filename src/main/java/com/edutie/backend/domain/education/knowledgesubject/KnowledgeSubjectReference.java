@@ -1,12 +1,17 @@
-package com.edutie.backend.domain.personalization.knowledgesubject;
+package com.edutie.backend.domain.education.knowledgesubject;
 
 import com.edutie.backend.domain.common.base.EntityBase;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Knowledge subject reference is an entity that represents only the identifier of the knowledge subject.
+ * In the Edutie context the details of the knowledge subject are not important as of now.
+ */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Getter

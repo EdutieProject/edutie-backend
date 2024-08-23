@@ -2,8 +2,8 @@ package com.edutie.backend.mocks;
 
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
-import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;

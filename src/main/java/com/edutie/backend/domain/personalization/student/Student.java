@@ -2,7 +2,7 @@ package com.edutie.backend.domain.personalization.student;
 
 import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import jakarta.persistence.Entity;

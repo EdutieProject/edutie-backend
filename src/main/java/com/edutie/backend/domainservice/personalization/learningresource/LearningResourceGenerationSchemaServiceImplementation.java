@@ -1,6 +1,6 @@
 package com.edutie.backend.domainservice.personalization.learningresource;
 
-import com.edutie.backend.domain.personalization.knowledgecorrelation.KnowledgeCorrelation;
+import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.PersonalizationRule;
