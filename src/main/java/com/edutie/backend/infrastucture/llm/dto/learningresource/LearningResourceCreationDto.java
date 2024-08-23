@@ -3,7 +3,7 @@ package com.edutie.backend.infrastucture.llm.dto.learningresource;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
-import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
+import com.edutie.backend.domain.personalization.learningresource.entities.LearningResourceProblemDescriptor;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,7 +39,7 @@ public class LearningResourceCreationDto {
                 generationSchema,
                 Activity.create(activityText, hints),
                 Theory.create(theoryOverviewText, theorySummaryText),
-                problemDetails.stream().map(o -> ProblemDetail.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet())
+                problemDetails.stream().map(o -> LearningResourceProblemDescriptor.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet())
         );
     }
 }

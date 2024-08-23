@@ -2,7 +2,7 @@ package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.ProblemDetail;
+import com.edutie.backend.domain.personalization.learningresource.entities.LearningResourceProblemDescriptor;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
@@ -36,8 +36,8 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private Activity activity;
     @OneToOne(targetEntity = Theory.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Theory theory;
-    @OneToMany(targetEntity = ProblemDetail.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ProblemDetail> problemDetails = new HashSet<>();
+    @OneToMany(targetEntity = LearningResourceProblemDescriptor.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<LearningResourceProblemDescriptor> problemDescriptors = new HashSet<>();
 
     /**
      * Recommended constructor that creates learning resource from L.R.G.S. and other different details.
@@ -45,13 +45,13 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
      * @param generationSchema generation schema
      * @param activity         activity
      * @param theory           theory
-     * @param problemDetails   problem details text
+     * @param learningResourceProblemDescriptors   problem details text
      * @return new Learning Resource
      */
     public static LearningResource create(LearningResourceGenerationSchema generationSchema,
                                           Activity activity,
                                           Theory theory,
-                                          Set<ProblemDetail> problemDetails
+                                          Set<LearningResourceProblemDescriptor> learningResourceProblemDescriptors
     ) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
@@ -60,7 +60,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setDefinition(generationSchema.getLearningResourceDefinition());
         learningResource.setActivity(activity);
         learningResource.setTheory(theory);
-        learningResource.setProblemDetails(problemDetails);
+        learningResource.setProblemDescriptors(learningResourceProblemDescriptors);
         return learningResource;
     }
 }
