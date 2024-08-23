@@ -2,11 +2,9 @@ package com.edutie.backend.domain.personalization.student;
 
 import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -41,8 +39,8 @@ public class Student extends Role<StudentId> {
 
     public List<LearningResult> getLearningHistoryByKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
         return learningHistory.stream()
-                .filter(o -> o.getSolutionSubmission().getLearningResourceDefinition().getLearningRequirements()
-                        .stream().anyMatch(x->x.getKnowledgeSubjectId().equals(knowledgeSubjectId)))
+                .filter(o -> o.getSolutionSubmission().getLearningResource().getDefinition().getLearningRequirements()
+                        .stream().anyMatch(x -> x.getKnowledgeSubjectId().equals(knowledgeSubjectId)))
                 .collect(Collectors.toList());
     }
 }

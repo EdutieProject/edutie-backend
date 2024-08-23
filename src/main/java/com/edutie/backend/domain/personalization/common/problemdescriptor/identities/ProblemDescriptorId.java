@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities;
+package com.edutie.backend.domain.personalization.common.problemdescriptor.identities;
 
 import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
 import com.fasterxml.jackson.annotation.JsonCreator;

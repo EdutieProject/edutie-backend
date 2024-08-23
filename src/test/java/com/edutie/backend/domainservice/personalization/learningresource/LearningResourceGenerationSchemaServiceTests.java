@@ -6,6 +6,9 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.knowledgesubject.KnowledgeSubjectId;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
@@ -58,7 +61,7 @@ public class LearningResourceGenerationSchemaServiceTests {
         LearningResourceGenerationSchema generationSchema = learningResourceGenerationSchemaService.createSchema(learningResourceDefinition, student).getValue();
 
         assertFalse(generationSchema.getProblemDescriptors().isEmpty());
-        assertEquals(1, generationSchema.getProblemDescriptors().get(0).getQualifiedSubRequirements());
+        assertEquals(1, generationSchema.getProblemDescriptors().get(0).getQualifiedSubRequirementOrdinal());
         assertTrue(generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty());
     }
 
@@ -75,7 +78,13 @@ public class LearningResourceGenerationSchemaServiceTests {
         primaryLearningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
 
         LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("1"), PromptFragment.of("2"), Set.of(primaryLearningRequirement));
-        SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResourceDefinition, "Thats my report!", 0);
+        LearningResource learningResource = LearningResource.create(
+                LearningResourceGenerationSchema.create(learningResourceDefinition, student),
+                Activity.create("", Set.of()),
+                Theory.create("",""),
+                Set.of()
+        );
+        SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "Thats my report!", 0);
         LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("HEllo, World!", FeedbackType.NEUTRAL));
         learningResult.addAssessment(Assessment.create(primaryLearningRequirement.getId(), new Grade(5)));
 
@@ -111,7 +120,7 @@ public class LearningResourceGenerationSchemaServiceTests {
         assertFalse(generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty());
         // 4 value is from mock
         assertEquals(4, generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().getFirst().getKnowledgeCorrelationFactor());
-        assertEquals(3, generationSchema.getProblemDescriptors().getFirst().getQualifiedSubRequirements());
+        assertEquals(3, generationSchema.getProblemDescriptors().getFirst().getQualifiedSubRequirementOrdinal());
 
     }
 }
