@@ -61,7 +61,7 @@ public class LearningResourceGenerationSchemaServiceTests {
         LearningResourceGenerationSchema generationSchema = learningResourceGenerationSchemaService.createSchema(learningResourceDefinition, student).getValue();
 
         assertFalse(generationSchema.getProblemDescriptors().isEmpty());
-        assertEquals(1, generationSchema.getProblemDescriptors().get(0).getQualifiedSubRequirements());
+        assertEquals(1, generationSchema.getProblemDescriptors().get(0).getQualifiedSubRequirementOrdinal());
         assertTrue(generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty());
     }
 
@@ -120,7 +120,7 @@ public class LearningResourceGenerationSchemaServiceTests {
         assertFalse(generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().isEmpty());
         // 4 value is from mock
         assertEquals(4, generationSchema.getProblemDescriptors().getFirst().getPersonalizationRules().getFirst().getKnowledgeCorrelationFactor());
-        assertEquals(3, generationSchema.getProblemDescriptors().getFirst().getQualifiedSubRequirements());
+        assertEquals(3, generationSchema.getProblemDescriptors().getFirst().getQualifiedSubRequirementOrdinal());
 
     }
 }
