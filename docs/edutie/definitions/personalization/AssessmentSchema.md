@@ -2,7 +2,7 @@
 * [Assessment Schema](#assessment-schema)
   * [Contained data:](#contained-data)
     * [Solution submission](#solution-submission)
-    * [Assessment Problem descriptors](#assessment-problem-descriptors)
+    * [Assessment Problem descriptor list](#assessment-problem-descriptor-list)
   * [References](#references)
 <!-- TOC -->
 
@@ -15,15 +15,18 @@ a Learning Result.
 
 ### Solution submission
 
-It must be embedded into the schema, so we know what to assess. 
+It must be embedded into the schema, so we know what to assess.
 
-### Assessment Problem descriptors
+### Assessment Problem descriptor list
+
 Assessment problem descriptor is derived from Learning Resource so the assessment process accounts for
 the amount of sub requirements from each learning requirement.
 
 Therefore, it consists of:
- - Learning Requirement
- - Amount of qualified sub requirements
+
+- Learning Requirement
+- Amount of qualified sub requirements
 
 ## References
+
 Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md
