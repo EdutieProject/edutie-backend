@@ -10,24 +10,32 @@
 <!-- TOC -->
 
 # Course
-Course is the biggest piece of education aggregating the most information pieces. Moreover, course is an aggregator of 
+
+Course is the biggest piece of education aggregating the most information pieces. Moreover, course is an aggregator of
 lessons; Course is a single lesson tree.
 
 ## Contained data:
+
 ### Name
+
 Name of the course
 
 ### Snippet description
+
 Description of the course
 
 ### Lessons
-List of lessons being in the course, forming a lesson tree.
+
+References of all lessons being in the course, which create a lesson tree.
 
 ### Science
-Reference of the science of this course.
+
+Reference of the science being assigned to this course.
 
 ### Tags
+
 List of course tags that describe this course purpose in more symbolic way.
 
 ## References
-No references as of now.
+
+Find more information here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/SystemProgresu.md
