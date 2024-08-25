@@ -30,10 +30,10 @@ sequenceDiagram
 
 ## Input data
 
-| Input            | Type        | Required |
-|------------------|-------------|----------|
-| Educator User Id | Educator Id | ✅        |
-| Segment Id       | Course Id   | ✅        |
+| Input            | Type            | Required |
+|------------------|-----------------|----------|
+| Educator User Id | UUID Identifier | ✅        |
+| Segment Id       | UUID Identifier | ✅        |
 
 ## Description
 

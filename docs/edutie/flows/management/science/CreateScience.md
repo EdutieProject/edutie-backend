@@ -28,11 +28,11 @@ sequenceDiagram
 
 ## Input data
 
-| Input                 | Type             | Required |
-|-----------------------|------------------|----------|
-| Administrator User Id | Administrator Id | ✅        |
-| Science Name          | String           | ✅        |
-| Science Description   | String           | ❌        |
+| Input                 | Type            | Required |
+|-----------------------|-----------------|----------|
+| Administrator User Id | UUID Identifier | ✅        |
+| Science Name          | String          | ✅        |
+| Science Description   | String          | ❌        |
 
 ## Description
 

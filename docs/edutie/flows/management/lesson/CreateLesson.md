@@ -38,13 +38,13 @@ sequenceDiagram
 
 ## Input data
 
-| Input              | Type        | Required |
-|--------------------|-------------|----------|
-| Educator User Id   | Educator Id | ✅        |
-| Lesson Name        | String      | ✅        |
-| Lesson Description | String      | ❌        |
-| Previous Lesson Id | Lesson Id   | ✅        |
-| Next Lesson Id     | Lesson Id   | ❌        |
+| Input              | Type            | Required |
+|--------------------|-----------------|----------|
+| Educator User Id   | UUID Identifier | ✅        |
+| Lesson Name        | String          | ✅        |
+| Lesson Description | String          | ❌        |
+| Previous Lesson Id | UUID Identifier | ✅        |
+| Next Lesson Id     | UUID Identifier | ❌        |
 
 ## Description
 

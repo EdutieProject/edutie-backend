@@ -37,13 +37,13 @@ sequenceDiagram
 
 ## Input data
 
-| Input               | Type        | Required |
-|---------------------|-------------|----------|
-| Educator User Id    | Educator Id | ✅        |
-| Segment Name        | String      | ✅        |
-| Segment Description | String      | ❌        |
-| Previous Segment Id | Lesson Id   | ✅        |
-| Next Segment Id     | Lesson Id   | ❌        |
+| Input               | Type            | Required |
+|---------------------|-----------------|----------|
+| Educator User Id    | UUID Identifier | ✅        |
+| Segment Name        | String          | ✅        |
+| Segment Description | String          | ❌        |
+| Previous Segment Id | UUID Identifier | ✅        |
+| Next Segment Id     | UUID Identifier | ❌        |
 
 ## Description
 

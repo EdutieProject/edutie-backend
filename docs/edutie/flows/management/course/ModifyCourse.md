@@ -34,13 +34,13 @@ sequenceDiagram
 
 ## Input data
 
-| Input              | Type        | Required |
-|--------------------|-------------|----------|
-| Educator User Id   | Educator Id | ✅        |
-| Course Id          | Course Id   | ✅        |
-| Course Name        | String      | ❌        |
-| Course Description | String      | ❌        |
-| Accessibility      | boolean     | ❌        |
+| Input              | Type            | Required |
+|--------------------|-----------------|----------|
+| Educator User Id   | UUID Identifier | ✅        |
+| Course Id          | UUID Identifier | ✅        |
+| Course Name        | String          | ❌        |
+| Course Description | String          | ❌        |
+| Accessibility      | boolean         | ❌        |
 
 ## Description
 

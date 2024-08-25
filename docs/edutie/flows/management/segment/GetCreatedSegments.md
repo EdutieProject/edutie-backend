@@ -26,9 +26,9 @@ sequenceDiagram
 
 ## Input data
 
-| Input            | Type        | Required |
-|------------------|-------------|----------|
-| Educator User Id | Educator Id | ✅        |
+| Input            | Type            | Required |
+|------------------|-----------------|----------|
+| Educator User Id | UUID Identifier | ✅        |
 
 ## Description
 

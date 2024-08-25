@@ -45,14 +45,14 @@ sequenceDiagram
 
 ## Input data
 
-| Input                          | Type        | Required |
-|--------------------------------|-------------|----------|
-| Educator User Id               | Educator Id | ✅        |
-| Segment Id                     | Segment Id  | ❌        |
-| Theory description             | String      | ✅        |
-| Exercise description           | String      | ✅        |
-| Additional summary description | String      | ❌        |
-| Additional hints description   | String      | ❌        |
+| Input                          | Type            | Required |
+|--------------------------------|-----------------|----------|
+| Educator User Id               | UUID Identifier | ✅        |
+| Segment Id                     | UUID Identifier | ❌        |
+| Theory description             | String          | ✅        |
+| Exercise description           | String          | ✅        |
+| Additional summary description | String          | ❌        |
+| Additional hints description   | String          | ❌        |
 
 ## Description
 

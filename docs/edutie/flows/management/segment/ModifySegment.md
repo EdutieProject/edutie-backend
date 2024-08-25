@@ -34,12 +34,12 @@ sequenceDiagram
 
 ## Input data
 
-| Input                       | Type        | Required |
-|-----------------------------|-------------|----------|
-| Educator User Id            | Educator Id | ✅        |
-| Segment Id                  | Course Id   | ✅        |
-| Segment Name                | String      | ❌        |
-| Segment Snippet Description | String      | ❌        |
+| Input                       | Type            | Required |
+|-----------------------------|-----------------|----------|
+| Educator User Id            | UUID Identifier | ✅        |
+| Segment Id                  | UUID Identifier | ✅        |
+| Segment Name                | String          | ❌        |
+| Segment Snippet Description | String          | ❌        |
 
 ## Description
 

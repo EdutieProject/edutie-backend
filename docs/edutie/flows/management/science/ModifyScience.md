@@ -32,13 +32,13 @@ sequenceDiagram
 
 ## Input data
 
-| Input               | Type        | Required |
-|---------------------|-------------|----------|
-| Educator User Id    | Educator Id | ✅        |
-| Science Id          | Course Id   | ✅        |
-| Science Name        | String      | ❌        |
-| Science Description | String      | ❌        |
-| Accessibility       | Boolean     | ❌        |
+| Input               | Type            | Required |
+|---------------------|-----------------|----------|
+| Educator User Id    | UUID Identifier | ✅        |
+| Science Id          | UUID Identifier | ✅        |
+| Science Name        | String          | ❌        |
+| Science Description | String          | ❌        |
+| Accessibility       | Boolean         | ❌        |
 
 ## Description
 
