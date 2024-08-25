@@ -46,7 +46,7 @@ sequenceDiagram
 Flow updates course properties using the provided command.
 
 - Lesson being modified is the lesson with id provided in the command
-- Educator modifying the course must be an author of the course to modify it.
+- Educator modifying the lesson must be an author of the lesson to modify it.
 - Properties are assigned if they are provided.
     - Property is not assigned if it is assigned null explicitly or not provided in the command (assigned null
       implicitly)

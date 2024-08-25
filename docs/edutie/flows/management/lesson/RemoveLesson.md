@@ -38,9 +38,9 @@ sequenceDiagram
 
 ## Description
 
-Flow removes the course from the application.
+Flow removes the lesson from the application.
 
 - Lesson itself is being removed.
     - Underlying segments stay in the database by default. They are removed if "Remove Segments" property is true
 - Next lessons (if any) are automatically being connected to the previous element
-- Course may be removed only by author educator
+- Lesson may be removed only by author educator

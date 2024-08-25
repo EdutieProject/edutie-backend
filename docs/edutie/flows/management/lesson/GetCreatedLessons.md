@@ -20,7 +20,7 @@ sequenceDiagram
     Application ->> Persistence: Load created Lessons
     Persistence ->> Persistence: Filter lessons by<br/>author Educator Id
     Persistence ->> Application: Loaded entities
-    Application ->> Rest API: Wrapper result of course list
+    Application ->> Rest API: Wrapper result of lesson list
     Rest API ->> Client: List of Lessons response
 ```
 
@@ -32,6 +32,6 @@ sequenceDiagram
 
 ## Description
 
-Flow retrieves created courses by given educator user.
+Flow retrieves created lessons by given educator user.
 
 - User invoking the flow must be an educator
