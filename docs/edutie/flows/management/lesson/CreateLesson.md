@@ -48,7 +48,7 @@ sequenceDiagram
 
 ## Description
 
-Flow creates a course using provided command.
+Flow creates a science using provided command.
 
 - Lesson uses name and description provided in the command
 - Lesson is created as next in relation to the previous lesson identified by the id in the command.
