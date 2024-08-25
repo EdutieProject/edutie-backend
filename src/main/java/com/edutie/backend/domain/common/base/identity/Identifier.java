@@ -6,6 +6,11 @@ import jakarta.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Base Identifier class
+ *
+ * @param <TId> The identifier type
+ */
 @MappedSuperclass
 public abstract class Identifier<TId> implements Serializable {
     protected TId identifierValue;

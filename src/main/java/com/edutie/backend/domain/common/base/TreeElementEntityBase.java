@@ -12,6 +12,13 @@ import validation.Result;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Tree element base entity. Subtypes are tree-like study program structure elements.
+ *
+ * @param <TNavigationEntity> Type of the entity creating the tree
+ * @param <TId>               Type of entity identifier
+ */
+//TODO: move to study program subdomain
 @Getter
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)

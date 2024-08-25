@@ -14,7 +14,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * Base class for a role
+ * Base class for a role profile
  *
  * @param <TId>
  */

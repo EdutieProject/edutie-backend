@@ -4,12 +4,18 @@ import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.base.identity.Identifier;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.common.RoleRepository;
 import com.edutie.backend.infrastucture.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.common.RoleRepository;
 import validation.Result;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Base Persistence extension providing additional operations for Role profile support.
+ *
+ * @param <TEntity> Role entity type
+ * @param <TId> Role entity identifier type
+ */
 public interface RolePersistence<TEntity extends Role<TId>, TId extends Identifier<?>> extends Persistence<TEntity, TId> {
 
     RoleRepository<TEntity, TId> getRepository();

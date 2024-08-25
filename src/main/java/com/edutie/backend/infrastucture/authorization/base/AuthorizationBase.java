@@ -21,7 +21,6 @@ public interface AuthorizationBase {
      * Pre-inject roles if any injectable exist in authentication token.
      *
      * @param authentication authentication token
-     * @return Injection result
      */
     void injectRoles(JwtAuthenticationToken authentication);
 }

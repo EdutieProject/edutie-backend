@@ -1,7 +1,5 @@
 package com.edutie.backend.domain.studyprogram.science;
 
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.education.EducationError;
 import com.edutie.backend.domain.education.educator.Educator;

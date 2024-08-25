@@ -16,6 +16,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Schema used in personalized Learning Resource generation.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Setter
