@@ -1,6 +1,6 @@
 # Remove lesson flow
 
-This flow removes a lesson. This may be performed by author educator of the course.
+This flow removes a lesson. This may be performed by author educator of the lesson.
 
 ## Sequence diagram
 

@@ -1,6 +1,6 @@
 # Modify lesson flow
 
-This flow modifies a lesson. This may be performed by any educator which is a course author.
+This flow modifies a lesson. This may be performed by any educator which is a lesson author.
 
 ## Sequence diagram
 

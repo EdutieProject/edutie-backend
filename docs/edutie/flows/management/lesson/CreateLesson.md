@@ -1,6 +1,7 @@
 # Create lesson flow
 
-This flow creates a lesson. This may be performed by any educator.
+This flow creates a lesson. This may be performed by an educator that has access to the corresponding
+course modification.
 
 ## Sequence diagram
 
