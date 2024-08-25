@@ -26,6 +26,12 @@ sequenceDiagram
     Domain ->> Application: Wrapper Result
     Application ->> Persistence: Deep save lesson
     Persistence ->> Application: Result
+    opt Next lesson Id provided
+        Application ->> Domain: Change previous element<br/>of the "next" lesson to the created one
+        Domain ->> Application: Result
+        Application ->> Persistence: Save next lesson
+        Persistence ->> Application: Result
+    end
     Application ->> Rest API: Wrapper Result
     Rest API ->> Client: Response with created lesson
 ```
