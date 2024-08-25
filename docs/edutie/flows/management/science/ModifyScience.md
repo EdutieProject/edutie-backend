@@ -45,7 +45,7 @@ sequenceDiagram
 Flow updates course properties using the provided command.
 
 - Science being modified is the Science with id provided in the command
-- Any admin can modify any science.
+- Any administrator can modify any science.
 - Properties are assigned if they are provided.
     - Property is not assigned if it is assigned null explicitly or not provided in the command (assigned null
       implicitly)
