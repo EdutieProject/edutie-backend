@@ -10,25 +10,33 @@
 <!-- TOC -->
 
 # Segment
-Segment is the most atomic part of a study program. 
+
+Segment is the most atomic part of a tree-like study program.
 
 Segments form tree-like structures, where a segment can have a previous element and many next elements.
 
 ## Contained data:
+
 ### Previous element & Next elements
+
 As described above, those are the references to the connected elements in the tree structure.
 
 ### Name
+
 Segment name displayed in the tree view
 
 ### Snippet description
-The description displayable in the tree view
+
+The description displayable for the student in the tree view
 
 ### Learning Resource Definition
+
 The definition of the learning resource that is used to generate the dedicated learning resource for a student.
 
 ### Lesson
-A reference of the lesson which contains the segment. 
+
+A reference of the lesson which contains the segment.
 
 ## References
-No references as of now.
+
+Find more information here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/SystemProgresu.md

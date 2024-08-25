@@ -1,6 +1,5 @@
 package com.edutie.backend.domain.personalization.learningresourcedefinition;
 
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -16,6 +15,10 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Learning Resource Definition is an absolute definition of how Learning Resource should be generated
+ * from the knowledge and educational perspective.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

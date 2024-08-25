@@ -1,1 +1,0 @@
-Reimplement profiles handlers when auth  #54 is resolved

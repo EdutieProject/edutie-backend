@@ -2,6 +2,9 @@ package com.edutie.backend.domain.education;
 
 import validation.Error;
 
+/**
+ * Common education subdomain errors.
+ */
 public class EducationError {
     public static Error educatorMustBeAuthorError(Class<?> entityClass) {
         return new Error(

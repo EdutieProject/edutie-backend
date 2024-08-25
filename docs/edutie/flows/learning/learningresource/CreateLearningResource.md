@@ -1,4 +1,5 @@
 # Create learning resource flow
+
 This flow creates personalized, dedicated learning resource for a student.
 
 ## Sequence diagram
@@ -16,55 +17,56 @@ sequenceDiagram
     participant Wikimap
     participant LLM
     autonumber
-    
-    Client->>Rest API: Create learning resource request
-    Rest API->>Rest API: Authorize student
-    Rest API->>Application: Create learning resource command
-    Application->>Persistence: Fetch entities
-    Persistence->>Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
-    Application->>Domain: Create Learning Resource Domain Service
-   note left of Domain: First, create an LRGS
+    Client ->> Rest API: Create learning resource request
+    Rest API ->> Rest API: Authorize student
+    Rest API ->> Application: Create learning resource command
+    Application ->> Persistence: Fetch entities
+    Persistence ->> Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
+    Application ->> Domain: Create Learning Resource Domain Service
+    note left of Domain: First, create an LRGS
     loop For every learning requirement in LRD
-        Domain->>Domain: Create Problem descriptor
-        Domain->>Wikimap: Get knowledge correlations
-        Wikimap->>Domain: Knowledge correlations
+        Domain ->> Domain: Create Problem descriptor
+        Domain ->> Wikimap: Get knowledge correlations
+        Wikimap ->> Domain: Knowledge correlations
         loop For every knowledge correlation
-            Domain->>Domain: Create personalization rule
+            Domain ->> Domain: Create personalization rule
         end
-        Domain->>Domain: Calculate qualified sub-requirements
+        Domain ->> Domain: Calculate qualified sub-requirements
     end
     note left of Domain: Now, let LLM generate LR from LRGS
-    Domain->>LLM: Learning Resource Generation Schema
-    LLM->>Domain: Learning Resource
-    Domain->>Application: Learning Resource
-    Application->>Persistence: Save Learning Resource
-    Persistence->>Application: Save Result
-    Application->>Rest API: Result wrapping Learning Resource
-    Rest API->>Client: Learning Resource Response
+    Domain ->> LLM: Learning Resource Generation Schema
+    LLM ->> Domain: Learning Resource
+    Domain ->> Application: Learning Resource
+    Application ->> Persistence: Save Learning Resource
+    Persistence ->> Application: Save Result
+    Application ->> Rest API: Result wrapping Learning Resource
+    Rest API ->> Client: Learning Resource Response
 
 ```
 
 ## Input data
 
-| Input                           | Type                            | Required |
-|---------------------------------|---------------------------------|----------|
-| Student Id                      | Student Id                      | ✅        |
-| Learning Resource Definition Id | Learning Resource Definition Id | ✅        |
+| Input                           | Type            | Required |
+|---------------------------------|-----------------|----------|
+| Student Id                      | UUID Identifier | ✅        |
+| Learning Resource Definition Id | UUID Identifier | ✅        |
 
 ## Description
+
 This flow creates a learning resource. It is created using learning resource definition and a student profile.
 
 Learning resource is created by constructing Learning Resource Generation Schema.
 Let's describe the algorithm behind the LRGS creation:
+
 1. Input data: Student id and Learning Resource Definition id
 2. Load the data - student profile and LR Definition
 3. For each Learning Requirement in LR Definition:
-   1. Create Problem descriptor
-   2. Fetch Knowledge correlations related to the problem descriptor's knowledge subject id
-   3. For each knowledge correlation create Personalization Rule
-      - using the knowledge correlation (spread properties)
-      - using the student's learning history learning results that are filtered using this knowledge subject id
-   4. Calculate qualified sub-requirements utilizing personalization rules
+    1. Create Problem descriptor
+    2. Fetch Knowledge correlations related to the problem descriptor's knowledge subject id
+    3. For each knowledge correlation create Personalization Rule
+        - using the knowledge correlation (spread properties)
+        - using the student's learning history learning results that are filtered using this knowledge subject id
+    4. Calculate qualified sub-requirements utilizing personalization rules
 4. Using the created Problem descriptors and the LR Definition create Learning Resource Generation Schema
 
 The LRGS is sent to the LLM and the response is being restructured to match Learning Resource.

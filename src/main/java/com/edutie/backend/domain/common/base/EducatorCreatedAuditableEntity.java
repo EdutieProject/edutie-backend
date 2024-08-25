@@ -10,6 +10,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Auditable entity with {@code authorEducator} field and relationship.
+ *
+ * @param <TId>
+ */
 @Getter
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)

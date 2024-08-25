@@ -1,12 +1,12 @@
 package com.edutie.backend.domain.education.learningrequirement;
 
-import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.DomainErrors;
+import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +17,9 @@ import validation.Result;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Learning Requirement entity represents the requirements that student exercises to gain knowledge.
+ */
 @NoArgsConstructor
 @Getter
 @Setter

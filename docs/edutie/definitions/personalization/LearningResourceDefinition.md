@@ -14,22 +14,32 @@ Learning resource definition is a scheme from which personalized Learning Resour
 ## Contained data:
 
 ### Learning requirements relationships
-Learning Resource Definition has access to Learning Requirements references. 
-That is a many-to-many relationship. There must be at least 1 learning requirement related to the definition.
+
+Learning Resource Definition has access to Learning Requirements references.
+That is a many-to-many relationship. There must be at least 1 learning requirement related to the definition for it to
+be functional.
+
+Learning requirements are the primary descriptors of what the LR should require from the student. Therefore, they are
+the most important when it comes to the true knowledge student exercises.
 
 ### Theory context sources
-Learning Resource Definition has a theory context source. 
+
+Learning Resource Definition has a theory context source.
 The theory context source describes how the theory context in the learning resource should look like.
 The contents of this part are:
- - theory description - a description used for theory context generation
- - theory summary additions - an additional prompt used for summary generation
+
+- Theory description - a description used for theory context generation
+- Theory summary additions - an additional prompt used for summary generation
 
 ### Activity context sources
+
 Learning Resource Definition has an activity context source.
-Activity context source describes how the activity for the learning resource should look like. 
+Activity context source describes how the activity for the learning resource should look like.
 The contents of this part are:
- - activity description - a description used for task generation
- - hints description additions - an additional description used for hint generation
+
+- Activity description - a description used for task generation
+- Hints description additions - an additional description used for hint generation
 
 ## References
+
 Find more information in here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/Personalizacja.md

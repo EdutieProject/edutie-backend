@@ -9,16 +9,24 @@ import validation.WrapperResult;
 
 import java.util.Optional;
 
-
+/**
+ * Base persistence. By default, it uses jpa repositories to perform basic operations on entities.
+ * Override its methods to use different kinds of techniques to perform DB operations.
+ *
+ * @param <T>   Type of entity to be persisted
+ * @param <TId> Identifier of the entity type
+ */
 public interface Persistence<T extends EntityBase<TId>, TId extends Identifier<?>> {
     /**
      * Override this to provide repository for default methods
+     *
      * @return crud jpa repository
      */
     JpaRepository<T, TId> getRepository();
 
     /**
      * Override this to provide entity class for default methods
+     *
      * @return class of persistence entity
      */
     Class<T> entityClass();

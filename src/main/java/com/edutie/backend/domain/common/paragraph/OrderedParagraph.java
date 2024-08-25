@@ -1,11 +1,15 @@
 package com.edutie.backend.domain.common.paragraph;
 
 import com.edutie.backend.domain.common.base.identity.Identifier;
-
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * A Paragraph but with an ordinal, knowing its order
+ *
+ * @param <TId> Type of paragraph id.
+ */
 @Getter
 @Setter
 @MappedSuperclass

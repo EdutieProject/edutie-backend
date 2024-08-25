@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 
+/**
+ * Action to be extended when a flow should be invoked by an administrator
+ *
+ * @param <T>
+ */
 @Getter
 @Accessors(fluent = true)
 public abstract class AdminAction<T extends AdminAction<T>> {

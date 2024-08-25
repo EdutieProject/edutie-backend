@@ -60,8 +60,7 @@ public class WrapperResult<T> extends Result {
     }
 
     /**
-     * Retrieves the value. May throw {@code NoSuchElementException} when the value is null. The value is null
-     * only if the wrapper result is failure, so it is necessary to check using {@code isFailure()}
+     * Retrieves the value. May throw {@code OperationFailureException} when the value is null.
      * or {@code isSuccess()}
      *
      * @return Wrapped Value

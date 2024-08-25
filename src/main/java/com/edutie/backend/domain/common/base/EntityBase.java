@@ -1,18 +1,23 @@
 package com.edutie.backend.domain.common.base;
 
-import java.io.Serializable;
-
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 
 /**
  * Base class for an entity.
- * @param <TId> Type of id. Example: Book entity has an id of type BookId
+ *
+ * @param <TId> Type of id. Must be strongly typed using Identifier class.
+ * @see Identifier Identifier class
  */
 @Getter
 @Setter(AccessLevel.PROTECTED)

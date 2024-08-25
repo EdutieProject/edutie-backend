@@ -3,6 +3,9 @@ package com.edutie.backend.infrastucture.persistence;
 import com.edutie.backend.domain.common.base.EntityBase;
 import validation.Error;
 
+/**
+ * Common persistence errors.
+ */
 public class PersistenceError {
     public static Error exceptionEncountered(Exception ex) {
         return new Error("PERSISTENCE-EXCEPTION-500", ex.getMessage());

@@ -8,6 +8,11 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+/**
+ * Action to be extended when a flow should be invoked by a student
+ *
+ * @param <T>
+ */
 @Setter
 @Getter
 @Accessors(fluent = true)

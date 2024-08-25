@@ -2,6 +2,9 @@ package com.edutie.backend.domain.common;
 
 import validation.Error;
 
+/**
+ * Common Domain Errors
+ */
 public class DomainErrors {
     public static Error invalidIdentifier() {
         return new Error(

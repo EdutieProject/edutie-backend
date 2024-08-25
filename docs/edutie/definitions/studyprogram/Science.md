@@ -6,11 +6,15 @@
 <!-- TOC -->
 
 # Science
+
 Science serves as a category for courses.
 
 ## Contained data:
+
 ### Name
+
 Science name
 
 ## References
-No references as of now.
+
+Find more information here: https://github.com/EdutieProject/Dokumentacja/blob/main/projekty/edutie/SystemProgresu.md

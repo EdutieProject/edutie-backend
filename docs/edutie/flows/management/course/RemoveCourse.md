@@ -15,30 +15,32 @@ sequenceDiagram
     participant Domain
     participant Persistence
     autonumber
-    
-    Client->>Rest API: Remove Course Request
-    Rest API->>Rest API: Authorize Educator
-    Rest API->>Application: Remove Course Command
-    Application->>Persistence: Load Data
-    Persistence->>Application: Loaded entities
-    Application->>Domain: Check if educator is author
-    Domain->>Application: true/false
-    Application->>Persistence: Remove course
-    Persistence->>Application: Result
-    Application->>Rest API: Result
-    Rest API->>Client: Result Response
+    Client ->> Rest API: Remove Course Request
+    Rest API ->> Rest API: Authorize Educator
+    Rest API ->> Application: Remove Course Command
+    Application ->> Persistence: Load Data
+    Persistence ->> Application: Loaded entities
+    Application ->> Domain: Check if educator is author
+    Domain ->> Application: true/false
+    Application ->> Persistence: Remove course
+    Persistence ->> Application: Result
+    Application ->> Rest API: Result
+    Rest API ->> Client: Result Response
 ```
 
 ## Input data
 
-| Input              | Type        | Required |
-|--------------------|-------------|----------|
-| Educator User Id   | Educator Id | ✅        |
-| Course Id          | Course Id   | ✅        |
+| Input            | Type            | Required |
+|------------------|-----------------|----------|
+| Educator User Id | UUID Identifier | ✅        |
+| Course Id        | UUID Identifier | ✅        |
+| Remove Lessons   | Boolean         | ❌        |
 
 ## Description
 
 Flow removes the course from the application.
- - Only course itself is being removed.
-   - Underlying lessons & segments stay in the database.
- - Course may be removed only by author educator
+
+- Course itself is being removed.
+    - Underlying lessons & segments stay in the database by default. They are removed if "Remove Lessons" property is
+      true
+- Course may be removed only by author educator
