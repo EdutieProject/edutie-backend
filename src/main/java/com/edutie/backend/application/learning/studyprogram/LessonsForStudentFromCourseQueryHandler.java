@@ -1,7 +1,7 @@
-package com.edutie.backend.application.learning.lesson;
+package com.edutie.backend.application.learning.studyprogram;
 
-import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
-import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
+import com.edutie.backend.application.learning.studyprogram.queries.LessonsForStudentFromCourseQuery;
+import com.edutie.backend.application.learning.studyprogram.viewmodels.LessonView;
 import com.edutie.backend.application.common.UseCaseHandler;
 import validation.WrapperResult;
 

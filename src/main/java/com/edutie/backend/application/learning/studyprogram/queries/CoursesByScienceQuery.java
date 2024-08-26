@@ -1,4 +1,4 @@
-package com.edutie.backend.application.learning.course.queries;
+package com.edutie.backend.application.learning.studyprogram.queries;
 
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

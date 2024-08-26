@@ -1,7 +1,7 @@
-package com.edutie.backend.application.learning.course.implementation;
+package com.edutie.backend.application.learning.studyprogram.implementation;
 
-import com.edutie.backend.application.learning.course.CoursesByScienceQueryHandler;
-import com.edutie.backend.application.learning.course.queries.CoursesByScienceQuery;
+import com.edutie.backend.application.learning.studyprogram.CoursesByScienceQueryHandler;
+import com.edutie.backend.application.learning.studyprogram.queries.CoursesByScienceQuery;
 import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;

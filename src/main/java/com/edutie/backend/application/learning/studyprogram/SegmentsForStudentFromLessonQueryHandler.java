@@ -1,7 +1,7 @@
-package com.edutie.backend.application.learning.segment;
+package com.edutie.backend.application.learning.studyprogram;
 
-import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
-import com.edutie.backend.application.learning.segment.viewmodels.SegmentView;
+import com.edutie.backend.application.learning.studyprogram.queries.SegmentsForStudentFromLessonQuery;
+import com.edutie.backend.application.learning.studyprogram.viewmodels.SegmentView;
 import com.edutie.backend.application.common.UseCaseHandler;
 import validation.WrapperResult;
 

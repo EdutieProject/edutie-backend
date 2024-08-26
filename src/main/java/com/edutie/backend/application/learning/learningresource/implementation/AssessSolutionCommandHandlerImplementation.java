@@ -1,8 +1,8 @@
-package com.edutie.backend.application.learning.assessment.implementation;
+package com.edutie.backend.application.learning.learningresource.implementation;
 
 import com.edutie.backend.application.common.HandlerBase;
-import com.edutie.backend.application.learning.assessment.AssessSolutionCommandHandler;
-import com.edutie.backend.application.learning.assessment.commands.AssessSolutionCommand;
+import com.edutie.backend.application.learning.learningresource.AssessSolutionCommandHandler;
+import com.edutie.backend.application.learning.learningresource.commands.AssessSolutionCommand;
 import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;

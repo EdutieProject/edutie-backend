@@ -1,7 +1,7 @@
-package com.edutie.backend.application.learning.science;
+package com.edutie.backend.application.learning.studyprogram;
 
 import com.edutie.backend.application.common.UseCaseHandler;
-import com.edutie.backend.application.learning.science.queries.AccessibleSciencesQuery;
+import com.edutie.backend.application.learning.studyprogram.queries.AccessibleSciencesQuery;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import validation.WrapperResult;
 

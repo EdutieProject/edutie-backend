@@ -1,8 +1,8 @@
-package com.edutie.backend.application.learning.lesson.implementation;
+package com.edutie.backend.application.learning.studyprogram.implementation;
 
-import com.edutie.backend.application.learning.lesson.LessonsForStudentFromCourseQueryHandler;
-import com.edutie.backend.application.learning.lesson.queries.LessonsForStudentFromCourseQuery;
-import com.edutie.backend.application.learning.lesson.viewmodels.LessonView;
+import com.edutie.backend.application.learning.studyprogram.LessonsForStudentFromCourseQueryHandler;
+import com.edutie.backend.application.learning.studyprogram.queries.LessonsForStudentFromCourseQuery;
+import com.edutie.backend.application.learning.studyprogram.viewmodels.LessonView;
 import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;

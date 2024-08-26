@@ -1,9 +1,9 @@
-package com.edutie.backend.application.learning.segment.implementation;
+package com.edutie.backend.application.learning.studyprogram.implementation;
 
 import com.edutie.backend.application.common.HandlerBase;
-import com.edutie.backend.application.learning.segment.SegmentsForStudentFromLessonQueryHandler;
-import com.edutie.backend.application.learning.segment.queries.SegmentsForStudentFromLessonQuery;
-import com.edutie.backend.application.learning.segment.viewmodels.SegmentView;
+import com.edutie.backend.application.learning.studyprogram.SegmentsForStudentFromLessonQueryHandler;
+import com.edutie.backend.application.learning.studyprogram.queries.SegmentsForStudentFromLessonQuery;
+import com.edutie.backend.application.learning.studyprogram.viewmodels.SegmentView;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;

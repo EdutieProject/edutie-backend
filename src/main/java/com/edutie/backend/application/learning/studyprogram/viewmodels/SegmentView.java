@@ -1,4 +1,4 @@
-package com.edutie.backend.application.learning.segment.viewmodels;
+package com.edutie.backend.application.learning.studyprogram.viewmodels;
 
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 
