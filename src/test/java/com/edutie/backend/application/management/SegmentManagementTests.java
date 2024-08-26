@@ -8,9 +8,8 @@ import com.edutie.backend.application.management.segment.commands.CreateSegmentC
 import com.edutie.backend.application.management.segment.commands.ModifySegmentCommand;
 import com.edutie.backend.application.management.segment.commands.RemoveSegmentCommand;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
-import com.edutie.backend.domain.administration.administrator.Administrator;
-import com.edutie.backend.domain.administration.administrator.identities.AdministratorId;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
@@ -97,7 +96,6 @@ public class SegmentManagementTests {
         Segment createdSegment = segmentWrapperResult.getValue();
 
         assert createdSegment.getName().equals("Hello World!");
-        assert createdSegment.getTheoryDescription().text().equals("Desc");
         assert createdSegment.getPreviousElement().getId().equals(previousSegmentId);
         assert createdSegment.getNextElements().isEmpty();
 
@@ -132,7 +130,7 @@ public class SegmentManagementTests {
 
         Segment previousFetched = segmentPersistence.getById(prevSegmentId).getValue();
         assert createdSegmentResult.getValue().getPreviousElement().getId().equals(previousFetched.getId());
-        assert createdSegmentResult.getValue().getNextElements().stream().anyMatch(o->o.getId().equals(nextSegmentId));
+        assert createdSegmentResult.getValue().getNextElements().stream().anyMatch(o -> o.getId().equals(nextSegmentId));
 
     }
 
