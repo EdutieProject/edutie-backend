@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.studyprogram.queries;
 
 import com.edutie.backend.application.common.actions.StudentAction;
-import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
+import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +14,11 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class LessonsForStudentFromCourseQuery extends StudentAction<LessonsForStudentFromCourseQuery> {
-    private @NonNull CourseId courseId;
+public final class ViewSegmentsFromLessonQuery extends StudentAction<ViewSegmentsFromLessonQuery> {
+    private @NonNull LessonId lessonId;
 
     @Override
-    protected LessonsForStudentFromCourseQuery getThis() {
+    protected ViewSegmentsFromLessonQuery getThis() {
         return this;
     }
 }

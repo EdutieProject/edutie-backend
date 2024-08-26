@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.studyprogram.implementation;
 
-import com.edutie.backend.application.learning.studyprogram.LessonsForStudentFromCourseQueryHandler;
-import com.edutie.backend.application.learning.studyprogram.queries.LessonsForStudentFromCourseQuery;
+import com.edutie.backend.application.learning.studyprogram.ViewLessonsFromCourseQueryHandler;
+import com.edutie.backend.application.learning.studyprogram.queries.ViewLessonsFromCourseQuery;
 import com.edutie.backend.application.learning.studyprogram.viewmodels.LessonView;
 import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class LessonsForStudentFromCourseQueryHandlerImplementation extends HandlerBase implements LessonsForStudentFromCourseQueryHandler {
+public class ViewLessonsFromCourseQueryHandlerImplementation extends HandlerBase implements ViewLessonsFromCourseQueryHandler {
     private final LessonPersistence lessonPersistence;
     private final StudentPersistence studentPersistence;
     @Override
-    public WrapperResult<List<LessonView>> handle(LessonsForStudentFromCourseQuery query) {
+    public WrapperResult<List<LessonView>> handle(ViewLessonsFromCourseQuery query) {
         LOGGER.info("Retrieving lessons for course of id {} for student of id {}",
                 query.courseId().identifierValue(),
                 query.studentUserId().identifierValue());

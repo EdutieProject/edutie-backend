@@ -4,12 +4,12 @@ import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.studyprogram.AccessibleSciencesQueryHandler;
 import com.edutie.backend.application.learning.studyprogram.CoursesByScienceQueryHandler;
-import com.edutie.backend.application.learning.studyprogram.LessonsForStudentFromCourseQueryHandler;
-import com.edutie.backend.application.learning.studyprogram.SegmentsForStudentFromLessonQueryHandler;
+import com.edutie.backend.application.learning.studyprogram.ViewLessonsFromCourseQueryHandler;
+import com.edutie.backend.application.learning.studyprogram.ViewSegmentsFromLessonQueryHandler;
 import com.edutie.backend.application.learning.studyprogram.queries.AccessibleSciencesQuery;
 import com.edutie.backend.application.learning.studyprogram.queries.CoursesByScienceQuery;
-import com.edutie.backend.application.learning.studyprogram.queries.LessonsForStudentFromCourseQuery;
-import com.edutie.backend.application.learning.studyprogram.queries.SegmentsForStudentFromLessonQuery;
+import com.edutie.backend.application.learning.studyprogram.queries.ViewLessonsFromCourseQuery;
+import com.edutie.backend.application.learning.studyprogram.queries.ViewSegmentsFromLessonQuery;
 import com.edutie.backend.application.learning.studyprogram.viewmodels.LessonView;
 import com.edutie.backend.application.learning.studyprogram.viewmodels.SegmentView;
 import com.edutie.backend.domain.studyprogram.course.Course;
@@ -37,8 +37,8 @@ public class StudyProgramLearningController {
     private final StudentAuthorization studentAuthorization;
     private final AccessibleSciencesQueryHandler accessibleSciencesQueryHandler;
     private final CoursesByScienceQueryHandler coursesByScienceQueryHandler;
-    private final LessonsForStudentFromCourseQueryHandler lessonsForStudentFromCourseQueryHandler;
-    private final SegmentsForStudentFromLessonQueryHandler segmentsForStudentFromLessonQueryHandler;
+    private final ViewLessonsFromCourseQueryHandler viewLessonsFromCourseQueryHandler;
+    private final ViewSegmentsFromLessonQueryHandler viewSegmentsFromLessonQueryHandler;
 
     @GetMapping("/sciences")
     public ResponseEntity<ApiResult<List<Science>>> getAccessibleSciences(Authentication auth) {
@@ -64,8 +64,8 @@ public class StudyProgramLearningController {
         return new GenericRequestHandler<List<LessonView>>()
                 .authenticate(auth)
                 .authorize(studentAuthorization)
-                .handle((userId) -> lessonsForStudentFromCourseQueryHandler.handle(
-                        new LessonsForStudentFromCourseQuery().studentUserId(userId).courseId(courseId)
+                .handle((userId) -> viewLessonsFromCourseQueryHandler.handle(
+                        new ViewLessonsFromCourseQuery().studentUserId(userId).courseId(courseId)
                 ));
     }
 
@@ -74,8 +74,8 @@ public class StudyProgramLearningController {
         return new GenericRequestHandler<List<SegmentView>>()
                 .authenticate(auth)
                 .authorize(studentAuthorization)
-                .handle((userId) -> segmentsForStudentFromLessonQueryHandler.handle(
-                        new SegmentsForStudentFromLessonQuery().studentUserId(userId).lessonId(lessonId)
+                .handle((userId) -> viewSegmentsFromLessonQueryHandler.handle(
+                        new ViewSegmentsFromLessonQuery().studentUserId(userId).lessonId(lessonId)
                 ));
     }
 }
