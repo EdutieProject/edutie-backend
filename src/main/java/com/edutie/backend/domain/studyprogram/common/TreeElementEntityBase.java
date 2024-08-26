@@ -1,7 +1,8 @@
-package com.edutie.backend.domain.common.base;
+package com.edutie.backend.domain.studyprogram.common;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlyCollectionSerializer;
 import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
+import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.base.identity.Identifier;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;

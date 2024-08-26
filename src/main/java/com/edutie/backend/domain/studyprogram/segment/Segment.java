@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.studyprogram.segment;
 
-import com.edutie.backend.domain.common.base.TreeElementEntityBase;
+import com.edutie.backend.domain.studyprogram.common.TreeElementEntityBase;
 import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -82,24 +82,6 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
         segment.setLesson(previousSegment.getLesson());
         segment.setPreviousElement(previousSegment);
         return segment;
-    }
-
-    /**
-     * Adds learning requirement association
-     *
-     * @param learningRequirement learning requirement
-     */
-    public void addLearningRequirement(LearningRequirement learningRequirement) {
-        learningRequirements.add(learningRequirement);
-    }
-
-    /**
-     * Removes learning requirement association
-     *
-     * @param learningRequirement learning requirement
-     */
-    public void removeLearningRequirement(LearningRequirement learningRequirement) {
-        learningRequirements.remove(learningRequirement);
     }
 
     /**
