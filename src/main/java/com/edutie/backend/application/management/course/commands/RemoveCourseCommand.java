@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
 public final class RemoveCourseCommand extends EducatorAction<RemoveCourseCommand> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private @NonNull CourseId courseId;
+    @Schema(example = "false")
     private boolean removeLessons = false;
 
     @Override

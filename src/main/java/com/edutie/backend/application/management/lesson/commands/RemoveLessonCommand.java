@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
 public final class RemoveLessonCommand extends EducatorAction<RemoveLessonCommand> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private @NonNull LessonId lessonId;
+    @Schema(example = "false")
     private boolean removeSegments = false;
 
     @Override
