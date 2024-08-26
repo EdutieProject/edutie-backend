@@ -7,10 +7,11 @@ import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
+import com.edutie.backend.infrastucture.persistence.PersistenceError;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.CourseRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LessonRepository;
-import com.edutie.backend.infrastucture.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.SegmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LessonPersistenceImplementation implements LessonPersistence {
     private final LessonRepository lessonRepository;
+    private final SegmentRepository segmentRepository;
     private final CourseRepository courseRepository;
     private final EducatorRepository educatorRepository;
 
@@ -107,6 +109,23 @@ public class LessonPersistenceImplementation implements LessonPersistence {
                 return Result.failureWrapper(PersistenceError.notFound(Course.class));
             List<Lesson> lessons = lessonRepository.getLessonsByAuthorEducator(educator.get());
             return WrapperResult.successWrapper(lessons);
+        } catch (Exception exception) {
+            return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
+        }
+    }
+
+    /**
+     * Removes the lesson together with the underlying segments
+     *
+     * @param lesson lesson to be removed
+     * @return Result object
+     */
+    @Override
+    public Result deepRemove(Lesson lesson) {
+        try {
+            segmentRepository.deleteAll(lesson.getSegments());
+            lessonRepository.delete(lesson);
+            return Result.success();
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
         }

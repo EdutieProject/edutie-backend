@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.studyprogram.lesson;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
-import com.edutie.backend.domain.common.base.TreeElementEntityBase;
+import com.edutie.backend.domain.studyprogram.common.TreeElementEntityBase;
 import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;

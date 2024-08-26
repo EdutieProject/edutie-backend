@@ -2,6 +2,7 @@ package com.edutie.backend.application.management.learningresourcedefinition.com
 
 import com.edutie.backend.application.common.actions.EducatorAction;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
+import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public final class CreateLearningResourceDefinitionCommand extends EducatorActio
     private @NonNull String exerciseDescription;
     private String additionalSummaryDescription;
     private String additionalHintsDescription;
+    private SegmentId segmentId;
 
     @Override
     protected CreateLearningResourceDefinitionCommand getThis() {

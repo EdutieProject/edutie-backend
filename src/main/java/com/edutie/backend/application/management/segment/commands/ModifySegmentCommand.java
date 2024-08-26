@@ -1,7 +1,6 @@
 package com.edutie.backend.application.management.segment.commands;
 
 import com.edutie.backend.application.common.actions.EducatorAction;
-import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,9 +23,6 @@ public final class ModifySegmentCommand extends EducatorAction<ModifySegmentComm
     private @NonNull SegmentId segmentId;
     private String segmentName;
     private String segmentSnippetDescription;
-    private String segmentTheoryDescription;
-    private String segmentExerciseDescription;
-    private ExerciseTypeId exerciseTypeId;
     private SegmentId previousSegmentId;
     private List<SegmentId> nextSegmentIds = new ArrayList<>();
 

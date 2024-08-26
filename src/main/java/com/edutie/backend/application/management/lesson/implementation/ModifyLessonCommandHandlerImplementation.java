@@ -3,8 +3,8 @@ package com.edutie.backend.application.management.lesson.implementation;
 import com.edutie.backend.application.common.HandlerBase;
 import com.edutie.backend.application.management.lesson.ModifyLessonCommandHandler;
 import com.edutie.backend.application.management.lesson.commands.ModifyLessonCommand;
-import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.EducationError;
+import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
@@ -25,33 +25,24 @@ public class ModifyLessonCommandHandlerImplementation extends HandlerBase implem
     @Transactional
     public Result handle(ModifyLessonCommand command) {
         Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
-        WrapperResult<Lesson> lessonWrapperResult = lessonPersistence.getById(command.lessonId());
-        if (lessonWrapperResult.isFailure())
-            return lessonWrapperResult;
-        Lesson lesson = lessonWrapperResult.getValue();
+        Lesson lesson = lessonPersistence.getById(command.lessonId()).getValue();
         if (!educator.isAuthorOf(lesson)) {
             LOGGER.info("Educator has insufficient permissions to modify this lesson");
             return Result.failure(EducationError.educatorMustBeAuthorError(Lesson.class));
         }
-
         if (command.lessonName() != null)
             lesson.setName(command.lessonName());
         if (command.lessonDescription() != null)
             lesson.setDescription(command.lessonDescription());
         if (command.previousLessonId() != null) {
-            WrapperResult<Lesson> prevLessonWrapper = lessonPersistence.getById(command.previousLessonId());
-            if (prevLessonWrapper.isFailure())
-                return prevLessonWrapper;
-            lesson.setPreviousElement(prevLessonWrapper.getValue());
+            Lesson previousLesson = lessonPersistence.getById(command.previousLessonId()).getValue();
+            lesson.setPreviousElement(previousLesson);
         }
         for (LessonId nextLessonId : command.nextLessonIds()) {
-            WrapperResult<Lesson> nextLessonWrapper = lessonPersistence.getById(nextLessonId);
-            if (nextLessonWrapper.isFailure())
-                return nextLessonWrapper;
-            lesson.setPreviousElement(nextLessonWrapper.getValue());
+            Lesson nextLesson = lessonPersistence.getById(nextLessonId).getValue();
+            lesson.setPreviousElement(nextLesson);
         }
-        lesson.update(command.educatorUserId());
-        lessonPersistence.save(lesson);
+        lessonPersistence.save(lesson).throwIfFailure();
         return WrapperResult.successWrapper(lesson);
     }
 }

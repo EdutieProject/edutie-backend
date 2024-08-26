@@ -2,8 +2,8 @@ package com.edutie.backend.api.v1.learning;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
-import com.edutie.backend.application.learning.assessment.AssessSolutionCommandHandler;
-import com.edutie.backend.application.learning.assessment.commands.AssessSolutionCommand;
+import com.edutie.backend.application.learning.learningresource.AssessSolutionCommandHandler;
+import com.edutie.backend.application.learning.learningresource.commands.AssessSolutionCommand;
 import com.edutie.backend.application.learning.learningresource.CreateLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;

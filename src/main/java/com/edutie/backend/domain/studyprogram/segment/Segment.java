@@ -1,11 +1,9 @@
 package com.edutie.backend.domain.studyprogram.segment;
 
-import com.edutie.backend.domain.common.base.TreeElementEntityBase;
 import com.edutie.backend.domain.common.DomainErrors;
-import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.exercisetype.ExerciseType;
-import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.studyprogram.common.TreeElementEntityBase;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,9 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import validation.Result;
-
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -33,18 +28,8 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     private String name;
     private String snippetDescription;
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "theory_description"))
-    @JsonIgnore
-    private PromptFragment theoryDescription;
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
-    @JsonIgnore
-    private PromptFragment exerciseDescription;
-    @ManyToOne
-    private ExerciseType exerciseType;
-    @ManyToMany
-    @JsonIgnore
-    private final Set<LearningRequirement> learningRequirements = new HashSet<>();
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "learning_resource_definition_id"))
+    private LearningResourceDefinitionId learningResourceDefinitionId;
     @JoinColumn(name = "lesson_id")
     @ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -70,8 +55,8 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     /**
      * Recommended constructor associating Lesson Segment with a creator, lesson and a previous element
      *
-     * @param educator creator reference
-     * @param previousSegment   previous segment reference
+     * @param educator        creator reference
+     * @param previousSegment previous segment reference
      * @return Lesson Segment
      */
     public static Segment create(Educator educator, Segment previousSegment) {
@@ -82,24 +67,6 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
         segment.setLesson(previousSegment.getLesson());
         segment.setPreviousElement(previousSegment);
         return segment;
-    }
-
-    /**
-     * Adds learning requirement association
-     *
-     * @param learningRequirement learning requirement
-     */
-    public void addLearningRequirement(LearningRequirement learningRequirement) {
-        learningRequirements.add(learningRequirement);
-    }
-
-    /**
-     * Removes learning requirement association
-     *
-     * @param learningRequirement learning requirement
-     */
-    public void removeLearningRequirement(LearningRequirement learningRequirement) {
-        learningRequirements.remove(learningRequirement);
     }
 
     /**

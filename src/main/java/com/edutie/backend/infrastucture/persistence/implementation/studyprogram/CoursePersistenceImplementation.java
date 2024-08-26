@@ -7,10 +7,8 @@ import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.CourseRepository;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.ScienceRepository;
 import com.edutie.backend.infrastucture.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -19,11 +17,14 @@ import validation.WrapperResult;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class CoursePersistenceImplementation implements CoursePersistence {
     private final CourseRepository courseRepository;
+    private final LessonRepository lessonRepository;
+    private final SegmentRepository segmentRepository;
     private final ScienceRepository scienceRepository;
     private final EducatorRepository educatorRepository;
 
@@ -99,6 +100,24 @@ public class CoursePersistenceImplementation implements CoursePersistence {
                 return Result.failureWrapper(PersistenceError.notFound(Educator.class));
             List<Course> courses = courseRepository.findCoursesByAuthorEducator(educatorOptional.get());
             return WrapperResult.successWrapper(courses);
+        } catch (Exception exception) {
+            return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
+        }
+    }
+
+    /**
+     * Removes the course together with the underlying lessons & segments
+     *
+     * @param course course to be removed
+     * @return Result object
+     */
+    @Override
+    public Result deepRemove(Course course) {
+        try {
+            segmentRepository.deleteAll(course.getLessons().stream().flatMap(o -> o.getSegments().stream()).collect(Collectors.toList()));
+            lessonRepository.deleteAll(course.getLessons());
+            courseRepository.delete(course);
+            return Result.success();
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
         }
