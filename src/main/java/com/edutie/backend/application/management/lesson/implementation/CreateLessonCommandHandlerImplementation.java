@@ -7,13 +7,11 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
-import com.edutie.backend.domainservice.common.logging.ExternalFailureLog;
 import com.edutie.backend.domainservice.studyprogram.initializers.lesson.LessonInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import validation.Result;
 import validation.WrapperResult;
 
 @Component
@@ -31,37 +29,20 @@ public class CreateLessonCommandHandlerImplementation extends HandlerBase implem
                 command.educatorUserId().identifierValue(),
                 command.previousLessonId().identifierValue());
         Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
-        WrapperResult<Lesson> previousLessonWrapperResult = lessonPersistence.getById(command.previousLessonId());
-        if (previousLessonWrapperResult.isFailure()) {
-            return ExternalFailureLog.persistenceFailure(previousLessonWrapperResult, LOGGER);
-        }
-        Lesson previousLesson = previousLessonWrapperResult.getValue();
+        Lesson previousLesson = lessonPersistence.getById(command.previousLessonId()).getValue();
         Lesson lesson = Lesson.create(educator, previousLesson);
         lesson.setName(command.lessonName());
         lesson.setDescription(command.lessonDescription() != null ? command.lessonDescription() : "");
-        Result saveResult = lessonPersistence.save(lesson);
-        if (saveResult.isFailure())
-            return ExternalFailureLog.persistenceFailure(saveResult, LOGGER).map(() -> null);
-        Result lessonInitialization = lessonInitializer.initializeLesson(lesson);
-        if (lessonInitialization.isFailure()) {
-            LOGGER.warn("Lesson initialization failure");
-            return lessonInitialization.map(() -> null);
-        }
+        lessonPersistence.save(lesson).throwIfFailure();
+        lessonInitializer.initializeLesson(lesson).throwIfFailure();
         if (command.nextLessonId() == null) {
             LOGGER.info("Next lesson not specified. Lesson successfully created as the learning tree leaf.");
             return WrapperResult.successWrapper(lesson);
         }
-        WrapperResult<Lesson> nextLessonWrapperResult = lessonPersistence.getById(command.nextLessonId());
-        if (nextLessonWrapperResult.isFailure()) {
-            return ExternalFailureLog.persistenceFailure(nextLessonWrapperResult, LOGGER);
-        }
-        Lesson nextLesson = nextLessonWrapperResult.getValue();
+        Lesson nextLesson = lessonPersistence.getById(command.nextLessonId()).getValue();
         nextLesson.setPreviousElement(lesson);
-        Result saveResult2 = lessonPersistence.save(nextLesson);
+        lessonPersistence.save(nextLesson).throwIfFailure();
         lesson.addNextElement(nextLesson);
-        if (saveResult2.isFailure()) {
-            return ExternalFailureLog.persistenceFailure(saveResult2, LOGGER).map(() -> null);
-        }
         LOGGER.info("Created new lesson successfully in between lesson of id "
                 + previousLesson.getId().identifierValue() + " and lesson of id "
                 + nextLesson.getId().identifierValue());

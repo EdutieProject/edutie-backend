@@ -9,13 +9,11 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import com.edutie.backend.domainservice.common.logging.ExternalFailureLog;
 import com.edutie.backend.domainservice.studyprogram.initializers.course.CourseInitializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import validation.Result;
 import validation.WrapperResult;
 
 @Component
@@ -33,18 +31,11 @@ public class CreateCourseCommandHandlerImplementation extends HandlerBase implem
         LOGGER.info("Creating course by user of id {} ", command.educatorUserId().identifierValue());
         Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
         Science science = sciencePersistence.getById(command.scienceId()).getValue();
-        LOGGER.info("Creating course...");
         Course course = Course.create(educator, science);
         course.setName(command.courseName());
         course.setDescription(command.courseDescription() != null ? command.courseDescription() : "");
-        Result courseSaveResult = coursePersistence.save(course);
-        if (courseSaveResult.isFailure())
-            return ExternalFailureLog.persistenceFailure(courseSaveResult, LOGGER).map(() -> null);
-        Result initializationResult = courseInitializer.initializeCourse(course);
-        if (initializationResult.isFailure()) {
-            LOGGER.warn("Course initialization failed!");
-            return initializationResult.map(() -> null);
-        }
+        coursePersistence.save(course).throwIfFailure();
+        courseInitializer.initializeCourse(course).throwIfFailure();
         LOGGER.info("Course creation & initialization success.");
         return WrapperResult.successWrapper(course);
     }

@@ -18,6 +18,7 @@ import java.util.List;
 public class CreatedLessonsQueryHandlerImplementation extends HandlerBase implements CreatedLessonsQueryHandler {
     private final LessonPersistence lessonPersistence;
     private final EducatorPersistence educatorPersistence;
+
     @Override
     public WrapperResult<List<Lesson>> handle(CreatedLessonsQuery query) {
         LOGGER.info("Retrieving lessons made by educator {}", query.educatorUserId().identifierValue());
