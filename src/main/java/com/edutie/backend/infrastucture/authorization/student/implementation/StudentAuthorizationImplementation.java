@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import validation.Result;
 
 import java.util.UUID;
@@ -34,7 +36,7 @@ public class StudentAuthorizationImplementation implements StudentAuthorization 
      * @param authentication authentication token
      */
     @Override
-    public void injectRoles(JwtAuthenticationToken authentication) {
+    public synchronized void injectRoles(JwtAuthenticationToken authentication) {
         UserId userId = new UserId(UUID.fromString(authentication.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
         if (studentRepository.findByOwnerUserId(userId).isEmpty()) {
             LOGGER.info("No student role profile found in edutie context. Injecting student role in the edutie db.");
