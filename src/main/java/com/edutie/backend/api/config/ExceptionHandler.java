@@ -4,10 +4,13 @@ import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMapAdapter;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import validation.Error;
 import validation.OperationFailureException;
@@ -38,6 +41,15 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                 exception.getClass().getSimpleName() + " occurred. Message: " + exception.getMessage()
         );
         return new ResponseEntity<>(ApiResult.fromResult(Result.failure(error)), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public final ResponseEntity<ApiResult<?>> handleConverterExceptions(MethodArgumentTypeMismatchException exception) {
+        Error error = new Error(
+                "ARGUMENT-TYPE-MISMATCH-400",
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(ApiResult.fromResult(Result.failure(error)), HttpStatus.BAD_REQUEST);
     }
 
 }
