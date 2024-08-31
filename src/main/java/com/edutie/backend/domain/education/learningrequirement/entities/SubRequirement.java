@@ -19,7 +19,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class SubRequirement extends EntityBase<SubRequirementId> {
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "description"))
+    @AttributeOverride(name = "text", column = @Column(name = "description", columnDefinition = "TEXT"))
     private PromptFragment description;
     private Integer ordinal;
 
