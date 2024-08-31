@@ -26,16 +26,16 @@ import java.util.Set;
 @Entity
 public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<LearningResourceDefinitionId> {
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "theory_description"))
+    @AttributeOverride(name = "text", column = @Column(name = "theory_description", columnDefinition = "TEXT"))
     private PromptFragment theoryDescription;
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "theory_summary_description"))
+    @AttributeOverride(name = "text", column = @Column(name = "theory_summary_description", columnDefinition = "TEXT"))
     private PromptFragment theorySummaryAdditionalDescription;
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "exercise_description"))
+    @AttributeOverride(name = "text", column = @Column(name = "exercise_description", columnDefinition = "TEXT"))
     private PromptFragment exerciseDescription;
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "hints_description"))
+    @AttributeOverride(name = "text", column = @Column(name = "hints_description", columnDefinition = "TEXT"))
     private PromptFragment hintsAdditionalDescription;
     @ManyToMany(targetEntity = LearningRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();

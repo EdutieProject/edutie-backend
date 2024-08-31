@@ -14,6 +14,7 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Activ
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -47,8 +48,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Slf4j
 public class Seeding {
-    final int MAX_SEEDED_COURSES = 2;
-    final int MAX_SEEDED_SCIENCES = 2;
+    final int MAX_SEEDED_COURSES = 8;
+    final int MAX_SEEDED_SCIENCES = 4;
 
     private final SciencePersistence sciencePersistence;
     private final CoursePersistence coursePersistence;
@@ -66,6 +67,7 @@ public class Seeding {
     private final Administrator administrator = Administrator.create(uid);
     private final Educator educator = Educator.create(uid, administrator);
     private CourseTag courseTag;
+    private static LearningResourceDefinitionId learningResourceDefinitionId;
 
     /**
      * Seed database with sample study program
@@ -82,8 +84,8 @@ public class Seeding {
         log.info("======================");
         administratorPersistence.save(administrator);
         educatorPersistence.save(educator);
-        seedSciences();
         seedLearningResourceDefinition();
+        seedSciences();
         log.info("=====================");
         log.info("  DB SEEDING - END   ");
         log.info("=====================");
@@ -194,6 +196,7 @@ public class Seeding {
         learningResourceDefinition.addLearningRequirement(learningRequirement);
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
         log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
+        learningResourceDefinitionId = learningResourceDefinition.getId();
 
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
                 learningResourceDefinition,
@@ -408,7 +411,7 @@ public class Seeding {
              * Seed first segment in lesson
              *
              * @return first segment
-             * @since 0.5
+             * @since 0.6
              */
             private @NonNull Segment seedFirstSegment() {
 //				Science science = lesson.getCourse().getScience();
@@ -421,6 +424,7 @@ public class Seeding {
                 s1.setName("Segment 1");
                 s1.setSnippetDescription("Snippet description of Segment 1");
                 s1.update(uid);
+                s1.setLearningResourceDefinitionId(learningResourceDefinitionId);
                 segmentPersistence.save(s1);
 
                 return s1;
@@ -541,7 +545,7 @@ public class Seeding {
              * @param i    lesson number
              * @param prev previous lesson
              * @return seeded lesson
-             * @since 0.5
+             * @since 0.6
              */
             private @NonNull Segment seedSegment(int i, Segment prev) {
                 Segment segment = Segment.create(educator, lesson);
@@ -549,6 +553,7 @@ public class Seeding {
                 segment.setSnippetDescription("Snippet description of Segment" + i);
                 segment.setPreviousElement(prev);
                 segment.update(uid);
+                segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
                 segmentPersistence.save(segment);
                 return segment;
             }
