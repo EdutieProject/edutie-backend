@@ -1,0 +1,87 @@
+version: "3.0"
+services:
+  db:
+    container_name: db
+    image: postgres:latest
+    env_file:
+      - .env
+    ports:
+      - '5435:5432'
+    networks:
+      - backendnetwork
+
+  backendapp:
+    container_name: backendapp
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - MAVEN_REPO=/maven-repo
+    ports:
+      - "8081:8081"
+    volumes:
+      - maven-repo:/root/.m2/repository
+    depends_on:
+      - db
+    networks:
+      - backendnetwork
+
+  llmservice:
+    container_name: llmservice
+    build:
+      context: ../edutie-llm
+      dockerfile: Dockerfile
+    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
+    volumes:
+      - .:/app
+    ports:
+      - "9000:80"
+    env_file:
+      - ../edutie-llm/.env
+    networks:
+      - backendnetwork
+
+  wikimapservice:
+    build:
+      context: ../edutie-wikimap
+      dockerfile: Dockerfile
+    container_name: wikimapservice
+    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
+    volumes:
+      - .:/app
+    ports:
+      - "9001:80"
+    networks:
+      - backendnetwork
+
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:24.0.0
+    command:
+      - start-dev
+      - --import-realm
+    ports:
+      - 8080:8080
+    volumes:
+      - ./import/:/opt/keycloak/data/import/
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HTTP_PORT: 8080
+      KC_HOSTNAME_URL: http://localhost:8080/auth
+      KC_HOSTNAME_ADMIN_URL: http://localhost:8080/auth
+      KC_HTTP_RELATIVE_PATH: /auth
+      #KC_LOG_LEVEL: DEBUG
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - backendnetwork
+
+networks:
+  backendnetwork:
+    name: backendnetwork
+
+volumes:
+  maven-repo:
