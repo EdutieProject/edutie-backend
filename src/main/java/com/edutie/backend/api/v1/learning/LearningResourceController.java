@@ -4,12 +4,15 @@ import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.learningresource.AssessSolutionCommandHandler;
 import com.edutie.backend.application.learning.learningresource.GetLearningResourceByIdQueryHandler;
+import com.edutie.backend.application.learning.learningresource.GetLearningResourcesByDefinitionIdQueryHandler;
 import com.edutie.backend.application.learning.learningresource.commands.AssessSolutionCommand;
 import com.edutie.backend.application.learning.learningresource.CreateLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
+import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,8 +27,9 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Learning Resource Controller", description = "Provides operations regarding learning resources in the learning context")
 public class LearningResourceController {
     private final StudentAuthorization studentAuthorization;
-    private final CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
     private final GetLearningResourceByIdQueryHandler getLearningResourceByIdQueryHandler;
+    private final GetLearningResourcesByDefinitionIdQueryHandler getLearningResourcesByDefinitionIdQueryHandler;
+    private final CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
     private final AssessSolutionCommandHandler assessSolutionCommandHandler;
 
     @GetMapping
@@ -38,6 +42,18 @@ public class LearningResourceController {
                         new GetLearningResourceByIdQuery().learningResourceId(learningResourceId).studentUserId(userId)
                 ));
     }
+
+    @GetMapping("/of-definition")
+    public ResponseEntity<ApiResult<LearningResource>> getLearningResourceByDefinitionId(Authentication authentication,
+                                                                               @RequestParam LearningResourceDefinitionId definitionId) {
+        return new GenericRequestHandler<LearningResource>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle((userId) -> getLearningResourcesByDefinitionIdQueryHandler.handle(
+                        new GetLearningResourcesByDefinitionIdQuery().studentUserId(userId).learningResourceDefinitionId(definitionId)
+                ));
+    }
+
 
     @PostMapping
     public ResponseEntity<ApiResult<LearningResource>> createLearningResource(Authentication authentication,

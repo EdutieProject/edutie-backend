@@ -1,5 +1,6 @@
 package com.edutie.backend.domain.personalization.learningresource.persistence;
 
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
@@ -12,9 +13,9 @@ import java.util.List;
 public interface LearningResourcePersistence extends Persistence<LearningResource, LearningResourceId> {
 
     /**
-     * Retrieve all Learning Resources associated with given student
-     * @param studentId student id
+     * Retrieve all Learning Resources associated with given definition
+     * @param learningResourceDefinitionId definition id
      * @return Wrapper result of desired list
      */
-    WrapperResult<List<LearningResource>> getAllOfStudentId(StudentId studentId);
+    WrapperResult<List<LearningResource>> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId);
 }
