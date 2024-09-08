@@ -25,6 +25,7 @@ services:
       - maven-repo:/root/.m2/repository
     depends_on:
       - db
+      - keycloak
     networks:
       - backendnetwork
 
@@ -33,7 +34,7 @@ services:
     build:
       context: ../edutie-llm
       dockerfile: Dockerfile
-    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
+#    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
     volumes:
       - .:/app
     ports:
@@ -48,7 +49,7 @@ services:
       context: ../edutie-wikimap
       dockerfile: Dockerfile
     container_name: wikimapservice
-    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
+#    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
     volumes:
       - .:/app
     ports:
@@ -65,7 +66,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./import/:/opt/keycloak/data/import/
+      - ../edutie-authorization-server/import/:/opt/keycloak/data/import/
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
