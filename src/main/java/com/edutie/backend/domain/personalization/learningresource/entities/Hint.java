@@ -2,20 +2,20 @@ package com.edutie.backend.domain.personalization.learningresource.entities;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.personalization.learningresource.identities.HintId;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Hint extends EntityBase<HintId> {
-    @Setter(AccessLevel.PROTECTED)
-    private String text;
-    public static Hint create(String text) {
-        Hint hint = new Hint();
-        hint.setId(new HintId());
-        hint.setText(text);
-        return hint;
-    }
+	@Setter(AccessLevel.PROTECTED)
+	private String text;
+
+	public static Hint create(String text) {
+		Hint hint = new Hint();
+		hint.setId(new HintId());
+		hint.setText(text);
+		return hint;
+	}
 }

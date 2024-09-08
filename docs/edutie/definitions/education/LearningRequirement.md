@@ -1,11 +1,13 @@
 <!-- TOC -->
+
 * [Learning Requirement](#learning-requirement)
-  * [Contained data:](#contained-data)
-    * [Name](#name)
-    * [Description](#description)
-    * [Sub requirements](#sub-requirements)
-    * [Knowledge Subject Id](#knowledge-subject-id)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Name](#name)
+        * [Description](#description)
+        * [Sub requirements](#sub-requirements)
+        * [Knowledge Subject Id](#knowledge-subject-id)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Learning Requirement

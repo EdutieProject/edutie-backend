@@ -1,12 +1,10 @@
 package com.edutie.backend.application.common.actions;
 
 import com.edutie.backend.domain.administration.UserId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.*;
+import lombok.experimental.*;
 
 /**
  * Action to be extended when a flow should be invoked by a student
@@ -17,14 +15,13 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public abstract class StudentAction<T extends StudentAction<T>> {
-    @JsonIgnore
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull UserId studentUserId;
+	@JsonIgnore
+	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+	private UserId studentUserId;
 
-    public T studentUserId(UserId userId) {
-        this.studentUserId = userId;
-        return getThis();
-    }
+	public T studentUserId(UserId userId) {
+		return getThis();
+	}
 
-    protected abstract T getThis();
+	protected abstract T getThis();
 }

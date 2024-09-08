@@ -1,11 +1,9 @@
 package com.edutie.backend.application.management.segment.queries;
 
 import com.edutie.backend.application.common.actions.EducatorAction;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
+import lombok.experimental.*;
 
 @NoArgsConstructor
 @Getter
@@ -13,8 +11,8 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class CreatedSegmentsQuery extends EducatorAction<CreatedSegmentsQuery> {
-    @Override
-    protected CreatedSegmentsQuery getThis() {
-        return this;
-    }
+	@Override
+	protected CreatedSegmentsQuery getThis() {
+		return this;
+	}
 }

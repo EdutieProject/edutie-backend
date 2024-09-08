@@ -7,6 +7,4 @@ import validation.WrapperResult;
 
 import java.util.List;
 
-public interface GetLearningResourcesByDefinitionIdQueryHandler
-        extends UseCaseHandler<WrapperResult<List<LearningResource>>, GetLearningResourcesByDefinitionIdQuery> {
-}
+public interface GetLearningResourcesByDefinitionIdQueryHandler extends UseCaseHandler<WrapperResult<List<LearningResource>>, GetLearningResourcesByDefinitionIdQuery> { }

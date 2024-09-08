@@ -1,12 +1,14 @@
 <!-- TOC -->
+
 * [Course](#course)
-  * [Contained data:](#contained-data)
-    * [Name](#name)
-    * [Snippet description](#snippet-description)
-    * [Lessons](#lessons)
-    * [Science](#science)
-    * [Tags](#tags)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Name](#name)
+        * [Snippet description](#snippet-description)
+        * [Lessons](#lessons)
+        * [Science](#science)
+        * [Tags](#tags)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Course

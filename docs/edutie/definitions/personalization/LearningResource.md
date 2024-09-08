@@ -1,10 +1,12 @@
 <!-- TOC -->
+
 * [Learning Resource](#learning-resource)
-  * [Contained data:](#contained-data)
-    * [Theory context](#theory-context)
-    * [Activity](#activity)
-    * [Problem Descriptor list](#problem-descriptor-list)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Theory context](#theory-context)
+        * [Activity](#activity)
+        * [Problem Descriptor list](#problem-descriptor-list)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Learning Resource

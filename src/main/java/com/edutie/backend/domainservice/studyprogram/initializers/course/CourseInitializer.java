@@ -5,5 +5,5 @@ import validation.Result;
 
 @FunctionalInterface
 public interface CourseInitializer {
-    Result initializeCourse(Course course);
+	Result initializeCourse(Course course);
 }

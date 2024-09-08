@@ -1,8 +1,10 @@
 <!-- TOC -->
+
 * [Student](#student)
-  * [Contained data:](#contained-data)
-    * [Learning History](#learning-history)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Learning History](#learning-history)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Student

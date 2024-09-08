@@ -1,38 +1,32 @@
 package com.edutie.backend.api.serialization.converters;
 
 import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.convert.converter.ConverterFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.core.convert.converter.*;
+import org.springframework.stereotype.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
 
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class UuidIdentifierConverterFactory implements ConverterFactory<String, UuidIdentifier> {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	@Override
+	public <T extends UuidIdentifier> @NonNull Converter<String, T> getConverter(@NonNull Class<T> targetType) {
+		return new StringToUuidIdentifierConverter<>(targetType);
+	}
 
-    private static class StringToUuidIdentifierConverter<T extends UuidIdentifier> implements Converter<String, T> {
-        private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-        private final Class<T> idType;
+	@Slf4j
+	private record StringToUuidIdentifierConverter<T extends UuidIdentifier>(
+			Class<T> idType) implements Converter<String, T> {
 
-        public StringToUuidIdentifierConverter(Class<T> idType) {
-            this.idType = idType;
-        }
-
-        public T convert(String source) {
-            try {
-                return idType.getConstructor(UUID.class).newInstance(UUID.fromString(source));
-            } catch (Exception e) {
-                LOGGER.warn("Could not parse provided string into UUID identifier");
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    @Override
-    public <T extends UuidIdentifier> Converter<String, T> getConverter(Class<T> targetType) {
-        return new StringToUuidIdentifierConverter<>(targetType);
-    }
+		public T convert(@NonNull String source) {
+			try {
+				return idType.getConstructor(UUID.class).newInstance(UUID.fromString(source));
+			} catch (Exception e) {
+				log.warn("Could not parse provided string into UUID identifier");
+				throw new RuntimeException(e);
+			}
+		}
+	}
 }

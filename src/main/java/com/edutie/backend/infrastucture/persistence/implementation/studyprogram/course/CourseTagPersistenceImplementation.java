@@ -4,9 +4,9 @@ import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
 import com.edutie.backend.domain.studyprogram.course.tag.indentities.CourseTagId;
 import com.edutie.backend.domain.studyprogram.course.tag.persistence.CourseTagPersistence;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.CourseTagRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
+import lombok.*;
 
 @Component
 @RequiredArgsConstructor

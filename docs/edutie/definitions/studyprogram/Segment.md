@@ -1,12 +1,14 @@
 <!-- TOC -->
+
 * [Segment](#segment)
-  * [Contained data:](#contained-data)
-    * [Previous element & Next elements](#previous-element--next-elements)
-    * [Name](#name)
-    * [Snippet description](#snippet-description)
-    * [Learning Resource Definition](#learning-resource-definition)
-    * [Lesson](#lesson)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Previous element & Next elements](#previous-element--next-elements)
+        * [Name](#name)
+        * [Snippet description](#snippet-description)
+        * [Learning Resource Definition](#learning-resource-definition)
+        * [Lesson](#lesson)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Segment

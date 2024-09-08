@@ -1,7 +1,6 @@
 package validation;
 
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.function.Supplier;
 
@@ -12,100 +11,99 @@ import java.util.function.Supplier;
  */
 @Getter
 public class Result {
-    Error error = null;
+	Error error = null;
 
-    protected Result() {
-    }
+	protected Result() {
+	}
 
-    protected Result(Error error) {
-        this.error = error;
-    }
+	protected Result(Error error) {
+		this.error = error;
+	}
 
-    /**
-     * Indicates whether result is a failure result
-     *
-     * @return boolean - true/false
-     */
-    public boolean isFailure() {
-        return !isSuccess();
-    }
+	/**
+	 * Creates a blank successful result
+	 *
+	 * @return Result object
+	 */
+	public static Result success() {
+		return new Result();
+	}
 
-    /**
-     * Indicates whether result is successful
-     *
-     * @return boolean - true/false
-     */
-    public boolean isSuccess() {
-        return error == null;
-    }
+	/**
+	 * Creates a failure result with specified error
+	 *
+	 * @param error error
+	 * @return Result object
+	 */
+	public static Result failure(@NonNull Error error) {
+		return new Result(error);
+	}
 
-    /**
-     * Builder-like function returning this result unchanged, but throwing {@code OperationFailureException}
-     * when the result is failure.
-     *
-     * @return this result.
-     */
-    public Result throwIfFailure() {
-        if (isFailure())
-            throw new OperationFailureException(this.getError());
-        return this;
-    }
+	public static <T> WrapperResult<T> successWrapper(T value) {
+		return new WrapperResult<>(value, null);
+	}
 
-    @Override
-    public String toString() {
-        String className = this.getClass().getSimpleName();
-        return className + "[" + (this.isSuccess() ? "SUCCESS" : this.getError()) + "]";
-    }
+	public static <T> WrapperResult<T> failureWrapper(Error error) {
+		return new WrapperResult<>(null, error);
+	}
 
-    /**
-     * Creates new wrapper result out of this result containing the value
-     * provided as the supplier function return value.
-     *
-     * @param mapper function providing value.
-     * @param <T>    type of new wrapper result
-     * @return Wrapper Result object
-     */
-    public <T> WrapperResult<T> map(Supplier<T> mapper) {
-        return new WrapperResult<>(mapper.get(), error);
-    }
+	/**
+	 * Indicates whether result is a failure result
+	 *
+	 * @return boolean - true/false
+	 */
+	public boolean isFailure() {
+		return !isSuccess();
+	}
 
-    /**
-     * Creates new wrapper result with blank null object as value. New wrapper result is of type
-     * provided as the class object.
-     *
-     * @param clazz class object of the desired type
-     * @param <U>   type of new wrapper result
-     * @return Wrapper Result object
-     */
-    public <U> WrapperResult<U> into(Class<U> clazz) {
-        return this.map(() -> null);
-    }
+	/**
+	 * Indicates whether result is successful
+	 *
+	 * @return boolean - true/false
+	 */
+	public boolean isSuccess() {
+		return error == null;
+	}
 
-    /**
-     * Creates a blank successful result
-     *
-     * @return Result object
-     */
-    public static Result success() {
-        return new Result();
-    }
+	/**
+	 * Builder-like function returning this result unchanged, but throwing {@code OperationFailureException}
+	 * when the result is failure.
+	 *
+	 * @return this result.
+	 */
+	public Result throwIfFailure() {
+		if (isFailure())
+			throw new OperationFailureException(this.getError());
+		return this;
+	}
 
-    /**
-     * Creates a failure result with specified error
-     *
-     * @param error error
-     * @return Result object
-     */
-    public static Result failure(@NonNull Error error) {
-        return new Result(error);
-    }
+	@Override
+	public String toString() {
+		String className = this.getClass().getSimpleName();
+		return className + "[" + (this.isSuccess() ? "SUCCESS" : this.getError()) + "]";
+	}
 
+	/**
+	 * Creates new wrapper result out of this result containing the value
+	 * provided as the supplier function return value.
+	 *
+	 * @param mapper function providing value.
+	 * @param <T>    type of new wrapper result
+	 * @return Wrapper Result object
+	 */
+	public <T> WrapperResult<T> map(Supplier<T> mapper) {
+		return new WrapperResult<>(mapper.get(), error);
+	}
 
-    public static <T> WrapperResult<T> successWrapper(T value) {
-        return new WrapperResult<>(value, null);
-    }
-
-    public static <T> WrapperResult<T> failureWrapper(Error error) {
-        return new WrapperResult<>(null, error);
-    }
+	/**
+	 * Creates new wrapper result with blank null object as value. New wrapper result is of type
+	 * provided as the class object.
+	 *
+	 * @param clazz class object of the desired type
+	 * @param <U>   type of new wrapper result
+	 * @return Wrapper Result object
+	 */
+	public <U> WrapperResult<U> into(Class<U> clazz) {
+		return this.map(() -> null);
+	}
 }

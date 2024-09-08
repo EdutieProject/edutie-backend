@@ -6,11 +6,8 @@ import com.edutie.backend.domain.personalization.assessmentschema.identities.Ass
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.*;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,16 +21,16 @@ import java.util.stream.Collectors;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 public class AssessmentSchema extends AuditableEntityBase<AssessmentSchemaId> {
-    @JsonIgnore
-    private Student student;
-    private SolutionSubmission solutionSubmission;
-    private Set<AssessmentSchemaProblemDescriptor> problemDescriptors = new HashSet<>();
+	private Set<AssessmentSchemaProblemDescriptor> problemDescriptors = new HashSet<>();
+	@JsonIgnore
+	private Student student;
+	private SolutionSubmission solutionSubmission;
 
-    public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission, LearningResource learningResource) {
-        AssessmentSchema assessmentSchema = new AssessmentSchema();
-        assessmentSchema.setStudent(student);
-        assessmentSchema.setSolutionSubmission(solutionSubmission);
-        assessmentSchema.setProblemDescriptors(learningResource.getProblemDescriptors().stream().map(AssessmentSchemaProblemDescriptor::new).collect(Collectors.toSet()));
-        return assessmentSchema;
-    }
+	public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission, LearningResource learningResource) {
+		AssessmentSchema assessmentSchema = new AssessmentSchema();
+		assessmentSchema.setStudent(student);
+		assessmentSchema.setSolutionSubmission(solutionSubmission);
+		assessmentSchema.setProblemDescriptors(learningResource.getProblemDescriptors().stream().map(AssessmentSchemaProblemDescriptor::new).collect(Collectors.toSet()));
+		return assessmentSchema;
+	}
 }

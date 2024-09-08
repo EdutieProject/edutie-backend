@@ -1,11 +1,13 @@
 <!-- TOC -->
+
 * [Learning Result](#learning-result)
-  * [Contained data:](#contained-data)
-    * [Solution Submission (entity reference)](#solution-submission-entity-reference)
-    * [Feedback](#feedback)
-    * [Student reference](#student-reference)
-    * [Assessments](#assessments)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Solution Submission (entity reference)](#solution-submission-entity-reference)
+        * [Feedback](#feedback)
+        * [Student reference](#student-reference)
+        * [Assessments](#assessments)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Learning Result

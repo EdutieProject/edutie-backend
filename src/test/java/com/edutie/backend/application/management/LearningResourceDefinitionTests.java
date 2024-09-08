@@ -8,43 +8,39 @@ import com.edutie.backend.domain.administration.administrator.persistence.Admini
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import validation.WrapperResult;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
 
 @SpringBootTest
 public class LearningResourceDefinitionTests {
-    @Autowired
-    private EducatorPersistence educatorPersistence;
-    @Autowired
-    private AdministratorPersistence administratorPersistence;
-    @Autowired
-    private CreateLearningResourceDefinitionCommandHandler createLearningResourceDefinitionCommandHandler;
-    private final UserId userId = new UserId();
-    private final Administrator administrator = Administrator.create(userId);
-    private final Educator educator = Educator.create(userId, administrator);
+	private final UserId userId = new UserId();
+	private final Administrator administrator = Administrator.create(userId);
+	private final Educator educator = Educator.create(userId, administrator);
+	@Autowired
+	private EducatorPersistence educatorPersistence;
+	@Autowired
+	private AdministratorPersistence administratorPersistence;
+	@Autowired
+	private CreateLearningResourceDefinitionCommandHandler createLearningResourceDefinitionCommandHandler;
 
-    @BeforeEach
-    public void testSetup() {
-        administratorPersistence.save(administrator).throwIfFailure();
-        educatorPersistence.save(educator).throwIfFailure();
-    }
+	@BeforeEach
+	public void testSetup() {
+		administratorPersistence.save(administrator).throwIfFailure();
+		educatorPersistence.save(educator).throwIfFailure();
+	}
 
-    @Test
-    public void createLearningResourceDefinitionTest() {
-        CreateLearningResourceDefinitionCommand command = new CreateLearningResourceDefinitionCommand()
-                .theoryDescription("LRD theory descriptor")
-                .exerciseDescription("LRD exercise descriptor")
-                .educatorUserId(userId);
+	@Test
+	public void createLearningResourceDefinitionTest() {
+		CreateLearningResourceDefinitionCommand command = new CreateLearningResourceDefinitionCommand().theoryDescription("LRD theory descriptor").exerciseDescription("LRD exercise descriptor").educatorUserId(userId);
 
-        WrapperResult<LearningResourceDefinition> wrapperResult = createLearningResourceDefinitionCommandHandler.handle(command);
+		WrapperResult<LearningResourceDefinition> wrapperResult = createLearningResourceDefinitionCommandHandler.handle(command);
 
-        assert wrapperResult.isSuccess();
-        LearningResourceDefinition learningResourceDefinition = wrapperResult.getValue();
-        assert learningResourceDefinition.getLearningRequirements().isEmpty();
-        assert learningResourceDefinition.getTheoryDescription().text().equals("LRD theory descriptor");
-    }
+		assert wrapperResult.isSuccess();
+		LearningResourceDefinition learningResourceDefinition = wrapperResult.getValue();
+		assert learningResourceDefinition.getLearningRequirements().isEmpty();
+		assert learningResourceDefinition.getTheoryDescription().text().equals("LRD theory descriptor");
+	}
 }

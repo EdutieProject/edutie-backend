@@ -5,5 +5,4 @@ import com.edutie.backend.application.profiles.educator.commands.AssignEducatorR
 import com.edutie.backend.domain.education.educator.Educator;
 import validation.WrapperResult;
 
-public interface AssignEducatorRoleCommandHandler extends UseCaseHandler<WrapperResult<Educator>, AssignEducatorRoleCommand> {
-}
+public interface AssignEducatorRoleCommandHandler extends UseCaseHandler<WrapperResult<Educator>, AssignEducatorRoleCommand> { }

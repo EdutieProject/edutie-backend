@@ -7,20 +7,24 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import validation.WrapperResult;
+import org.springframework.stereotype.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
 
 import java.util.List;
+
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CreatedSegmentsQueryHandlerImplementation extends HandlerBase implements CreatedSegmentsQueryHandler {
-    private final SegmentPersistence segmentPersistence;
-    private final EducatorPersistence educatorPersistence;
-    @Override
-    public WrapperResult<List<Segment>> handle(CreatedSegmentsQuery query) {
-        LOGGER.info("Retrieving segments created by educator of id {}", query.educatorUserId().identifierValue());
-        Educator educator = educatorPersistence.getByAuthorizedUserId(query.educatorUserId());
-        return segmentPersistence.getAllOfEducatorId(educator.getId());
-    }
+	private final SegmentPersistence segmentPersistence;
+	private final EducatorPersistence educatorPersistence;
+
+	@Override
+	public WrapperResult<List<Segment>> handle(CreatedSegmentsQuery query) {
+		log.info("Retrieving segments created by educator of id {}", query.educatorUserId().identifierValue());
+		Educator educator = educatorPersistence.getByAuthorizedUserId(query.educatorUserId());
+		return segmentPersistence.getAllOfEducatorId(educator.getId());
+	}
 }

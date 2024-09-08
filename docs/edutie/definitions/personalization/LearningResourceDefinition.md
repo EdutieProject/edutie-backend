@@ -1,10 +1,12 @@
 <!-- TOC -->
+
 * [Learning Resource Definition](#learning-resource-definition)
-  * [Contained data:](#contained-data)
-    * [Learning requirements relationships](#learning-requirements-relationships)
-    * [Theory context sources](#theory-context-sources)
-    * [Activity context sources](#activity-context-sources)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Learning requirements relationships](#learning-requirements-relationships)
+        * [Theory context sources](#theory-context-sources)
+        * [Activity context sources](#activity-context-sources)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Learning Resource Definition

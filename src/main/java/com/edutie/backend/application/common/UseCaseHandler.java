@@ -8,5 +8,5 @@ package com.edutie.backend.application.common;
  * @param <TInput>  Input type of the handler. Usually a command or query type.
  */
 public interface UseCaseHandler<TReturn, TInput> {
-    TReturn handle(TInput input);
+	TReturn handle(TInput input);
 }

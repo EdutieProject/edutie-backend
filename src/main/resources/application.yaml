@@ -59,7 +59,7 @@ springdoc:
       client-id: ${CLIENT_ID}
       client-secret: ${CLIENT_SECRET}
       scopes:
-       - openid
+        - openid
   writer-with-default-pretty-printer: true
   group-configs:
     - group: Learning

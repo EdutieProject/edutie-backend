@@ -4,8 +4,8 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
@@ -17,60 +17,43 @@ import com.edutie.backend.domain.personalization.learningresult.valueobjects.Fee
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.*;
 
 import java.util.Set;
 
 @SpringBootTest
 public class StudentTests {
-    private final UserId userId = new UserId();
-    private final Educator educator = Educator.create(userId, Administrator.create(userId));
-    @Test
-    public void getLearningHistoryByKnowledgeSubjectTest() {
-        Student student = Student.create(userId);
+	private final UserId userId = new UserId();
+	private final Educator educator = Educator.create(userId, Administrator.create(userId));
 
-        KnowledgeSubjectId knowledgeSubjectId = new KnowledgeSubjectId();
+	@Test
+	public void getLearningHistoryByKnowledgeSubjectTest() {
+		Student student = Student.create(userId);
 
-        LearningRequirement learningRequirement = LearningRequirement.create(educator);
-        learningRequirement.setKnowledgeSubjectId(knowledgeSubjectId);
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
-        LearningResource learningResource = LearningResource.create(
-                LearningResourceGenerationSchema.create(learningResourceDefinition, student),
-                Activity.create("", Set.of()),
-                Theory.create("",""),
-                Set.of()
-        );
+		KnowledgeSubjectId knowledgeSubjectId = new KnowledgeSubjectId();
 
-        LearningResult learningResult = LearningResult.create(
-                student,
-                SolutionSubmission.create(student, learningResource, "My report", 0),
-                new Feedback("My feedback", FeedbackType.NEUTRAL)
-        );
-        student.getLearningHistory().add(learningResult);
+		LearningRequirement learningRequirement = LearningRequirement.create(educator);
+		learningRequirement.setKnowledgeSubjectId(knowledgeSubjectId);
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
+		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
 
-        assert !student.getLearningHistoryByKnowledgeSubject(knowledgeSubjectId).isEmpty();
-    }
+		LearningResult learningResult = LearningResult.create(student, SolutionSubmission.create(student, learningResource, "My report", 0), new Feedback("My feedback", FeedbackType.NEUTRAL));
+		student.getLearningHistory().add(learningResult);
 
-    @Test
-    public void getLearningHistoryByKnowledgeSubjectEmptyVariantTest() {
-        Student student = Student.create(userId);
+		assert !student.getLearningHistoryByKnowledgeSubject(knowledgeSubjectId).isEmpty();
+	}
 
-        LearningRequirement learningRequirement = LearningRequirement.create(educator);
-        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
-        LearningResource learningResource = LearningResource.create(
-                LearningResourceGenerationSchema.create(learningResourceDefinition, student),
-                Activity.create("", Set.of()),
-                Theory.create("",""),
-                Set.of()
-        );
-        LearningResult learningResult = LearningResult.create(
-                student,
-                SolutionSubmission.create(student, learningResource, "My report", 0),
-                new Feedback("My feedback", FeedbackType.NEUTRAL)
-        );
-        student.getLearningHistory().add(learningResult);
+	@Test
+	public void getLearningHistoryByKnowledgeSubjectEmptyVariantTest() {
+		Student student = Student.create(userId);
 
-        assert student.getLearningHistoryByKnowledgeSubject(new KnowledgeSubjectId()).isEmpty();
-    }
+		LearningRequirement learningRequirement = LearningRequirement.create(educator);
+		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
+		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
+		LearningResult learningResult = LearningResult.create(student, SolutionSubmission.create(student, learningResource, "My report", 0), new Feedback("My feedback", FeedbackType.NEUTRAL));
+		student.getLearningHistory().add(learningResult);
+
+		assert student.getLearningHistoryByKnowledgeSubject(new KnowledgeSubjectId()).isEmpty();
+	}
 }

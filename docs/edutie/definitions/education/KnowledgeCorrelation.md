@@ -1,10 +1,12 @@
 <!-- TOC -->
+
 * [Knowledge Correlation](#knowledge-correlation)
-  * [Contained data:](#contained-data)
-    * [Knowledge subject Id](#knowledge-subject-id)
-    * [Correlation Factor](#correlation-factor)
-  * [Sample visualisation:](#sample-visualisation)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Knowledge subject Id](#knowledge-subject-id)
+        * [Correlation Factor](#correlation-factor)
+    * [Sample visualisation:](#sample-visualisation)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Knowledge Correlation

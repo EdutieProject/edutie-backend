@@ -10,5 +10,5 @@ import java.util.List;
  * Service for interaction with externally implemented Knowledge Map.
  */
 public interface KnowledgeMapService {
-    WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId);
+	WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId);
 }

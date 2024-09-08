@@ -1,14 +1,10 @@
 package com.edutie.backend.application.management.science.commands;
 
-import com.edutie.backend.application.common.actions.AdminAction;
 import com.edutie.backend.application.common.actions.EducatorAction;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.*;
+import lombok.experimental.*;
 
 @NoArgsConstructor
 @Getter
@@ -16,12 +12,12 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class CreateScienceCommand extends EducatorAction<CreateScienceCommand> {
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull String scienceName;
-    private String scienceDescription;
+	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+	private @NonNull String scienceName;
+	private String scienceDescription;
 
-    @Override
-    protected CreateScienceCommand getThis() {
-        return this;
-    }
+	@Override
+	protected CreateScienceCommand getThis() {
+		return this;
+	}
 }

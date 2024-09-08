@@ -5,26 +5,29 @@ import com.edutie.backend.application.learning.studyprogram.AccessibleSciencesQu
 import com.edutie.backend.application.learning.studyprogram.queries.AccessibleSciencesQuery;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import validation.Result;
 import validation.WrapperResult;
+import org.springframework.stereotype.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class AccessibleSciencesQueryImplementation extends HandlerBase implements AccessibleSciencesQueryHandler {
-    private final SciencePersistence sciencePersistence;
-    @Override
-    public WrapperResult<List<Science>> handle(AccessibleSciencesQuery query){
-        LOGGER.info("Retrieving all sciences");
-        WrapperResult<List<Science>> scienceResult = sciencePersistence.getAll();
-        if (scienceResult.isFailure()) {
-            LOGGER.info("Persistence error: " + scienceResult.getError().toString());
-            return scienceResult;
-        }
-        LOGGER.info("Sciences retrieved successfully");
-        return Result.successWrapper(scienceResult.getValue());
-    }
+	private final SciencePersistence sciencePersistence;
+
+	@Override
+	public WrapperResult<List<Science>> handle(AccessibleSciencesQuery query) {
+		log.info("Retrieving all sciences");
+		WrapperResult<List<Science>> scienceResult = sciencePersistence.getAll();
+		if (scienceResult.isFailure()) {
+			log.info("Persistence error: {}", scienceResult.getError().toString());
+			return scienceResult;
+		}
+		log.info("Sciences retrieved successfully");
+		return Result.successWrapper(scienceResult.getValue());
+	}
 }

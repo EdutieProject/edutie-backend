@@ -10,40 +10,38 @@ import com.edutie.backend.domain.education.educator.persistence.EducatorPersiste
 import com.edutie.backend.domain.studyprogram.science.Science;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import validation.Result;
 import validation.WrapperResult;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
 
 @SpringBootTest
 public class ScienceManagementTests {
-    @Autowired
-    CreateScienceCommandHandler createScienceCommandHandler;
-    @Autowired
-    EducatorPersistence educatorPersistence;
-    @Autowired
-    AdministratorPersistence administratorPersistence;
-    private final UserId userId = new UserId();
-    private final Administrator administrator = Administrator.create(userId);
-    private  final Educator educator = Educator.create(userId, administrator);
+	private final UserId userId = new UserId();
+	private final Administrator administrator = Administrator.create(userId);
+	private final Educator educator = Educator.create(userId, administrator);
+	@Autowired
+	CreateScienceCommandHandler createScienceCommandHandler;
+	@Autowired
+	EducatorPersistence educatorPersistence;
+	@Autowired
+	AdministratorPersistence administratorPersistence;
 
-    @BeforeEach
-    public void testSetup() {
-        Result result2 = administratorPersistence.save(administrator);
-        System.out.println("ADMIN SAVE RESULT " + result2.getError());
-        Result result = educatorPersistence.save(educator);
-        System.out.println("EDUCATOR SAVE RESULT " + result.getError());
-    }
+	@BeforeEach
+	public void testSetup() {
+		Result result2 = administratorPersistence.save(administrator);
+		System.out.println("ADMIN SAVE RESULT " + result2.getError());
+		Result result = educatorPersistence.save(educator);
+		System.out.println("EDUCATOR SAVE RESULT " + result.getError());
+	}
 
-    @Test
-    public void createScienceTest() {
-        CreateScienceCommand command = new CreateScienceCommand()
-                .educatorUserId(userId)
-                .scienceName("Mathematics");
+	@Test
+	public void createScienceTest() {
+		CreateScienceCommand command = new CreateScienceCommand().educatorUserId(userId).scienceName("Mathematics");
 
-        WrapperResult<Science> scienceWrapperResult = createScienceCommandHandler.handle(command);
+		WrapperResult<Science> scienceWrapperResult = createScienceCommandHandler.handle(command);
 
-        assert scienceWrapperResult.isSuccess();
-        assert scienceWrapperResult.getValue().getName().equals("Mathematics");
-    }
+		assert scienceWrapperResult.isSuccess();
+		assert scienceWrapperResult.getValue().getName().equals("Mathematics");
+	}
 }

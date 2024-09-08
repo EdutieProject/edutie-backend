@@ -1,4 +1,4 @@
 package com.edutie.backend.misc.definitions;
 
-public record Foo(String text) {
-}
+public record Foo(
+		String text) { }

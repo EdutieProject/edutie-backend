@@ -6,7 +6,7 @@ import com.edutie.backend.domain.personalization.learningresult.entities.Assessm
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,22 +17,16 @@ import java.util.stream.Collectors;
  * LLM service and Edutie Backend for Learning Result creation purpose.
  */
 public class LearningResultCreationDto {
-    @JsonProperty
-    private String feedbackText;
-    @JsonProperty
-    private String feedbackLevel;
-    @JsonProperty
-    private Set<AssessmentDto> assessments = new HashSet<>();
+	@JsonProperty
+	private final Set<AssessmentDto> assessments = new HashSet<>();
+	@JsonProperty
+	private String feedbackText;
+	@JsonProperty
+	private String feedbackLevel;
 
-    public LearningResult intoLearningResult(AssessmentSchema assessmentSchema) {
-        LearningResult learningResult = LearningResult.create(
-                assessmentSchema.getStudent(),
-                assessmentSchema.getSolutionSubmission(),
-                new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel))
-        );
-        assessments.stream()
-                .map(o -> Assessment.create(o.learningRequirementId, new Grade(o.gradeNumber))).collect(Collectors.toSet())
-                .forEach(learningResult::addAssessment);
-        return learningResult;
-    }
+	public LearningResult intoLearningResult(AssessmentSchema assessmentSchema) {
+		LearningResult learningResult = LearningResult.create(assessmentSchema.getStudent(), assessmentSchema.getSolutionSubmission(), new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel)));
+		assessments.stream().map(o -> Assessment.create(o.learningRequirementId, new Grade(o.gradeNumber))).collect(Collectors.toSet()).forEach(learningResult::addAssessment);
+		return learningResult;
+	}
 }

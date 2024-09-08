@@ -2,7 +2,6 @@ package com.edutie.backend.infrastucture.persistence.jpa.repositories;
 
 import com.edutie.backend.domain.education.exercisetype.ExerciseType;
 import com.edutie.backend.domain.education.exercisetype.identities.ExerciseTypeId;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 
-public interface ExerciseTypeRepository extends JpaRepository<ExerciseType, ExerciseTypeId> {
-}
+public interface ExerciseTypeRepository extends JpaRepository<ExerciseType, ExerciseTypeId> { }
