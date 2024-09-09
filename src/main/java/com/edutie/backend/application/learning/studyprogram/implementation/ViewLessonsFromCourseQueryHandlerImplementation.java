@@ -25,7 +25,7 @@ public class ViewLessonsFromCourseQueryHandlerImplementation extends HandlerBase
 
 	@Override
 	public WrapperResult<List<LessonView>> handle(ViewLessonsFromCourseQuery query) {
-		log.info("Retrieving lessons for course of id {} for student of id {}", query.courseId().identifierValue(), query.studentUserId());
+		log.info("Retrieving lessons for course of id {} for student of id {}", query.courseId(), query.studentUserId());
 		Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
 		WrapperResult<List<Lesson>> lessonsResult = lessonPersistence.getAllOfCourseId(query.courseId());
 		if (lessonsResult.isFailure()) {
