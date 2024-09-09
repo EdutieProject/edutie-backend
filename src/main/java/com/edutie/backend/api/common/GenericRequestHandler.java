@@ -40,6 +40,7 @@ public class GenericRequestHandler<TResponseBody> {
 		if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
 			this.authenticationToken = jwtAuthenticationToken;
 			this.actionUserId = new UserId(UUID.fromString(jwtAuthenticationToken.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
+			log.info("Handling authenticated request - action user id: {}", this.actionUserId);
 			this.authenticationResult = Result.success();
 			return this;
 		}
