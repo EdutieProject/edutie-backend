@@ -2,6 +2,7 @@ package com.edutie.backend.application.common.actions;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.fasterxml.jackson.annotation.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.*;
 
@@ -17,6 +18,7 @@ public abstract class EducatorAction<T extends EducatorAction<T>> {
 	private UserId educatorUserId;
 
 	public T educatorUserId(UserId userId) {
+		this.educatorUserId = userId;
 		return getThis();
 	}
 

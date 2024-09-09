@@ -16,10 +16,10 @@ import lombok.experimental.*;
 @Accessors(fluent = true)
 public abstract class StudentAction<T extends StudentAction<T>> {
 	@JsonIgnore
-	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-	private UserId studentUserId;
+	private @NonNull UserId studentUserId;
 
 	public T studentUserId(UserId userId) {
+		this.studentUserId = userId;
 		return getThis();
 	}
 
