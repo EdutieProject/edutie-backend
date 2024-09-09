@@ -22,12 +22,23 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
 	public final ResponseEntity<ApiResult<?>> handleAllExceptions(Exception exception) {
 		if (exception instanceof OperationFailureException ex) {
-			return new ResponseEntity<>(ApiResult.fromResult(Result.failure(ex.getError())), new MultiValueMapAdapter<>(new HashMap<>()), GenericRequestHandler.inferStatusCode(ex.getError()));
+			return new ResponseEntity<>(ApiResult.fromResult(
+					Result.failure(ex.getError())),
+					new MultiValueMapAdapter<>(new HashMap<>()),
+					GenericRequestHandler.inferStatusCode(ex.getError())
+			);
 		}
 
-		log.error("EXCEPTION CAUGHT: {}\nMessage: {}", exception.getClass().getSimpleName(), exception.getMessage());
+		log.error("EXCEPTION CAUGHT: {}\nMessage: {}\nStack trace last elements: {}",
+				exception.getClass().getSimpleName(),
+				exception.getMessage(),
+				Arrays.stream(exception.getStackTrace()).limit(5).map(o -> o.toString() + "\n").collect(Collectors.joining())
+		);
 		log.debug("DISPLAYING STACK TRACE: \n{}", Arrays.stream(exception.getStackTrace()).map(o -> o.toString() + "\n").collect(Collectors.joining()));
-		Error error = new Error("SERVER-ERROR-500", exception.getClass().getSimpleName() + " occurred. Message: " + exception.getMessage());
+		Error error = new Error(
+				"SERVER-ERROR-500",
+				exception.getClass().getSimpleName() + " occurred. Message: " + exception.getMessage() + "\nTrace: " + Arrays.stream(exception.getStackTrace()).limit(5).map(o -> o.toString() + " -> ").collect(Collectors.joining())
+		);
 		return new ResponseEntity<>(ApiResult.fromResult(Result.failure(error)), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
