@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.personalization.assessmentschema;
 
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.personalization.assessmentschema.entities.AssessmentSchemaProblemDescriptor;
 import com.edutie.backend.domain.personalization.assessmentschema.identities.AssessmentSchemaId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class AssessmentSchema extends AuditableEntityBase<AssessmentSchemaId> {
+public class AssessmentSchema extends EntityBase<AssessmentSchemaId> {
     private Set<AssessmentSchemaProblemDescriptor> problemDescriptors = new HashSet<>();
     @JsonIgnore
     private Student student;
@@ -41,6 +41,7 @@ public class AssessmentSchema extends AuditableEntityBase<AssessmentSchemaId> {
      */
     public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission, LearningResource learningResource) {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
+        assessmentSchema.setId(new AssessmentSchemaId());
         assessmentSchema.setStudent(student);
         assessmentSchema.setSolutionSubmission(solutionSubmission);
         assessmentSchema.setProblemDescriptors(learningResource.getProblemDescriptors().stream().map(AssessmentSchemaProblemDescriptor::new).collect(Collectors.toSet()));
