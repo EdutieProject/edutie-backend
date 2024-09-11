@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 @Embeddable
 public record Feedback(
-		String text,
+		@Column(columnDefinition = "TEXT") String text,
 		@Convert(converter = FeedbackType.Converter.class) FeedbackType type) {
 	public Feedback() {
 		this("Feedback could not be generated", FeedbackType.NEUTRAL);
