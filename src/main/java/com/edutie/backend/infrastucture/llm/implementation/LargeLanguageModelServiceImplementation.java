@@ -36,12 +36,13 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
 				// Create a POST request with the target URL
 				HttpPost postRequest = new HttpPost(LEARNING_RESOURCE_LLM_URL);
 
-				StringEntity entity = new StringEntity(serializedBody);
+				StringEntity entity = new StringEntity(serializedBody, "UTF-8");
 				postRequest.setEntity(entity);
 				// Set headers (if needed)
-				postRequest.setHeader("Content-Type", "application/json");
+				postRequest.setHeader("Content-Type", "application/json; charset=utf-8");
 				postRequest.setHeader("Accept", "application/json");
 
+				log.info("POSTREQUEST: " + postRequest.getEntity().toString());
 				// Execute the request and get the response
 				try (CloseableHttpResponse response = httpClient.execute(postRequest)) {
 					// Check the status code
@@ -74,12 +75,13 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
 				// Create a POST request with the target URL
 				HttpPost postRequest = new HttpPost(LEARNING_RESULT_LLM_URL);
 
-				StringEntity entity = new StringEntity(serializedBody);
+				StringEntity entity = new StringEntity(serializedBody, "UTF-8");
 				postRequest.setEntity(entity);
 				// Set headers (if needed)
-				postRequest.setHeader("Content-Type", "application/json");
+				postRequest.setHeader("Content-Type", "application/json; charset=utf-8");
 				postRequest.setHeader("Accept", "application/json");
 
+				log.info("POSTREQUEST: " + postRequest.getEntity().toString());
 				// Execute the request and get the response
 				try (CloseableHttpResponse response = httpClient.execute(postRequest)) {
 					// Check the status code
