@@ -181,12 +181,18 @@ public class Seeding {
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("Hello"), PromptFragment.of("World"), PromptFragment.of("Hello"), PromptFragment.of("Universe"));
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
-		learningRequirement.setName("TODO!!!");
-		learningRequirement.setDescription(PromptFragment.of("Hello there"));
-		learningRequirement.appendSubRequirement("Sub req 1");
-		learningRequirement.appendSubRequirement("Sub req 2");
-		learningRequirement.appendSubRequirement("Sub req 3");
-		learningRequirement.appendSubRequirement("Sub req 4");
+		learningRequirement.setName(SampleLearningResourceDefinitionData.LEARNING_REQUIREMENT_NAME);
+		learningRequirement.setDescription(PromptFragment.of(SampleLearningResourceDefinitionData.LEARNING_REQUIREMENT_DESCRIPTION));
+		learningRequirement.appendSubRequirement("Wartość bezwzględna liczby rzeczywistej");
+		learningRequirement.appendSubRequirement("Odległość między liczbami na osi liczbowej");
+		learningRequirement.appendSubRequirement("Geometryczna interpretacja wartości bezwzględnej na osi liczbowej");
+		learningRequirement.appendSubRequirement("Proste równania z wartością bezwzględną");
+		learningRequirement.appendSubRequirement("Własności wartości bezwzględnej");
+		learningRequirement.appendSubRequirement("Złożone równania z wartością bezwzględną");
+		learningRequirement.appendSubRequirement("Nierówności z wartością bezwzględną");
+		learningRequirement.appendSubRequirement("Równanie liniowe z parametrem");
+		learningRequirement.appendSubRequirement("Nierówność liniowa z parametrem");
+		learningRequirement.appendSubRequirement("Równanie liniowe z wartością bezwzględną i parametrem");
 
 		learningRequirementPersistence.save(learningRequirement);
 
