@@ -21,7 +21,7 @@ public enum FeedbackType implements PersistableEnum<String> {
 
 	public static FeedbackType fromString(String code) {
 		for (FeedbackType feedbackType: NEUTRAL.getDeclaringClass().getEnumConstants()) {
-			if (feedbackType.code.equals(code))
+			if (feedbackType.code.equalsIgnoreCase(code))
 				return feedbackType;
 		}
 		return NEUTRAL;
