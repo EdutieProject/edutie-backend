@@ -12,14 +12,17 @@ import lombok.*;
 @Entity
 public class SubRequirement extends EntityBase<SubRequirementId> {
 	@Embedded
-	@AttributeOverride(name = "text", column = @Column(name = "description", columnDefinition = "TEXT"))
-	private PromptFragment description;
+	@AttributeOverride(name = "text", column = @Column(name = "requirement_text", columnDefinition = "TEXT"))
+	private PromptFragment requirementText;
+	@Embedded
+	@AttributeOverride(name = "text", column = @Column(name = "scientific_description", columnDefinition = "TEXT"))
+	private PromptFragment scientificDescription;
 	private Integer ordinal;
 
-	public static SubRequirement create(PromptFragment desc, int orderIndex) {
+	public static SubRequirement create(PromptFragment requirementText, PromptFragment scientificDescription, int orderIndex) {
 		SubRequirement subRequirement = new SubRequirement();
 		subRequirement.setId(new SubRequirementId());
-		subRequirement.description = desc;
+		subRequirement.requirementText = requirementText;
 		subRequirement.ordinal = orderIndex;
 		return subRequirement;
 	}
