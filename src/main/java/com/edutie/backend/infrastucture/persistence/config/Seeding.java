@@ -178,7 +178,6 @@ public class Seeding {
 	}
 
 	private void seedLearningResourceDefinition() {
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("Hello"), PromptFragment.of("World"), PromptFragment.of("Hello"), PromptFragment.of("Universe"));
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
 		learningRequirement.setName(SampleLearningResourceDefinitionData.LEARNING_REQUIREMENT_NAME);
@@ -217,6 +216,13 @@ public class Seeding {
 
 		learningRequirementPersistence.save(learningRequirement);
 
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+				educator,
+				PromptFragment.of("Opisując własności wartości bezwzględnej uwzględnij działania w przypadku podwójnie zagnieżdżonych wartości bezwzględnych "),
+				PromptFragment.of("Zadanie powinno zawierać fabułę dotyczącą morskiej żeglugi. Niech zadanie korzysta z analogii morza żęglującego po statku jako przemierzania odległości po osi liczbowej."),
+				PromptFragment.of("Podsumuj temat podając przykłady ilustrujące uczniowi to jak działa wartość bezwzględna w równaniach na osi liczbowej."),
+				PromptFragment.of("")
+		);
 		learningResourceDefinition.addLearningRequirement(learningRequirement);
 		learningResourceDefinitionPersistence.save(learningResourceDefinition);
 		log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
