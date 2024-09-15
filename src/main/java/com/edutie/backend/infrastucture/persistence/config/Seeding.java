@@ -182,17 +182,38 @@ public class Seeding {
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
 		learningRequirement.setName(SampleLearningResourceDefinitionData.LEARNING_REQUIREMENT_NAME);
-		learningRequirement.setDescription(PromptFragment.of(SampleLearningResourceDefinitionData.LEARNING_REQUIREMENT_DESCRIPTION));
-		learningRequirement.appendSubRequirement("Wartość bezwzględna liczby rzeczywistej");
-		learningRequirement.appendSubRequirement("Odległość między liczbami na osi liczbowej");
-		learningRequirement.appendSubRequirement("Geometryczna interpretacja wartości bezwzględnej na osi liczbowej");
-		learningRequirement.appendSubRequirement("Proste równania z wartością bezwzględną");
-		learningRequirement.appendSubRequirement("Własności wartości bezwzględnej");
-		learningRequirement.appendSubRequirement("Złożone równania z wartością bezwzględną");
-		learningRequirement.appendSubRequirement("Nierówności z wartością bezwzględną");
-		learningRequirement.appendSubRequirement("Równanie liniowe z parametrem");
-		learningRequirement.appendSubRequirement("Nierówność liniowa z parametrem");
-		learningRequirement.appendSubRequirement("Równanie liniowe z wartością bezwzględną i parametrem");
+		learningRequirement.appendSubRequirement(
+				"Uczeń zna definicję wartości bezwzględnej liczby rzeczywistej i jej interpretację geometryczną",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_1)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń potrafi obliczyć wartość bezwzględną liczby",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_2)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń umie zapisać i obliczyć odległość na osi liczbowej między dwoma dowolnymi punktami",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_3)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń zaznacza na osi liczbowej liczby o danej wartości bezwzględnej",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_4)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń rozwiązuje proste równania z wartością bezwzględną typu |x-a| = b",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_5)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń potrafi zaznaczyć na osi liczbowej zbiory opisane za pomocą równań i nierówności z wartością bezwzględną typu: | x - a | = b, | x - a | < b, | x - a | > b",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_6)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń potrafi uprościć wyrażenie z wartością bezwzględną dla zmiennej z danego przedziału",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_7)
+		);
+		learningRequirement.appendSubRequirement(
+				"Uczeń potrafi na podstawie zbioru rozwiązań nierówności z wartością bezwzględną zapisać tę nierówność",
+				PromptFragment.of(SampleLearningResourceDefinitionData.SUB_REQUIREMENT_8)
+		);
 
 		learningRequirementPersistence.save(learningRequirement);
 
