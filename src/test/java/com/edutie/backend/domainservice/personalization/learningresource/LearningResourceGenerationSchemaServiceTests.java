@@ -41,11 +41,10 @@ public class LearningResourceGenerationSchemaServiceTests {
 
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setName("Integration by parts");
-		learningRequirement.setDescription(PromptFragment.of("Here would go the description of integration by parts"));
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-		learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions");
-		learningRequirement.appendSubRequirement("Proper formula usage");
-		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
+		learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("Proper formula usage", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
 		learningResourceDefinition.setTheorySummaryAdditionalDescription(PromptFragment.of("Theory summary additional desc"));
@@ -64,11 +63,10 @@ public class LearningResourceGenerationSchemaServiceTests {
 
 		LearningRequirement primaryLearningRequirement = LearningRequirement.create(educator);
 		primaryLearningRequirement.setName("Integration by parts");
-		primaryLearningRequirement.setDescription(PromptFragment.of("Here would go the description of integration by parts"));
 		primaryLearningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("4e92752a-5ef8-420e-ba45-260b6b7af5fe")));
-		primaryLearningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions");
-		primaryLearningRequirement.appendSubRequirement("Proper formula usage");
-		primaryLearningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
+		primaryLearningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions", PromptFragment.of(""));
+		primaryLearningRequirement.appendSubRequirement("Proper formula usage", PromptFragment.of(""));
+		primaryLearningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("1"), PromptFragment.of("2"), Set.of(primaryLearningRequirement));
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
@@ -80,11 +78,10 @@ public class LearningResourceGenerationSchemaServiceTests {
 
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setName("U substitution integration");
-		learningRequirement.setDescription(PromptFragment.of("Req1"));
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-		learningRequirement.appendSubRequirement("SUBREQ1");
-		learningRequirement.appendSubRequirement("SUBREQ2");
-		learningRequirement.appendSubRequirement("SUBREQ3");
+		learningRequirement.appendSubRequirement("SUBREQ1", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("SUBREQ2", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("SUBREQ3", PromptFragment.of(""));
 
 		LearningResourceDefinition learningResourceDefinition2 = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
 		learningResourceDefinition2.setTheorySummaryAdditionalDescription(PromptFragment.of("Theory summary additional desc"));

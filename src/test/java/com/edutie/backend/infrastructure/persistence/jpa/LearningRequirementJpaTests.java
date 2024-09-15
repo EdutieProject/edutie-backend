@@ -56,10 +56,8 @@ public class LearningRequirementJpaTests {
 	@Test
 	public void testCourseNameAndDescription() {
 		learningRequirement.setName("TestName");
-		learningRequirement.setDescription(PromptFragment.of("TestDescription"));
 
 		assertEquals("TestName", learningRequirement.getName());
-		assertEquals("TestDescription", learningRequirement.getDescription().text());
 	}
 
 	@Test

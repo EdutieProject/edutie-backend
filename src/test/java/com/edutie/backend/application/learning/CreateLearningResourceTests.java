@@ -85,11 +85,10 @@ public class CreateLearningResourceTests {
 
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setName("Integration by parts");
-		learningRequirement.setDescription(PromptFragment.of("Here would go the description of integration by parts"));
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-		learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions");
-		learningRequirement.appendSubRequirement("Proper formula usage");
-		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
+		learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("Proper formula usage", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
@@ -111,11 +110,10 @@ public class CreateLearningResourceTests {
 
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setName("Integration by parts");
-		learningRequirement.setDescription(PromptFragment.of("Here would go the description of integration by parts"));
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")));
-		learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions");
-		learningRequirement.appendSubRequirement("Proper formula usage");
-		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe");
+		learningRequirement.appendSubRequirement("Calculating derivatives and antiderivatives of ingredient functions", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("Proper formula usage", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
@@ -133,9 +131,9 @@ public class CreateLearningResourceTests {
 		// Create a resource definition
 		LearningRequirement requirement = LearningRequirement.create(educator);
 		requirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-		requirement.appendSubRequirement("SUBREQ1");
-		requirement.appendSubRequirement("SUBREQ2");
-		requirement.appendSubRequirement("SUBREQ3");
+		requirement.appendSubRequirement("SUBREQ1", PromptFragment.of(""));
+		requirement.appendSubRequirement("SUBREQ2", PromptFragment.of(""));
+		requirement.appendSubRequirement("SUBREQ3", PromptFragment.of(""));
 		learningRequirementPersistence.save(requirement).throwIfFailure();
 		LearningResourceDefinition definition = LearningResourceDefinition.create(PromptFragment.of("Theory DESC!"), PromptFragment.of("Exercise DESC!"), Set.of(requirement));
 		definition.setHintsAdditionalDescription(PromptFragment.of("ADDITIONAL DESC FOR HINTS"));
