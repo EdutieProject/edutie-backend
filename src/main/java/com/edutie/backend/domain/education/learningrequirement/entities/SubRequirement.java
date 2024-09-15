@@ -23,6 +23,7 @@ public class SubRequirement extends EntityBase<SubRequirementId> {
 		SubRequirement subRequirement = new SubRequirement();
 		subRequirement.setId(new SubRequirementId());
 		subRequirement.requirementText = requirementText;
+		subRequirement.setScientificDescription(scientificDescription);
 		subRequirement.ordinal = orderIndex;
 		return subRequirement;
 	}
