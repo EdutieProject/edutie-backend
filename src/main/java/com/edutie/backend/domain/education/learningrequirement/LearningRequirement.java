@@ -24,9 +24,6 @@ import java.util.List;
 @Setter
 @Entity
 public class LearningRequirement extends EducatorCreatedAuditableEntity<LearningRequirementId> {
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "description", columnDefinition = "TEXT"))
-    private PromptFragment description = new PromptFragment();
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("ordinal")
     private List<SubRequirement> subRequirements = new ArrayList<>();
