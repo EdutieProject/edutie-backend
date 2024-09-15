@@ -2,6 +2,7 @@ package com.edutie.backend.infrastructure.persistence.implementation.education;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
+import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
@@ -45,8 +46,8 @@ public class LearningRequirementPersistenceTests {
 	@Test
 	public void wholeSaveTest() {
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
-		learningRequirement.appendSubRequirement("hello");
-		learningRequirement.appendSubRequirement("universe!");
+		learningRequirement.appendSubRequirement("hello", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("universe!", PromptFragment.of(""));
 		Result result = learningRequirementPersistence.save(learningRequirement);
 		if (result.isFailure())
 			throw new AssertionError(result.getError());

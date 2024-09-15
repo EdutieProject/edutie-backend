@@ -2,6 +2,7 @@ package com.edutie.backend.domain.education;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
+import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.enums.EducatorType;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
@@ -23,35 +24,35 @@ public class LearningRequirementTests {
 	@Test
 	public void subRequirementsAppendTest() {
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
-		learningRequirement.appendSubRequirement("R1");
-		learningRequirement.appendSubRequirement("R2");
-		learningRequirement.appendSubRequirement("R3");
+		learningRequirement.appendSubRequirement("R1", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("R2", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("R3", PromptFragment.of(""));
 
-		assert learningRequirement.getSubRequirements().get(0).getDescription().text().equals("R1");
-		assert learningRequirement.getSubRequirements().get(2).getDescription().text().equals("R3");
+		assert learningRequirement.getSubRequirements().get(0).getRequirementText().text().equals("R1");
+		assert learningRequirement.getSubRequirements().get(2).getRequirementText().text().equals("R3");
 	}
 
 	@Test
 	public void subRequirementsInsertTest() {
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
-		learningRequirement.appendSubRequirement("R1");
-		learningRequirement.appendSubRequirement("R2");
-		learningRequirement.appendSubRequirement("R3");
-		assert learningRequirement.insertSubRequirement("Hello!", 1).isSuccess();
+		learningRequirement.appendSubRequirement("R1", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("R2", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("R3", PromptFragment.of(""));
+		assert learningRequirement.insertSubRequirement("Hello!", PromptFragment.of(""), 1).isSuccess();
 
-		assert learningRequirement.getSubRequirements().get(1).getDescription().text().equals("Hello!");
+		assert learningRequirement.getSubRequirements().get(1).getRequirementText().text().equals("Hello!");
 	}
 
 	@Test
 	public void subRequirementDeleteTest() {
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
-		learningRequirement.appendSubRequirement("R1");
-		learningRequirement.appendSubRequirement("R2");
-		learningRequirement.appendSubRequirement("R3");
+		learningRequirement.appendSubRequirement("R1", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("R2", PromptFragment.of(""));
+		learningRequirement.appendSubRequirement("R3", PromptFragment.of(""));
 		assert learningRequirement.getSubRequirements().size() == 3;
 
 		assert learningRequirement.removeSubRequirement(0).isSuccess();
-		assert learningRequirement.getSubRequirements().getFirst().getDescription().text().equals("R2");
+		assert learningRequirement.getSubRequirements().getFirst().getRequirementText().text().equals("R2");
 	}
 
 }
