@@ -23,10 +23,14 @@ Solution submission reference tells us which solution submission is assessed usi
 
 Not a contained entity.
 
-### Feedback
+### General Feedback
 
-Feedback is used both to communicate students how can they improve their knowledge, but it also can be used for
-personalized learning resource generation.
+General feedback summarizes the feedbacks of all the assessments made.
+
+### Feedback type
+
+An enumeration type symbolises the overall meaning of the feedback. Used to adjust the UI for the appropriate 
+feeling of the feedback.
 
 ### Student reference
 
@@ -36,11 +40,13 @@ Learning result contains a reference to the student it is assigned to.
 
 Assessment indicate the scale of knowledge student has regarding the given learning requirement.
 
-- An assessment is a pair of a learning requirement reference and a grade of student's knowledge regarding that
-  requirement
-- Learning Result may have many assessments
-- Number of assessments should be equal to number of LRD learning requirements, since every Learning Requirement is
-  assessed
+Assessment encompasses:
+ - The reference to the assessed learning requirement in form of the Learning Requirement Id
+ - Grade of the assessment
+ - Brief feedback targeting this particular learning requirement
+ - Referred Sub requirements references 
+
+Number of assessments should be equal to number of LRD learning requirements, since every Learning Requirement is assessed.
 
 Considering all assessments, mean grade of the learning result can be calculated.
 
