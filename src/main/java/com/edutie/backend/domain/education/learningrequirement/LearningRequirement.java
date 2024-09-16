@@ -15,6 +15,7 @@ import validation.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Learning Requirement entity represents the requirements that student exercises to gain knowledge.
@@ -102,5 +103,14 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
             subRequirements.get(i).setOrdinal(i);
         }
         return Result.success();
+    }
+
+    /**
+     * Retrieves sub requirements with respect to their ordinal.
+     * @param qualifiedOrdinal as end index
+     * @return list of Sub Requirements
+     */
+    public List<SubRequirement> getQualifiedSubRequirements(int qualifiedOrdinal) {
+        return subRequirements.stream().filter(o -> o.getOrdinal() <= qualifiedOrdinal).toList();
     }
 }

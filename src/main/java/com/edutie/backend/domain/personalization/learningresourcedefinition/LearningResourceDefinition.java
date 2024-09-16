@@ -10,6 +10,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -55,6 +56,10 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
 		learningResourceDefinition.setExerciseDescription(exerciseDescription);
 		learningResourceDefinition.learningRequirements.addAll(learningRequirements);
 		return learningResourceDefinition;
+	}
+
+	public Optional<LearningRequirement> getLearningRequirementOfId(LearningRequirementId learningRequirementId) {
+		return learningRequirements.stream().filter(o -> o.getId().equals(learningRequirementId)).findFirst();
 	}
 
 	public void addLearningRequirement(LearningRequirement learningRequirement) {
