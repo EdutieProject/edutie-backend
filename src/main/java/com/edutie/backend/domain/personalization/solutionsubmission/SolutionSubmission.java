@@ -25,6 +25,7 @@ public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId
 	@Setter(AccessLevel.PRIVATE)
 	@JsonIgnore
 	private LearningResource learningResource;
+	@Column(columnDefinition = "TEXT")
 	private String reportText;
 
 	public static SolutionSubmission create(Student student, LearningResource learningResource, String reportText, int hintsRevealed) {

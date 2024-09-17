@@ -125,7 +125,7 @@ public class CreateLearningResourceTests {
 		SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "My report!", 0);
 		solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
 		LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("Feedback!", FeedbackType.NEUTRAL));
-		learningResult.addAssessment(Assessment.create(learningRequirement.getId(), new Grade(5)));
+		learningResult.addAssessment(Assessment.create(learningRequirement.getId(), new Grade(5), "", learningRequirement.getQualifiedSubRequirements(1)));
 		learningResultPersistence.save(learningResult).throwIfFailure();
 
 		// Create a resource definition

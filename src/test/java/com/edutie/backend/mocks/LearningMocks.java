@@ -36,7 +36,7 @@ public class LearningMocks {
 			@Override
 			public WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema) {
 				LearningResult learningResult = LearningResult.create(assessmentSchema.getStudent(), assessmentSchema.getSolutionSubmission(), new Feedback("Great!", FeedbackType.POSITIVE));
-				learningResult.addAssessment(Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE));
+				learningResult.addAssessment(Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE,  "", assessmentSchema.getLearningResourceDefinition().getLearningRequirements().stream().findFirst().get().getSubRequirements()));
 				return WrapperResult.successWrapper(learningResult);
 			}
 		};

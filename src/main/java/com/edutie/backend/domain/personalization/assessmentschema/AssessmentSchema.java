@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.assessmentschema;
 
 import com.edutie.backend.domain.common.base.EntityBase;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.assessmentschema.entities.AssessmentSchemaProblemDescriptor;
 import com.edutie.backend.domain.personalization.assessmentschema.identities.AssessmentSchemaId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
@@ -47,5 +48,9 @@ public class AssessmentSchema extends EntityBase<AssessmentSchemaId> {
         assessmentSchema.setProblemDescriptors(learningResource.getProblemDescriptors().stream().map(AssessmentSchemaProblemDescriptor::new).collect(Collectors.toSet()));
         assessmentSchema.setLearningResourceDefinition(learningResource.getDefinition());
         return assessmentSchema;
+    }
+
+    public AssessmentSchemaProblemDescriptor getProblemDescriptorByLearningRequirement(LearningRequirementId learningRequirementId) {
+        return problemDescriptors.stream().filter(o -> o.getLearningRequirementId().equals(learningRequirementId)).findFirst().get();
     }
 }
