@@ -16,7 +16,7 @@ import lombok.*;
 @RequestMapping("/api/v1/management/learning-resource")
 @RequiredArgsConstructor
 @Tag(name = "Learning Resource Definition Management Controller", description = "Provides operations regarding learning res. definitions in the management context")
-public class LearningResourceDefinitionController {
+public class LearningResourceDefinitionManagementController {
 	private final EducatorAuthorization educatorAuthorization;
 	private final CreateLearningResourceDefinitionCommandHandler createLearningResourceDefinitionCommandHandler;
 
