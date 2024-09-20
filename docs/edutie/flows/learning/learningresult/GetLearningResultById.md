@@ -6,7 +6,7 @@ This flow retrieves a learning result by its unique identifier
 
 ```mermaid
 ---
-title: Learning resource retrieval by Id
+title: Learning Result retrieval by Id
 ---
 sequenceDiagram
     participant Client
@@ -17,7 +17,7 @@ sequenceDiagram
     Client ->> Rest API: Get Learning Result By Id Request
     Rest API ->> Rest API: Authorize Student
     Rest API ->> Application: Get Learning Result By Id Query
-    Application ->> Persistence: Load lLearning Result
+    Application ->> Persistence: Load Learning Result
     Persistence ->> Persistence: Find by Id
     Persistence ->> Application: Loaded entity
     Application ->> Rest API: Wrapper result of Learning Result
