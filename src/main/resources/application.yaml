@@ -68,6 +68,9 @@ springdoc:
     - group: Management
       packages-to-scan:
         - com.edutie.backend.api.v1.management
+    - group: Profiles
+      packages-to-scan:
+        - com.edutie.backend.api.v1.profiles
     - group: Testing
       packages-to-scan:
         - com.edutie.backend.api.v1.testing

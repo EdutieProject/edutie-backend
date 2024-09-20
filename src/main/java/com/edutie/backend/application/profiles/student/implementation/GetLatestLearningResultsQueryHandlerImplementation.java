@@ -17,8 +17,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class GetLatestLearningResultsQueryHandlerImplementation implements GetLatestLearningResultsQueryHandler {
-    private LearningResultPersistence learningResultPersistence;
-    private StudentPersistence studentPersistence;
+    private final LearningResultPersistence learningResultPersistence;
+    private final StudentPersistence studentPersistence;
     @Override
     public WrapperResult<List<LearningResult>> handle(GetLatestLearningResultsQuery query) {
         log.info("Retrieving latest learning results for student user of id {}", query.studentUserId());
