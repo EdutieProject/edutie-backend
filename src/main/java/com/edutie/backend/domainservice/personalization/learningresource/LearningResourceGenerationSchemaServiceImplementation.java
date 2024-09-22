@@ -29,7 +29,9 @@ public class LearningResourceGenerationSchemaServiceImplementation implements Le
 				if (!personalizationRule.getLearningResults().isEmpty())
 					problemDescriptor.addPersonalizationRule(personalizationRule);
 			}
-			problemDescriptor.calculateQualifiedSubRequirements(lResDef.getLearningRequirements().stream().filter(o -> o.getId().equals(problemDescriptor.getLearningRequirementId())).findFirst().orElseThrow().getSubRequirements().size());
+			problemDescriptor.calculateQualifiedSubRequirements(
+					lResDef.getLearningRequirementOfId(problemDescriptor.getLearningRequirementId()).get().getSubRequirements().size()
+			);
 		}
 		return WrapperResult.successWrapper(learningResourceGenerationSchema);
 	}

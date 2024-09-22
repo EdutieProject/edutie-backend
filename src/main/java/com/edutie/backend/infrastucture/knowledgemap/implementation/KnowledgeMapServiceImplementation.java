@@ -4,6 +4,7 @@ import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrela
 import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
+import com.edutie.backend.infrastucture.knowledgemap.dto.KnowledgeCorrelationCreationDto;
 import com.fasterxml.jackson.databind.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.*;
@@ -57,8 +58,10 @@ public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
 						return WrapperResult.failureWrapper(KnowledgeMapServiceErrors.invalidStatus(statusCode, responseBody));
 					}
 
-					KnowledgeCorrelation[] knowledgeCorrelations = new ObjectMapper().readValue(responseBody, KnowledgeCorrelation[].class);
-					return WrapperResult.successWrapper(Arrays.stream(knowledgeCorrelations).toList());
+					KnowledgeCorrelationCreationDto[] knowledgeCorrelations = new ObjectMapper().readValue(responseBody, KnowledgeCorrelationCreationDto[].class);
+					return WrapperResult.successWrapper(
+							Arrays.stream(knowledgeCorrelations).map(KnowledgeCorrelationCreationDto::intoKnowledgeCorrelation).toList()
+					);
 				}
 			}
 		} catch (Exception ex) {

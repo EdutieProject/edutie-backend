@@ -34,7 +34,10 @@ public class GenerationSchemaProblemDescriptor extends ProblemDescriptor {
 	 * amount.
 	 */
 	public void calculateQualifiedSubRequirements(int subRequirementsSize) {
-		double meanOverallGrade = personalizationRules.stream().flatMap(o -> o.getLearningResults().stream()).flatMap(o -> o.getAssessments().stream()).map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1);
+		double meanOverallGrade = personalizationRules.stream().flatMap(o -> o.getLearningResults().stream())
+				.flatMap(o -> o.getAssessments().stream())
+				.map(o -> o.getGrade().gradeNumber())
+				.mapToInt(Integer::intValue).average().orElse(1);
 		double gradePercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
 		this.setQualifiedSubRequirementOrdinal((int) Math.ceil(gradePercentage * subRequirementsSize));
 	}
