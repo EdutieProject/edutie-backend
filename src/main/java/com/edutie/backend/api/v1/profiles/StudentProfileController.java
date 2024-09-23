@@ -40,7 +40,7 @@ public class StudentProfileController {
                         new GetLatestLearningResultsQuery()
                                 .studentUserId(userId)
                                 .amount(amount)
-                                .maxDate(LocalDateTime.parse(maxDate, DateTimeFormatter.ISO_DATE_TIME))
+                                .maxDate(maxDate != null ? LocalDateTime.parse(maxDate, DateTimeFormatter.ISO_DATE_TIME) : null)
                 )));
     }
 }
