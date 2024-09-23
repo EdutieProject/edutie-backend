@@ -8,6 +8,7 @@ import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -29,12 +32,15 @@ public class StudentProfileController {
     @GetMapping("/learning-results/latest")
     public ResponseEntity<ApiResult<List<LearningResult>>> getLatestLearningResults(Authentication authentication,
                                                                                     @RequestParam(required = false) Integer amount,
-                                                                                    @RequestParam(required = false) LocalDate maxDate) {
+                                                                                    String maxDate) {
         return new GenericRequestHandler<List<LearningResult>>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId -> getLatestLearningResultsQueryHandler.handle(
-                        new GetLatestLearningResultsQuery().studentUserId(userId).amount(amount).maxDate(maxDate)
+                        new GetLatestLearningResultsQuery()
+                                .studentUserId(userId)
+                                .amount(amount)
+                                .maxDate(LocalDateTime.parse(maxDate, DateTimeFormatter.ISO_DATE_TIME))
                 )));
     }
 }

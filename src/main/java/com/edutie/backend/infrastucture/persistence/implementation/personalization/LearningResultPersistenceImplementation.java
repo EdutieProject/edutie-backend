@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import validation.Result;
 import validation.WrapperResult;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,17 +54,19 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
      * @return Wrapper Result of Learning Results
      */
     @Override
-    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDate maxDate) {
+    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate) {
         try {
             Optional<Student> student = studentRepository.findById(studentId);
             if (student.isEmpty())
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
             List<LearningResult> learningResults;
             if (maxDate != null)
-                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOn(student.get(), maxDate, amount == null ? Limit.unlimited() : Limit.of(amount));
+                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOn(
+                        student.get(), maxDate, amount == null ? Limit.unlimited() : Limit.of(amount)
+                );
             else
                 learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOn(student.get(), Limit.of(amount));
-        return Result.successWrapper(learningResults);
+            return Result.successWrapper(learningResults);
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
         }

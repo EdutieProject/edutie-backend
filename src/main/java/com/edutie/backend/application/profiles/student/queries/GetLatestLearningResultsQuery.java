@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class GetLatestLearningResultsQuery extends StudentAction<GetLatestLearningResultsQuery> {
     private Integer amount;
-    private LocalDate maxDate;
+    private LocalDateTime maxDate;
 
     @Override
     protected GetLatestLearningResultsQuery getThis() {
@@ -25,10 +25,11 @@ public final class GetLatestLearningResultsQuery extends StudentAction<GetLatest
 
     /**
      * Note that this implementation requires a rest endpoint function to call the amount setter first.
+     *
      * @param maxDate max Date
      * @return this query
      */
-    public GetLatestLearningResultsQuery maxDate(LocalDate maxDate) {
+    public GetLatestLearningResultsQuery maxDate(LocalDateTime maxDate) {
         this.maxDate = maxDate;
         if (this.maxDate == null && this.amount == null)
             this.amount = 5;
