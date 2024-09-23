@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import validation.Result;
 import validation.WrapperResult;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,13 +54,19 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
      * @return Wrapper Result of Learning Results
      */
     @Override
-    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, int amount) {
+    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate) {
         try {
             Optional<Student> student = studentRepository.findById(studentId);
-            return student
-                    .map(value -> WrapperResult.successWrapper(
-                            learningResultRepository.findLearningResultsByStudentOrderByCreatedOn(value, Limit.of(amount)))
-                    ).orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
+            if (student.isEmpty())
+                return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
+            List<LearningResult> learningResults;
+            if (maxDate != null)
+                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOn(
+                        student.get(), maxDate, amount == null ? Limit.unlimited() : Limit.of(amount)
+                );
+            else
+                learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOn(student.get(), Limit.of(amount));
+            return Result.successWrapper(learningResults);
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
         }

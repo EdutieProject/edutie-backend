@@ -6,6 +6,8 @@ import com.edutie.backend.domain.personalization.learningresult.identities.Learn
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import validation.WrapperResult;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface LearningResultPersistence extends Persistence<LearningResult, LearningResultId> {
@@ -18,5 +20,5 @@ public interface LearningResultPersistence extends Persistence<LearningResult, L
      * @param amount    learning result amount
      * @return Wrapper Result of Learning Results
      */
-    WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, int amount);
+    WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate);
 }

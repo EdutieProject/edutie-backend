@@ -15,6 +15,7 @@ public class ApiConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(@NonNull CorsRegistry registry) {
+		//TODO: add allowed origins to env or props
 		registry.addMapping("/**").allowedOrigins("http://127.0.0.1:5173", "http://localhost:5173");
 	}
 }
