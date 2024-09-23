@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,12 +27,14 @@ public class StudentProfileController {
     private final GetLatestLearningResultsQueryHandler getLatestLearningResultsQueryHandler;
 
     @GetMapping("/learning-results/latest")
-    public ResponseEntity<ApiResult<List<LearningResult>>> getLatestLearningResults(Authentication authentication, @RequestParam int amount) {
+    public ResponseEntity<ApiResult<List<LearningResult>>> getLatestLearningResults(Authentication authentication,
+                                                                                    @RequestParam(required = false) Integer amount,
+                                                                                    @RequestParam(required = false) LocalDate maxDate) {
         return new GenericRequestHandler<List<LearningResult>>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId -> getLatestLearningResultsQueryHandler.handle(
-                        new GetLatestLearningResultsQuery().studentUserId(userId).amount(amount)
+                        new GetLatestLearningResultsQuery().studentUserId(userId).amount(amount).maxDate(maxDate)
                 )));
     }
 }
