@@ -6,4 +6,5 @@ public record SegmentView(
 		Segment segment,
 		int approachesTaken,
 		int approachesSucceeded,
-		boolean done) { }
+		boolean done
+) { }
