@@ -1,12 +1,12 @@
 package com.edutie.backend.domain.personalization.learningresult.persistence;
 
 import com.edutie.backend.domain.common.persistence.Persistence;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import validation.WrapperResult;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,4 +21,12 @@ public interface LearningResultPersistence extends Persistence<LearningResult, L
      * @return Wrapper Result of Learning Results
      */
     WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate);
+
+    /**
+     * Provides learning results associated with certain learning resource definition id.
+     *
+     * @param learningResourceDefinitionId learning resource definition id
+     * @return Learning Result List Wrapper Result
+     */
+    WrapperResult<List<LearningResult>> getLearningResultsForStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId);
 }

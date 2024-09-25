@@ -1,11 +1,14 @@
 package com.edutie.backend.infrastucture.persistence.implementation.personalization;
 
+import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.infrastucture.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningResourceDefinitionRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningResultRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ import java.util.Optional;
 public class LearningResultPersistenceImplementation implements LearningResultPersistence {
     private final LearningResultRepository learningResultRepository;
     private final StudentRepository studentRepository;
+    private final LearningResourceDefinitionRepository learningResourceDefinitionRepository;
 
     /**
      * Override this to provide repository for default methods
@@ -71,5 +75,28 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
         }
 
+    }
+
+    /**
+     * Provides learning results associated with certain learning resource definition id.
+     *
+     * @param studentId                    student Id
+     * @param learningResourceDefinitionId learning resource definition id
+     * @return Learning Result List Wrapper Result
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsForStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
+        try {
+            Optional<Student> student = studentRepository.findById(studentId);
+            if (student.isEmpty())
+                return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
+            Optional<LearningResourceDefinition> learningResourceDefinition = learningResourceDefinitionRepository.findById(learningResourceDefinitionId);
+            return learningResourceDefinition
+                    .map(definition -> WrapperResult.successWrapper(
+                            learningResultRepository.findLearningResultsBySolutionSubmissionLearningResourceDefinitionAndStudent(definition, student.get()))
+                    ).orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(LearningResourceDefinition.class)));
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
+        }
     }
 }
