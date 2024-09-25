@@ -35,16 +35,17 @@ public class ViewSegmentsFromLessonQueryHandlerImplementation extends HandlerBas
         return WrapperResult.successWrapper(
                 lesson.getSegments().stream().map(
                         segment -> {
-                            List<LearningResult> learningResults = learningResultPersistence.getLearningResultsForStudentByLearningResourceDefinitionId(
+                            if (segment.getLearningResourceDefinitionId() == null) {
+                                return new SegmentView(segment, -1, -1, false);
+                            }
+                            WrapperResult<List<LearningResult>> learningResults = learningResultPersistence.getLearningResultsForStudentByLearningResourceDefinitionId(
                                     student.getId(), segment.getLearningResourceDefinitionId()
-                            ).getValue();
-
-                            int successResultsCount = (int) learningResults.stream().filter(
+                            );
+                            int successResultsCount = (int) learningResults.getValue().stream().filter(
                                     o -> o.getAssessments().stream().allMatch(a -> a.getGrade().greaterThanOrEqual(Grade.SUCCESS_GRADE))
                             ).count();
-
                             return new SegmentView(segment,
-                                    learningResults.size(),
+                                    learningResults.getValue().size(),
                                     successResultsCount,
                                     successResultsCount > 0);
                         }

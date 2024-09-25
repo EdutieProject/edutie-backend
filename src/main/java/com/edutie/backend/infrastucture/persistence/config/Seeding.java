@@ -29,6 +29,7 @@ import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersist
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import jakarta.annotation.PostConstruct;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 import lombok.*;
@@ -83,9 +84,19 @@ public class Seeding {
 		educatorPersistence.save(educator);
 		seedLearningResourceDefinition();
 		seedSciences();
+		injectLearningResourceDefinition();
 		log.info("=====================");
 		log.info("  DB SEEDING - END   ");
 		log.info("=====================");
+	}
+
+	private void injectLearningResourceDefinition() {
+		log.info("Injecting LRD into one of the segments...");
+		Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get(0);
+		segment.setName("Podróż oceaniczna z wartością bezwzględną");
+		segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem");
+		segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
+		segmentPersistence.save(segment);
 	}
 
 	/**
@@ -95,6 +106,7 @@ public class Seeding {
 	 * @since 0.5
 	 */
 	private void seedSciences() {
+		log.info("Seeding study program...");
 		int sciencesCount = (int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES);
 		seedSciences(sciencesCount);
 	}
@@ -452,7 +464,6 @@ public class Seeding {
 				s1.setName("Segment 1");
 				s1.setSnippetDescription("Snippet description of Segment 1");
 				s1.update(uid);
-				s1.setLearningResourceDefinitionId(learningResourceDefinitionId);
 				segmentPersistence.save(s1);
 
 				return s1;
@@ -581,7 +592,6 @@ public class Seeding {
 				segment.setSnippetDescription("Snippet description of Segment" + i);
 				segment.setPreviousElement(prev);
 				segment.update(uid);
-				segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
 				segmentPersistence.save(segment);
 				return segment;
 			}
