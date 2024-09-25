@@ -26,7 +26,7 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
 	private String name;
 	private String snippetDescription;
 	@Embedded
-	@AttributeOverride(name = "identifierValue", column = @Column(name = "learning_resource_definition_id"))
+	@AttributeOverride(name = "identifierValue", column = @Column(name = "learning_resource_definition_id", unique = true))
 	private LearningResourceDefinitionId learningResourceDefinitionId;
 	@JoinColumn(name = "lesson_id")
 	@ManyToOne(targetEntity = Lesson.class, fetch = FetchType.EAGER)
