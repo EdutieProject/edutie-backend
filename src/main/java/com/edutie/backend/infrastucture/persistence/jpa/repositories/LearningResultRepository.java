@@ -1,5 +1,6 @@
 package com.edutie.backend.infrastucture.persistence.jpa.repositories;
 
+import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -13,4 +14,7 @@ public interface LearningResultRepository extends JpaRepository<LearningResult, 
     List<LearningResult> findLearningResultsByStudentOrderByCreatedOn(Student student, Limit limit);
 
     List<LearningResult> findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOn(Student student, LocalDateTime localDate, Limit limit);
+
+    Integer countLearningResultsBySolutionSubmissionLearningResourceDefinition(LearningResourceDefinition learningResourceDefinition);
+    List<LearningResult> findLearningResultsBySolutionSubmissionLearningResourceDefinitionAndStudent(LearningResourceDefinition solutionSubmission_learningResource_definition, Student student);
 }
