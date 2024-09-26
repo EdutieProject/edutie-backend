@@ -38,14 +38,12 @@ public class ViewSegmentsFromLessonQueryHandlerImplementation extends HandlerBas
                             if (segment.getLearningResourceDefinitionId() == null) {
                                 return new SegmentView(segment, -1, -1, false);
                             }
-                            WrapperResult<List<LearningResult>> learningResults = learningResultPersistence.getLearningResultsForStudentByLearningResourceDefinitionId(
+                           List<LearningResult> learningResults = learningResultPersistence.getLearningResultsForStudentByLearningResourceDefinitionId(
                                     student.getId(), segment.getLearningResourceDefinitionId()
-                            );
-                            int successResultsCount = (int) learningResults.getValue().stream().filter(
-                                    o -> o.getAssessments().stream().allMatch(a -> a.getGrade().greaterThanOrEqual(Grade.SUCCESS_GRADE))
-                            ).count();
+                            ).getValue();
+                            int successResultsCount = (int) learningResults.stream().filter(LearningResult::isSuccessful).count();
                             return new SegmentView(segment,
-                                    learningResults.getValue().size(),
+                                    learningResults.size(),
                                     successResultsCount,
                                     successResultsCount > 0);
                         }
