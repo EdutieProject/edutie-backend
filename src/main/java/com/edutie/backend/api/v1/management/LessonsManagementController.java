@@ -7,6 +7,7 @@ import com.edutie.backend.application.management.lesson.commands.*;
 import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQuery;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import validation.Result;
 import org.springframework.http.*;
@@ -28,21 +29,25 @@ public class LessonsManagementController {
 	private final EducatorAuthorization educatorAuthorization;
 
 	@GetMapping
+	@Operation(description = "Retrieves lessons created by an educator invoking the flow")
 	public ResponseEntity<ApiResult<List<Lesson>>> getCreatedLessons(Authentication auth) {
 		return new GenericRequestHandler<List<Lesson>>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createdLessonsQueryHandler.handle(new CreatedLessonsQuery().educatorUserId(userId)));
 	}
 
 	@PostMapping
+	@Operation(description = "Creates a lesson using the specified command. May be performed by a privileged educator.")
 	public ResponseEntity<ApiResult<Lesson>> createLesson(Authentication auth, @RequestBody CreateLessonCommand command) {
 		return new GenericRequestHandler<Lesson>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createLessonCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
 	@PatchMapping
+	@Operation(description = "Modifies lesson using the specified command. May be performed by an author educator.")
 	public ResponseEntity<ApiResult<Result>> modifyLesson(Authentication auth, @RequestBody ModifyLessonCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> modifyLessonCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
 	@DeleteMapping
+	@Operation(description = "Deletes lesson specified by an id in the command. May be performed by an author educator")
 	public ResponseEntity<ApiResult<Result>> removeLesson(Authentication auth, @RequestBody RemoveLessonCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> removeLessonCommandHandler.handle(command.educatorUserId(userId)));
 	}
