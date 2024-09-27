@@ -6,6 +6,7 @@ import com.edutie.backend.application.profiles.student.GetLatestLearningResultsQ
 import com.edutie.backend.application.profiles.student.queries.GetLatestLearningResultsQuery;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,6 +31,7 @@ public class StudentProfileController {
     private final GetLatestLearningResultsQueryHandler getLatestLearningResultsQueryHandler;
 
     @GetMapping("/learning-results/latest")
+    @Operation(description = "Retrieves latest learning results for given student")
     public ResponseEntity<ApiResult<List<LearningResult>>> getLatestLearningResults(Authentication authentication,
                                                                                     @RequestParam(required = false) Integer amount,
                                                                                     String maxDate) {
