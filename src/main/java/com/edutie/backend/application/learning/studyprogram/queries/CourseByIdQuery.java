@@ -1,5 +1,6 @@
 package com.edutie.backend.application.learning.studyprogram.queries;
 
+import com.edutie.backend.application.common.actions.StudentAction;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +15,11 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class CourseByIdQuery {
+public final class CourseByIdQuery extends StudentAction<CourseByIdQuery> {
     private @NonNull CourseId courseId;
+
+    @Override
+    protected CourseByIdQuery getThis() {
+        return this;
+    }
 }
