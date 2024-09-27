@@ -8,10 +8,11 @@ import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
+import com.edutie.backend.domainservice.studyprogram.progressindication.lesson.LessonProgressIndicationService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import validation.WrapperResult;
-import org.springframework.stereotype.*;
-import lombok.*;
-import lombok.extern.slf4j.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,20 +21,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ViewLessonsFromCourseQueryHandlerImplementation extends HandlerBase implements ViewLessonsFromCourseQueryHandler {
-	private final LessonPersistence lessonPersistence;
-	private final StudentPersistence studentPersistence;
+    private final LessonPersistence lessonPersistence;
+    private final StudentPersistence studentPersistence;
+    private final LessonProgressIndicationService lessonProgressIndicationService;
 
-	@Override
-	public WrapperResult<List<LessonView>> handle(ViewLessonsFromCourseQuery query) {
-		log.info("Retrieving lessons for course of id {} for student of id {}", query.courseId(), query.studentUserId());
-		Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
-		WrapperResult<List<Lesson>> lessonsResult = lessonPersistence.getAllOfCourseId(query.courseId());
-		if (lessonsResult.isFailure()) {
-			log.info("Persistence error: {}", lessonsResult.getError().toString());
-			return lessonsResult.map(o -> null);
-		}
+    @Override
+    public WrapperResult<List<LessonView>> handle(ViewLessonsFromCourseQuery query) {
+        log.info("Retrieving lessons for course of id {} for student of id {}", query.courseId(), query.studentUserId());
+        Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
+        List<Lesson> lessons = lessonPersistence.getAllOfCourseId(query.courseId()).getValue();
 
-		//TODO: note that current implementation signs which lesson is "touched".
-		return lessonsResult.map(primaryResult -> primaryResult.stream().map(o -> new LessonView(o, false)).collect(Collectors.toList()));
-	}
+        return WrapperResult.successWrapper(lessons.stream().map(lesson ->
+                        new LessonView(lesson, lessonProgressIndicationService.getLessonProgressState(lesson, student).getValue())
+                ).collect(Collectors.toList())
+        );
+    }
 }

@@ -12,11 +12,15 @@ import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.*;
-import org.springframework.security.core.*;
-import org.springframework.web.bind.annotation.*;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,30 +29,66 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Study Program Learning Controller", description = "Provides operations regarding study program in the learning context")
 public class StudyProgramLearningController {
-	private final StudentAuthorization studentAuthorization;
-	private final AccessibleSciencesQueryHandler accessibleSciencesQueryHandler;
-	private final CoursesByScienceQueryHandler coursesByScienceQueryHandler;
-	private final ViewLessonsFromCourseQueryHandler viewLessonsFromCourseQueryHandler;
-	private final ViewSegmentsFromLessonQueryHandler viewSegmentsFromLessonQueryHandler;
+    private final StudentAuthorization studentAuthorization;
+    private final AccessibleSciencesQueryHandler accessibleSciencesQueryHandler;
+    private final CoursesByScienceQueryHandler coursesByScienceQueryHandler;
+    private final CourseByIdQueryHandler courseByIdQueryHandler;
+    private final ViewLessonsFromCourseQueryHandler viewLessonsFromCourseQueryHandler;
+    private final ViewSegmentsFromLessonQueryHandler viewSegmentsFromLessonQueryHandler;
 
-	@GetMapping("/sciences")
-	public ResponseEntity<ApiResult<List<Science>>> getAccessibleSciences(Authentication auth) {
-		return new GenericRequestHandler<List<Science>>().authenticate(auth).authorize(studentAuthorization).handle(() -> accessibleSciencesQueryHandler.handle(new AccessibleSciencesQuery()));
+    @GetMapping("/sciences")
+    @Operation(description = "Retrieves all accessible sciences")
+    public ResponseEntity<ApiResult<List<Science>>> getAccessibleSciences(Authentication auth) {
+        return new GenericRequestHandler<List<Science>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle(() -> accessibleSciencesQueryHandler.handle(
+                        new AccessibleSciencesQuery()
+                ));
 
-	}
+    }
 
-	@GetMapping("/courses")
-	public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(Authentication auth, @RequestParam ScienceId scienceId) {
-		return new GenericRequestHandler<List<Course>>().authenticate(auth).authorize(studentAuthorization).handle((userId) -> coursesByScienceQueryHandler.handle(new CoursesByScienceQuery().scienceId(scienceId)));
-	}
+    @GetMapping("/courses")
+    @Operation(description = "Retrieves all courses associated with a given science")
+    public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(Authentication auth, @RequestParam ScienceId scienceId) {
+        return new GenericRequestHandler<List<Course>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> coursesByScienceQueryHandler.handle(
+                        new CoursesByScienceQuery().scienceId(scienceId)
+                ));
+    }
 
-	@GetMapping("/lessons")
-	public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(Authentication auth, @RequestParam CourseId courseId) {
-		return new GenericRequestHandler<List<LessonView>>().authenticate(auth).authorize(studentAuthorization).handle((userId) -> viewLessonsFromCourseQueryHandler.handle(new ViewLessonsFromCourseQuery().studentUserId(userId).courseId(courseId)));
-	}
+    @GetMapping("/courses/by-id")
+    @Operation(description = "Retrieves a course by its identifier")
+    public ResponseEntity<ApiResult<List<Course>>> getCourseById(Authentication auth, @RequestParam CourseId courseId) {
+        return new GenericRequestHandler<List<Course>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> courseByIdQueryHandler.handle(
+                        new CourseByIdQuery().courseId(courseId).studentUserId(userId)
+                ));
+    }
 
-	@GetMapping("/segments")
-	public ResponseEntity<ApiResult<List<SegmentView>>> getSegmentsForStudentFromLesson(Authentication auth, @RequestParam LessonId lessonId) {
-		return new GenericRequestHandler<List<SegmentView>>().authenticate(auth).authorize(studentAuthorization).handle((userId) -> viewSegmentsFromLessonQueryHandler.handle(new ViewSegmentsFromLessonQuery().studentUserId(userId).lessonId(lessonId)));
-	}
+    @GetMapping("/lessons")
+    @Operation(description = "Retrieves lesson views for the student invoking the flow from the given course")
+    public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(Authentication auth, @RequestParam CourseId courseId) {
+        return new GenericRequestHandler<List<LessonView>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> viewLessonsFromCourseQueryHandler.handle(
+                        new ViewLessonsFromCourseQuery().studentUserId(userId).courseId(courseId)
+                ));
+    }
+
+    @GetMapping("/segments")
+    @Operation(description = "Retrieves segment views for student invoking the flow from the given lesson")
+    public ResponseEntity<ApiResult<List<SegmentView>>> getSegmentsForStudentFromLesson(Authentication auth, @RequestParam LessonId lessonId) {
+        return new GenericRequestHandler<List<SegmentView>>()
+                .authenticate(auth)
+                .authorize(studentAuthorization)
+                .handle((userId) -> viewSegmentsFromLessonQueryHandler.handle(
+                        new ViewSegmentsFromLessonQuery().studentUserId(userId).lessonId(lessonId)
+                ));
+    }
 }

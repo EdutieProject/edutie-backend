@@ -1,0 +1,11 @@
+package com.edutie.backend.application.learning.studyprogram;
+
+import com.edutie.backend.application.common.UseCaseHandler;
+import com.edutie.backend.application.learning.studyprogram.queries.CourseByIdQuery;
+import com.edutie.backend.application.learning.studyprogram.queries.CoursesByScienceQuery;
+import com.edutie.backend.domain.studyprogram.course.Course;
+import validation.WrapperResult;
+
+import java.util.List;
+
+public interface CourseByIdQueryHandler extends UseCaseHandler<WrapperResult<Course>, CourseByIdQuery> { }

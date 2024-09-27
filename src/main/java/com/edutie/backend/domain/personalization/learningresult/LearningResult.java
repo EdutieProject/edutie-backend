@@ -5,6 +5,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Lear
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -77,6 +78,15 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     @JsonProperty("learningResourceDefinition")
     public LearningResourceDefinition getLearningResourceDefinition() {
         return solutionSubmission.getLearningResource().getDefinition();
+    }
+
+    /**
+     * Indicates whether learning result is successful based on the grade that needs to be met in order
+     * to be successful
+     * @return boolean true/false
+     */
+    public boolean isSuccessful() {
+        return this.getAssessments().stream().allMatch(a -> a.getGrade().greaterThanOrEqual(Grade.SUCCESS_GRADE));
     }
 
 }

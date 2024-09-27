@@ -18,6 +18,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.iden
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class LearningResultController {
 	private final GetLearningResultByIdQueryHandler getLearningResultByIdQueryHandler;
 
 	@GetMapping
+	@Operation(description = "Retrieves a learning result by its identifier")
 	public ResponseEntity<ApiResult<LearningResource>> getLearningResultById(Authentication authentication, @RequestParam LearningResultId learningResultId) {
 		return new GenericRequestHandler<LearningResource>()
 				.authenticate(authentication)

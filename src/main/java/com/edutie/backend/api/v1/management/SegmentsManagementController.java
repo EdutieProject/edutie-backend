@@ -7,6 +7,7 @@ import com.edutie.backend.application.management.segment.commands.*;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import validation.Result;
 import org.springframework.http.*;
@@ -28,21 +29,25 @@ public class SegmentsManagementController {
 	private final EducatorAuthorization educatorAuthorization;
 
 	@GetMapping
+	@Operation(description = "Retrieves segments created by an educator invoking the flow")
 	public ResponseEntity<ApiResult<List<Segment>>> getCreatedSegments(Authentication auth) {
 		return new GenericRequestHandler<List<Segment>>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery().educatorUserId(userId)));
 	}
 
 	@PostMapping
+	@Operation(description = "Creates a segment using the specified command. May be performed by a privileged educator.")
 	public ResponseEntity<ApiResult<Segment>> createSegment(Authentication auth, @RequestBody CreateSegmentCommand command) {
 		return new GenericRequestHandler<Segment>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createSegmentCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
 	@PatchMapping
+	@Operation(description = "Modifies a segment using the specified command. May be performed by an author educator.")
 	public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody ModifySegmentCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> modifySegmentCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
 	@DeleteMapping
+	@Operation(description = "Deletes segment specified by an id in the command. May be performed by an author educator")
 	public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody RemoveSegmentCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> removeSegmentCommandHandler.handle(command.educatorUserId(userId)));
 	}
