@@ -54,6 +54,18 @@ services:
       - ../edutie-wikimap:/app
     ports:
       - "9001:80"
+    depends_on:
+      - knowledgemapdb
+    networks:
+      - backendnetwork
+
+  knowledgemapdb: # This will be deleted in the future. Future implementation will utilize edutie DB
+    container_name: knowledgemapdb
+    image: postgres:latest
+    env_file:
+      - .env
+    ports:
+      - '5436:5432'
     networks:
       - backendnetwork
 
