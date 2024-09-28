@@ -28,6 +28,7 @@ services:
       - keycloak
     networks:
       - backendnetwork
+      - frontendnetwork
 
   llmservice:
     container_name: llmservice
@@ -95,6 +96,8 @@ services:
 networks:
   backendnetwork:
     name: backendnetwork
+  frontendnetwork:
+    name: frontendnetwork
 
 volumes:
   maven-repo:
