@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.8"
 services:
   db:
     container_name: db
@@ -31,12 +31,12 @@ services:
 
   llmservice:
     container_name: llmservice
-    build:
-      context: ../edutie-llm
-      dockerfile: Dockerfile
-#    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
+    build: ../edutie-llm
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+             uvicorn main:app --host 0.0.0.0 --port 80 --reload"
     volumes:
-      - .:/app
+      - ../edutie-llm:/app
     ports:
       - "9000:80"
     env_file:
@@ -45,13 +45,13 @@ services:
       - backendnetwork
 
   wikimapservice:
-    build:
-      context: ../edutie-wikimap
-      dockerfile: Dockerfile
+    build: ../edutie-wikimap
     container_name: wikimapservice
-#    command: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload" ]
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+             uvicorn main:app --host 0.0.0.0 --port 80 --reload"
     volumes:
-      - .:/app
+      - ../edutie-wikimap:/app
     ports:
       - "9001:80"
     networks:
