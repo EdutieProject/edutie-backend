@@ -92,6 +92,7 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       - backendnetwork
+      - frontendnetwork #TODO! Resolve if it is needed!
 
 networks:
   backendnetwork:
