@@ -5,31 +5,31 @@ import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.StudentRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.common.RoleRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.*;
+import lombok.*;
 
 @Component
 @RequiredArgsConstructor
 public class StudentPersistenceImplementation implements StudentPersistence {
-    private final StudentRepository studentRepository;
+	private final StudentRepository studentRepository;
 
-    /**
-     * Override this to provide repository for default methods
-     *
-     * @return crud jpa repository
-     */
-    @Override
-    public RoleRepository<Student, StudentId> getRepository() {
-        return studentRepository;
-    }
+	/**
+	 * Override this to provide repository for default methods
+	 *
+	 * @return crud jpa repository
+	 */
+	@Override
+	public RoleRepository<Student, StudentId> getRepository() {
+		return studentRepository;
+	}
 
-    /**
-     * Override this to provide entity class for default methods
-     *
-     * @return class of persistence entity
-     */
-    @Override
-    public Class<Student> entityClass() {
-        return Student.class;
-    }
+	/**
+	 * Override this to provide entity class for default methods
+	 *
+	 * @return class of persistence entity
+	 */
+	@Override
+	public Class<Student> entityClass() {
+		return Student.class;
+	}
 }

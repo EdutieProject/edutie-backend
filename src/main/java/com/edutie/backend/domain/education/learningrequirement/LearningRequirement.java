@@ -8,7 +8,6 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +15,7 @@ import validation.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Learning Requirement entity represents the requirements that student exercises to gain knowledge.
@@ -24,15 +24,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class LearningRequirement extends EducatorCreatedAuditableEntity<LearningRequirementId> {
-    private String name;
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "description", columnDefinition = "TEXT"))
-    private PromptFragment description = new PromptFragment();
     @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("ordinal")
     private List<SubRequirement> subRequirements = new ArrayList<>();
+    private String name;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_node_id"))
     private KnowledgeSubjectId knowledgeSubjectId;
@@ -54,22 +50,24 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     /**
      * Appends sub requirement at the end of the sub requirement list
      *
-     * @param subRequirementDescriptor sub requirement descriptor
+     * @param requirementText       text of what is required
+     * @param scientificDescription description of the sub requirement
      */
-    public void appendSubRequirement(String subRequirementDescriptor) {
-        subRequirements.add(SubRequirement.create(PromptFragment.of(subRequirementDescriptor), subRequirements.size()));
+    public void appendSubRequirement(String requirementText, PromptFragment scientificDescription) {
+        subRequirements.add(SubRequirement.create(PromptFragment.of(requirementText), scientificDescription, subRequirements.size()));
     }
 
     /**
      * Inserts sub requirement into given index, moving all the next sub requirements forward and
      * updating their ordinal
      *
-     * @param subRequirementDescriptor sub requirement descriptor
-     * @param desiredIndex             desired index
+     * @param requirementText                     sub requirement text
+     * @param subRequirementScientificDescription sub requirement descriptor
+     * @param desiredIndex                        desired index
      * @return Result object
      */
-    public Result insertSubRequirement(String subRequirementDescriptor, int desiredIndex) {
-        appendSubRequirement(subRequirementDescriptor);
+    public Result insertSubRequirement(String requirementText, PromptFragment subRequirementScientificDescription, int desiredIndex) {
+        appendSubRequirement(requirementText, subRequirementScientificDescription);
         return moveSubRequirement(subRequirements.size() - 1, desiredIndex);
     }
 
@@ -105,5 +103,14 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
             subRequirements.get(i).setOrdinal(i);
         }
         return Result.success();
+    }
+
+    /**
+     * Retrieves sub requirements with respect to their ordinal.
+     * @param qualifiedOrdinal as end index
+     * @return list of Sub Requirements
+     */
+    public List<SubRequirement> getQualifiedSubRequirements(int qualifiedOrdinal) {
+        return subRequirements.stream().filter(o -> o.getOrdinal() <= qualifiedOrdinal).toList();
     }
 }

@@ -8,4 +8,6 @@ public class AssessmentDto {
     LearningRequirementId learningRequirementId;
     @JsonProperty
     int gradeNumber;
+    @JsonProperty
+    String feedbackText;
 }

@@ -10,6 +10,7 @@ import validation.WrapperResult;
  * Service for interaction with externally implemented LLM.
  */
 public interface LargeLanguageModelService {
-    WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema);
-    WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema);
+	WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema);
+
+	WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema);
 }

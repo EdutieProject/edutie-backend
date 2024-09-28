@@ -1,88 +1,81 @@
 package com.edutie.backend.infrastructure.persistence.jpa;
 
+import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.AdministratorRepository;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningRequirementRepository;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.ScienceRepository;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class LearningRequirementJpaTests {
-    private final UserId testUserId = new UserId();
-    private final Administrator administrator = Administrator.create(testUserId);
-    private Educator creator;
-    private Science science;
-    private LearningRequirement learningRequirement;
+	private final UserId testUserId = new UserId();
+	private final Administrator administrator = Administrator.create(testUserId);
+	private Educator creator;
+	private LearningRequirement learningRequirement;
 
 
-    @Autowired
-    private EducatorRepository educatorRepository;
-    @Autowired
-    private LearningRequirementRepository learningRequirementRepository;
-    @Autowired
-    private ScienceRepository scienceRepository;
-    @Autowired
-    private AdministratorRepository administratorRepository;
+	@Autowired
+	private EducatorRepository educatorRepository;
+	@Autowired
+	private LearningRequirementRepository learningRequirementRepository;
+	@Autowired
+	private ScienceRepository scienceRepository;
+	@Autowired
+	private AdministratorRepository administratorRepository;
 
-    @BeforeEach
-    public void testSetup() {
-        creator = Educator.create(testUserId, administrator);
-        educatorRepository.save(creator);
-        science = Science.create(creator).getValue();
-        scienceRepository.save(science);
+	@BeforeEach
+	public void testSetup() {
+		creator = Educator.create(testUserId, administrator);
+		educatorRepository.save(creator);
+		Science science = Science.create(creator).getValue();
+		scienceRepository.save(science);
 
-        learningRequirement = LearningRequirement.create(creator);
-    }
+		learningRequirement = LearningRequirement.create(creator);
+	}
 
-    @Test
-    public void testLearningRequirementCreation() {
+	@Test
+	public void testLearningRequirementCreation() {
 
-        assertNotNull(learningRequirement);
-        assertEquals(creator, learningRequirement.getAuthorEducator());
+		assertNotNull(learningRequirement);
+		assertEquals(creator, learningRequirement.getAuthorEducator());
 
-        learningRequirementRepository.save(learningRequirement);
+		learningRequirementRepository.save(learningRequirement);
 
-        var fetched = learningRequirementRepository.findById(learningRequirement.getId()).orElseThrow();
-        assertEquals(fetched, learningRequirement);
-    }
+		var fetched = learningRequirementRepository.findById(learningRequirement.getId()).orElseThrow();
+		assertNull(learningRequirement);
+	}
 
-    @Test
-    public void testCourseNameAndDescription() {
-        learningRequirement.setName("TestName");
-        learningRequirement.setDescription(PromptFragment.of("TestDescription"));
+	@Test
+	public void testCourseNameAndDescription() {
+		learningRequirement.setName("TestName");
 
-        assertEquals("TestName", learningRequirement.getName());
-        assertEquals("TestDescription", learningRequirement.getDescription().text());
-    }
+		assertEquals("TestName", learningRequirement.getName());
+	}
 
-    @Test
-    public void testOneToManyRelationship() {
+	@Test
+	public void testOneToManyRelationship() {
 
-        LearningRequirement learningRequirement1 = LearningRequirement.create(creator);
-        LearningRequirement learningRequirement2 = LearningRequirement.create(creator);
+		LearningRequirement learningRequirement1 = LearningRequirement.create(creator);
+		LearningRequirement learningRequirement2 = LearningRequirement.create(creator);
 
-        learningRequirementRepository.save(learningRequirement);
-        learningRequirementRepository.save(learningRequirement1);
-        learningRequirementRepository.save(learningRequirement2);
+		learningRequirementRepository.save(learningRequirement);
+		learningRequirementRepository.save(learningRequirement1);
+		learningRequirementRepository.save(learningRequirement2);
 
-        var fetched = learningRequirementRepository.findById(learningRequirement.getId()).orElseThrow();
-        var fetched1 = learningRequirementRepository.findById(learningRequirement1.getId()).orElseThrow();
-        var fetched2 = learningRequirementRepository.findById(learningRequirement2.getId()).orElseThrow();
+		var fetched = learningRequirementRepository.findById(learningRequirement.getId()).orElseThrow();
+		var fetched1 = learningRequirementRepository.findById(learningRequirement1.getId()).orElseThrow();
+		var fetched2 = learningRequirementRepository.findById(learningRequirement2.getId()).orElseThrow();
 
-        assertEquals(fetched, learningRequirement);
-        assertEquals(fetched1, learningRequirement1);
-        assertEquals(fetched2, learningRequirement2);
-    }
+		assertNull(learningRequirement);
+		assertNull(learningRequirement1);
+		assertNull(learningRequirement2);
+	}
 }

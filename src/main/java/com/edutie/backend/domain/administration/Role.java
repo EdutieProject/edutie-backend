@@ -2,14 +2,8 @@ package com.edutie.backend.domain.administration;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -21,10 +15,9 @@ import java.time.LocalDateTime;
 @Setter(AccessLevel.PROTECTED)
 @Getter
 @MappedSuperclass
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public abstract class Role<TId extends Identifier<?>> extends EntityBase<TId> {
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "user_id"))
-    protected UserId ownerUserId;
-    protected final LocalDateTime assignedOn = LocalDateTime.now();
+	protected final LocalDateTime assignedOn = LocalDateTime.now();
+	@Embedded
+	@AttributeOverride(name = "identifierValue", column = @Column(name = "user_id"))
+	protected UserId ownerUserId;
 }

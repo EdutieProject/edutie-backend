@@ -11,19 +11,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter(AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Activity extends EntityBase<ActivityId> {
-    @OneToMany(targetEntity = Hint.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Hint> hints = new HashSet<>();
-    @Column(columnDefinition = "TEXT")
-    private String activityText;
+	@OneToMany(targetEntity = Hint.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Hint> hints = new HashSet<>();
+	@Column(columnDefinition = "TEXT")
+	private String activityText;
 
-    public static Activity create(String activityText, Set<Hint> hints) {
-        Activity activity = new Activity();
-        activity.setId(new ActivityId());
-        activity.setActivityText(activityText);
-        activity.setHints(hints);
-        return activity;
-    }
+	public static Activity create(String activityText, Set<Hint> hints) {
+		Activity activity = new Activity();
+		activity.setId(new ActivityId());
+		activity.setActivityText(activityText);
+		activity.setHints(hints);
+		return activity;
+	}
 }

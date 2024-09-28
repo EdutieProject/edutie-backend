@@ -5,5 +5,4 @@ import com.edutie.backend.application.learning.learningresource.commands.AssessS
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import validation.WrapperResult;
 
-public interface AssessSolutionCommandHandler extends UseCaseHandler<WrapperResult<LearningResult>, AssessSolutionCommand> {
-}
+public interface AssessSolutionCommandHandler extends UseCaseHandler<WrapperResult<LearningResult>, AssessSolutionCommand> { }

@@ -6,11 +6,12 @@ Welcome to the edutie backend application.
 
 To browse open api docs run the app and visit http://localhost:8081/docs url.
 
-The JSON OpenApi specification is present under http://localhost:8081/docs/spec 
+The JSON OpenApi specification is present under http://localhost:8081/docs/spec
 
 ### Run inside docker
 
 Running the app using *docker-compose*:
+
 1. `docker-compose build` - this ensures the codebase is refreshed and up-to-date
 2. `docker-compose up`
 

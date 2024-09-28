@@ -1,9 +1,11 @@
 <!-- TOC -->
+
 * [Assessment Schema](#assessment-schema)
-  * [Contained data:](#contained-data)
-    * [Solution submission](#solution-submission)
-    * [Assessment Problem descriptor list](#assessment-problem-descriptor-list)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Solution submission](#solution-submission)
+        * [Assessment Problem descriptor list](#assessment-problem-descriptor-list)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Assessment Schema

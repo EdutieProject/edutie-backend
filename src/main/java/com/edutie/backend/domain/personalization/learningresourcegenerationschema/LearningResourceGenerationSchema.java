@@ -7,11 +7,8 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Lear
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.GenerationSchemaProblemDescriptor;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.LearningResourceGenerationSchemaId;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.databind.annotation.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,32 +20,32 @@ import java.util.List;
 @Getter
 @Setter
 public class LearningResourceGenerationSchema extends AuditableEntityBase<LearningResourceGenerationSchemaId> {
-    @JsonSerialize(using = IdOnlySerializer.class)
-    private Student student;
-    private LearningResourceDefinition learningResourceDefinition;
-    private List<GenerationSchemaProblemDescriptor> problemDescriptors = new ArrayList<>();
+	private final List<GenerationSchemaProblemDescriptor> problemDescriptors = new ArrayList<>();
+	@JsonSerialize(using = IdOnlySerializer.class)
+	private Student student;
+	private LearningResourceDefinition learningResourceDefinition;
 
-    /**
-     * Initialize Learning Resource Generation Schema with empty problem descriptors
-     * Valid Learning Resource Generation Schema creation requires usage of external system, thus
-     * to create a valid L.R.G.S. LearningResourceGenerationSchemaService must be used.
-     *
-     * @param learningResourceDefinition learning resource definition
-     * @return LearningResourceGenerationSchema
-     */
-    public static LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition, Student student) {
-        LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
-        learningResourceGenerationSchema.setId(new LearningResourceGenerationSchemaId());
-        learningResourceGenerationSchema.setLearningResourceDefinition(learningResourceDefinition);
-        learningResourceGenerationSchema.setStudent(student);
-        learningResourceGenerationSchema.setCreatedBy(student.getOwnerUserId());
-        for (LearningRequirement learningRequirement : learningResourceDefinition.getLearningRequirements()) {
-            learningResourceGenerationSchema.addProblemDescriptor(new GenerationSchemaProblemDescriptor(learningRequirement));
-        }
-        return learningResourceGenerationSchema;
-    }
+	/**
+	 * Initialize Learning Resource Generation Schema with empty problem descriptors
+	 * Valid Learning Resource Generation Schema creation requires usage of external system, thus
+	 * to create a valid L.R.G.S. LearningResourceGenerationSchemaService must be used.
+	 *
+	 * @param learningResourceDefinition learning resource definition
+	 * @return LearningResourceGenerationSchema
+	 */
+	public static LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition, Student student) {
+		LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
+		learningResourceGenerationSchema.setId(new LearningResourceGenerationSchemaId());
+		learningResourceGenerationSchema.setLearningResourceDefinition(learningResourceDefinition);
+		learningResourceGenerationSchema.setStudent(student);
+		learningResourceGenerationSchema.setCreatedBy(student.getOwnerUserId());
+		for (LearningRequirement learningRequirement: learningResourceDefinition.getLearningRequirements()) {
+			learningResourceGenerationSchema.addProblemDescriptor(new GenerationSchemaProblemDescriptor(learningRequirement));
+		}
+		return learningResourceGenerationSchema;
+	}
 
-    private void addProblemDescriptor(GenerationSchemaProblemDescriptor problemDescriptor) {
-        problemDescriptors.add(problemDescriptor);
-    }
+	private void addProblemDescriptor(GenerationSchemaProblemDescriptor problemDescriptor) {
+		problemDescriptors.add(problemDescriptor);
+	}
 }

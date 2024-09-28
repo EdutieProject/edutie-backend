@@ -1,8 +1,10 @@
 <!-- TOC -->
+
 * [Educator](#educator)
-  * [Contained data:](#contained-data)
-    * [Educator type](#educator-type)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Educator type](#educator-type)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Educator

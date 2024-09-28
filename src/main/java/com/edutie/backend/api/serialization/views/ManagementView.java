@@ -1,4 +1,3 @@
 package com.edutie.backend.api.serialization.views;
 
-public class ManagementView extends CommonView {
-}
+public class ManagementView extends CommonView { }

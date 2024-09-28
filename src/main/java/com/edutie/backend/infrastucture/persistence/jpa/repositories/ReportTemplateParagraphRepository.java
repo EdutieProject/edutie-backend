@@ -2,7 +2,6 @@ package com.edutie.backend.infrastucture.persistence.jpa.repositories;
 
 import com.edutie.backend.domain.education.exercisetype.entities.ReportTemplateParagraph;
 import com.edutie.backend.domain.education.exercisetype.identities.ReportTemplateParagraphId;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 
-public interface ReportTemplateParagraphRepository extends JpaRepository<ReportTemplateParagraph, ReportTemplateParagraphId> {
-}
+public interface ReportTemplateParagraphRepository extends JpaRepository<ReportTemplateParagraph, ReportTemplateParagraphId> { }

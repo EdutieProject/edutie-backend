@@ -1,14 +1,8 @@
 package com.edutie.backend.domain.common.base;
 
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -22,9 +16,8 @@ import java.io.Serializable;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
-@EqualsAndHashCode
 public abstract class EntityBase<TId extends Identifier<?> & Serializable> {
-    @EmbeddedId
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "id"))
-    private TId id;
+	@EmbeddedId
+	@AttributeOverride(name = "identifierValue", column = @Column(name = "id"))
+	private TId id;
 }

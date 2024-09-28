@@ -1,8 +1,10 @@
 <!-- TOC -->
+
 * [Knowledge Subject](#knowledge-subject)
-  * [Contained data:](#contained-data)
-    * [Knowledge Subject Id](#knowledge-subject-id)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Knowledge Subject Id](#knowledge-subject-id)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Knowledge Subject

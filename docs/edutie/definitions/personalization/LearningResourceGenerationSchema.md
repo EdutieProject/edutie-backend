@@ -1,11 +1,13 @@
 <!-- TOC -->
+
 * [Learning Resource Generation Schema](#learning-resource-generation-schema)
-  * [Contained data:](#contained-data)
-    * [Learning Resource Definition](#learning-resource-definition)
-    * [Problem Descriptors](#problem-descriptors)
-      * [Personalization Rules](#personalization-rules)
-  * [Visual representation](#visual-representation)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Learning Resource Definition](#learning-resource-definition)
+        * [Problem Descriptors](#problem-descriptors)
+            * [Personalization Rules](#personalization-rules)
+    * [Visual representation](#visual-representation)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Learning Resource Generation Schema

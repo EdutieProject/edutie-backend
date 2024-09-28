@@ -18,21 +18,22 @@ import java.util.stream.Collectors;
  */
 public class LearningResultCreationDto {
     @JsonProperty
+    private final Set<AssessmentDto> assessments = new HashSet<>();
+    @JsonProperty
     private String feedbackText;
     @JsonProperty
     private String feedbackLevel;
-    @JsonProperty
-    private Set<AssessmentDto> assessments = new HashSet<>();
 
     public LearningResult intoLearningResult(AssessmentSchema assessmentSchema) {
-        LearningResult learningResult = LearningResult.create(
-                assessmentSchema.getStudent(),
-                assessmentSchema.getSolutionSubmission(),
-                new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel))
-        );
-        assessments.stream()
-                .map(o -> Assessment.create(o.learningRequirementId, new Grade(o.gradeNumber))).collect(Collectors.toSet())
-                .forEach(learningResult::addAssessment);
+        LearningResult learningResult = LearningResult.create(assessmentSchema.getStudent(), assessmentSchema.getSolutionSubmission(), new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel)));
+        assessments.stream().map(o -> Assessment.create(
+                o.learningRequirementId,
+                new Grade(o.gradeNumber),
+                o.feedbackText,
+                assessmentSchema.getLearningResourceDefinition()
+                        .getLearningRequirementOfId(o.learningRequirementId).get()
+                        .getQualifiedSubRequirements(assessmentSchema.getProblemDescriptorByLearningRequirement(o.learningRequirementId).getQualifiedSubRequirementOrdinal()))
+        ).collect(Collectors.toSet()).forEach(learningResult::addAssessment);
         return learningResult;
     }
 }

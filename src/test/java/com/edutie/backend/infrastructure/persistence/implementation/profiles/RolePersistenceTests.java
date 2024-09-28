@@ -5,21 +5,21 @@ import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
 
 @SpringBootTest
 public class RolePersistenceTests {
-    @Autowired
-    private EducatorPersistence educatorPersistence;
-    private final UserId userId = new UserId();
-    private final Administrator administrator = Administrator.create(new UserId());
+	private final UserId userId = new UserId();
+	private final Administrator administrator = Administrator.create(new UserId());
+	@Autowired
+	private EducatorPersistence educatorPersistence;
 
-    @Test
-    public void getByAuthorizedUserIdTest() {
-        Educator educator = Educator.create(userId, administrator);
-        assert educatorPersistence.save(educator).isSuccess();
+	@Test
+	public void getByAuthorizedUserIdTest() {
+		Educator educator = Educator.create(userId, administrator);
+		assert educatorPersistence.save(educator).isSuccess();
 
-        assert educatorPersistence.getByAuthorizedUserId(userId).equals(educator);
-    }
+		assert educatorPersistence.getByAuthorizedUserId(userId).equals(educator);
+	}
 }

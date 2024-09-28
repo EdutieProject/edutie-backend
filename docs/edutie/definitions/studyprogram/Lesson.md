@@ -1,12 +1,14 @@
 <!-- TOC -->
+
 * [Lesson](#lesson)
-  * [Contained data:](#contained-data)
-    * [Previous element & Next elements](#previous-element--next-elements)
-    * [Name](#name)
-    * [Snippet description](#snippet-description)
-    * [Segments](#segments)
-    * [Course](#course)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Previous element & Next elements](#previous-element--next-elements)
+        * [Name](#name)
+        * [Snippet description](#snippet-description)
+        * [Segments](#segments)
+        * [Course](#course)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Lesson

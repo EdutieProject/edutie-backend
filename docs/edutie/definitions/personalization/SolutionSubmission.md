@@ -1,11 +1,13 @@
 <!-- TOC -->
+
 * [Solution submission](#solution-submission)
-  * [Contained data:](#contained-data)
-    * [Report text](#report-text)
-    * [Revealed hints count](#revealed-hints-count)
-    * [Student relationship](#student-relationship)
-    * [Learning Resource relationship](#learning-resource-relationship)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Report text](#report-text)
+        * [Revealed hints count](#revealed-hints-count)
+        * [Student relationship](#student-relationship)
+        * [Learning Resource relationship](#learning-resource-relationship)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Solution submission

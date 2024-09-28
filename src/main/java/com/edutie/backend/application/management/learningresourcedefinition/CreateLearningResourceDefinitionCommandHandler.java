@@ -5,5 +5,4 @@ import com.edutie.backend.application.management.learningresourcedefinition.comm
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import validation.WrapperResult;
 
-public interface CreateLearningResourceDefinitionCommandHandler extends UseCaseHandler<WrapperResult<LearningResourceDefinition>, CreateLearningResourceDefinitionCommand> {
-}
+public interface CreateLearningResourceDefinitionCommandHandler extends UseCaseHandler<WrapperResult<LearningResourceDefinition>, CreateLearningResourceDefinitionCommand> { }

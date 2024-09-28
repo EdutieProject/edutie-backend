@@ -7,6 +7,4 @@ import validation.WrapperResult;
 
 import java.util.List;
 
-public interface AccessibleSciencesQueryHandler extends UseCaseHandler<WrapperResult<List<Science>>, AccessibleSciencesQuery> {
-}
-
+public interface AccessibleSciencesQueryHandler extends UseCaseHandler<WrapperResult<List<Science>>, AccessibleSciencesQuery> { }

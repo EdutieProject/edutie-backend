@@ -13,28 +13,30 @@ import com.edutie.backend.domain.personalization.solutionsubmission.persistence.
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import validation.WrapperResult;
+import org.springframework.stereotype.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AssessSolutionCommandHandlerImplementation extends HandlerBase implements AssessSolutionCommandHandler {
-    private final LearningResourcePersistence learningResourcePersistence;
-    private final StudentPersistence studentPersistence;
-    private final SolutionSubmissionPersistence solutionSubmissionPersistence;
-    private final LargeLanguageModelService largeLanguageModelService;
-    private final LearningResultPersistence learningResultPersistence;
+	private final LearningResourcePersistence learningResourcePersistence;
+	private final StudentPersistence studentPersistence;
+	private final SolutionSubmissionPersistence solutionSubmissionPersistence;
+	private final LargeLanguageModelService largeLanguageModelService;
+	private final LearningResultPersistence learningResultPersistence;
 
-    @Override
-    public WrapperResult<LearningResult> handle(AssessSolutionCommand command) {
-        LOGGER.info("Handling assessment for student of id {} and learning resource of id {}", command.studentUserId(), command.learningResourceId());
-        Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-        LearningResource learningResource = learningResourcePersistence.getById(command.learningResourceId()).getValue();
-        SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, command.solutionSubmissionText(), command.hintsRevealedCount());
-        solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
-        LearningResult learningResult = largeLanguageModelService.generateLearningResult(AssessmentSchema.create(student, solutionSubmission, learningResource)).getValue();
-        learningResultPersistence.save(learningResult).throwIfFailure();
-        return WrapperResult.successWrapper(learningResult);
-    }
+	@Override
+	public WrapperResult<LearningResult> handle(AssessSolutionCommand command) {
+		log.info("Handling assessment for student of id {} and learning resource of id {}", command.studentUserId(), command.learningResourceId());
+		Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
+		LearningResource learningResource = learningResourcePersistence.getById(command.learningResourceId()).getValue();
+		SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, command.solutionSubmissionText(), command.hintsRevealedCount());
+		solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
+		LearningResult learningResult = largeLanguageModelService.generateLearningResult(AssessmentSchema.create(student, solutionSubmission, learningResource)).getValue();
+		learningResultPersistence.save(learningResult).throwIfFailure();
+		return WrapperResult.successWrapper(learningResult);
+	}
 }

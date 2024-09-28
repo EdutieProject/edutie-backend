@@ -3,8 +3,8 @@ package com.edutie.backend.application.management.learningresourcedefinition.que
 import com.edutie.backend.application.common.actions.EducatorAction;
 
 public final class CreatedLearningResourceDefinitionsQuery extends EducatorAction<CreatedLearningResourceDefinitionsQuery> {
-    @Override
-    protected CreatedLearningResourceDefinitionsQuery getThis() {
-        return this;
-    }
+	@Override
+	protected CreatedLearningResourceDefinitionsQuery getThis() {
+		return this;
+	}
 }

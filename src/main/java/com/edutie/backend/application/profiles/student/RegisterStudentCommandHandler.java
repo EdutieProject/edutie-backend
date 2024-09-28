@@ -5,5 +5,4 @@ import com.edutie.backend.application.profiles.student.commands.RegisterStudentC
 import com.edutie.backend.domain.personalization.student.Student;
 import validation.WrapperResult;
 
-public interface RegisterStudentCommandHandler extends UseCaseHandler<WrapperResult<Student>, RegisterStudentCommand> {
-}
+public interface RegisterStudentCommandHandler extends UseCaseHandler<WrapperResult<Student>, RegisterStudentCommand> { }

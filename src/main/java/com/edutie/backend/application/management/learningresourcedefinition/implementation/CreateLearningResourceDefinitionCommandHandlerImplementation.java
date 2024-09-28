@@ -9,33 +9,27 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Lear
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import validation.WrapperResult;
+import org.springframework.stereotype.*;
+import lombok.*;
 
 @Component
 @RequiredArgsConstructor
 public class CreateLearningResourceDefinitionCommandHandlerImplementation implements CreateLearningResourceDefinitionCommandHandler {
-    private final EducatorPersistence educatorPersistence;
-    private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
-    private final SegmentPersistence segmentPersistence;
+	private final EducatorPersistence educatorPersistence;
+	private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
+	private final SegmentPersistence segmentPersistence;
 
-    @Override
-    public WrapperResult<LearningResourceDefinition> handle(CreateLearningResourceDefinitionCommand command) {
-        Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of(command.theoryDescription()),
-                PromptFragment.of(command.exerciseDescription()),
-                PromptFragment.of(command.additionalSummaryDescription()),
-                PromptFragment.of(command.additionalHintsDescription())
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-        if (command.segmentId() != null) {
-            Segment segment = segmentPersistence.getById(command.segmentId()).getValue();
-            segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
-            segmentPersistence.save(segment).throwIfFailure();
-        }
-        return WrapperResult.successWrapper(learningResourceDefinition);
-    }
+	@Override
+	public WrapperResult<LearningResourceDefinition> handle(CreateLearningResourceDefinitionCommand command) {
+		Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of(command.theoryDescription()), PromptFragment.of(command.exerciseDescription()), PromptFragment.of(command.additionalSummaryDescription()), PromptFragment.of(command.additionalHintsDescription()));
+		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+		if (command.segmentId() != null) {
+			Segment segment = segmentPersistence.getById(command.segmentId()).getValue();
+			segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+			segmentPersistence.save(segment).throwIfFailure();
+		}
+		return WrapperResult.successWrapper(learningResourceDefinition);
+	}
 }

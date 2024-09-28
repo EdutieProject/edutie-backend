@@ -2,17 +2,13 @@ package com.edutie.backend.domain.studyprogram.course.tag;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.studyprogram.course.tag.indentities.CourseTagId;
-import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class CourseTag extends EntityBase<CourseTagId> {
 	private String name;
 

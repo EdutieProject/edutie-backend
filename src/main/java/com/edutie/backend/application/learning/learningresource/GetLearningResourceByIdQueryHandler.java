@@ -5,6 +5,4 @@ import com.edutie.backend.application.learning.learningresource.queries.GetLearn
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import validation.WrapperResult;
 
-public interface GetLearningResourceByIdQueryHandler
-        extends UseCaseHandler<WrapperResult<LearningResource>, GetLearningResourceByIdQuery> {
-}
+public interface GetLearningResourceByIdQueryHandler extends UseCaseHandler<WrapperResult<LearningResource>, GetLearningResourceByIdQuery> { }

@@ -8,25 +8,26 @@ import com.edutie.backend.domain.personalization.learningresult.valueobjects.Fee
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
 
 @SpringBootTest
 public class StudentPersistenceTests {
-    @Autowired
-    LearningResultPersistence learningResultPersistence;
-    @Autowired
-    StudentPersistence studentPersistence;
-    private final UserId userId = new UserId();
-    @Test
-    public void learningHistoryTest() {
-        Student student = Student.create(userId);
-        studentPersistence.save(student).throwIfFailure();
+	private final UserId userId = new UserId();
+	@Autowired
+	LearningResultPersistence learningResultPersistence;
+	@Autowired
+	StudentPersistence studentPersistence;
 
-        LearningResult learningResult = LearningResult.create(student, null, new Feedback("", FeedbackType.NEUTRAL));
-        learningResultPersistence.save(learningResult).throwIfFailure();
+	@Test
+	public void learningHistoryTest() {
+		Student student = Student.create(userId);
+		studentPersistence.save(student).throwIfFailure();
 
-        Student studentFetched = studentPersistence.getById(student.getId()).getValue();
-        assert !studentFetched.getLearningHistory().isEmpty();
-    }
+		LearningResult learningResult = LearningResult.create(student, null, new Feedback("", FeedbackType.NEUTRAL));
+		learningResultPersistence.save(learningResult).throwIfFailure();
+
+		Student studentFetched = studentPersistence.getById(student.getId()).getValue();
+		assert !studentFetched.getLearningHistory().isEmpty();
+	}
 }

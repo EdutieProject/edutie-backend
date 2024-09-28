@@ -5,5 +5,6 @@ package validation;
  * Code is meant to represent the unique error cause, the message is the
  * description of the error.
  */
-public record Error(String code, String message) {
-}
+public record Error(
+		String code,
+		String message) { }

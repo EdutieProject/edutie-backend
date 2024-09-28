@@ -1,11 +1,13 @@
 <!-- TOC -->
+
 * [Learning Requirement](#learning-requirement)
-  * [Contained data:](#contained-data)
-    * [Name](#name)
-    * [Description](#description)
-    * [Sub requirements](#sub-requirements)
-    * [Knowledge Subject Id](#knowledge-subject-id)
-  * [References](#references)
+    * [Contained data:](#contained-data)
+        * [Name](#name)
+        * [Description](#description)
+        * [Sub requirements](#sub-requirements)
+        * [Knowledge Subject Id](#knowledge-subject-id)
+    * [References](#references)
+
 <!-- TOC -->
 
 # Learning Requirement
@@ -21,15 +23,20 @@ knowledge subject id.
 
 The name of the requirement, used both as displayable name and as a prompt
 
-### Description
-
-Description used as a prompt regarding learning resource creation when the definition includes this requirement.
-
 ### Sub requirements
 
-Sub requirements are the points that represent steps that students must pass to fully satisfy the
-requirement. Sub requirement's order is important, as the first one is taken as the easiest one and the last
-one is taken as the most difficult.
+Sub requirements are the contents describing the knowledge requirements of the main requirement.
+
+#### Ordinal
+Sub requirements have ordinals - the bigger the ordinal, the more complex is the sub requirement knowledge
+
+#### Scientific description
+
+The scientific description describes the sub requirement's concept in the scientific sense.
+
+#### Requirement text
+
+The sub requirement's text describes briefly what student should understand regarding the command of this requirement.
 
 ### Knowledge Subject Id
 

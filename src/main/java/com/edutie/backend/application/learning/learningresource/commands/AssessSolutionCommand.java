@@ -2,13 +2,10 @@ package com.edutie.backend.application.learning.learningresource.commands;
 
 import com.edutie.backend.application.common.actions.StudentAction;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import lombok.*;
+import lombok.experimental.*;
 
 @NoArgsConstructor
 @Getter
@@ -16,15 +13,15 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class AssessSolutionCommand extends StudentAction<AssessSolutionCommand> {
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull LearningResourceId learningResourceId;
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull String solutionSubmissionText;
-    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull int hintsRevealedCount;
+	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+	private @NonNull LearningResourceId learningResourceId;
+	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+	private @NonNull String solutionSubmissionText;
+	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+	private Integer hintsRevealedCount;
 
-    @Override
-    protected AssessSolutionCommand getThis() {
-        return this;
-    }
+	@Override
+	protected AssessSolutionCommand getThis() {
+		return this;
+	}
 }
