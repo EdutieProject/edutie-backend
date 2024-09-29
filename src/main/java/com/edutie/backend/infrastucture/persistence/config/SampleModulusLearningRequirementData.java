@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastucture.persistence.config;
 
-public class SampleLearningResourceDefinitionData {
+public class SampleModulusLearningRequirementData {
     public static final String LEARNING_REQUIREMENT_NAME = "Równania i nierówności z wartością bezwzględną";
      public static final String SUB_REQUIREMENT_1 = """
              ### Koncept teoretyczny: Wartość bezwzględna
