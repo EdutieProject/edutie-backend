@@ -11,7 +11,8 @@ services:
       - backendnetwork
 
   backendapp:
-    container_name: backendapp
+    container_name: backend-app
+    image: edutie/backend-app
     env_file:
       - .env
     build:
