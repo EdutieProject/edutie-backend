@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping("/details")
     @Operation(description = "Retrieves user details. For instance user's name or email.")
     public ResponseEntity<ApiResult<UserDetails>> getUserDetails(Authentication authentication, @RequestParam(required = false) UserId userId) {
-        if (userId == null)
+        if (userId != null)
             return ResponseEntity.unprocessableEntity().body(
                     ApiResult.fromResult(Result.failure(new Error("NOT-IMPLEMENTED-422", "Feature is not implemented")))
             );
