@@ -59,7 +59,7 @@ public class GenericRequestHandler<TResponseBody> {
 	public <U extends Result> ResponseEntity<ApiResult<TResponseBody>> handle(Function<UserId, U> resultLambda) {
 		if (authenticationResult.isFailure())
 			return ResponseEntity.status(401).body(ApiResult.fromResult(authenticationResult));
-		if (authorizationResult.isFailure())
+		if (authorizationResult != null && authorizationResult.isFailure())
 			return ResponseEntity.status(403).body(ApiResult.fromResult(authorizationResult));
 
 		U handlerResult = resultLambda.apply(actionUserId);
