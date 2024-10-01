@@ -11,10 +11,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface LearningResultRepository extends JpaRepository<LearningResult, LearningResultId> {
-    List<LearningResult> findLearningResultsByStudentOrderByCreatedOn(Student student, Limit limit);
+    List<LearningResult> findLearningResultsByStudentOrderByCreatedOnDesc(Student student, Limit limit);
 
-    List<LearningResult> findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOn(Student student, LocalDateTime localDate, Limit limit);
+    List<LearningResult> findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOnDesc(Student student, LocalDateTime localDate, Limit limit);
 
-    Integer countLearningResultsBySolutionSubmissionLearningResourceDefinition(LearningResourceDefinition learningResourceDefinition);
     List<LearningResult> findLearningResultsBySolutionSubmissionLearningResourceDefinitionAndStudent(LearningResourceDefinition solutionSubmission_learningResource_definition, Student student);
 }

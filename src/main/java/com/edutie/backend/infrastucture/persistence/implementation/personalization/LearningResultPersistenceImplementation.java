@@ -65,11 +65,11 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
             List<LearningResult> learningResults;
             if (maxDate != null)
-                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOn(
+                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOnDesc(
                         student.get(), maxDate, amount == null ? Limit.unlimited() : Limit.of(amount)
                 );
             else
-                learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOn(student.get(), Limit.of(amount));
+                learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOnDesc(student.get(), Limit.of(amount));
             return Result.successWrapper(learningResults);
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
