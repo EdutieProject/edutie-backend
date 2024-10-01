@@ -34,7 +34,8 @@ public class TestController {
 		}
 		if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken) {
 			UserId userId = new UserId(UUID.fromString(jwtAuthenticationToken.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
-			return "AUTH SUCCESS! Look, its you: " + userId;
+			String name = (String) jwtAuthenticationToken.getTokenAttributes().get("name");
+			return "AUTH SUCCESS! Look, its you: " + userId + "\nYour name here: " + name;
 		}
 		return Result.failure(AuthenticationError.noJwtAuthentication()).toString();
 	}
