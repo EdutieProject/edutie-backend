@@ -13,12 +13,12 @@ public class Theory extends EntityBase<TheoryId> {
 	@Column(columnDefinition = "TEXT")
 	private String overview;
 	@Column(columnDefinition = "TEXT")
-	private String summary;
+	private String mermaidGraph;
 
-	public static Theory create(String overviewText, String summaryText) {
+	public static Theory create(String overviewText, String mermaidGraphString) {
 		Theory theory = new Theory();
 		theory.setId(new TheoryId());
-		theory.setSummary(summaryText);
+		theory.setMermaidGraph(mermaidGraphString);
 		theory.setOverview(overviewText);
 		return theory;
 	}

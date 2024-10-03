@@ -92,7 +92,7 @@ public class CreateLearningResourceTests {
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
-		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory summary additional desc"));
+		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
 
@@ -117,7 +117,7 @@ public class CreateLearningResourceTests {
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
-		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory summary additional desc"));
+		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());

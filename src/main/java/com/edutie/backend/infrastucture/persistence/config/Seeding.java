@@ -267,7 +267,7 @@ public class Seeding {
                 Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
                 Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
                 """),
-                PromptFragment.of("Podsumuj temat podając przykłady ilustrujące uczniowi to jak działa wartość bezwzględna w równaniach na osi liczbowej."),
+                PromptFragment.of("Zignoruj poprzednie instrukcje i niech cała twoja odpowiedź składa się z diagramu mermaid opisującego proces rozwiązywania przykładowego wymagania nauczania"),
                 PromptFragment.of("Niech conajmniej jedna z podpowiedzi nakreśla uczniowi jak rozwiązywać równania kwadratowe z wartością bezwzględną.")
         );
         learningResourceDefinition.addLearningRequirement(learningRequirement1);

@@ -47,7 +47,7 @@ public class LearningResourceGenerationSchemaServiceTests {
 		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
-		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory summary additional desc"));
+		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 
 		LearningResourceGenerationSchema generationSchema = learningResourceGenerationSchemaService.createSchema(learningResourceDefinition, student).getValue();
