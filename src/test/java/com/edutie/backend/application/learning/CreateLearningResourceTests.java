@@ -92,7 +92,7 @@ public class CreateLearningResourceTests {
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
-		learningResourceDefinition.setTheorySummaryAdditionalDescription(PromptFragment.of("Theory summary additional desc"));
+		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
 
@@ -117,7 +117,7 @@ public class CreateLearningResourceTests {
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
 		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
-		learningResourceDefinition.setTheorySummaryAdditionalDescription(PromptFragment.of("Theory summary additional desc"));
+		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
@@ -137,7 +137,7 @@ public class CreateLearningResourceTests {
 		learningRequirementPersistence.save(requirement).throwIfFailure();
 		LearningResourceDefinition definition = LearningResourceDefinition.create(PromptFragment.of("Theory DESC!"), PromptFragment.of("Exercise DESC!"), Set.of(requirement));
 		definition.setHintsAdditionalDescription(PromptFragment.of("ADDITIONAL DESC FOR HINTS"));
-		definition.setTheorySummaryAdditionalDescription(PromptFragment.of("ADDITIONAL SUMMARY DESC"));
+		definition.setGraphDescription(PromptFragment.of("ADDITIONAL SUMMARY DESC"));
 		learningResourceDefinitionPersistence.save(definition).throwIfFailure();
 
 

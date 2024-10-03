@@ -28,8 +28,8 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
 	@AttributeOverride(name = "text", column = @Column(name = "theory_description", columnDefinition = "TEXT"))
 	private PromptFragment theoryDescription;
 	@Embedded
-	@AttributeOverride(name = "text", column = @Column(name = "theory_summary_description", columnDefinition = "TEXT"))
-	private PromptFragment theorySummaryAdditionalDescription;
+	@AttributeOverride(name = "text", column = @Column(name = "graph_description", columnDefinition = "TEXT"))
+	private PromptFragment graphDescription;
 	@Embedded
 	@AttributeOverride(name = "text", column = @Column(name = "exercise_description", columnDefinition = "TEXT"))
 	private PromptFragment exerciseDescription;
@@ -44,7 +44,7 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
 		lrd.setCreatedBy(educator.getOwnerUserId());
 		lrd.setTheoryDescription(theoryDescription);
 		lrd.setExerciseDescription(exerciseDescription);
-		lrd.setTheorySummaryAdditionalDescription(theorySummaryAdditionalDescription);
+		lrd.setGraphDescription(theorySummaryAdditionalDescription);
 		lrd.setHintsAdditionalDescription(hintsAdditionalDescription);
 		return lrd;
 	}

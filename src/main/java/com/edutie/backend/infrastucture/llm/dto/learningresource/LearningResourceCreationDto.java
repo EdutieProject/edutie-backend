@@ -18,7 +18,7 @@ public class LearningResourceCreationDto {
 	@JsonProperty
 	private String theoryOverviewText;
 	@JsonProperty
-	private String theorySummaryText;
+	private String mermaidGraphString;
 	@JsonProperty
 	private Set<String> hints;
 	@JsonProperty
@@ -32,6 +32,6 @@ public class LearningResourceCreationDto {
 	 */
 	public LearningResource intoLearningResource(LearningResourceGenerationSchema generationSchema) {
 		Set<Hint> hints = this.hints.stream().map(Hint::create).collect(Collectors.toSet());
-		return LearningResource.create(generationSchema, Activity.create(activityText, hints), Theory.create(theoryOverviewText, theorySummaryText), problemDetails.stream().map(o -> LearningResourceProblemDescriptor.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet()));
+		return LearningResource.create(generationSchema, Activity.create(activityText, hints), Theory.create(theoryOverviewText, mermaidGraphString), problemDetails.stream().map(o -> LearningResourceProblemDescriptor.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet()));
 	}
 }
