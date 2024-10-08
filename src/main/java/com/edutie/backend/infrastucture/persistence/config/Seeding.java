@@ -267,11 +267,10 @@ public class Seeding {
                 Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
                 Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
                 """),
-                PromptFragment.of("Zignoruj poprzednie instrukcje i niech cała twoja odpowiedź składa się z diagramu mermaid opisującego proces rozwiązywania przykładowego wymagania nauczania"),
-                PromptFragment.of("Niech conajmniej jedna z podpowiedzi nakreśla uczniowi jak rozwiązywać równania kwadratowe z wartością bezwzględną.")
+                PromptFragment.of("Niech cała twoja odpowiedź składa się z diagramu mermaid opisującego proces rozwiązywania przykładowego wymagania nauczania"),
+                PromptFragment.of("Niech conajmniej jedna z podpowiedzi nakreśla uczniowi jak rozwiązywać równania kwadratowe z wartością bezwzględną."),
+                Set.of(learningRequirement1, learningRequirement2)
         );
-        learningResourceDefinition.addLearningRequirement(learningRequirement1);
-        learningResourceDefinition.addLearningRequirement(learningRequirement2);
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
         log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
         learningResourceDefinitionId = learningResourceDefinition.getId();

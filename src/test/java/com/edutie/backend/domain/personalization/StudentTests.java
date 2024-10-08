@@ -34,7 +34,7 @@ public class StudentTests {
 
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setKnowledgeSubjectId(knowledgeSubjectId);
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("dsa"), PromptFragment.of("dada"));
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
 
 		LearningResult learningResult = LearningResult.create(student, SolutionSubmission.create(student, learningResource, "My report", 0), new Feedback("My feedback", FeedbackType.NEUTRAL));
@@ -49,7 +49,7 @@ public class StudentTests {
 
 		LearningRequirement learningRequirement = LearningRequirement.create(educator);
 		learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("dsa"), PromptFragment.of("dada"), Set.of(learningRequirement));
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("dsa"), PromptFragment.of("dada"));
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
 		LearningResult learningResult = LearningResult.create(student, SolutionSubmission.create(student, learningResource, "My report", 0), new Feedback("My feedback", FeedbackType.NEUTRAL));
 		student.getLearningHistory().add(learningResult);
