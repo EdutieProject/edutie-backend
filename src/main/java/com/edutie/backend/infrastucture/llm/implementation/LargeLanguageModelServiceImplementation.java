@@ -114,6 +114,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
         try {
             String serializedBody = new ObjectMapper()
                     .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                    .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                     .registerModule(new JavaTimeModule()).writeValueAsString(randomFactGenerationSchema);
             log.info("===== Sending request to LLM service: ====\nTarget URL: {}\nBody sent: {}", RANDOM_FACT_LLM_URL, serializedBody);
             // Create an instance of HttpClient
