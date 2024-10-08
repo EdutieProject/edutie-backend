@@ -1,6 +1,6 @@
 # Create learning resource flow
 
-This flow creates personalized, dedicated learning resource for a student.
+This flow creates personalized, dedicated learning resource for a student using a Learning Resource Definition.
 
 ## Sequence diagram
 
