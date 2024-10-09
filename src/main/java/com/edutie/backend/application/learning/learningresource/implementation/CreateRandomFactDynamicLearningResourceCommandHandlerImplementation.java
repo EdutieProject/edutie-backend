@@ -38,13 +38,9 @@ public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation
         if (latestLearningResults.isEmpty())
             return WrapperResult.failureWrapper(PersonalizationError.cantCreateDynamicResourceNoLatestResults());
         LearningResourceDefinition learningResourceDefinition = latestLearningResults.getFirst().getLearningResourceDefinition();
-        learningResourceDefinition.setExerciseDescription(
-                PromptFragment.of(String.format("""
-                Exercise must be related to the provided random fact:
-                <random-fact>%s</random-fact>
-                Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
-                """, command.randomFact())));
-        LearningResourceGenerationSchema learningResourceGenerationSchema = learningResourceGenerationSchemaService.createSchema(learningResourceDefinition, student).getValue();
+        LearningResourceGenerationSchema learningResourceGenerationSchema = learningResourceGenerationSchemaService.createSchema(
+                learningResourceDefinition.adjustRandomFactExercise(command.randomFact()), student
+        ).getValue();
         LearningResource learningResource = largeLanguageModelService.generateLearningResource(learningResourceGenerationSchema).getValue();
         return WrapperResult.successWrapper(learningResource);
     }

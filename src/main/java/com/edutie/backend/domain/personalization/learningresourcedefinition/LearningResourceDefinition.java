@@ -110,4 +110,14 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
     public void removeLearningRequirement(LearningRequirementId learningRequirementId) {
         learningRequirements.removeIf(o -> o.getId().equals(learningRequirementId));
     }
+
+    public LearningResourceDefinition adjustRandomFactExercise(String randomFact) {
+        this.setExerciseDescription(
+                PromptFragment.of(String.format("""
+                Exercise must be related to the provided random fact:
+                <random-fact>%s</random-fact>
+                Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
+                """, randomFact)));
+        return this;
+    }
 }
