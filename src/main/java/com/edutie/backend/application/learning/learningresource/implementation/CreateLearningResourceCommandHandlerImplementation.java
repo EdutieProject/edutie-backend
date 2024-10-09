@@ -29,7 +29,7 @@ public class CreateLearningResourceCommandHandlerImplementation extends HandlerB
 
 	@Override
 	public WrapperResult<LearningResource> handle(CreateLearningResourceCommand command) {
-		log.info("Creating learning resource for student of id {}", command.studentUserId());
+		log.info("Creating learning resource for student user of id {}", command.studentUserId());
 		Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
 		LearningResourceDefinition learningResourceDefinition = learningResourceDefinitionPersistence.getById(command.learningResourceDefinitionId()).getValue();
 		LearningResourceGenerationSchema learningResourceGenerationSchema = learningResourceGenerationSchemaService.createSchema(learningResourceDefinition, student).getValue();
