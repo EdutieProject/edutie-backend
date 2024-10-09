@@ -68,7 +68,7 @@ public class LearningResourceController {
                 ));
     }
 
-    @PostMapping
+    @PostMapping("/dynamic")
     @Operation(description = """
             Creates a personalized learning resource for a student invoking the flow using the latest used definition 
             and altering the exercise to be about the provided random fact in the command.

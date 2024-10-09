@@ -34,7 +34,7 @@ public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation
     public WrapperResult<LearningResource> handle(CreateRandomFactDynamicLearningResourceCommand command) {
         log.info("Creating dynamic learning resource for student user of id {} using a random fact:\n\"{}\"", command.studentUserId(), command.randomFact());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-        List<LearningResult> latestLearningResults = learningResultPersistence.getLatestResultsOfStudent(student.getId(), 1, LocalDateTime.MIN).getValue();
+        List<LearningResult> latestLearningResults = learningResultPersistence.getLatestResultsOfStudent(student.getId(), 1, LocalDateTime.now().minusDays(7)).getValue();
         if (latestLearningResults.isEmpty())
             return WrapperResult.failureWrapper(PersonalizationError.cantCreateDynamicResourceNoLatestResults());
         LearningResourceDefinition learningResourceDefinition = latestLearningResults.getFirst().getLearningResourceDefinition();

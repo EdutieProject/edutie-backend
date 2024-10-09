@@ -117,6 +117,7 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
                 Exercise must be related to the provided random fact:
                 <random-fact>%s</random-fact>
                 Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
+                All problems in this exercise should refer to the random fact and similar topics.
                 """, randomFact)));
         return this;
     }
