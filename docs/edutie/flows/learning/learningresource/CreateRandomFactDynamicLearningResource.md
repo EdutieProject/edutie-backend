@@ -43,8 +43,6 @@ sequenceDiagram
     Domain ->> LLM: Learning Resource Generation Schema
     LLM ->> Domain: Learning Resource
     Domain ->> Application: Learning Resource
-    Application ->> Persistence: Save Learning Resource
-    Persistence ->> Application: Save Result
     Application ->> Rest API: Result wrapping Learning Resource
     Rest API ->> Client: Learning Resource Response
 
