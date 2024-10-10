@@ -46,7 +46,7 @@ public class LearningResourceGenerationSchemaServiceTests {
 		learningRequirement.appendSubRequirement("Proper formula usage", PromptFragment.of(""));
 		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"));
 		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 
@@ -68,7 +68,7 @@ public class LearningResourceGenerationSchemaServiceTests {
 		primaryLearningRequirement.appendSubRequirement("Proper formula usage", PromptFragment.of(""));
 		primaryLearningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("1"), PromptFragment.of("2"), Set.of(primaryLearningRequirement));
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("1"), PromptFragment.of("2"));
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
 		SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "Thats my report!", 0);
 		LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("HEllo, World!", FeedbackType.NEUTRAL));
@@ -83,7 +83,7 @@ public class LearningResourceGenerationSchemaServiceTests {
 		learningRequirement.appendSubRequirement("SUBREQ2", PromptFragment.of(""));
 		learningRequirement.appendSubRequirement("SUBREQ3", PromptFragment.of(""));
 
-		LearningResourceDefinition learningResourceDefinition2 = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
+		LearningResourceDefinition learningResourceDefinition2 = LearningResourceDefinition.create(educator, PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"));
 		learningResourceDefinition2.setGraphDescription(PromptFragment.of("Graph additional desc"));
 		learningResourceDefinition2.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 

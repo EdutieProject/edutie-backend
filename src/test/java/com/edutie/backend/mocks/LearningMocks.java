@@ -1,5 +1,7 @@
 package com.edutie.backend.mocks;
 
+import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
+import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
@@ -38,6 +40,17 @@ public class LearningMocks {
 				LearningResult learningResult = LearningResult.create(assessmentSchema.getStudent(), assessmentSchema.getSolutionSubmission(), new Feedback("Great!", FeedbackType.POSITIVE));
 				learningResult.addAssessment(Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE,  "", assessmentSchema.getLearningResourceDefinition().getLearningRequirements().stream().findFirst().get().getSubRequirements()));
 				return WrapperResult.successWrapper(learningResult);
+			}
+
+			/**
+			 * Generates a random fact on the provided schema
+			 *
+			 * @param randomFactGenerationSchema random fact generation schema
+			 * @return Wrapper Result of Random Fact
+			 */
+			@Override
+			public WrapperResult<RandomFact> generateRandomFact(RandomFactGenerationSchema randomFactGenerationSchema) {
+				return WrapperResult.successWrapper(new RandomFact("Mount Everest is the highest mountain in the world"));
 			}
 		};
 	}

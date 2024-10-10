@@ -91,7 +91,7 @@ public class CreateLearningResourceTests {
 		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"));
 		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
@@ -116,7 +116,7 @@ public class CreateLearningResourceTests {
 		learningRequirement.appendSubRequirement("3rd sub req nfgoiufguoeoeaofsoefe", PromptFragment.of(""));
 		learningRequirementPersistence.save(learningRequirement).throwIfFailure();
 
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"), Set.of(learningRequirement));
+		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of("Theory description"), PromptFragment.of("Exercise description"));
 		learningResourceDefinition.setGraphDescription(PromptFragment.of("Theory mermaidGraph additional desc"));
 		learningResourceDefinition.setHintsAdditionalDescription(PromptFragment.of("Hints additional desc"));
 		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
@@ -135,7 +135,7 @@ public class CreateLearningResourceTests {
 		requirement.appendSubRequirement("SUBREQ2", PromptFragment.of(""));
 		requirement.appendSubRequirement("SUBREQ3", PromptFragment.of(""));
 		learningRequirementPersistence.save(requirement).throwIfFailure();
-		LearningResourceDefinition definition = LearningResourceDefinition.create(PromptFragment.of("Theory DESC!"), PromptFragment.of("Exercise DESC!"), Set.of(requirement));
+		LearningResourceDefinition definition = LearningResourceDefinition.create(educator, PromptFragment.of("Theory DESC!"), PromptFragment.of("Exercise DESC!"));
 		definition.setHintsAdditionalDescription(PromptFragment.of("ADDITIONAL DESC FOR HINTS"));
 		definition.setGraphDescription(PromptFragment.of("ADDITIONAL SUMMARY DESC"));
 		learningResourceDefinitionPersistence.save(definition).throwIfFailure();
