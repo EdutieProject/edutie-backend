@@ -5,6 +5,8 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,46 +29,23 @@ import java.util.Set;
 public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<LearningResourceDefinitionId> {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private final Set<LearningRequirement> learningRequirements = new HashSet<>();
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "theory_description", columnDefinition = "TEXT"))
-    private PromptFragment theoryDescription;
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "graph_description", columnDefinition = "TEXT"))
-    private PromptFragment graphDescription;
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "exercise_description", columnDefinition = "TEXT"))
-    private PromptFragment exerciseDescription;
-    @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "hints_description", columnDefinition = "TEXT"))
-    private PromptFragment hintsAdditionalDescription;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private ActivityDetails activityDetails;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private TheoryDetails theoryDetails;
 
-    /**
-     * Creates a Learning Resource Definition with full specification provided.
-     *
-     * @param educator                   educator profile
-     * @param theoryDescription          theory description prompt fragment
-     * @param exerciseDescription        exercise description prompt fragment
-     * @param graphDescription           graph description prompt fragment
-     * @param hintsAdditionalDescription hints additional description prompt fragment
-     * @param learningRequirements       learning requirements set
-     * @return new Learning Resource Definition
-     */
     public static LearningResourceDefinition create(
             Educator educator,
-            PromptFragment theoryDescription,
-            PromptFragment exerciseDescription,
-            PromptFragment graphDescription,
-            PromptFragment hintsAdditionalDescription,
+            TheoryDetails theoryDetails,
+            ActivityDetails activityDetails,
             Set<LearningRequirement> learningRequirements
     ) {
         LearningResourceDefinition lrd = new LearningResourceDefinition();
         lrd.setId(new LearningResourceDefinitionId());
         lrd.setAuthorEducator(educator);
         lrd.setCreatedBy(educator.getOwnerUserId());
-        lrd.setTheoryDescription(theoryDescription);
-        lrd.setExerciseDescription(exerciseDescription);
-        lrd.setGraphDescription(graphDescription);
-        lrd.setHintsAdditionalDescription(hintsAdditionalDescription);
+        lrd.setActivityDetails(activityDetails);
+        lrd.setTheoryDetails(theoryDetails);
         lrd.learningRequirements.addAll(learningRequirements);
         return lrd;
     }
@@ -80,7 +59,11 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
      * @return new Learning Resource Definition
      */
     public static LearningResourceDefinition create(Educator educator, PromptFragment theoryDescription, PromptFragment exerciseDescription) {
-        return create(educator, theoryDescription, exerciseDescription, null, null, Set.of());
+        return create(educator,
+                TheoryDetails.create(theoryDescription, PromptFragment.empty()),
+                ActivityDetails.create(exerciseDescription, PromptFragment.empty()),
+                Set.of()
+        );
     }
 
     /**
@@ -112,7 +95,7 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
     }
 
     public LearningResourceDefinition adjustRandomFactExercise(String randomFact) {
-        this.setExerciseDescription(
+        this.activityDetails.setExerciseDescription(
                 PromptFragment.of(String.format("""
                 Exercise must be related to the provided random fact:
                 <random-fact>%s</random-fact>

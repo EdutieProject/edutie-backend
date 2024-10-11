@@ -20,6 +20,10 @@ public record PromptFragment(
 		this("");
 	}
 
+	public static PromptFragment empty() {
+		return new PromptFragment("");
+	}
+
 	public static PromptFragment of(String text) {
 		return text != null ? new PromptFragment(text) : null;
 	}
