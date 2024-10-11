@@ -5,7 +5,7 @@ import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,7 +15,6 @@ import validation.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Learning Requirement entity represents the requirements that student exercises to gain knowledge.
@@ -25,9 +24,9 @@ import java.util.stream.Collectors;
 @Setter
 @Entity
 public class LearningRequirement extends EducatorCreatedAuditableEntity<LearningRequirementId> {
-    @OneToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("ordinal")
-    private List<SubRequirement> subRequirements = new ArrayList<>();
+    private List<ElementalRequirement> elementalRequirements = new ArrayList<>();
     private String name;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_node_id"))
@@ -54,7 +53,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @param scientificDescription description of the sub requirement
      */
     public void appendSubRequirement(String requirementText, PromptFragment scientificDescription) {
-        subRequirements.add(SubRequirement.create(PromptFragment.of(requirementText), scientificDescription, subRequirements.size()));
+        elementalRequirements.add(ElementalRequirement.create(PromptFragment.of(requirementText), scientificDescription, elementalRequirements.size()));
     }
 
     /**
@@ -68,7 +67,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      */
     public Result insertSubRequirement(String requirementText, PromptFragment subRequirementScientificDescription, int desiredIndex) {
         appendSubRequirement(requirementText, subRequirementScientificDescription);
-        return moveSubRequirement(subRequirements.size() - 1, desiredIndex);
+        return moveSubRequirement(elementalRequirements.size() - 1, desiredIndex);
     }
 
     /**
@@ -79,13 +78,13 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @return Result object
      */
     public Result moveSubRequirement(int currentIndex, int desiredIndex) {
-        if (currentIndex < 0 || currentIndex >= subRequirements.size() || desiredIndex < 0 || desiredIndex >= subRequirements.size())
-            return Result.failure(DomainErrors.invalidIndex(SubRequirement.class));
-        SubRequirement subRequirement = subRequirements.get(currentIndex);
-        subRequirements.remove(subRequirement);
-        subRequirements.add(desiredIndex, subRequirement);
-        for (int i = 0; i < subRequirements.size(); i++) {
-            subRequirements.get(i).setOrdinal(i);
+        if (currentIndex < 0 || currentIndex >= elementalRequirements.size() || desiredIndex < 0 || desiredIndex >= elementalRequirements.size())
+            return Result.failure(DomainErrors.invalidIndex(ElementalRequirement.class));
+        ElementalRequirement elementalRequirement = elementalRequirements.get(currentIndex);
+        elementalRequirements.remove(elementalRequirement);
+        elementalRequirements.add(desiredIndex, elementalRequirement);
+        for (int i = 0; i < elementalRequirements.size(); i++) {
+            elementalRequirements.get(i).setOrdinal(i);
         }
         return Result.success();
     }
@@ -97,10 +96,10 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @return Result object
      */
     public Result removeSubRequirement(int index) {
-        if (subRequirements.remove(index) == null)
-            return Result.failure(DomainErrors.invalidIndex(SubRequirement.class));
-        for (int i = 0; i < subRequirements.size(); i++) {
-            subRequirements.get(i).setOrdinal(i);
+        if (elementalRequirements.remove(index) == null)
+            return Result.failure(DomainErrors.invalidIndex(ElementalRequirement.class));
+        for (int i = 0; i < elementalRequirements.size(); i++) {
+            elementalRequirements.get(i).setOrdinal(i);
         }
         return Result.success();
     }
@@ -110,7 +109,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @param qualifiedOrdinal as end index
      * @return list of Sub Requirements
      */
-    public List<SubRequirement> getQualifiedSubRequirements(int qualifiedOrdinal) {
-        return subRequirements.stream().filter(o -> o.getOrdinal() <= qualifiedOrdinal).toList();
+    public List<ElementalRequirement> getQualifiedSubRequirements(int qualifiedOrdinal) {
+        return elementalRequirements.stream().filter(o -> o.getOrdinal() <= qualifiedOrdinal).toList();
     }
 }

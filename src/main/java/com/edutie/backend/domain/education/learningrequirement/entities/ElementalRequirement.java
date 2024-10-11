@@ -2,7 +2,7 @@ package com.edutie.backend.domain.education.learningrequirement.entities;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.education.learningrequirement.identities.SubRequirementId;
+import com.edutie.backend.domain.education.learningrequirement.identities.ElementalRequirementId;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-public class SubRequirement extends EntityBase<SubRequirementId> {
+public class ElementalRequirement extends EntityBase<ElementalRequirementId> {
 	@Embedded
 	@AttributeOverride(name = "text", column = @Column(name = "requirement_text", columnDefinition = "TEXT"))
 	private PromptFragment requirementText;
@@ -19,12 +19,12 @@ public class SubRequirement extends EntityBase<SubRequirementId> {
 	private PromptFragment scientificDescription;
 	private Integer ordinal;
 
-	public static SubRequirement create(PromptFragment requirementText, PromptFragment scientificDescription, int orderIndex) {
-		SubRequirement subRequirement = new SubRequirement();
-		subRequirement.setId(new SubRequirementId());
-		subRequirement.requirementText = requirementText;
-		subRequirement.setScientificDescription(scientificDescription);
-		subRequirement.ordinal = orderIndex;
-		return subRequirement;
+	public static ElementalRequirement create(PromptFragment requirementText, PromptFragment scientificDescription, int orderIndex) {
+		ElementalRequirement elementalRequirement = new ElementalRequirement();
+		elementalRequirement.setId(new ElementalRequirementId());
+		elementalRequirement.requirementText = requirementText;
+		elementalRequirement.setScientificDescription(scientificDescription);
+		elementalRequirement.ordinal = orderIndex;
+		return elementalRequirement;
 	}
 }

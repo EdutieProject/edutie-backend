@@ -72,7 +72,7 @@ public class LearningResourceGenerationSchemaServiceTests {
 		LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(learningResourceDefinition, student), Activity.create("", Set.of()), Theory.create("", ""), Set.of());
 		SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "Thats my report!", 0);
 		LearningResult learningResult = LearningResult.create(student, solutionSubmission, new Feedback("HEllo, World!", FeedbackType.NEUTRAL));
-		learningResult.addAssessment(Assessment.create(primaryLearningRequirement.getId(), new Grade(5), "", primaryLearningRequirement.getSubRequirements()));
+		learningResult.addAssessment(Assessment.create(primaryLearningRequirement.getId(), new Grade(5), "", primaryLearningRequirement.getElementalRequirements()));
 
 		student.getLearningHistory().add(learningResult);
 

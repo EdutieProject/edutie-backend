@@ -2,7 +2,7 @@ package com.edutie.backend.domain.personalization.learningresult.entities;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlyCollectionSerializer;
 import com.edutie.backend.domain.common.base.EntityBase;
-import com.edutie.backend.domain.education.learningrequirement.entities.SubRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
@@ -29,8 +29,8 @@ public class Assessment extends EntityBase<AssessmentId> {
     @Column(columnDefinition = "TEXT")
     String feedbackText;
     @JsonSerialize(using = IdOnlyCollectionSerializer.class)
-    @ManyToMany(targetEntity = SubRequirement.class, fetch = FetchType.EAGER)
-    List<SubRequirement> qualifiedSubRequirements = new ArrayList<>();
+    @ManyToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER)
+    List<ElementalRequirement> qualifiedElementalRequirements = new ArrayList<>();
 
     /**
      * Creates an assessment based on provided data
@@ -38,16 +38,16 @@ public class Assessment extends EntityBase<AssessmentId> {
      * @param learningRequirementId    assessed learning requirement id
      * @param grade                    assessment grade
      * @param feedbackText             feedback text
-     * @param qualifiedSubRequirements qualified sub requirements list
+     * @param qualifiedElementalRequirements qualified sub requirements list
      * @return new Assessment
      */
-    public static Assessment create(LearningRequirementId learningRequirementId, Grade grade, String feedbackText, List<SubRequirement> qualifiedSubRequirements) {
+    public static Assessment create(LearningRequirementId learningRequirementId, Grade grade, String feedbackText, List<ElementalRequirement> qualifiedElementalRequirements) {
         Assessment assessment = new Assessment();
         assessment.setId(new AssessmentId());
         assessment.setLearningRequirementId(learningRequirementId);
         assessment.setGrade(grade);
         assessment.setFeedbackText(feedbackText);
-        assessment.setQualifiedSubRequirements(qualifiedSubRequirements);
+        assessment.setQualifiedElementalRequirements(qualifiedElementalRequirements);
         return assessment;
     }
 

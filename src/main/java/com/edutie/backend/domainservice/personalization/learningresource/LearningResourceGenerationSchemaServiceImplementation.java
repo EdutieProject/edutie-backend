@@ -30,7 +30,7 @@ public class LearningResourceGenerationSchemaServiceImplementation implements Le
 					problemDescriptor.addPersonalizationRule(personalizationRule);
 			}
 			problemDescriptor.calculateQualifiedSubRequirements(
-					lResDef.getLearningRequirementOfId(problemDescriptor.getLearningRequirementId()).get().getSubRequirements().size()
+					lResDef.getLearningRequirementOfId(problemDescriptor.getLearningRequirementId()).get().getElementalRequirements().size()
 			);
 		}
 		return WrapperResult.successWrapper(learningResourceGenerationSchema);

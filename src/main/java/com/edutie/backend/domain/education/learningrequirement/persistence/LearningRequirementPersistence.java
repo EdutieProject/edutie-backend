@@ -10,19 +10,4 @@ import validation.WrapperResult;
 import java.util.List;
 
 public interface LearningRequirementPersistence extends Persistence<LearningRequirement, LearningRequirementId> {
-	/**
-	 * Retrieve all learning requirements associated with given creator
-	 *
-	 * @param educatorId educator id
-	 * @return Wrapper result of desired list
-	 */
-	WrapperResult<List<LearningRequirement>> getAllOfEducatorId(EducatorId educatorId);
-
-	/**
-	 * Retrieve all learning requirements associated with given science
-	 *
-	 * @param scienceId science id
-	 * @return Wrapper result of desired list
-	 */
-	WrapperResult<List<LearningRequirement>> getAllOfScienceId(ScienceId scienceId);
 }
