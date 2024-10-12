@@ -22,21 +22,25 @@ sequenceDiagram
     Rest API ->> Application: Create learning resource command
     Application ->> Persistence: Fetch entities
     Persistence ->> Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
-    Application ->> Domain: Create Learning Resource Domain Service
-    note left of Domain: First, create an LRGS
+    Application ->> Wikimap: Get knowledge correlations
+    Wikimap ->> Application: Knowledge correlations
+    Application ->> Domain: Create Personalized Activity Details
+    Domain ->> Domain: Calculate Activity Personalization Rules
+    Application ->> Domain: Activity Personalized Activity Details
+    Application ->> Domain: Create Personalized Theory Details
+    Domain ->> Domain: Calculate Personalization Rules
+    Application ->> Domain: Personalized Theory Details
+    Application ->> Domain: Create Learning Resource Generation Schema<br/>using personalized theory and activity details
+    note left of Domain: Calculate qualified elemental requirements
     loop For every learning requirement in LRD
-        Domain ->> Domain: Create Problem descriptor
-        Domain ->> Wikimap: Get knowledge correlations
-        Wikimap ->> Domain: Knowledge correlations
-        loop For every knowledge correlation
-            Domain ->> Domain: Create personalization rule
-        end
-        Domain ->> Domain: Calculate qualified sub-requirements
+        Domain ->> Persistence: Get Student's Learning Results of L.Req. Id
+        Persistence ->> Domain: Learning  Results
+        Domain ->> Domain: Choose qualified elemental requirements
     end
-    note left of Domain: Now, let LLM generate LR from LRGS
-    Domain ->> LLM: Learning Resource Generation Schema
-    LLM ->> Domain: Learning Resource
-    Domain ->> Application: Learning Resource
+    Domain ->> Application: Learning Resource Generation Schema
+    note left of Application: Now, let LLM generate LR from LRGS
+    Application ->> LLM: Learning Resource Generation Schema
+    LLM ->> Application: Learning Resource
     Application ->> Persistence: Save Learning Resource
     Persistence ->> Application: Save Result
     Application ->> Rest API: Result wrapping Learning Resource
@@ -60,13 +64,15 @@ Let's describe the algorithm behind the LRGS creation:
 
 1. Input data: Student id and Learning Resource Definition id
 2. Load the data - student profile and LR Definition
-3. For each Learning Requirement in LR Definition:
-    1. Create Problem descriptor
-    2. Fetch Knowledge correlations related to the problem descriptor's knowledge subject id
-    3. For each knowledge correlation create Personalization Rule
-        - using the knowledge correlation (spread properties)
-        - using the student's learning history learning results that are filtered using this knowledge subject id
-    4. Calculate qualified sub-requirements utilizing personalization rules
-4. Using the created Problem descriptors and the LR Definition create Learning Resource Generation Schema
+3. Create a Learning Resource Generation schema:
+   1. For each learning requirement calculate the amount of qualified elemental requirements and add them to the LRGS
+   2. Create Personalized Activity Details
+      - Use activity prompts provided in the Learning Resource Definition
+      - Create Activity Personalization Rules using Knowledge map
+   3. Create Personalized Theory Details
+       - Use theory prompts provided in the Learning Resource Definition
+       - Create Theory Personalization Rules using Knowledge map
+
+Personalized theory & activity details may be offloaded as they can be created separately
 
 The LRGS is sent to the LLM and the response is being restructured to match Learning Resource.
