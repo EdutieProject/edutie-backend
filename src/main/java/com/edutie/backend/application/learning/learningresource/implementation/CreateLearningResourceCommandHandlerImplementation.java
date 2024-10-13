@@ -47,7 +47,8 @@ public class CreateLearningResourceCommandHandlerImplementation extends HandlerB
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
                 learningResultPersistence, student, learningResourceDefinition.getLearningRequirements(), knowledgeCorrelations,
                 activityPersonalizationService.personalize(learningResourceDefinition.getActivityDetails(), student, knowledgeCorrelations).getValue(),
-                theoryPersonalizationService.personalize(learningResourceDefinition.getTheoryDetails(), student, knowledgeCorrelations).getValue()
+                theoryPersonalizationService.personalize(learningResourceDefinition.getTheoryDetails(), student, knowledgeCorrelations).getValue(),
+                command.learningResourceDefinitionId()
         );
         LearningResource learningResource = largeLanguageModelService.generateLearningResource(learningResourceGenerationSchema).getValue();
         learningResourcePersistence.save(learningResource).throwIfFailure();

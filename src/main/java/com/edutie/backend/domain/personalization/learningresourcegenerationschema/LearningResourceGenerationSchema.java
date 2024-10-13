@@ -6,6 +6,7 @@ import com.edutie.backend.domain.education.learningrequirement.entities.Elementa
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.ActivityPersonalizedDetails;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
+import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import jakarta.annotation.Nullable;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -55,11 +57,8 @@ public class LearningResourceGenerationSchema {
         learningResourceGenerationSchema.setTheoryDetails(theoryDetails);
         learningResourceGenerationSchema.setActivityDetails(activityDetails);
         for (LearningRequirement learningRequirement : learningRequirements) {
-            learningResourceGenerationSchema.qualifiedRequirements = new HashSet<>(
-                    learningRequirement.calculateQualifiedElementalRequirements(
-                            student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId())
-                    )
-            );
+            List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
+            learningResourceGenerationSchema.qualifiedRequirements = new HashSet<>(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
         }
         return learningResourceGenerationSchema;
     }

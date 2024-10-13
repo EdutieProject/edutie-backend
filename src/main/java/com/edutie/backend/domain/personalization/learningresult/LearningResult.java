@@ -76,7 +76,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      * @return LRD
      */
     @JsonProperty("learningResourceDefinitionId")
-    public LearningResourceDefinitionId getLearningResourceDefinition() {
+    public LearningResourceDefinitionId getLearningResourceDefinitionId() {
         return solutionSubmission.getLearningResource().getDefinitionId();
     }
 
