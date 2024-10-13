@@ -8,12 +8,12 @@ import java.util.UUID;
 
 @Embeddable
 public class TheoryDetailsId extends UuidIdentifier {
-	public TheoryDetailsId() {
-		super();
-	}
+    public TheoryDetailsId() {
+        super();
+    }
 
-	@JsonCreator
-	public TheoryDetailsId(UUID uuid) {
-		super(uuid);
-	}
+    @JsonCreator
+    public TheoryDetailsId(UUID uuid) {
+        super(uuid);
+    }
 }

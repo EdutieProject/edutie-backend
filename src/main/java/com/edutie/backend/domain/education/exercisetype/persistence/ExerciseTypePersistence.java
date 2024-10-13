@@ -8,10 +8,10 @@ import validation.WrapperResult;
 import java.util.List;
 
 public interface ExerciseTypePersistence extends Persistence<ExerciseType, ExerciseTypeId> {
-	/**
-	 * Retrieve all exercise types
-	 *
-	 * @return Wrapper result of desired list
-	 */
-	WrapperResult<List<ExerciseType>> getAll();
+    /**
+     * Retrieve all exercise types
+     *
+     * @return Wrapper result of desired list
+     */
+    WrapperResult<List<ExerciseType>> getAll();
 }

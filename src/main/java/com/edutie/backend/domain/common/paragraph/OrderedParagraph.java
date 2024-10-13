@@ -1,8 +1,9 @@
 package com.edutie.backend.domain.common.paragraph;
 
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * A Paragraph but with an ordinal, knowing its order
@@ -13,5 +14,5 @@ import lombok.*;
 @Setter
 @MappedSuperclass
 public abstract class OrderedParagraph<TId extends Identifier<?>> extends Paragraph<TId> {
-	private int ordinal = 0;
+    private int ordinal = 0;
 }

@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface LearningResourcePersistence extends Persistence<LearningResource, LearningResourceId> {
 
-	/**
-	 * Retrieve all Learning Resources associated with given definition
-	 *
-	 * @param learningResourceDefinitionId definition id
-	 * @return Wrapper result of desired list
-	 */
-	WrapperResult<List<LearningResource>> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId);
+    /**
+     * Retrieve all Learning Resources associated with given definition
+     *
+     * @param learningResourceDefinitionId definition id
+     * @return Wrapper result of desired list
+     */
+    WrapperResult<List<LearningResource>> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId);
 }

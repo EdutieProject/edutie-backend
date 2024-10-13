@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Base class for personalized details of learning resource contents
+ *
  * @param <T>
  */
 @Getter

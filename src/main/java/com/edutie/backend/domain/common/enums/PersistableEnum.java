@@ -6,5 +6,5 @@ package com.edutie.backend.domain.common.enums;
  * @param <E> Type of the code.
  */
 public interface PersistableEnum<E> {
-	E getCode();
+    E getCode();
 }

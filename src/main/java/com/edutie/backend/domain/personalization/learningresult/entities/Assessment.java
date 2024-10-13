@@ -35,9 +35,9 @@ public class Assessment extends EntityBase<AssessmentId> {
     /**
      * Creates an assessment based on provided data
      *
-     * @param learningRequirementId    assessed learning requirement id
-     * @param grade                    assessment grade
-     * @param feedbackText             feedback text
+     * @param learningRequirementId          assessed learning requirement id
+     * @param grade                          assessment grade
+     * @param feedbackText                   feedback text
      * @param qualifiedElementalRequirements qualified sub requirements list
      * @return new Assessment
      */

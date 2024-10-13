@@ -1,7 +1,6 @@
 package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
@@ -84,6 +83,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     /**
      * Indicates whether learning result is successful based on the grade that needs to be met in order
      * to be successful
+     *
      * @return boolean true/false
      */
     public boolean isSuccessful() {
