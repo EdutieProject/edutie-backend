@@ -7,6 +7,8 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,12 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_node_id"))
     private KnowledgeSubjectId knowledgeSubjectId;
+
+    /**
+     * The value which limits the amount of elemental requirements
+     * assigned to the learning resources created with learning requirements
+     */
+    private static final int MAX_ELEMENTAL_REQUIREMENTS = 2;
 
     /**
      * Recommended constructor associating Learning Requirement with an educator and a science
@@ -106,10 +114,28 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
 
     /**
      * Retrieves sub requirements with respect to their ordinal.
+     *
      * @param qualifiedOrdinal as end index
      * @return list of Sub Requirements
      */
     public List<ElementalRequirement> getQualifiedSubRequirements(int qualifiedOrdinal) {
         return elementalRequirements.stream().filter(o -> o.getOrdinal() <= qualifiedOrdinal).toList();
+    }
+
+    /**
+     * Retrieves the qualified elemental requirements based on the past results provided.
+     *
+     * @param pastResults past results provided as list
+     * @return list of elemental requirements.
+     */
+    public List<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults) {
+        double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
+                .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
+        double gradeAsPercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
+        int maxQualifiedRequirementOrdinal = (int) Math.ceil(gradeAsPercentage * elementalRequirements.size());
+        return elementalRequirements.stream().filter(o ->
+                o.getOrdinal() <= maxQualifiedRequirementOrdinal &&
+                        o.getOrdinal() > maxQualifiedRequirementOrdinal - MAX_ELEMENTAL_REQUIREMENTS
+        ).toList();
     }
 }

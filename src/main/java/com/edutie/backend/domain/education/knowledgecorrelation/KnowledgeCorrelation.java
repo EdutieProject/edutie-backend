@@ -1,7 +1,6 @@
 package com.edutie.backend.domain.education.knowledgecorrelation;
 
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.*;
 
 /**
@@ -10,11 +9,13 @@ import lombok.*;
 @Getter
 @Setter
 public class KnowledgeCorrelation {
-	private KnowledgeSubjectId knowledgeSubjectId;
+	private KnowledgeSubjectId sourceSubjectId;
+	private KnowledgeSubjectId correlatedSubjectId;
 	private int correlationFactor;
 
-	public KnowledgeCorrelation(KnowledgeSubjectId knowledgeSubjectId, int correlationFactor) {
-		this.knowledgeSubjectId = knowledgeSubjectId;
+	public KnowledgeCorrelation(KnowledgeSubjectId sourceSubjectId, KnowledgeSubjectId correlatedSubjectId, int correlationFactor) {
+		this.sourceSubjectId = sourceSubjectId;
+		this.correlatedSubjectId = correlatedSubjectId;
 		this.correlationFactor = correlationFactor;
 	}
 }
