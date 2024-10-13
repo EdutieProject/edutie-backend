@@ -1,51 +1,56 @@
 package com.edutie.backend.domain.personalization.learningresourcegenerationschema;
 
-import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.entities.GenerationSchemaProblemDescriptor;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.identities.LearningResourceGenerationSchemaId;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.ActivityPersonalizedDetails;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.fasterxml.jackson.databind.annotation.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Schema used in personalized Learning Resource generation.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@Setter
-public class LearningResourceGenerationSchema extends AuditableEntityBase<LearningResourceGenerationSchemaId> {
-	private final List<GenerationSchemaProblemDescriptor> problemDescriptors = new ArrayList<>();
-	@JsonSerialize(using = IdOnlySerializer.class)
-	private Student student;
-	private LearningResourceDefinition learningResourceDefinition;
+@Setter(AccessLevel.PRIVATE)
+public class LearningResourceGenerationSchema {
+    private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
+    private ActivityPersonalizedDetails activityDetails;
+    private TheoryPersonalizedDetails theoryDetails;
 
-	/**
-	 * Initialize Learning Resource Generation Schema with empty problem descriptors
-	 * Valid Learning Resource Generation Schema creation requires usage of external system, thus
-	 * to create a valid L.R.G.S. LearningResourceGenerationSchemaService must be used.
-	 *
-	 * @param learningResourceDefinition learning resource definition
-	 * @return LearningResourceGenerationSchema
-	 */
-	public static LearningResourceGenerationSchema create(LearningResourceDefinition learningResourceDefinition, Student student) {
-		LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
-		learningResourceGenerationSchema.setId(new LearningResourceGenerationSchemaId());
-		learningResourceGenerationSchema.setLearningResourceDefinition(learningResourceDefinition);
-		learningResourceGenerationSchema.setStudent(student);
-		learningResourceGenerationSchema.setCreatedBy(student.getOwnerUserId());
-		for (LearningRequirement learningRequirement: learningResourceDefinition.getLearningRequirements()) {
-			learningResourceGenerationSchema.addProblemDescriptor(new GenerationSchemaProblemDescriptor(learningRequirement));
-		}
-		return learningResourceGenerationSchema;
-	}
+    /**
+     * Creation method for learning resource generation schema
+     *
+     * @param student               student which is the recipient of the latter learning result
+     * @param learningRequirements  learning requirements (usually form the learning resource definition)
+     * @param knowledgeCorrelations knowledge correlation list
+     * @param activityDetails       personalized activity details
+     * @param theoryDetails         personalized theory details
+     * @return new Learning Resource Generation Schema
+     */
+    public static LearningResourceGenerationSchema create(
+            Student student,
+            Set<LearningRequirement> learningRequirements,
+            Set<KnowledgeCorrelation> knowledgeCorrelations, // for the possible future purposes
+            ActivityPersonalizedDetails activityDetails,
+            TheoryPersonalizedDetails theoryDetails
+    ) {
+        LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
+        learningResourceGenerationSchema.setTheoryDetails(theoryDetails);
+        learningResourceGenerationSchema.setActivityDetails(activityDetails);
+        for (LearningRequirement learningRequirement : learningRequirements) {
+            learningResourceGenerationSchema.qualifiedRequirements = new HashSet<>(
+                    learningRequirement.calculateQualifiedElementalRequirements(student.getLearningHistoryByKnowledgeSubject(learningRequirement.getKnowledgeSubjectId()))
+            );
+        }
+        return learningResourceGenerationSchema;
+    }
 
-	private void addProblemDescriptor(GenerationSchemaProblemDescriptor problemDescriptor) {
-		problemDescriptors.add(problemDescriptor);
-	}
 }
