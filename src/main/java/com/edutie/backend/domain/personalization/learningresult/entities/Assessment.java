@@ -22,15 +22,15 @@ import java.util.List;
 public class Assessment extends EntityBase<AssessmentId> {
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "learning_requirement_id"))
-    LearningRequirementId learningRequirementId;
+    private LearningRequirementId learningRequirementId;
     @Embedded
     @AttributeOverride(name = "gradeNumber", column = @Column(name = "grade_number"))
-    Grade grade;
+    private Grade grade;
     @Column(columnDefinition = "TEXT")
-    String feedbackText;
+    private String feedbackText;
     @JsonSerialize(using = IdOnlyCollectionSerializer.class)
     @ManyToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER)
-    List<ElementalRequirement> qualifiedElementalRequirements = new ArrayList<>();
+    private List<ElementalRequirement> qualifiedElementalRequirements = new ArrayList<>();
 
     /**
      * Creates an assessment based on provided data

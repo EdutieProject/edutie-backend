@@ -1,9 +1,11 @@
 package com.edutie.backend.domain.education.learningrequirement.entities;
 
+import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.ElementalRequirementId;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,7 @@ public class ElementalRequirement extends EntityBase<ElementalRequirementId> {
     private Integer ordinal;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "learning_requirement_id")
-    @JsonIgnore
+    @JsonSerialize(using = IdOnlySerializer.class)
     private LearningRequirement learningRequirement;
 
     public static ElementalRequirement create(LearningRequirement learningRequirement, PromptFragment requirementText, PromptFragment scientificDescription, int orderIndex) {

@@ -17,7 +17,11 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Lear
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.ActivityPersonalizedDetails;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
+import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
@@ -36,6 +40,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -61,12 +66,21 @@ public class Seeding {
     //    private final ExerciseTypePersistence exerciseTypePersistence;
     private final LearningRequirementPersistence learningRequirementPersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
+    private final LearningResultPersistence learningResultPersistence;
     private final CourseTagPersistence courseTagPersistence;
     private final LearningResourcePersistence learningResourcePersistence;
+    private final StudentPersistence studentPersistence;
     private final UserId uid = new UserId();
     private final Administrator administrator = Administrator.create(uid);
     private final Educator educator = Educator.create(uid, administrator);
+    private final Student student = Student.create(new UserId());
     private CourseTag courseTag;
+
+    public void initializeProfiles() {
+        studentPersistence.save(student);
+        administratorPersistence.save(administrator);
+        educatorPersistence.save(educator);
+    }
 
     /**
      * Seed database with sample study program
@@ -81,8 +95,7 @@ public class Seeding {
         log.info("======================");
         log.info("  DB SEEDING - START  ");
         log.info("======================");
-        administratorPersistence.save(administrator);
-        educatorPersistence.save(educator);
+
         seedLearningResourceDefinition();
         seedSciences();
         injectLearningResourceDefinition();
@@ -262,21 +275,28 @@ public class Seeding {
                 educator,
                 PromptFragment.of("Opisz również rozwiązywanie równań kwadratowych z wartością bezwzględną. Dopasuj trudność do trudności podanych wymagań"),
                 PromptFragment.of("""
-                Zadanie powinno zawierać fabułę dotyczącą projektowania miasta. 
-                Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic. 
+                Zadanie powinno zawierać fabułę dotyczącą projektowania miasta.
+                Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic.
                 Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
                 Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
                 """),
-                PromptFragment.of("Niech cała twoja odpowiedź składa się z diagramu mermaid opisującego proces rozwiązywania przykładowego wymagania nauczania"),
-                PromptFragment.of("Niech conajmniej jedna z podpowiedzi nakreśla uczniowi jak rozwiązywać równania kwadratowe z wartością bezwzględną."),
                 Set.of(learningRequirement1, learningRequirement2)
         );
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
         log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
         learningResourceDefinitionId = learningResourceDefinition.getId();
 
-        LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(learningResourceDefinition, Student.create(new UserId()));
-        LearningResource learningResource = LearningResource.create(learningResourceGenerationSchema, Activity.create("Please calculate the hypotenuse in the right triangle of sides lengths: 6 and 8", Set.of()), Theory.create("Pythagoras theorem is...", "Pythagoras helps to calculate hypotenuses"), Set.of());
+        LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
+                learningResultPersistence, student, learningResourceDefinition.getLearningRequirements(), Set.of(),
+                ActivityPersonalizedDetails.create(List.of(), learningResourceDefinition.getActivityDetails(), student),
+                TheoryPersonalizedDetails.create(List.of(), learningResourceDefinition.getTheoryDetails(),student),
+                learningResourceDefinition.getId()
+        );
+        LearningResource learningResource = LearningResource.create(
+                learningResourceGenerationSchema,
+                Activity.create("Please calculate the hypotenuse in the right triangle of sides lengths: 6 and 8", Set.of()),
+                Theory.create("Pythagoras theorem is...", "Pythagoras helps to calculate hypotenuses")
+        );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         log.info("Seeded Learning Resource with id: {}", learningResource.getId().identifierValue().toString());
     }

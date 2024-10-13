@@ -30,10 +30,8 @@ public class LearningResultCreationDto {
                 o.learningRequirementId,
                 new Grade(o.gradeNumber),
                 o.feedbackText,
-                assessmentSchema.getLearningResourceDefinition()
-                        .getLearningRequirementOfId(o.learningRequirementId).get()
-                        .getQualifiedSubRequirements(assessmentSchema.getProblemDescriptorByLearningRequirement(o.learningRequirementId).getQualifiedSubRequirementOrdinal()))
-        ).collect(Collectors.toSet()).forEach(learningResult::addAssessment);
+                assessmentSchema.getQualifiedRequirements().stream().toList()
+        )).collect(Collectors.toSet()).forEach(learningResult::addAssessment);
         return learningResult;
     }
 }
