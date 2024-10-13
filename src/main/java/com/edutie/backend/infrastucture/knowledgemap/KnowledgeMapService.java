@@ -4,11 +4,11 @@ import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrela
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import validation.WrapperResult;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Service for interaction with externally implemented Knowledge Map.
  */
 public interface KnowledgeMapService {
-	WrapperResult<List<KnowledgeCorrelation>> getKnowledgeCorrelations(KnowledgeSubjectId knowledgeSubjectId);
+	WrapperResult<Set<KnowledgeCorrelation>> getKnowledgeCorrelations(Set<KnowledgeSubjectId> knowledgeSubjectIds);
 }
