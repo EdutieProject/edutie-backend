@@ -5,6 +5,7 @@
         * [Correlated knowledge subject Id](#correlated-knowledge-subject-id)
         * [Correlated knowledge subject Id](#correlated-knowledge-subject-id-1)
         * [Correlation Factor](#correlation-factor)
+    * [Worth noticing](#worth-noticing)
     * [References](#references)
 
 <!-- TOC -->
@@ -33,6 +34,13 @@ The factor that represents how much given subject is correlated.
 
 The less the correlation factor, the more the subject represented by above identity is correlated to the subject that
 invoked the flow.
+
+## Worth noticing
+
+The correlation factor should not be equal to 0. In the previous implementations, knowledge correlations with the factor
+equal to 0 indicated the same knowledge subject in the response.
+
+Currently, knowledge correlations should only show the correlated subjects.
 
 ## References
 
