@@ -9,6 +9,7 @@ import com.edutie.backend.domain.personalization.learningresource.persistence.Le
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.activity.ActivityPersonalizationService;
@@ -30,6 +31,7 @@ public class CreateLearningResourceCommandHandlerImplementation extends HandlerB
     private final StudentPersistence studentPersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
     private final LearningResourcePersistence learningResourcePersistence;
+    private final LearningResultPersistence learningResultPersistence;
     // ==== Services ====
     private final ActivityPersonalizationService activityPersonalizationService;
     private final TheoryPersonalizationService theoryPersonalizationService;
@@ -43,7 +45,7 @@ public class CreateLearningResourceCommandHandlerImplementation extends HandlerB
         LearningResourceDefinition learningResourceDefinition = learningResourceDefinitionPersistence.getById(command.learningResourceDefinitionId()).getValue();
         Set<KnowledgeCorrelation> knowledgeCorrelations = knowledgeMapService.getKnowledgeCorrelations(learningResourceDefinition.getKnowledgeSubjectIds()).getValue();
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
-                student, learningResourceDefinition.getLearningRequirements(), knowledgeCorrelations,
+                learningResultPersistence, student, learningResourceDefinition.getLearningRequirements(), knowledgeCorrelations,
                 activityPersonalizationService.personalize(learningResourceDefinition.getActivityDetails(), student, knowledgeCorrelations).getValue(),
                 theoryPersonalizationService.personalize(learningResourceDefinition.getTheoryDetails(), student, knowledgeCorrelations).getValue()
         );

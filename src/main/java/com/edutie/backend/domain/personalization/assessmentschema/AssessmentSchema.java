@@ -45,7 +45,7 @@ public class AssessmentSchema extends EntityBase<AssessmentSchemaId> {
         assessmentSchema.setId(new AssessmentSchemaId());
         assessmentSchema.setStudent(student);
         assessmentSchema.setSolutionSubmission(solutionSubmission);
-        assessmentSchema.setProblemDescriptors(learningResource.getProblemDescriptors().stream().map(AssessmentSchemaProblemDescriptor::new).collect(Collectors.toSet()));
+        assessmentSchema.setProblemDescriptors(learningResource.getQualifiedRequirements().stream().map(AssessmentSchemaProblemDescriptor::new).collect(Collectors.toSet()));
         assessmentSchema.setLearningResourceDefinition(learningResource.getDefinition());
         return assessmentSchema;
     }

@@ -2,6 +2,7 @@ package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -75,9 +76,9 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      *
      * @return LRD
      */
-    @JsonProperty("learningResourceDefinition")
-    public LearningResourceDefinition getLearningResourceDefinition() {
-        return solutionSubmission.getLearningResource().getDefinition();
+    @JsonProperty("learningResourceDefinitionId")
+    public LearningResourceDefinitionId getLearningResourceDefinition() {
+        return solutionSubmission.getLearningResource().getDefinitionId();
     }
 
     /**
