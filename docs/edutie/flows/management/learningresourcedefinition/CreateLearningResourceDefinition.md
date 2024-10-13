@@ -51,8 +51,6 @@ sequenceDiagram
 | Segment Id                     | UUID Identifier | ❌        |
 | Theory description             | String          | ✅        |
 | Exercise description           | String          | ✅        |
-| Additional summary description | String          | ❌        |
-| Additional hints description   | String          | ❌        |
 
 ## Description
 

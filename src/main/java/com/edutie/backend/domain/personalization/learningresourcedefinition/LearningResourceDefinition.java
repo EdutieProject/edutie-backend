@@ -55,16 +55,22 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
     /**
      * Creates an LRD with only mandatory descriptors but without learning requirements.
      *
-     * @param educator            educator profile
-     * @param theoryDescription   theory description prompt fragment
-     * @param exerciseDescription exercise description prompt fragment
+     * @param educator             educator profile
+     * @param theoryDescription    theory description prompt fragment
+     * @param exerciseDescription  exercise description prompt fragment
+     * @param learningRequirements learning requirements
      * @return new Learning Resource Definition
      */
-    public static LearningResourceDefinition create(Educator educator, PromptFragment theoryDescription, PromptFragment exerciseDescription) {
+    public static LearningResourceDefinition create(
+            Educator educator,
+            PromptFragment theoryDescription,
+            PromptFragment exerciseDescription,
+            Set<LearningRequirement> learningRequirements
+    ) {
         return create(educator,
                 TheoryDetails.create(theoryDescription, PromptFragment.empty()),
                 ActivityDetails.create(exerciseDescription, PromptFragment.empty()),
-                Set.of()
+                learningRequirements
         );
     }
 
