@@ -22,20 +22,23 @@ sequenceDiagram
     Rest API ->> Application: Create learning resource command
     Application ->> Persistence: Fetch entities
     Persistence ->> Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
+    loop For every learning requirement in LRD
     Application ->> Wikimap: Get knowledge correlations
     Wikimap ->> Application: Knowledge correlations
+    end
+    Application ->> Application: Merge knowledge correlations into singular list
     Application ->> Domain: Create Personalized Activity Details
     Domain ->> Domain: Calculate Activity Personalization Rules
     Application ->> Domain: Activity Personalized Activity Details
     Application ->> Domain: Create Personalized Theory Details
     Domain ->> Domain: Calculate Personalization Rules
     Application ->> Domain: Personalized Theory Details
-    Application ->> Domain: Create Learning Resource Generation Schema<br/>using personalized theory and activity details
-    note left of Domain: Calculate qualified elemental requirements
-    loop For every learning requirement in LRD
-        Domain ->> Persistence: Get Student's Learning Results of L.Req. Id
+    Application ->> Domain: Create Learning Resource Generation Schema<br/>using personalized theory and activity details<br/>and knowledge correlations
+    note left of Domain: Choose qualified elemental requirements
+    loop For every knowledge correlation
+        Domain ->> Persistence: Get Student's Learning Results of given knowledge correlation<br/> correlated subject
         Persistence ->> Domain: Learning  Results
-        Domain ->> Domain: Choose qualified elemental requirements
+        Domain ->> Domain: Choose qualified elemental requirements<br/>based on previous correlated results
     end
     Domain ->> Application: Learning Resource Generation Schema
     note left of Application: Now, let LLM generate LR from LRGS
