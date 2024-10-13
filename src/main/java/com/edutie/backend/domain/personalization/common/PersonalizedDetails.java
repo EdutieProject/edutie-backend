@@ -1,7 +1,6 @@
-package com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.base;
+package com.edutie.backend.domain.personalization.common;
 
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.rules.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
 import lombok.Getter;
 

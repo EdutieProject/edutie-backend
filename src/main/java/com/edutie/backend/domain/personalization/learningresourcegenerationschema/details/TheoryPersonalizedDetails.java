@@ -2,7 +2,7 @@ package com.edutie.backend.domain.personalization.learningresourcegenerationsche
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.base.PersonalizedDetails;
+import com.edutie.backend.domain.personalization.common.PersonalizedDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.rules.TheoryPersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
