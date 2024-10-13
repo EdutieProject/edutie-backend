@@ -61,7 +61,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @param scientificDescription description of the sub requirement
      */
     public void appendSubRequirement(String requirementText, PromptFragment scientificDescription) {
-        elementalRequirements.add(ElementalRequirement.create(PromptFragment.of(requirementText), scientificDescription, elementalRequirements.size()));
+        elementalRequirements.add(ElementalRequirement.create(this, PromptFragment.of(requirementText), scientificDescription, elementalRequirements.size()));
     }
 
     /**
