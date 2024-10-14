@@ -4,7 +4,7 @@ import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGen
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
 import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
 import com.edutie.backend.infrastucture.llm.dto.learningresource.LearningResourceCreationDto;

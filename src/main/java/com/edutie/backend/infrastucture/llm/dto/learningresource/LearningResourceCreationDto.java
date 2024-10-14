@@ -2,7 +2,7 @@ package com.edutie.backend.infrastucture.llm.dto.learningresource;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.*;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.fasterxml.jackson.annotation.*;
 
 import java.util.Set;

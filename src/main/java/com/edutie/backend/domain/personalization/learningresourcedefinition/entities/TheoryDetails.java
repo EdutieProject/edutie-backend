@@ -2,7 +2,6 @@ package com.edutie.backend.domain.personalization.learningresourcedefinition.ent
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.personalization.common.Personalizable;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.TheoryDetailsId;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -15,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class TheoryDetails extends EntityBase<TheoryDetailsId> implements Personalizable {
+public class TheoryDetails extends EntityBase<TheoryDetailsId> {
     @AttributeOverride(name = "text", column = @Column(name = "overview_description", columnDefinition = "TEXT"))
     private PromptFragment overviewDescription;
     @AttributeOverride(name = "text", column = @Column(name = "graph_description", columnDefinition = "TEXT"))

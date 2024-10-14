@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.solutionsubmission;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.personalization.common.AbsoluteDefinition;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.solutionsubmission.identities.SolutionSubmissionId;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId> {
+public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId> implements AbsoluteDefinition {
     private int hintsRevealed = 0;
     @ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)

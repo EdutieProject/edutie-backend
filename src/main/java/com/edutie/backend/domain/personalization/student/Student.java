@@ -3,6 +3,8 @@ package com.edutie.backend.domain.personalization.student;
 import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
@@ -15,6 +17,8 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Student class conceals all the student characteristics of the user.
@@ -25,8 +29,7 @@ import java.util.List;
 @Getter
 @Entity
 public class Student extends Role<StudentId> {
-    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.EAGER, mappedBy = "student")
-    //TODO: lazy load
+    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.LAZY, mappedBy = "student")
     private final List<LearningResult> learningHistory = new ArrayList<>();
 
     public static Student create(UserId userId) {

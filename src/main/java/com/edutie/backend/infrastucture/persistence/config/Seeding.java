@@ -16,9 +16,9 @@ import com.edutie.backend.domain.personalization.learningresource.persistence.Le
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.ActivityPersonalizedDetails;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.details.ActivityPersonalizedDetails;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.details.TheoryPersonalizedDetails;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;

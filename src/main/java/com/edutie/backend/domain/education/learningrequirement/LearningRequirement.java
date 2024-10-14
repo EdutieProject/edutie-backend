@@ -17,6 +17,8 @@ import validation.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Learning Requirement entity represents the requirements that student exercises to gain knowledge.
@@ -126,9 +128,9 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * Retrieves the qualified elemental requirements based on the past results provided.
      *
      * @param pastResults past results provided as list
-     * @return list of elemental requirements.
+     * @return Set of elemental requirements.
      */
-    public List<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults) {
+    public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults) {
         double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
                 .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
         double gradeAsPercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
@@ -136,6 +138,6 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
         return elementalRequirements.stream().filter(o ->
                 o.getOrdinal() <= maxQualifiedRequirementOrdinal &&
                         o.getOrdinal() > maxQualifiedRequirementOrdinal - MAX_ELEMENTAL_REQUIREMENTS
-        ).toList();
+        ).collect(Collectors.toSet());
     }
 }

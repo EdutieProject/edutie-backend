@@ -1,17 +1,12 @@
 package com.edutie.backend.mocks;
 
-import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.ActivityPersonalizedDetails;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
-import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.details.ActivityPersonalizedDetails;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.details.TheoryPersonalizedDetails;
 import com.edutie.backend.domainservice.personalization.activity.ActivityPersonalizationService;
 import com.edutie.backend.domainservice.personalization.theory.TheoryPersonalizationService;
 import validation.WrapperResult;
 
 import java.util.List;
-import java.util.Set;
 
 public class PersonalizationServiceMocks {
     public static ActivityPersonalizationService activityPersonalizationServiceMock() {
