@@ -49,15 +49,23 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      *
      * @param student            student reference
      * @param solutionSubmission solution submission reference
+     * @param feedback           feedback
+     * @param assessments        assessments
      * @return new Learning Result
      */
-    public static LearningResult create(Student student, SolutionSubmission solutionSubmission, Feedback feedback) {
+    public static LearningResult create(
+            Student student,
+            SolutionSubmission solutionSubmission,
+            Feedback feedback,
+            Set<Assessment> assessments
+    ) {
         LearningResult learningResult = new LearningResult();
         learningResult.setId(new LearningResultId());
         learningResult.setCreatedBy(student.getOwnerUserId());
         learningResult.setStudent(student);
         learningResult.setSolutionSubmission(solutionSubmission);
         learningResult.setFeedback(feedback);
+        learningResult.assessments.addAll(assessments);
         return learningResult;
     }
 

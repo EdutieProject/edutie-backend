@@ -13,8 +13,14 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Activ
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.ActivityPersonalizedDetails;
+import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
+import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +29,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import validation.WrapperResult;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,6 +50,8 @@ public class GetLearningResourceTests {
 	@Autowired
 	private LearningResourcePersistence learningResourcePersistence;
 	@Autowired
+	private LearningResultPersistence learningResultPersistence;
+	@Autowired
 	private LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
 	@Autowired
 	private StudentPersistence studentPersistence;
@@ -56,14 +65,15 @@ public class GetLearningResourceTests {
 
 	@Test
 	public void getLearningResourceByIdTest() {
-		LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of(""), PromptFragment.of(""));
-		learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-
 		LearningResource learningResource = LearningResource.create(
-				LearningResourceGenerationSchema.create(learningResourceDefinition, student),
+				LearningResourceGenerationSchema.create(
+						learningResultPersistence,
+						student, Set.of(), Set.of(),
+						ActivityPersonalizedDetails.create(List.of(), ActivityDetails.create(PromptFragment.empty(), PromptFragment.empty()), student),
+						TheoryPersonalizedDetails.create(List.of(), TheoryDetails.create(PromptFragment.empty(), PromptFragment.empty()), student),
+						new LearningResourceDefinitionId()),
 				Activity.create("", Set.of()),
-				Theory.create("", ""),
-				Set.of()
+				Theory.create("", "")
 		);
 		learningResourcePersistence.save(learningResource).throwIfFailure();
 

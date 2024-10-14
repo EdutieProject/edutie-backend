@@ -77,6 +77,7 @@ public class Seeding {
     private CourseTag courseTag;
 
     public void initializeProfiles() {
+        log.info("Seeding profiles for user of id {}", uid);
         studentPersistence.save(student);
         administratorPersistence.save(administrator);
         educatorPersistence.save(educator);
@@ -86,18 +87,18 @@ public class Seeding {
      * Seed database with sample study program
      * <p>This will create random number of sciences</p>
      *
-     * @see #seedSciences()
+     * @see #seedStudyProgram()
      * @since 0.5
      */
     @PostConstruct
     @Transactional
-    public void seedStudyProgram() {
+    public void seeding() {
         log.info("======================");
         log.info("  DB SEEDING - START  ");
         log.info("======================");
-
+        initializeProfiles();
         seedLearningResourceDefinition();
-        seedSciences();
+        seedStudyProgram();
         injectLearningResourceDefinition();
         log.info("=====================");
         log.info("  DB SEEDING - END   ");
@@ -106,9 +107,9 @@ public class Seeding {
 
     private void injectLearningResourceDefinition() {
         log.info("Injecting LRD into one of the segments...");
-        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get(2);
+        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get((int)(Math.random() * 6));
         segment.setName("Podróż oceaniczna z wartością bezwzględną");
-        segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem");
+        segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem i długopisem...");
         segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
         segmentPersistence.save(segment);
     }
@@ -116,13 +117,13 @@ public class Seeding {
     /**
      * Seed random number of sciences
      *
-     * @see #seedSciences(int)
+     * @see #seedStudyProgram(int)
      * @since 0.5
      */
-    private void seedSciences() {
+    private void seedStudyProgram() {
         log.info("Seeding study program...");
         int sciencesCount = (int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES);
-        seedSciences(sciencesCount);
+        seedStudyProgram(sciencesCount);
     }
 
     /**
@@ -132,7 +133,7 @@ public class Seeding {
      * @see #seedScience(int)
      * @since 0.5
      */
-    private void seedSciences(int sciences) {
+    private void seedStudyProgram(int sciences) {
         for (int i = 0; i < sciences; i++)
             seedScience(i);
     }
@@ -204,6 +205,7 @@ public class Seeding {
     }
 
     private void seedLearningResourceDefinition() {
+        log.info("Seeding LRD...");
         LearningRequirement learningRequirement1 = LearningRequirement.create(educator);
         learningRequirement1.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
         learningRequirement1.setName(SampleModulusLearningRequirementData.LEARNING_REQUIREMENT_NAME);

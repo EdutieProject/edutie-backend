@@ -25,13 +25,15 @@ public class LearningResultCreationDto {
     private String feedbackLevel;
 
     public LearningResult intoLearningResult(AssessmentSchema assessmentSchema) {
-        LearningResult learningResult = LearningResult.create(assessmentSchema.getStudent(), assessmentSchema.getSolutionSubmission(), new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel)));
-        assessments.stream().map(o -> Assessment.create(
-                o.learningRequirementId,
-                new Grade(o.gradeNumber),
-                o.feedbackText,
-                assessmentSchema.getQualifiedRequirements().stream().toList()
-        )).collect(Collectors.toSet()).forEach(learningResult::addAssessment);
-        return learningResult;
+        return LearningResult.create(
+                assessmentSchema.getStudent(),
+                assessmentSchema.getSolutionSubmission(),
+                new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel)),
+                assessments.stream().map(o -> Assessment.create(
+                        o.learningRequirementId,
+                        new Grade(o.gradeNumber),
+                        o.feedbackText,
+                        assessmentSchema.getQualifiedRequirements().stream().toList()
+                )).collect(Collectors.toSet()));
     }
 }

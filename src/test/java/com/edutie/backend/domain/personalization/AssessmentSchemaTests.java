@@ -24,20 +24,9 @@ public class AssessmentSchemaTests {
 	private final UserId userId = new UserId();
 	private final Student student = Student.create(userId);
 	private final Educator educator = Educator.create(userId, Administrator.create(userId));
-	private final LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(educator, PromptFragment.of(""), PromptFragment.of(""));
 
 	@Test
 	public void createAssessmentSchemaTest() {
-		LearningResource learningResource = LearningResource.create(
-				LearningResourceGenerationSchema.create(learningResourceDefinition, student),
-				Activity.create("", Set.of()),
-				Theory.create("", ""),
-				Set.of());
-
-		SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource, "This is my report", 0);
-
-		AssessmentSchema assessmentSchema = AssessmentSchema.create(student, solutionSubmission, learningResource);
-
         fail(); //TODO: resolve tests. issue #139 + #146
 	}
 }
