@@ -2,7 +2,7 @@ package com.edutie.backend.infrastucture.llm;
 
 import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
-import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
+import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;

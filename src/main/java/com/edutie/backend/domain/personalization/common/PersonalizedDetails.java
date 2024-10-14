@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Base class for personalized details of learning resource contents
+ * Base class for personalization details.
  *
  * @param <T>
  */
@@ -17,5 +17,11 @@ import java.util.Set;
 public abstract class PersonalizedDetails<T extends PersonalizationRule> {
     protected List<T> personalizationRules;
 
+    /**
+     * Used for creating personalization rules, usually in initialization of personalization schemas
+     * @param student student for which personalization is done
+     * @param learningResultPersistence student's learning result persistence
+     * @param knowledgeCorrelations knowledge correlations for the personalization
+     */
     protected abstract void createPersonalizationRules(Student student, LearningResultPersistence learningResultPersistence, Set<KnowledgeCorrelation> knowledgeCorrelations);
 }

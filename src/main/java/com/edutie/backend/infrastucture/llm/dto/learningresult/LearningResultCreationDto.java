@@ -1,6 +1,6 @@
 package com.edutie.backend.infrastucture.llm.dto.learningresult;
 
-import com.edutie.backend.domain.personalization.assessmentschema.AssessmentSchema;
+import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;

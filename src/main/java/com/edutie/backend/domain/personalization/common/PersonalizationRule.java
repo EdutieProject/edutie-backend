@@ -6,15 +6,12 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * A base class for personalization rule. Personalization rule encompasses
+ * related past assessments that could be used for personalization.
+ */
 @Getter
-public class PersonalizationRule {
+public abstract class PersonalizationRule {
     private KnowledgeCorrelation knowledgeCorrelation;
     private List<Assessment> relatedAssessments;
-
-    public static PersonalizationRule create(KnowledgeCorrelation knowledgeCorrelation, List<Assessment> relatedAssessments) {
-        PersonalizationRule rule = new PersonalizationRule();
-        rule.knowledgeCorrelation = knowledgeCorrelation;
-        rule.relatedAssessments = relatedAssessments;
-        return rule;
-    }
 }

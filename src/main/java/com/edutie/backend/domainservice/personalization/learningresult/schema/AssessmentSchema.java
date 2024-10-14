@@ -1,7 +1,6 @@
-package com.edutie.backend.domain.personalization.assessmentschema;
+package com.edutie.backend.domainservice.personalization.learningresult.schema;
 
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
-import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -31,10 +30,9 @@ public class AssessmentSchema {
      *
      * @param student            student profile
      * @param solutionSubmission solution submission
-     * @param learningResource   learning resource
      * @return new Assessment Schema
      */
-    public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission, LearningResource learningResource) {
+    public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission) {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
         assessmentSchema.setStudent(student);
         assessmentSchema.setSolutionSubmission(solutionSubmission);
