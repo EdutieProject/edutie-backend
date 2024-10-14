@@ -16,6 +16,12 @@ import java.util.Set;
 public class ActivityPersonalizationServiceImplementation implements ActivityPersonalizationService {
     @Override
     public WrapperResult<ActivityPersonalizedDetails> personalize(ActivityDetails details, Student student, Set<KnowledgeCorrelation> knowledgeCorrelations) {
-        return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED", ""));
+        return WrapperResult.successWrapper(
+                ActivityPersonalizedDetails.create(
+                        knowledgeCorrelations.stream().toList(),
+                        details,
+                        student
+                )
+        );
     }
 }

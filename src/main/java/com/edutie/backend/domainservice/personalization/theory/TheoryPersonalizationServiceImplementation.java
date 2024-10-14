@@ -4,6 +4,7 @@ import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrela
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcegenerationschema.details.TheoryPersonalizedDetails;
 import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.Error;
@@ -16,6 +17,12 @@ import java.util.Set;
 public class TheoryPersonalizationServiceImplementation implements TheoryPersonalizationService {
     @Override
     public WrapperResult<TheoryPersonalizedDetails> personalize(TheoryDetails details, Student student, Set<KnowledgeCorrelation> knowledgeCorrelations) {
-        return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED", ""));
+        return WrapperResult.successWrapper(
+                TheoryPersonalizedDetails.create(
+                        knowledgeCorrelations.stream().toList(),
+                        details,
+                        student
+                )
+        );
     }
 }
