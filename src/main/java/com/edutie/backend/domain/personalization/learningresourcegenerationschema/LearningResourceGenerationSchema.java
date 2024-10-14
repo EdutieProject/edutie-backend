@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +30,7 @@ public class LearningResourceGenerationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     private ActivityPersonalizedDetails activityDetails;
     private TheoryPersonalizedDetails theoryDetails;
+    @JsonIgnore
     private Student studentMetadata;
     @Nullable
     private LearningResourceDefinitionId learningResourceDefinitionId;

@@ -45,7 +45,9 @@ public class CreateLearningResourceCommandHandlerImplementation extends HandlerB
         LearningResourceDefinition learningResourceDefinition = learningResourceDefinitionPersistence.getById(command.learningResourceDefinitionId()).getValue();
         Set<KnowledgeCorrelation> knowledgeCorrelations = knowledgeMapService.getKnowledgeCorrelations(learningResourceDefinition.getKnowledgeSubjectIds()).getValue();
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
-                learningResultPersistence, student, learningResourceDefinition.getLearningRequirements(), knowledgeCorrelations,
+                learningResultPersistence, student,
+                learningResourceDefinition.getLearningRequirements(),
+                knowledgeCorrelations,
                 activityPersonalizationService.personalize(learningResourceDefinition.getActivityDetails(), student, knowledgeCorrelations).getValue(),
                 theoryPersonalizationService.personalize(learningResourceDefinition.getTheoryDetails(), student, knowledgeCorrelations).getValue(),
                 command.learningResourceDefinitionId()
