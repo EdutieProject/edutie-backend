@@ -18,9 +18,9 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.pers
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
+import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import com.edutie.backend.mocks.EducationMocks;
 import com.edutie.backend.mocks.ExternalServiceMocks;
-import com.edutie.backend.mocks.PersonalizationServiceMocks;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import validation.WrapperResult;
@@ -46,9 +46,9 @@ public class CreateLearningResourceTests {
 	@Autowired
 	LearningResourcePersistence learningResourcePersistence;
 	@Autowired
-	LearningResultPersistence learningResultPersistence;
-	@Autowired
 	LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
+	@Autowired
+	LearningResourcePersonalizationService learningResourcePersonalizationService;
 
 	CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
 
@@ -58,11 +58,7 @@ public class CreateLearningResourceTests {
 				studentPersistence,
 				learningResourceDefinitionPersistence,
 				learningResourcePersistence,
-				learningResultPersistence,
-				PersonalizationServiceMocks.activityPersonalizationServiceMock(),
-				PersonalizationServiceMocks.theoryPersonalizationServiceMock(),
-				ExternalServiceMocks.knowledgeMapServiceMock(),
-				ExternalServiceMocks.largeLanguageModelServiceMock()
+				learningResourcePersonalizationService
 		);
 
 		studentPersistence.save(student).throwIfFailure();

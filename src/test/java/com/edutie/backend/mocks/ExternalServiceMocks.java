@@ -10,12 +10,12 @@ import com.edutie.backend.domain.personalization.learningresource.LearningResour
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
 import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
 import validation.WrapperResult;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class ExternalServiceMocks {
     public static KnowledgeMapService knowledgeMapServiceMock() {
         return knowledgeSubjectIds -> WrapperResult.successWrapper(Set.of(
-                new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(),  new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")), 2),
+                new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")), 2),
                 new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("4e92752a-5ef8-420e-ba45-260b6b7af5fe")), 4),
                 new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("201b3e63-5340-4a35-8f51-8de8275dae1e")), 7),
                 new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("7ad5fd80-6337-4b69-8048-8a97e39aa963")), 8)

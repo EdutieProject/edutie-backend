@@ -1,8 +1,6 @@
-package com.edutie.backend.validation;
+package validation;
 
 import org.junit.jupiter.api.Test;
-import validation.Result;
-import validation.WrapperResult;
 import org.springframework.boot.test.context.*;
 
 @SpringBootTest

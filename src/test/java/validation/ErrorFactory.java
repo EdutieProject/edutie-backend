@@ -1,4 +1,4 @@
-package com.edutie.backend.validation;
+package validation;
 
 import validation.Error;
 

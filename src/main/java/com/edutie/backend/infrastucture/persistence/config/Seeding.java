@@ -16,9 +16,6 @@ import com.edutie.backend.domain.personalization.learningresource.persistence.Le
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.details.ActivityPersonalizedDetails;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.details.TheoryPersonalizedDetails;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
@@ -32,6 +29,7 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +38,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -107,7 +104,7 @@ public class Seeding {
 
     private void injectLearningResourceDefinition() {
         log.info("Injecting LRD into one of the segments...");
-        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get((int)(Math.random() * 6));
+        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get((int) (Math.random() * 6));
         segment.setName("Podróż oceaniczna z wartością bezwzględną");
         segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem i długopisem...");
         segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
@@ -277,11 +274,11 @@ public class Seeding {
                 educator,
                 PromptFragment.of("Opisz również rozwiązywanie równań kwadratowych z wartością bezwzględną. Dopasuj trudność do trudności podanych wymagań"),
                 PromptFragment.of("""
-                Zadanie powinno zawierać fabułę dotyczącą projektowania miasta.
-                Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic.
-                Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
-                Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
-                """),
+                        Zadanie powinno zawierać fabułę dotyczącą projektowania miasta.
+                        Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic.
+                        Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
+                        Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
+                        """),
                 Set.of(learningRequirement1, learningRequirement2)
         );
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
@@ -289,10 +286,10 @@ public class Seeding {
         learningResourceDefinitionId = learningResourceDefinition.getId();
 
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
-                learningResultPersistence, student, learningResourceDefinition.getLearningRequirements(), Set.of(),
-                ActivityPersonalizedDetails.create(List.of(), learningResourceDefinition.getActivityDetails(), student),
-                TheoryPersonalizedDetails.create(List.of(), learningResourceDefinition.getTheoryDetails(),student),
-                learningResourceDefinition.getId()
+                student,
+                learningResultPersistence,
+                Set.of(),
+                learningResourceDefinition
         );
         LearningResource learningResource = LearningResource.create(
                 learningResourceGenerationSchema,
