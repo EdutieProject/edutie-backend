@@ -1,4 +1,4 @@
-package com.edutie.backend.application.learning.learningresource.commands;
+package com.edutie.backend.application.learning.learningresult.commands;
 
 import com.edutie.backend.application.common.actions.StudentAction;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;

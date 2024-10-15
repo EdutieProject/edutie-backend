@@ -1,8 +1,8 @@
 package com.edutie.backend.domain.studyprogram.lesson;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlySerializer;
-import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.studyprogram.StudyProgramError;
 import com.edutie.backend.domain.studyprogram.common.TreeElementEntityBase;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
@@ -84,7 +84,7 @@ public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
     @Override
     public Result addNextElement(Lesson lesson) {
         if (lesson.getCourse() != course)
-            return Result.failure(DomainErrors.invalidParentEntity());
+            return Result.failure(StudyProgramError.invalidParentEntity());
         nextElements.add(lesson);
         return Result.success();
     }
@@ -92,7 +92,7 @@ public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
     @Override
     public Result setPreviousElement(Lesson lesson) {
         if (!lesson.getCourse().equals(this.course)) {
-            return Result.failure(DomainErrors.invalidParentEntity());
+            return Result.failure(StudyProgramError.invalidParentEntity());
         }
         this.previousElement = lesson;
         return Result.success();

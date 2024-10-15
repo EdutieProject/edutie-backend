@@ -10,7 +10,7 @@ shall be solved in the future under [this GH issue](https://github.com/EdutiePro
 
 ```mermaid
 ---
-title: Random fact Dynamic Learning Resource creation
+title: Dynamic Learning Resource creation - Random fact variant
 ---
 sequenceDiagram
     participant Client
@@ -21,28 +21,31 @@ sequenceDiagram
     participant Wikimap
     participant LLM
     autonumber
-    Client ->> Rest API: Create R.F. Dynamic Learning Resource request
+    Client ->> Rest API: Create learning resource request
     Rest API ->> Rest API: Authorize student
-    Rest API ->> Application: Create R.F. Dynamic Learning Resource command
+    Rest API ->> Application: Create learning resource command
     Application ->> Persistence: Fetch entities
-    Persistence ->> Application: Persisted entities:<br/>Student profile<br/>+ Latest Learning Results
-    Application ->> Domain: Create Learning Resource Definition based on<br/>latest results and random fact
-    Domain ->> Application: Learning Resource Definition
-    Application ->> Domain: Create Learning Resource Domain Service
-    note left of Domain: First, create an LRGS
-    loop For every learning requirement in LRD
-        Domain ->> Domain: Create Problem descriptor
+    Persistence ->> Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
+    Application ->> Domain: Adjust LRD with Random fact info
+    Domain ->> Application: Adjusted LRD
+    Application ->> Domain: Create personalized Learning Resource using<br/>LRD for the provided student
+    critical Create Learning Resource Schema
         Domain ->> Wikimap: Get knowledge correlations
         Wikimap ->> Domain: Knowledge correlations
-        loop For every knowledge correlation
-            Domain ->> Domain: Create personalization rule
-        end
-        Domain ->> Domain: Calculate qualified sub-requirements
+        Domain ->> Persistence: Get Learning History for<br/>elemental requirement qualification
+        Persistence ->> Domain: Chosen Learning Results
+        Domain ->> Domain: Calculate qualified requirements
+        Domain ->> Domain: Create Personalized Theory & Activity<br/>details
+        Domain ->> Persistence: Get Learning History for personalization rules
+        Persistence ->> Domain: Chosen Learning Results
+        Domain ->> Domain: Compute personalization rules for every personalized details
     end
-    note left of Domain: Now, let LLM generate LR from LRGS
     Domain ->> LLM: Learning Resource Generation Schema
     LLM ->> Domain: Learning Resource
-    Domain ->> Application: Learning Resource
+    Domain ->> Application: Learning Resource Wrapper Result
+
+    Application ->> Persistence: Save Learning Resource
+    Persistence ->> Application: Save Result
     Application ->> Rest API: Result wrapping Learning Resource
     Rest API ->> Client: Learning Resource Response
 

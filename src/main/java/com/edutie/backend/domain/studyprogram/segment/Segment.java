@@ -1,8 +1,8 @@
 package com.edutie.backend.domain.studyprogram.segment;
 
-import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.studyprogram.StudyProgramError;
 import com.edutie.backend.domain.studyprogram.common.TreeElementEntityBase;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.segment.identities.SegmentId;
@@ -80,7 +80,7 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     @Override
     public Result addNextElement(Segment segment) {
         if (segment.getLesson() != lesson)
-            return Result.failure(DomainErrors.invalidParentEntity());
+            return Result.failure(StudyProgramError.invalidParentEntity());
         nextElements.add(segment);
         return Result.success();
     }
@@ -88,7 +88,7 @@ public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     @Override
     public Result setPreviousElement(Segment segment) {
         if (!segment.getLesson().equals(this.lesson)) {
-            return Result.failure(DomainErrors.invalidParentEntity());
+            return Result.failure(StudyProgramError.invalidParentEntity());
         }
         this.previousElement = segment;
         return Result.success();

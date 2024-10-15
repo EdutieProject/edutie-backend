@@ -1,10 +1,9 @@
-package com.edutie.backend.application.learning.learningresource.implementation;
+package com.edutie.backend.application.learning.learningresult.implementation;
 
 import com.edutie.backend.application.common.HandlerBase;
-import com.edutie.backend.application.learning.learningresource.AssessSolutionCommandHandler;
-import com.edutie.backend.application.learning.learningresource.commands.AssessSolutionCommand;
+import com.edutie.backend.application.learning.learningresult.AssessSolutionCommandHandler;
+import com.edutie.backend.application.learning.learningresult.commands.AssessSolutionCommand;
 import com.edutie.backend.domainservice.personalization.learningresult.LearningResultPersonalizationService;
-import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
@@ -13,7 +12,6 @@ import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubm
 import com.edutie.backend.domain.personalization.solutionsubmission.persistence.SolutionSubmissionPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
-import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
 import validation.WrapperResult;
 import org.springframework.stereotype.*;
 import lombok.*;
