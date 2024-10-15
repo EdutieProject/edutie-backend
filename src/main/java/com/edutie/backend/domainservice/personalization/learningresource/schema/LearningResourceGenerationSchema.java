@@ -11,12 +11,12 @@ import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.common.PersonalizationSchema;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.details.ActivityPersonalizedDetails;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.details.TheoryPersonalizedDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.HashSet;
 import java.util.List;
