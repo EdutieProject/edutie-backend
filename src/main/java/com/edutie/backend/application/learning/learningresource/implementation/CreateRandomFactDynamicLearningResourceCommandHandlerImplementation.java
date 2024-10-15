@@ -3,6 +3,7 @@ package com.edutie.backend.application.learning.learningresource.implementation;
 import com.edutie.backend.application.learning.learningresource.CreateRandomFactDynamicLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.commands.CreateRandomFactDynamicLearningResourceCommand;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
@@ -10,6 +11,7 @@ import com.edutie.backend.domain.personalization.learningresult.persistence.Lear
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
+import com.edutie.backend.domainservice.personalization.learningresult.LearningResultPersonalizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,7 @@ public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation
     private final LearningResultPersistence learningResultPersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
     private final LearningResourcePersonalizationService learningResourcePersonalizationService;
+    private final LearningResourcePersistence learningResourcePersistence;
 
 
     @Override
@@ -38,6 +41,7 @@ public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation
                 learningResourceDefinitionPersistence.getById(latestLearningResults.getFirst().getLearningResourceDefinitionId()).getValue();
         LearningResource learningResource = learningResourcePersonalizationService.personalize(
                 learningResourceDefinition.adjustRandomFactExercise(command.randomFact()), student).getValue();
+        learningResourcePersistence.save(learningResource).throwIfFailure();
         return WrapperResult.successWrapper(learningResource);
     }
 }

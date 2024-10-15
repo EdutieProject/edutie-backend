@@ -6,8 +6,8 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Activ
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,7 +27,7 @@ import java.util.Set;
 @Setter(AccessLevel.PRIVATE)
 @Entity
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
-    @OneToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
     private LearningResourceDefinitionId definitionId;
@@ -57,6 +57,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setCreatedBy(generationSchema.getStudentMetadata().getOwnerUserId());
         learningResource.setStudentId(generationSchema.getStudentMetadata().getId());
         learningResource.setDefinitionId(generationSchema.getLearningResourceDefinitionId());
+        learningResource.setQualifiedRequirements(generationSchema.getQualifiedRequirements());
         learningResource.setActivity(activity);
         learningResource.setTheory(theory);
         return learningResource;

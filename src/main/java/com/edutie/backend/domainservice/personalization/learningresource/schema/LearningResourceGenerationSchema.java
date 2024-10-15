@@ -62,7 +62,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
         );
         for (LearningRequirement learningRequirement : learningResourceDefinition.getLearningRequirements()) {
             List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
-            learningResourceGenerationSchema.qualifiedRequirements = learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement);
+            learningResourceGenerationSchema.qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
         }
         learningResourceGenerationSchema.setLearningResourceDefinitionId(learningResourceDefinition.getId());
         return learningResourceGenerationSchema;

@@ -8,7 +8,6 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.pers
 import com.edutie.backend.infrastucture.persistence.PersistenceError;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.EducatorRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningResourceDefinitionRepository;
-import org.springframework.data.domain.Example;
 import validation.Result;
 import validation.WrapperResult;
 import org.springframework.data.jpa.repository.*;
@@ -52,6 +51,6 @@ public class LearningResourceDefinitionPersistenceImplementation implements Lear
 
 	@Override
 	public WrapperResult<LearningResourceDefinition> getAny() {
-		return Result.successWrapper(learningResourceDefinitionRepository.findOne(Example.of(new LearningResourceDefinition())).get());
+		return Result.successWrapper(learningResourceDefinitionRepository.findRandom().get());
 	}
 }

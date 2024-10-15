@@ -52,8 +52,8 @@ import java.util.UUID;
 @Slf4j
 public class Seeding {
     private static LearningResourceDefinitionId learningResourceDefinitionId;
-    final int MAX_SEEDED_COURSES = 8;
-    final int MAX_SEEDED_SCIENCES = 4;
+    final int MAX_SEEDED_COURSES = 1;
+    final int MAX_SEEDED_SCIENCES = 1;
     private final SciencePersistence sciencePersistence;
     private final CoursePersistence coursePersistence;
     private final LessonPersistence lessonPersistence;
