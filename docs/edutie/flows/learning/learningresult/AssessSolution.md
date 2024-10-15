@@ -27,11 +27,10 @@ sequenceDiagram
         Domain ->> Application: Solution Submission
         Application ->> Persistence: Save Solution Submission
         Persistence ->> Application: Result
-        Application ->> Domain: Create Assessment Schema
-        Domain ->> Application: Assessment Schema
-        Application ->> LLM: Assessment Schema
-        LLM ->> Application: Learning Result DTO
-        Application ->> Domain: Learning Result DTO
+        Application ->> Domain: Create Personalized Learning Result
+        Domain ->> Domain: Create Assessment Schema
+        Domain ->> LLM: Assessment Schema
+        LLM ->> Domain: Learning Result
         Domain ->> Application: Learning Result
         Application ->> Persistence: Save Learning Result
         Persistence ->> Application: Save Result
