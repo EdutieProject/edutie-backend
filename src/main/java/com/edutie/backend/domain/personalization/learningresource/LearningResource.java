@@ -8,6 +8,7 @@ import com.edutie.backend.domain.personalization.learningresource.identities.Lea
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A singular form of learning in the application.
@@ -62,4 +64,10 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setTheory(theory);
         return learningResource;
     }
+
+    @JsonProperty("learningRequirementNames")
+    public Set<String> getLearningRequirementNames() {
+        return qualifiedRequirements.stream().map(o -> o.getLearningRequirement().getName()).collect(Collectors.toSet());
+    }
+
 }

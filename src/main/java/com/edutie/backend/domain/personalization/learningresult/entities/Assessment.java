@@ -2,10 +2,12 @@ package com.edutie.backend.domain.personalization.learningresult.entities;
 
 import com.edutie.backend.api.serialization.serializers.IdOnlyCollectionSerializer;
 import com.edutie.backend.domain.common.base.EntityBase;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,6 +16,8 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -49,6 +53,21 @@ public class Assessment extends EntityBase<AssessmentId> {
         assessment.setFeedbackText(feedbackText);
         assessment.setQualifiedElementalRequirements(qualifiedElementalRequirements);
         return assessment;
+    }
+
+    protected LearningRequirement getCorrespondingLearningRequirement() {
+        return qualifiedElementalRequirements.getFirst().getLearningRequirement();
+    }
+
+    @JsonProperty("learningRequirementName")
+    public String getLearningRequirementName() {
+        return getCorrespondingLearningRequirement().getName();
+    }
+
+    @JsonProperty("difficultyFactor")
+    public double getCalculatedDifficulty() {
+        return (double) Math.round(((float) this.qualifiedElementalRequirements.size() /
+                getCorrespondingLearningRequirement().getElementalRequirements().size() * 100)) / 100;
     }
 
 }

@@ -5,6 +5,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.iden
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,5 +40,10 @@ public class AssessmentSchema {
         assessmentSchema.setQualifiedRequirements(solutionSubmission.getLearningResource().getQualifiedRequirements());
         assessmentSchema.setLearningResourceDefinitionId(solutionSubmission.getLearningResource().getDefinitionId());
         return assessmentSchema;
+    }
+
+    @JsonProperty("activityText")
+    public String getActivityText() {
+        return solutionSubmission.getLearningResource().getActivity().getActivityText();
     }
 }
