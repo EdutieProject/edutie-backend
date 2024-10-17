@@ -5,6 +5,7 @@ import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.PersonalizationError;
 import com.edutie.backend.domain.personalization.learningresult.identities.AssessmentId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,11 +14,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import validation.OperationFailureException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -66,8 +66,11 @@ public class Assessment extends EntityBase<AssessmentId> {
 
     @JsonProperty("difficultyFactor")
     public double getCalculatedDifficulty() {
-        return (double) Math.round(((float) this.qualifiedElementalRequirements.size() /
-                getCorrespondingLearningRequirement().getElementalRequirements().size() * 100)) / 100;
+        return (double) Math.round(
+                ((float) this.qualifiedElementalRequirements.stream().mapToInt(ElementalRequirement::getOrdinal)
+                        .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId())))
+                        / getCorrespondingLearningRequirement().getElementalRequirements().size() * 100))
+                / 100;
     }
 
 }

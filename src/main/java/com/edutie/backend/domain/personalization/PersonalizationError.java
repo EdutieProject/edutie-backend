@@ -1,12 +1,13 @@
 package com.edutie.backend.domain.personalization;
 
+import com.edutie.backend.domain.personalization.learningresult.identities.AssessmentId;
 import validation.Error;
 
 public class PersonalizationError {
-    public static Error cantCreateDynamicResourceNoLatestResults() {
+    public static Error invalidDifficultyCalculation(AssessmentId assessmentId) {
         return new Error(
-                "NO-LATEST-RESULTS-422",
-                "Could not generate dynamic learning resource. Did not found latest results to base the learning resource on."
+                "INVALID-DIFFICULTY-CALCULATION-500",
+                String.format("Could not calculate difficulty for the assessment of id %s.", assessmentId)
         );
     }
 }
