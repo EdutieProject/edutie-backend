@@ -6,7 +6,6 @@ import com.edutie.backend.application.learning.studyprogram.queries.ViewSegments
 import com.edutie.backend.application.learning.studyprogram.viewmodels.SegmentView;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
-import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
@@ -38,7 +37,7 @@ public class ViewSegmentsFromLessonQueryHandlerImplementation extends HandlerBas
                             if (segment.getLearningResourceDefinitionId() == null) {
                                 return new SegmentView(segment, -1, -1, false);
                             }
-                           List<LearningResult> learningResults = learningResultPersistence.getLearningResultsForStudentByLearningResourceDefinitionId(
+                           List<LearningResult> learningResults = learningResultPersistence.getLearningResultsOfStudentByLearningResourceDefinitionId(
                                     student.getId(), segment.getLearningResourceDefinitionId()
                             ).getValue();
                             int successResultsCount = (int) learningResults.stream().filter(LearningResult::isSuccessful).count();

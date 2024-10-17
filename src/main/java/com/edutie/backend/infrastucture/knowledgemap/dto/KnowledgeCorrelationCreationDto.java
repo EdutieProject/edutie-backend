@@ -11,11 +11,17 @@ import java.util.UUID;
  */
 public class KnowledgeCorrelationCreationDto {
     @JsonProperty
-    private UUID knowledgeSubjectId;
+    private UUID correlatedSubjectId;
+    @JsonProperty
+    private UUID sourceSubjectId;
     @JsonProperty
     private Integer correlationFactor;
 
     public KnowledgeCorrelation intoKnowledgeCorrelation() {
-        return new KnowledgeCorrelation(new KnowledgeSubjectId(knowledgeSubjectId), correlationFactor);
+        return new KnowledgeCorrelation(
+                new KnowledgeSubjectId(sourceSubjectId),
+                new KnowledgeSubjectId(correlatedSubjectId),
+                correlationFactor
+        );
     }
 }

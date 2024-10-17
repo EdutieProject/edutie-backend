@@ -40,43 +40,4 @@ public class LearningRequirementPersistenceImplementation implements LearningReq
 		return LearningRequirement.class;
 	}
 
-	/**
-	 * Persists the provided learningRequirement into the database. If it is already present,
-	 * updates its state to the provided object's state. Returns result indicating whether
-	 * the operation was successful or not
-	 *
-	 * @param learningRequirement learning requirement
-	 * @return Result object
-	 */
-	@Override
-	public Result save(LearningRequirement learningRequirement) {
-		try {
-			getRepository().save(learningRequirement);
-			return Result.success();
-		} catch (Exception exception) {
-			return Result.failure(PersistenceError.exceptionEncountered(exception));
-		}
-	}
-
-	/**
-	 * Retrieve all learning requirements associated with given creator
-	 *
-	 * @param educatorId educator id
-	 * @return Wrapper result of desired list
-	 */
-	@Override
-	public WrapperResult<List<LearningRequirement>> getAllOfEducatorId(EducatorId educatorId) {
-		return null;
-	}
-
-	/**
-	 * Retrieve all learning requirements associated with given science
-	 *
-	 * @param scienceId science id
-	 * @return Wrapper result of desired list
-	 */
-	@Override
-	public WrapperResult<List<LearningRequirement>> getAllOfScienceId(ScienceId scienceId) {
-		return null;
-	}
 }

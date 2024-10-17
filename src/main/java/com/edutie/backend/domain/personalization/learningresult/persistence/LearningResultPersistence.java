@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.learningresult.persistence;
 
 import com.edutie.backend.domain.common.persistence.Persistence;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
@@ -23,10 +24,18 @@ public interface LearningResultPersistence extends Persistence<LearningResult, L
     WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate);
 
     /**
-     * Provides learning results associated with certain learning resource definition id.
+     * Provides learning results associated with certain learning resource definition id created by given student.
      *
      * @param learningResourceDefinitionId learning resource definition id
      * @return Learning Result List Wrapper Result
      */
-    WrapperResult<List<LearningResult>> getLearningResultsForStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId);
+    WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId);
+
+    /**
+     * Provides learning results associated with the L. requirement of certain knowledge subject id created by given student.
+     *
+     * @param knowledgeSubjectId knowledge subject id
+     * @return Learning Result List Wrapper Result
+     */
+    WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId);
 }

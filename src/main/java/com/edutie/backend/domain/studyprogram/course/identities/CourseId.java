@@ -1,19 +1,19 @@
 package com.edutie.backend.domain.studyprogram.course.identities;
 
 import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
-import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import jakarta.persistence.Embeddable;
 
 import java.util.UUID;
 
 @Embeddable
 public class CourseId extends UuidIdentifier {
-	public CourseId() {
-		super();
-	}
+    public CourseId() {
+        super();
+    }
 
-	@JsonCreator
-	public CourseId(UUID uuid) {
-		super(uuid);
-	}
+    @JsonCreator
+    public CourseId(UUID uuid) {
+        super(uuid);
+    }
 }

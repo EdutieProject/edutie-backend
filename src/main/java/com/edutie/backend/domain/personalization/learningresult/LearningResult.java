@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -49,15 +49,23 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      *
      * @param student            student reference
      * @param solutionSubmission solution submission reference
+     * @param feedback           feedback
+     * @param assessments        assessments
      * @return new Learning Result
      */
-    public static LearningResult create(Student student, SolutionSubmission solutionSubmission, Feedback feedback) {
+    public static LearningResult create(
+            Student student,
+            SolutionSubmission solutionSubmission,
+            Feedback feedback,
+            Set<Assessment> assessments
+    ) {
         LearningResult learningResult = new LearningResult();
         learningResult.setId(new LearningResultId());
         learningResult.setCreatedBy(student.getOwnerUserId());
         learningResult.setStudent(student);
         learningResult.setSolutionSubmission(solutionSubmission);
         learningResult.setFeedback(feedback);
+        learningResult.assessments.addAll(assessments);
         return learningResult;
     }
 
@@ -75,14 +83,15 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      *
      * @return LRD
      */
-    @JsonProperty("learningResourceDefinition")
-    public LearningResourceDefinition getLearningResourceDefinition() {
-        return solutionSubmission.getLearningResource().getDefinition();
+    @JsonProperty("learningResourceDefinitionId")
+    public LearningResourceDefinitionId getLearningResourceDefinitionId() {
+        return solutionSubmission.getLearningResource().getDefinitionId();
     }
 
     /**
      * Indicates whether learning result is successful based on the grade that needs to be met in order
      * to be successful
+     *
      * @return boolean true/false
      */
     public boolean isSuccessful() {

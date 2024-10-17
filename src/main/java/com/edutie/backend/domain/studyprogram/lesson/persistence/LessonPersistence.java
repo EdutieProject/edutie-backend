@@ -11,27 +11,27 @@ import validation.WrapperResult;
 import java.util.List;
 
 public interface LessonPersistence extends Persistence<Lesson, LessonId> {
-	/**
-	 * Retrieve all lessons associated with given course
-	 *
-	 * @param courseId course id
-	 * @return Wrapper result of lesson list
-	 */
-	WrapperResult<List<Lesson>> getAllOfCourseId(CourseId courseId);
+    /**
+     * Retrieve all lessons associated with given course
+     *
+     * @param courseId course id
+     * @return Wrapper result of lesson list
+     */
+    WrapperResult<List<Lesson>> getAllOfCourseId(CourseId courseId);
 
-	/**
-	 * Retrieve all lessons associated with given creator
-	 *
-	 * @param educatorId educator id
-	 * @return Wrapper result of lesson list
-	 */
-	WrapperResult<List<Lesson>> getAllOfEducatorId(EducatorId educatorId);
+    /**
+     * Retrieve all lessons associated with given creator
+     *
+     * @param educatorId educator id
+     * @return Wrapper result of lesson list
+     */
+    WrapperResult<List<Lesson>> getAllOfEducatorId(EducatorId educatorId);
 
-	/**
-	 * Removes the lesson together with the underlying segments
-	 *
-	 * @param lesson lesson to be removed
-	 * @return Result object
-	 */
-	Result deepRemove(Lesson lesson);
+    /**
+     * Removes the lesson together with the underlying segments
+     *
+     * @param lesson lesson to be removed
+     * @return Result object
+     */
+    Result deepRemove(Lesson lesson);
 }

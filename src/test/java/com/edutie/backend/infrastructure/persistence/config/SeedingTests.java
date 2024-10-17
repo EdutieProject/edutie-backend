@@ -24,7 +24,7 @@ public class SeedingTests {
 	@Test
 	@Transactional
 	public void shouldSeedStudyProgram() {
-		seeding.seedStudyProgram();
+		seeding.seeding();
 
 		Science science = entityManager.createQuery("SELECT s FROM Science s", Science.class).getSingleResult();
 		assertNotNull(science);

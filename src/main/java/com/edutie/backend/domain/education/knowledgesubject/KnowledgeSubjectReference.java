@@ -2,8 +2,10 @@ package com.edutie.backend.domain.education.knowledgesubject;
 
 import com.edutie.backend.domain.common.base.EntityBase;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Knowledge subject reference is an entity that represents only the identifier of the knowledge subject.
@@ -14,9 +16,9 @@ import lombok.*;
 @Setter
 @Entity
 public class KnowledgeSubjectReference extends EntityBase<KnowledgeSubjectId> {
-	public static KnowledgeSubjectReference create(KnowledgeSubjectId id) {
-		KnowledgeSubjectReference knowledgeSubjectReference = new KnowledgeSubjectReference();
-		knowledgeSubjectReference.setId(id);
-		return knowledgeSubjectReference;
-	}
+    public static KnowledgeSubjectReference create(KnowledgeSubjectId id) {
+        KnowledgeSubjectReference knowledgeSubjectReference = new KnowledgeSubjectReference();
+        knowledgeSubjectReference.setId(id);
+        return knowledgeSubjectReference;
+    }
 }

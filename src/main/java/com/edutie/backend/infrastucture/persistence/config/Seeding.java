@@ -16,8 +16,9 @@ import com.edutie.backend.domain.personalization.learningresource.persistence.Le
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
@@ -28,6 +29,7 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -50,8 +52,8 @@ import java.util.UUID;
 @Slf4j
 public class Seeding {
     private static LearningResourceDefinitionId learningResourceDefinitionId;
-    final int MAX_SEEDED_COURSES = 8;
-    final int MAX_SEEDED_SCIENCES = 4;
+    final int MAX_SEEDED_COURSES = 1;
+    final int MAX_SEEDED_SCIENCES = 1;
     private final SciencePersistence sciencePersistence;
     private final CoursePersistence coursePersistence;
     private final LessonPersistence lessonPersistence;
@@ -61,30 +63,39 @@ public class Seeding {
     //    private final ExerciseTypePersistence exerciseTypePersistence;
     private final LearningRequirementPersistence learningRequirementPersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
+    private final LearningResultPersistence learningResultPersistence;
     private final CourseTagPersistence courseTagPersistence;
     private final LearningResourcePersistence learningResourcePersistence;
+    private final StudentPersistence studentPersistence;
     private final UserId uid = new UserId();
     private final Administrator administrator = Administrator.create(uid);
     private final Educator educator = Educator.create(uid, administrator);
+    private final Student student = Student.create(new UserId());
     private CourseTag courseTag;
+
+    public void initializeProfiles() {
+        log.info("Seeding profiles for user of id {}", uid);
+        studentPersistence.save(student);
+        administratorPersistence.save(administrator);
+        educatorPersistence.save(educator);
+    }
 
     /**
      * Seed database with sample study program
      * <p>This will create random number of sciences</p>
      *
-     * @see #seedSciences()
+     * @see #seedStudyProgram()
      * @since 0.5
      */
     @PostConstruct
     @Transactional
-    public void seedStudyProgram() {
+    public void seeding() {
         log.info("======================");
         log.info("  DB SEEDING - START  ");
         log.info("======================");
-        administratorPersistence.save(administrator);
-        educatorPersistence.save(educator);
+        initializeProfiles();
         seedLearningResourceDefinition();
-        seedSciences();
+        seedStudyProgram();
         injectLearningResourceDefinition();
         log.info("=====================");
         log.info("  DB SEEDING - END   ");
@@ -93,9 +104,9 @@ public class Seeding {
 
     private void injectLearningResourceDefinition() {
         log.info("Injecting LRD into one of the segments...");
-        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get(2);
+        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get((int) (Math.random() * 6));
         segment.setName("Podróż oceaniczna z wartością bezwzględną");
-        segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem");
+        segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem i długopisem...");
         segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
         segmentPersistence.save(segment);
     }
@@ -103,13 +114,13 @@ public class Seeding {
     /**
      * Seed random number of sciences
      *
-     * @see #seedSciences(int)
+     * @see #seedStudyProgram(int)
      * @since 0.5
      */
-    private void seedSciences() {
+    private void seedStudyProgram() {
         log.info("Seeding study program...");
         int sciencesCount = (int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES);
-        seedSciences(sciencesCount);
+        seedStudyProgram(sciencesCount);
     }
 
     /**
@@ -119,7 +130,7 @@ public class Seeding {
      * @see #seedScience(int)
      * @since 0.5
      */
-    private void seedSciences(int sciences) {
+    private void seedStudyProgram(int sciences) {
         for (int i = 0; i < sciences; i++)
             seedScience(i);
     }
@@ -191,6 +202,7 @@ public class Seeding {
     }
 
     private void seedLearningResourceDefinition() {
+        log.info("Seeding LRD...");
         LearningRequirement learningRequirement1 = LearningRequirement.create(educator);
         learningRequirement1.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
         learningRequirement1.setName(SampleModulusLearningRequirementData.LEARNING_REQUIREMENT_NAME);
@@ -262,21 +274,28 @@ public class Seeding {
                 educator,
                 PromptFragment.of("Opisz również rozwiązywanie równań kwadratowych z wartością bezwzględną. Dopasuj trudność do trudności podanych wymagań"),
                 PromptFragment.of("""
-                Zadanie powinno zawierać fabułę dotyczącą projektowania miasta. 
-                Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic. 
-                Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
-                Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
-                """),
-                PromptFragment.of("Niech cała twoja odpowiedź składa się z diagramu mermaid opisującego proces rozwiązywania przykładowego wymagania nauczania"),
-                PromptFragment.of("Niech conajmniej jedna z podpowiedzi nakreśla uczniowi jak rozwiązywać równania kwadratowe z wartością bezwzględną."),
+                        Zadanie powinno zawierać fabułę dotyczącą projektowania miasta.
+                        Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic.
+                        Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
+                        Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
+                        """),
                 Set.of(learningRequirement1, learningRequirement2)
         );
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
         log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
         learningResourceDefinitionId = learningResourceDefinition.getId();
 
-        LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(learningResourceDefinition, Student.create(new UserId()));
-        LearningResource learningResource = LearningResource.create(learningResourceGenerationSchema, Activity.create("Please calculate the hypotenuse in the right triangle of sides lengths: 6 and 8", Set.of()), Theory.create("Pythagoras theorem is...", "Pythagoras helps to calculate hypotenuses"), Set.of());
+        LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
+                student,
+                learningResultPersistence,
+                Set.of(),
+                learningResourceDefinition
+        );
+        LearningResource learningResource = LearningResource.create(
+                learningResourceGenerationSchema,
+                Activity.create("Please calculate the hypotenuse in the right triangle of sides lengths: 6 and 8", Set.of()),
+                Theory.create("Pythagoras theorem is...", "Pythagoras helps to calculate hypotenuses")
+        );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         log.info("Seeded Learning Resource with id: {}", learningResource.getId().identifierValue().toString());
     }

@@ -34,13 +34,16 @@ public class LearningResourceDefinitionTests {
 
 	@Test
 	public void createLearningResourceDefinitionTest() {
-		CreateLearningResourceDefinitionCommand command = new CreateLearningResourceDefinitionCommand().theoryDescription("LRD theory descriptor").exerciseDescription("LRD exercise descriptor").educatorUserId(userId);
+		CreateLearningResourceDefinitionCommand command = new CreateLearningResourceDefinitionCommand()
+				.theoryDescription("LRD theory descriptor")
+				.exerciseDescription("LRD exercise descriptor")
+				.educatorUserId(userId);
 
 		WrapperResult<LearningResourceDefinition> wrapperResult = createLearningResourceDefinitionCommandHandler.handle(command);
 
 		assert wrapperResult.isSuccess();
 		LearningResourceDefinition learningResourceDefinition = wrapperResult.getValue();
 		assert learningResourceDefinition.getLearningRequirements().isEmpty();
-		assert learningResourceDefinition.getTheoryDescription().text().equals("LRD theory descriptor");
+		assert learningResourceDefinition.getActivityDetails().getExerciseDescription().text().equals("LRD exercise descriptor");
 	}
 }

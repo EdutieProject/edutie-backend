@@ -53,7 +53,7 @@ public class LearningResourcePersistenceImplementation implements LearningResour
 	public WrapperResult<List<LearningResource>> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId) {
 		try {
 			Optional<LearningResourceDefinition> definitionOptionalWrapper = learningResourceDefinitionRepository.findById(learningResourceDefinitionId);
-			return definitionOptionalWrapper.map(definition -> WrapperResult.successWrapper(learningResourceRepository.getAllByDefinition(definition))).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(LearningResourceDefinition.class)));
+			return definitionOptionalWrapper.map(definition -> WrapperResult.successWrapper(learningResourceRepository.getAllByDefinitionId(learningResourceDefinitionId))).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(LearningResourceDefinition.class)));
 		} catch (Exception ex) {
 			return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
 		}

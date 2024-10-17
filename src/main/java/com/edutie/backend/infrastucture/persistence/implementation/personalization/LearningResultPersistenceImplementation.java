@@ -1,6 +1,7 @@
 package com.edutie.backend.infrastucture.persistence.implementation.personalization;
 
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
@@ -8,6 +9,7 @@ import com.edutie.backend.domain.personalization.learningresult.persistence.Lear
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.infrastucture.persistence.PersistenceError;
+import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningRequirementRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningResourceDefinitionRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.LearningResultRepository;
 import com.edutie.backend.infrastucture.persistence.jpa.repositories.StudentRepository;
@@ -28,6 +30,7 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
     private final LearningResultRepository learningResultRepository;
     private final StudentRepository studentRepository;
     private final LearningResourceDefinitionRepository learningResourceDefinitionRepository;
+    private final LearningRequirementRepository learningRequirementRepository;
 
     /**
      * Override this to provide repository for default methods
@@ -85,16 +88,35 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
      * @return Learning Result List Wrapper Result
      */
     @Override
-    public WrapperResult<List<LearningResult>> getLearningResultsForStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
+        try {
+            Optional<Student> student = studentRepository.findById(studentId);
+            return student
+                    .map(value -> WrapperResult.successWrapper(learningResultRepository
+                            .findLearningResultsBySolutionSubmissionLearningResourceDefinitionIdAndStudent(learningResourceDefinitionId, value)))
+                    .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
+        }
+    }
+
+    /**
+     * Provides learning results associated with the L. requirement of certain knowledge subject id created by given student.
+     *
+     * @param studentId          student id
+     * @param knowledgeSubjectId knowledge subject id
+     * @return Learning Result List Wrapper Result
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId) {
         try {
             Optional<Student> student = studentRepository.findById(studentId);
             if (student.isEmpty())
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
-            Optional<LearningResourceDefinition> learningResourceDefinition = learningResourceDefinitionRepository.findById(learningResourceDefinitionId);
-            return learningResourceDefinition
-                    .map(definition -> WrapperResult.successWrapper(
-                            learningResultRepository.findLearningResultsBySolutionSubmissionLearningResourceDefinitionAndStudent(definition, student.get()))
-                    ).orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(LearningResourceDefinition.class)));
+            List<LearningRequirement> learningRequirements = learningRequirementRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
+            return WrapperResult.successWrapper(learningRequirements.stream().flatMap(o ->
+                    learningResultRepository.findLearningResultsByLearningRequirement(student.get(), o).stream()
+            ).toList());
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
         }

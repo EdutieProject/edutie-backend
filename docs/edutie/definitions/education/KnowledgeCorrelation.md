@@ -2,9 +2,10 @@
 
 * [Knowledge Correlation](#knowledge-correlation)
     * [Contained data:](#contained-data)
-        * [Knowledge subject Id](#knowledge-subject-id)
+        * [Correlated knowledge subject Id](#correlated-knowledge-subject-id)
+        * [Correlated knowledge subject Id](#correlated-knowledge-subject-id-1)
         * [Correlation Factor](#correlation-factor)
-    * [Sample visualisation:](#sample-visualisation)
+    * [Worth noticing](#worth-noticing)
     * [References](#references)
 
 <!-- TOC -->
@@ -19,11 +20,13 @@ correlations using given knowledge subject id.
 
 ## Contained data:
 
-### Knowledge subject Id
+### Correlated knowledge subject Id
 
-The identity of correlated knowledge subject. As Learning Requirements are related with a knowledge subject, the
-correlation
-is also about the learning requirement that is related to knowledge subject of this id.
+The identifier of the source knowledge subject which correlation is being measured.
+
+### Correlated knowledge subject Id
+
+The identifier of correlated knowledge subject.
 
 ### Correlation Factor
 
@@ -32,18 +35,12 @@ The factor that represents how much given subject is correlated.
 The less the correlation factor, the more the subject represented by above identity is correlated to the subject that
 invoked the flow.
 
-## Sample visualisation:
+## Worth noticing
 
-```mermaid
----
-title: Knowledge Correlation
----
-classDiagram
-    class KnowledgeCorrelation {
-        Knowledge Subject Id
-        Correlation Factor
-    }
-```
+The correlation factor should not be equal to 0. In the previous implementations, knowledge correlations with the factor
+equal to 0 indicated the same knowledge subject in the response.
+
+Currently, knowledge correlations should only show the correlated subjects.
 
 ## References
 

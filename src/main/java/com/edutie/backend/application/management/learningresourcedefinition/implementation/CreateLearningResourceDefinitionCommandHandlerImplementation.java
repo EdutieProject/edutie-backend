@@ -5,6 +5,7 @@ import com.edutie.backend.application.management.learningresourcedefinition.comm
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
+import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
@@ -13,12 +14,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class CreateLearningResourceDefinitionCommandHandlerImplementation implements CreateLearningResourceDefinitionCommandHandler {
     private final EducatorPersistence educatorPersistence;
+    private final LearningRequirementPersistence learningRequirementPersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
     private final SegmentPersistence segmentPersistence;
 
@@ -29,9 +31,7 @@ public class CreateLearningResourceDefinitionCommandHandlerImplementation implem
                 educator,
                 PromptFragment.of(command.theoryDescription()),
                 PromptFragment.of(command.exerciseDescription()),
-                PromptFragment.of(command.additionalSummaryDescription()),
-                PromptFragment.of(command.additionalHintsDescription()),
-                Set.of()
+                command.learningRequirementIds().stream().map(o -> learningRequirementPersistence.getById(o).getValue()).collect(Collectors.toSet())
         );
         learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
         if (command.segmentId() != null) {

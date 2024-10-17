@@ -2,7 +2,7 @@ package com.edutie.backend.infrastucture.llm.dto.learningresource;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.*;
-import com.edutie.backend.domain.personalization.learningresourcegenerationschema.LearningResourceGenerationSchema;
+import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.fasterxml.jackson.annotation.*;
 
 import java.util.Set;
@@ -21,8 +21,6 @@ public class LearningResourceCreationDto {
 	private String mermaidGraphString;
 	@JsonProperty
 	private Set<String> hints;
-	@JsonProperty
-	private Set<ProblemDetailDto> problemDetails;
 
 	/**
 	 * Converts DTO into domain Learning Resource entity
@@ -32,6 +30,6 @@ public class LearningResourceCreationDto {
 	 */
 	public LearningResource intoLearningResource(LearningResourceGenerationSchema generationSchema) {
 		Set<Hint> hints = this.hints.stream().map(Hint::create).collect(Collectors.toSet());
-		return LearningResource.create(generationSchema, Activity.create(activityText, hints), Theory.create(theoryOverviewText, mermaidGraphString), problemDetails.stream().map(o -> LearningResourceProblemDescriptor.create(o.learningRequirementId, o.qualifiedSubRequirements)).collect(Collectors.toSet()));
+		return LearningResource.create(generationSchema, Activity.create(activityText, hints), Theory.create(theoryOverviewText, mermaidGraphString));
 	}
 }
