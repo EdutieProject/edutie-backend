@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.persistence.config;
+package com.edutie.backend.infrastucture.persistence.config.initialization;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
@@ -6,8 +6,6 @@ import com.edutie.backend.domain.administration.administrator.persistence.Admini
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
-import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
@@ -30,6 +28,9 @@ import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersist
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
+import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
+import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
+import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleTrygonometryLearningRequirement;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Seeding class for seeding database with sample data
@@ -73,11 +73,18 @@ public class Seeding {
     private final Student student = Student.create(new UserId());
     private CourseTag courseTag;
 
-    public void initializeProfiles() {
+    private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
         studentPersistence.save(student);
         administratorPersistence.save(administrator);
         educatorPersistence.save(educator);
+    }
+
+    private void initializeLearningRequirements() {
+        log.info("Seeding learning requirements...");
+        learningRequirementPersistence.save(SampleModulusLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
+        learningRequirementPersistence.save(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
+        learningRequirementPersistence.save(SampleTrygonometryLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
     }
 
     /**
@@ -96,60 +103,160 @@ public class Seeding {
         initializeProfiles();
         seedLearningResourceDefinition();
         seedStudyProgram();
-        injectLearningResourceDefinition();
         log.info("=====================");
         log.info("  DB SEEDING - END   ");
         log.info("=====================");
     }
 
-    private void injectLearningResourceDefinition() {
-        log.info("Injecting LRD into one of the segments...");
-        Segment segment = segmentPersistence.getRepository().findAll(Sort.by("createdOn")).get((int) (Math.random() * 6));
-        segment.setName("Podróż oceaniczna z wartością bezwzględną");
-        segment.setSnippetDescription("W tym segmencie poznasz wartość bezwzględną wykonując zadania opisujące morską podróż statkiem! Naszykuj się na morską przygodę z zeszytem i długopisem...");
-        segment.setLearningResourceDefinitionId(learningResourceDefinitionId);
-        segmentPersistence.save(segment);
-    }
-
     /**
      * Seed random number of sciences
      *
-     * @see #seedStudyProgram(int)
      * @since 0.5
      */
     private void seedStudyProgram() {
         log.info("Seeding study program...");
-        int sciencesCount = (int) Math.ceil(Math.random() * MAX_SEEDED_SCIENCES);
-        seedStudyProgram(sciencesCount);
+        Science science = seedScience("Matematyka", "Królowa nauk");
+        seedSampleCourse(science, "Przykładowy kurs", "Kurs to może trochę przesadzona nazwa... powinniśmy te programy nazwać inaczej");
     }
 
-    /**
-     * Seed number of sciences
-     *
-     * @param sciences number of sciences to seed
-     * @see #seedScience(int)
-     * @since 0.5
-     */
-    private void seedStudyProgram(int sciences) {
-        for (int i = 0; i < sciences; i++)
-            seedScience(i);
-    }
 
     /**
-     * Seed science
+     * Seeds science
      *
-     * @param i science number
-     * @see #seedCourses(Science)
-     * @since 0.5
+     * @param name        science name
+     * @param description science description
+     * @return seeded science
      */
-    private void seedScience(int i) {
+    private Science seedScience(String name, String description) {
         Science science = Science.create(educator).getValue();
-        science.setName("Science" + i);
-        science.setDescription("Description of Science" + i);
-        science.update(uid);
+        science.setName(name);
+        science.setDescription(description);
         sciencePersistence.save(science);
-        seedCourses(science);
+        return science;
     }
+
+    private void seedSampleCourse(Science science, String name, String description) {
+        Course course = Course.create(educator, science);
+        course.setName(name);
+        course.setDescription(description);
+        coursePersistence.save(course);
+        seedSampleLessonsInCourse(course);
+    }
+
+    private void seedSampleLessonsInCourse(Course course) {
+        Lesson firstLesson = Lesson.create(educator, course);
+        firstLesson.setName("Pierwsza lekcja");
+        lessonPersistence.save(firstLesson);
+        seedSegmentsInFirstLesson(firstLesson);
+
+        Lesson secondLesson = Lesson.create(educator, firstLesson);
+        secondLesson.setName("Poszerzanie horyzontów");
+        lessonPersistence.save(secondLesson);
+        seedSegmentsInSecondLesson(secondLesson);
+
+        Lesson thirdLesson = Lesson.create(educator, secondLesson);
+        thirdLesson.setName("Następna lekcja");
+        lessonPersistence.save(thirdLesson);
+        seedSegmentsInThirdLesson(thirdLesson);
+
+        Lesson fourthLesson = Lesson.create(educator, secondLesson);
+        fourthLesson.setName("Zadania dodatkowe");
+        lessonPersistence.save(fourthLesson);
+        seedSegmentsInFourthLesson(fourthLesson);
+
+        Lesson fifthLesson = Lesson.create(educator, fourthLesson);
+        fifthLesson.setName("Tu jest najciężej...");
+        lessonPersistence.save(fifthLesson);
+        seedSegmentsInFifthLesson(fifthLesson);
+    }
+
+    private void seedSegmentsInFirstLesson(Lesson lesson) {
+        Segment segment1 = Segment.create(educator, lesson);
+        segment1.setName("Wartość bewzwzględna w oceanie");
+        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
+        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
+                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
+        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
+        segmentPersistence.save(segment1).throwIfFailure();
+
+        Segment segment2 = Segment.create(educator, segment1);
+        segment2.setName("Kapelusz grzyba jako parabola");
+        segment2.setSnippetDescription("Zauważ kształty obecne wokół nas... Czy grzyby nie przypominają ci paraboli?");
+        LearningResourceDefinition learningResourceDefinition2 = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of("Umieść w opisie teorii odnośniki do różnych rodzai grzybów. Wpleć to umiejętnie w zagadnienia teoretyczne tak, aby zaciekawić ucznia."),
+                PromptFragment.of("Zadanie powinno porównywać odwróconą parabolę funkcji kwadratowej do kształtu kapelusza grzyba."),
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition2).throwIfFailure();
+        segment2.setLearningResourceDefinitionId(learningResourceDefinition2.getId());
+        segmentPersistence.save(segment2).throwIfFailure();
+    };
+
+    private void seedSegmentsInSecondLesson(Lesson lesson) {
+        Segment segment1 = Segment.create(educator, lesson);
+        segment1.setName("Wartość bewzwzględna w oceanie");
+        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
+        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
+                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
+        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
+        segmentPersistence.save(segment1).throwIfFailure();
+    };
+
+    private void seedSegmentsInThirdLesson(Lesson lesson) {
+        Segment segment1 = Segment.create(educator, lesson);
+        segment1.setName("Wartość bewzwzględna w oceanie");
+        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
+        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
+                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
+        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
+        segmentPersistence.save(segment1).throwIfFailure();
+    };
+
+    private void seedSegmentsInFourthLesson(Lesson lesson) {
+        Segment segment1 = Segment.create(educator, lesson);
+        segment1.setName("Wartość bewzwzględna w oceanie");
+        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
+        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
+                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
+        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
+        segmentPersistence.save(segment1).throwIfFailure();
+    };
+
+    private void seedSegmentsInFifthLesson(Lesson lesson) {
+        Segment segment1 = Segment.create(educator, lesson);
+        segment1.setName("Wartość bewzwzględna w oceanie");
+        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
+        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
+                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
+        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
+        segmentPersistence.save(segment1).throwIfFailure();
+    };
 
     /**
      * Seed random number of courses in science
@@ -203,72 +310,9 @@ public class Seeding {
 
     private void seedLearningResourceDefinition() {
         log.info("Seeding LRD...");
-        LearningRequirement learningRequirement1 = LearningRequirement.create(educator);
-        learningRequirement1.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
-        learningRequirement1.setName(SampleModulusLearningRequirementData.LEARNING_REQUIREMENT_NAME);
-        learningRequirement1.appendSubRequirement(
-                "Uczeń zna definicję wartości bezwzględnej liczby rzeczywistej i jej interpretację geometryczną",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_1)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń potrafi obliczyć wartość bezwzględną liczby",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_2)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń umie zapisać i obliczyć odległość na osi liczbowej między dwoma dowolnymi punktami",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_3)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń zaznacza na osi liczbowej liczby o danej wartości bezwzględnej",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_4)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń rozwiązuje proste równania z wartością bezwzględną typu |x-a| = b",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_5)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń potrafi zaznaczyć na osi liczbowej zbiory opisane za pomocą równań i nierówności z wartością bezwzględną typu: | x - a | = b, | x - a | < b, | x - a | > b",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_6)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń potrafi uprościć wyrażenie z wartością bezwzględną dla zmiennej z danego przedziału",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_7)
-        );
-        learningRequirement1.appendSubRequirement(
-                "Uczeń potrafi na podstawie zbioru rozwiązań nierówności z wartością bezwzględną zapisać tę nierówność",
-                PromptFragment.of(SampleModulusLearningRequirementData.SUB_REQUIREMENT_8)
-        );
 
-        learningRequirementPersistence.save(learningRequirement1).throwIfFailure();
-
-        LearningRequirement learningRequirement2 = LearningRequirement.create(educator);
-        learningRequirement2.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningRequirement2.setName("Funkcja kwadratowa");
-        learningRequirement2.appendSubRequirement(
-                "Związek między wzorem funkcji kwadratowej w postaci ogólnej, a wzorem funkcji kwadratowej w postaci kanonicznej",
-                PromptFragment.of(SampleQuadraticFunctionLearningRequirementData.SUB_REQUIREMENT_1)
-        );
-        learningRequirement2.appendSubRequirement(
-                "Miejsce zerowe funkcji kwadratowej. Wzór funkcji kwadratowej w postaci iloczynowej",
-                PromptFragment.of(SampleQuadraticFunctionLearningRequirementData.SUB_REQUIREMENT_2)
-        );
-        learningRequirement2.appendSubRequirement(
-                "Szkicowanie wykresów funkcji kwadratowych. Odczytywanie własności funkcji kwadratowej na podstawie wykresu",
-                PromptFragment.of(SampleQuadraticFunctionLearningRequirementData.SUB_REQUIREMENT_3)
-        );
-        learningRequirement2.appendSubRequirement(
-                "Wyznaczanie wzoru funkcji kwadratowej na podstawie jej własności.",
-                PromptFragment.of(SampleQuadraticFunctionLearningRequirementData.SUB_REQUIREMENT_4)
-        );
-        learningRequirement2.appendSubRequirement(
-                "Najmniejsza oraz największa wartość funkcji kwadratowej w przedziale domkniętym",
-                PromptFragment.of(SampleQuadraticFunctionLearningRequirementData.SUB_REQUIREMENT_5)
-        );
-        learningRequirement2.appendSubRequirement(
-                "Uczeń potrafi algebraicznie rozwiązywać równania kwadratowe z jedną niewiadomą; ",
-                PromptFragment.of(SampleQuadraticFunctionLearningRequirementData.SUB_REQUIREMENT_6)
-        );
-        learningRequirementPersistence.save(learningRequirement2).throwIfFailure();
+        learningRequirementPersistence.save(SampleModulusLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
+        learningRequirementPersistence.save(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
 
         LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
                 educator,
@@ -279,7 +323,7 @@ public class Seeding {
                         Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
                         Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
                         """),
-                Set.of(learningRequirement1, learningRequirement2)
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator), SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
         );
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
         log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
