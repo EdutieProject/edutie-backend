@@ -6,6 +6,7 @@ import com.edutie.backend.domain.administration.administrator.persistence.Admini
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
@@ -87,6 +88,46 @@ public class Seeding {
         learningRequirementPersistence.save(SampleTrygonometryLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
     }
 
+    private record SeededSegmentDetails(
+            String segmentName,
+            String segmentDescription,
+            String learningResourceDefinitionTheoryOverview,
+            String learningResourceDefinitionExerciseOverview,
+            Set<LearningRequirement> learningRequirements
+    ){};
+
+    private Segment seedSegment(Lesson lesson, SeededSegmentDetails details) {
+        Segment segment = Segment.create(educator, lesson);
+        segment.setName(details.segmentName);
+        segment.setSnippetDescription(details.segmentDescription);
+        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of(details.learningResourceDefinitionTheoryOverview),
+                PromptFragment.of(details.learningResourceDefinitionExerciseOverview),
+                details.learningRequirements
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+        segmentPersistence.save(segment).throwIfFailure();
+        return segment;
+    }
+
+    private Segment seedSegment(Segment previousSegment, SeededSegmentDetails details) {
+        Segment segment = Segment.create(educator, previousSegment);
+        segment.setName(details.segmentName);
+        segment.setSnippetDescription(details.segmentDescription);
+        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+                educator,
+                PromptFragment.of(details.learningResourceDefinitionTheoryOverview),
+                PromptFragment.of(details.learningResourceDefinitionExerciseOverview),
+                details.learningRequirements
+        );
+        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+        segmentPersistence.save(segment).throwIfFailure();
+        return segment;
+    }
+
     /**
      * Seed database with sample study program
      * <p>This will create random number of sciences</p>
@@ -101,6 +142,7 @@ public class Seeding {
         log.info("  DB SEEDING - START  ");
         log.info("======================");
         initializeProfiles();
+        initializeLearningRequirements();
         seedLearningResourceDefinition();
         seedStudyProgram();
         log.info("=====================");
@@ -171,91 +213,88 @@ public class Seeding {
     }
 
     private void seedSegmentsInFirstLesson(Lesson lesson) {
-        Segment segment1 = Segment.create(educator, lesson);
-        segment1.setName("Wartość bewzwzględna w oceanie");
-        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
-        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
-                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
-        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
-        segmentPersistence.save(segment1).throwIfFailure();
-
-        Segment segment2 = Segment.create(educator, segment1);
-        segment2.setName("Kapelusz grzyba jako parabola");
-        segment2.setSnippetDescription("Zauważ kształty obecne wokół nas... Czy grzyby nie przypominają ci paraboli?");
-        LearningResourceDefinition learningResourceDefinition2 = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Umieść w opisie teorii odnośniki do różnych rodzai grzybów. Wpleć to umiejętnie w zagadnienia teoretyczne tak, aby zaciekawić ucznia."),
-                PromptFragment.of("Zadanie powinno porównywać odwróconą parabolę funkcji kwadratowej do kształtu kapelusza grzyba."),
+        Segment first = seedSegment(lesson, new SeededSegmentDetails(
+                "Wartość bewzwzględna w oceanie",
+                "Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!",
+                "Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania.",
+                "Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku.",
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))));
+        Segment second = seedSegment(first, new SeededSegmentDetails(
+                "Kapelusz grzyba jako parabola",
+                "Zauważ kształty obecne wokół nas... Czy grzyby nie przypominają ci paraboli?",
+                "Umieść w opisie teorii odnośniki do różnych rodzai grzybów. Wpleć to umiejętnie w zagadnienia teoretyczne tak, aby zaciekawić ucznia.",
+                "Zadanie powinno porównywać odwróconą parabolę funkcji kwadratowej do kształtu kapelusza grzyba.",
                 Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition2).throwIfFailure();
-        segment2.setLearningResourceDefinitionId(learningResourceDefinition2.getId());
-        segmentPersistence.save(segment2).throwIfFailure();
+                ));
     };
 
     private void seedSegmentsInSecondLesson(Lesson lesson) {
-        Segment segment1 = Segment.create(educator, lesson);
-        segment1.setName("Wartość bewzwzględna w oceanie");
-        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
-        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
-                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
-        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
-        segmentPersistence.save(segment1).throwIfFailure();
+        Segment first = seedSegment(lesson, new SeededSegmentDetails(
+                "Zbudujmy taras",
+                "Chcesz wybudować taras dla swojego domu. Będziesz opisywał jego kształt za pomocą równań!",
+                "Opis teorii powinien zawierać przykłady na temat tego jak funkcja kwadratowa może opisywać budowanie różnych struktur.",
+                "Zadanie powinno zawierać metaforę paraboli funkcji kwadratowej jako kształt tarasu. Niech uczeń opisze równaniami kształt tarasu w domu którym buduje! Dodatkowo, może opisywać równaniami kształty terkatory i balustrady.",
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
+                ));
+        Segment second = seedSegment(first, new SeededSegmentDetails(
+                "Fale radiowe",
+                "Zobaczymy jak wyglądają fale radiowe przy pomocy trygonometrii.",
+                "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w opisie fal stosowanych we współczesnych technologiach.",
+                "Zadanie powinno zawierać przykład zastosowania trygonometrii jako fale radiowe w krótkofalówkach.",
+                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator))
+                ));
+        Segment third = seedSegment(first, new SeededSegmentDetails(
+                "Maszt i nadawanie internetu",
+                "Fale radiowe nadawane przez maszty dają nam dostęp do internetu. Nauczmy się na ich przykładzie!",
+                "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w emitowaniu fal 5G które daja nam internet",
+                "Zadanie powinno opisywać za pomocą trygonometrii geometrię i zastosowanie fal 5G. Potem, obliczmy za pomocą wartosci bezwzględnej wysokości masztu nadawczego nad poziomem morza ale również wysokość względną.",
+                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
+                ));
     };
 
     private void seedSegmentsInThirdLesson(Lesson lesson) {
-        Segment segment1 = Segment.create(educator, lesson);
-        segment1.setName("Wartość bewzwzględna w oceanie");
-        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
-        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
-                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
-        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
-        segmentPersistence.save(segment1).throwIfFailure();
+        Segment first = seedSegment(lesson, new SeededSegmentDetails(
+                "Uczniowie na maturze",
+                "Sytuacja z którą pewnie możesz się utożsamiać...",
+                "Zaprezentuj że trygonometria może opisywać częstotliwość w różnych badaniach i w społeczeństwie.",
+                "Zadanie powinno opisywać częstotliwość stresowania się uczniów na maturze jako funkcja trygonometryczna.",
+                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator))
+        ));
+        Segment second = seedSegment(first, new SeededSegmentDetails(
+                "Wykresy i inne",
+                "Tym razem bardziej matematycznie...",
+                "Spróbuj uczniowi opisać korelację i podobieństwa funkcji kwadratowej i zagadnień trygonometrycznych na płaszczyźnie kartezjańskiej.",
+                "Niech zadanie poleci uczniowi narysowanie wykresów na osobnej kartce i opisanie ich w odpowiedzi na zadanie.",
+                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator), SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
+        ));
     };
 
     private void seedSegmentsInFourthLesson(Lesson lesson) {
-        Segment segment1 = Segment.create(educator, lesson);
-        segment1.setName("Wartość bewzwzględna w oceanie");
-        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
-        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
-                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
-        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
-        segmentPersistence.save(segment1).throwIfFailure();
+        Segment first = seedSegment(lesson, new SeededSegmentDetails(
+                "Praca domowa dla uczniów",
+                "Uczniowie nie lubią prac domowych!",
+                "Zaprezentuj funkcje kwadratową oraz jej monotoniczność na przykładzie uczniów którzy nie lubią prac domowych. Niech opis nakreśli w wyobraźni ucznia wykres mający kształt paraboli, opisujący to ile uczniów nie lubi robić prac domowych.",
+                "Niech zadanie zakłada że zależność ilości uczniów robiących prace domowe do zadawanych prac domowych ma kształt funkcji kwadratowej o ujemnym współczynniku. Niech uczeń obliczy właściwości tej funkcji.",
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
+        ));
     };
 
     private void seedSegmentsInFifthLesson(Lesson lesson) {
-        Segment segment1 = Segment.create(educator, lesson);
-        segment1.setName("Wartość bewzwzględna w oceanie");
-        segment1.setSnippetDescription("Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!");
-        LearningResourceDefinition learningResourceDefinition1 = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania."),
-                PromptFragment.of("Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku."),
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition1).throwIfFailure();
-        segment1.setLearningResourceDefinitionId(learningResourceDefinition1.getId());
-        segmentPersistence.save(segment1).throwIfFailure();
+        Segment first = seedSegment(lesson, new SeededSegmentDetails(
+                "Wyłowienie titanica",
+                "Rozwiążmy zagadkę: jak wyłowić statek Titanic?",
+                "Zaprezentuj jak można wykorzystać naukowy kontekst i wymagania nauczania do potencjalnej misji wyłowienia zatopionego statku.",
+                "Niech zadanie stawia na kreatywność ucznia. Powinno zawierać pewne wskazówki co do tego jak możnaby było użyć matematycznych właściwości aby wyłowić titanica. Opisz maszyny które możnaby wykorzystać i niech uczeń wykorzysta działania matematyczne aby maszyny wyłowiły zatopiony statek.",
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator), SampleTrygonometryLearningRequirement.getLearningRequirement(educator))
+        ));
+
+        Segment second = seedSegment(first, new SeededSegmentDetails(
+                "Konstruowanie helikoptera",
+                "Rozważmy funkcjonalności helikoptera w kontekście matematycznym...",
+                "Niech teoretyczny kontekst zawiera mało tekstu i dużo przykładów z prostymi wytłumaczeniami. Tłumacząc, odwołuj się do konstrukcji maszyn latających na przykład helikoptera.",
+                "Niech zadanie stawia na kreatywność ucznia. Niech uczeń najpierw obliczy częstotliwość obrotu śmigieł helikoptera. Potem niech obliczy wartości bezwzględne na podstawie wysokości budynków i wysokości na której leci helikopter.",
+                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
+        ));
     };
 
     /**

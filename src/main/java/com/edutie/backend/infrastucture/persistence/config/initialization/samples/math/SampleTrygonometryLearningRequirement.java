@@ -40,7 +40,7 @@ public class SampleTrygonometryLearningRequirement {
         return learningRequirement;
     }
 
-    private static String LEARNING_REQUIREMENT_NAME = "Operacje na zbiorach";
+    private static String LEARNING_REQUIREMENT_NAME = "Trygonometria";
 
     private static String SUB_REQUIREMENT_1 = """
             Uczeń musi znać definicje funkcji trygonometrycznych: sinus, cosinus i tangens w odniesieniu do trójkąta prostokątnego.
