@@ -28,6 +28,7 @@ import validation.Result;
 @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
 public class Segment extends TreeElementEntityBase<Segment, SegmentId> {
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String snippetDescription;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "learning_resource_definition_id", unique = true))
