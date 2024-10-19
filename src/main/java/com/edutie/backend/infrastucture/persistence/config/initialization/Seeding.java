@@ -354,8 +354,8 @@ public class Seeding {
                 " Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu...",
                 "Niech opis będzie zawierał referencje dotyczące fabuły: Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu...",
                 """
-                        Dopasuj poniższe zadanie tak, aby pasowało do aktualnych wymagań nauczania:
-                        Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu. Brachiosaurus stoi na wzniesieniu na wysokości 30 metrów nad poziomem morza na punkcie A, a Tyrannosaurus Rex na punkcie B, który leży bezpośrednio na poziomie morza, 1000 metrów w poziomie od punktu A.\s
+                        Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu.
+                        Dopasuj zadanie tak, aby wykorzystywało otaczające drzewa czy długości ciał dinozaurów do obliczeń.
                         """,
                 Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
         ));
