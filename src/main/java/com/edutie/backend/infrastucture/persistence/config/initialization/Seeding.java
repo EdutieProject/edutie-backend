@@ -31,12 +31,12 @@ import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersist
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
 import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
-import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleTrygonometryLearningRequirement;
+import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
+import com.edutie.backend.infrastucture.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +52,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class Seeding {
-    private static LearningResourceDefinitionId learningResourceDefinitionId;
     final int MAX_SEEDED_COURSES = 1;
     final int MAX_SEEDED_SCIENCES = 1;
     private final SciencePersistence sciencePersistence;
@@ -85,7 +84,8 @@ public class Seeding {
         log.info("Seeding learning requirements...");
         learningRequirementPersistence.save(SampleModulusLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
         learningRequirementPersistence.save(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
-        learningRequirementPersistence.save(SampleTrygonometryLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
+        learningRequirementPersistence.save(SampleTrigonometryLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
+        learningRequirementPersistence.save(SampleSetsLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
     }
 
     private record SeededSegmentDetails(
@@ -220,12 +220,12 @@ public class Seeding {
                 "Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku.",
                 Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))));
         Segment second = seedSegment(first, new SeededSegmentDetails(
-                "Kapelusz grzyba jako parabola",
-                "Zauważ kształty obecne wokół nas... Czy grzyby nie przypominają ci paraboli?",
-                "Umieść w opisie teorii odnośniki do różnych rodzai grzybów. Wpleć to umiejętnie w zagadnienia teoretyczne tak, aby zaciekawić ucznia.",
-                "Zadanie powinno porównywać odwróconą parabolę funkcji kwadratowej do kształtu kapelusza grzyba.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-                ));
+                "Owoce i warzywa",
+                "Pomyśl o zbiorach metaforycznie...",
+                "Podkreśl fundamentalne i ważne znaczenie zbiorów w matematyce, również na bardziej zaawansowanym jej poziomie. Używaj przykładów i metafor porównujących elementy zbiorów do owoców i warzyw.",
+                "Niech zadanie porównuje zbiory i ich elementy do koszyka warzyw i owoców.",
+                Set.of(SampleSetsLearningRequirement.getLearningRequirement(educator))
+        ));
     };
 
     private void seedSegmentsInSecondLesson(Lesson lesson) {
@@ -241,15 +241,56 @@ public class Seeding {
                 "Zobaczymy jak wyglądają fale radiowe przy pomocy trygonometrii.",
                 "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w opisie fal stosowanych we współczesnych technologiach.",
                 "Zadanie powinno zawierać przykład zastosowania trygonometrii jako fale radiowe w krótkofalówkach.",
-                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator))
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator))
                 ));
         Segment third = seedSegment(first, new SeededSegmentDetails(
                 "Maszt i nadawanie internetu",
                 "Fale radiowe nadawane przez maszty dają nam dostęp do internetu. Nauczmy się na ich przykładzie!",
                 "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w emitowaniu fal 5G które daja nam internet",
                 "Zadanie powinno opisywać za pomocą trygonometrii geometrię i zastosowanie fal 5G. Potem, obliczmy za pomocą wartosci bezwzględnej wysokości masztu nadawczego nad poziomem morza ale również wysokość względną.",
-                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
                 ));
+        Segment fourth = seedSegment(third, new SeededSegmentDetails(
+                "Kapelusz grzyba jako parabola",
+                "Zauważ kształty obecne wokół nas... Czy grzyby nie przypominają ci paraboli?",
+                "Umieść w opisie teorii odnośniki do różnych rodzai grzybów. Wpleć to umiejętnie w zagadnienia teoretyczne tak, aby zaciekawić ucznia.",
+                "Zadanie powinno porównywać odwróconą parabolę funkcji kwadratowej do kształtu kapelusza grzyba.",
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
+        ));
+        Segment fifth = seedSegment(third, new SeededSegmentDetails(
+                "Misja na planetę Zettarion",
+                "Astronauci z Ziemi, Kapitan Alva i Doktor Nero, zostali wysłani na misję eksploracyjną na nowo odkrytą planetę Zettarion. Zettarion jest niezwykłą planetą, ponieważ jej powierzchnia składa się z tajemniczych kryształów energetycznych o różnych właściwościach. Kryształy te dzielą się na dwie kategorie: kryształy A i kryształy B. Każdy kryształ emituje różną ilość energii, mierzoną w jednostkach absolutnych (wartość bezwzględna), a zbiory kryształów są szczególnie ważne dla rozwiązania zagadki planetarnej energii.",
+                "Umieść w opisie teoretycznym odnośniki i metafory do tego jak zagadnienia mogą być wykorzystywane w odkrywaniu kosmosu.",
+                """
+                        **Zadanie: Misja na planetę Zettarion**
+                        
+                        Astronauci z Ziemi, Kapitan Alva i Doktor Nero, zostali wysłani na misję eksploracyjną na nowo odkrytą planetę Zettarion. Zettarion jest niezwykłą planetą, ponieważ jej powierzchnia składa się z tajemniczych kryształów energetycznych o różnych właściwościach. Kryształy te dzielą się na dwie kategorie: **kryształy A** i **kryształy B**. Każdy kryształ emituje różną ilość energii, mierzoną w jednostkach absolutnych (wartość bezwzględna), a zbiory kryształów są szczególnie ważne dla rozwiązania zagadki planetarnej energii.
+                        
+                        Twoim zadaniem jest pomóc Kapitanowi Alvie i Doktorowi Nero, wykonując następujące obliczenia:
+                        
+                        ### Część 1: Zbiory kryształów
+                        Na planecie odkryto zbiory kryształów:
+                        - Zbiór \\( A \\), który zawiera kryształy emitujące energię o wartościach: \\( A = \\{-3, -1, 2, 5\\} \\),
+                        - Zbiór \\( B \\), który zawiera kryształy emitujące energię o wartościach: \\( B = \\{-2, 3, 4, 5\\} \\).
+                        
+                        1. Znajdź zbiór kryształów, które należą zarówno do zbioru \\( A \\), jak i \\( B \\) (czyli iloczyn zbiorów \\( A \\cap B \\)).
+                        2. Znajdź zbiór kryształów, które znajdują się w \\( A \\), ale nie znajdują się w \\( B \\) (czyli różnicę zbiorów \\( A \\setminus B \\)).
+                        
+                        ### Część 2: Wartość bezwzględna energii
+                        Naukowcy na Zettarionie odkryli, że prawdziwa moc kryształu mierzy się w wartościach bezwzględnych ich energii. Oblicz wartość bezwzględną energii dla kryształów z obu zbiorów i odpowiedz:
+                        
+                        1. Jakie są wartości bezwzględne wszystkich kryształów w \\( A \\cup B \\)?
+                        2. Czy istnieje kryształ o największej energii w wartościach bezwzględnych, który nie znajduje się w obu zbiorach?
+                        
+                        ### Część 3: Tajemnica ukrytego kryształu
+                        Kapitan Alva i Doktor Nero dowiedzieli się, że ukryty kryształ, który pomoże im wrócić na Ziemię, znajduje się w punkcie na osi liczbowej, którego wartość bezwzględna odpowiada różnicy największych wartości bezwzględnych kryształów z \\( A \\) i \\( B \\).\s
+                        
+                        1. Oblicz tę różnicę i wskaż, w którym miejscu na osi liczbowej znajduje się ukryty kryształ.
+                        
+                        Pomóż astronautom rozwiązać te problemy, aby bezpiecznie zakończyć misję!
+                        """,
+                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator), SampleSetsLearningRequirement.getLearningRequirement(educator))
+        ));
     };
 
     private void seedSegmentsInThirdLesson(Lesson lesson) {
@@ -258,14 +299,14 @@ public class Seeding {
                 "Sytuacja z którą pewnie możesz się utożsamiać...",
                 "Zaprezentuj że trygonometria może opisywać częstotliwość w różnych badaniach i w społeczeństwie.",
                 "Zadanie powinno opisywać częstotliwość stresowania się uczniów na maturze jako funkcja trygonometryczna.",
-                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator))
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator))
         ));
         Segment second = seedSegment(first, new SeededSegmentDetails(
                 "Wykresy i inne",
                 "Tym razem bardziej matematycznie...",
                 "Spróbuj uczniowi opisać korelację i podobieństwa funkcji kwadratowej i zagadnień trygonometrycznych na płaszczyźnie kartezjańskiej.",
                 "Niech zadanie poleci uczniowi narysowanie wykresów na osobnej kartce i opisanie ich w odpowiedzi na zadanie.",
-                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator), SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
         ));
     };
 
@@ -277,6 +318,70 @@ public class Seeding {
                 "Niech zadanie zakłada że zależność ilości uczniów robiących prace domowe do zadawanych prac domowych ma kształt funkcji kwadratowej o ujemnym współczynniku. Niech uczeń obliczy właściwości tej funkcji.",
                 Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
         ));
+
+        Segment second = seedSegment(first, new SeededSegmentDetails(
+                "Zarządzanie Produkcją w Fabryce Stal-Mach",
+                "W nowoczesnej fabryce Stal-Mach specjalizującej się w produkcji wyrobów ze stali, wykorzystywanych w branży budowlanej, zarządcy napotkali problem optymalizacji procesów produkcyjnych...",
+                """
+                        Dopasuj kontekst teoretyczny do fabuły podanej poniżej. Niech teoria zawiera metafory i odnośniki dotyczące fabuły.
+                        W nowoczesnej fabryce Stal-Mach specjalizującej się w produkcji wyrobów ze stali, wykorzystywanych w branży budowlanej, zarządcy napotkali problem optymalizacji procesów produkcyjnych. Fabryka posiada kilka linii produkcyjnych o różnych parametrach wydajności, a także różnorodne ilości surowców stalowych, które muszą być efektywnie wykorzystane.\s
+                        """,
+                """
+                        Dopasuj zadanie z fabułą podane poniżej do potrzeb aktualnych wymagań nauczania:
+                        1. **Surowce stalowe:** Fabryka posiada dwa główne typy surowców stalowych, które są przechowywane w dwóch oddzielnych magazynach:
+                        
+                           - Magazyn A, który mieści surowce o jakości Q1 i zawiera ilości partii oznaczone jako zbiór \\( A = \\{50, 100, 150, 200, 250\\} \\).
+                           - Magazyn B, w którym znajdują się surowce o jakości Q2 i zawiera ilości partii, które tworzą zbiór \\( B = \\{100, 150, 200, 250, 300\\} \\).
+                        
+                           Określ iloczyn i sumę zbiorów partii magazynowych. Co te zbiory oznaczają w kontekście surowców, które można wykorzystać bez zmian w jakości produkcji?
+                        
+                        2. **Linie produkcyjne:** W fabryce działają dwie kluczowe linie produkcyjne, które mogą być modelowane za pomocą funkcji kwadratowych:
+                        
+                           - Linia P1, której wydajność w zależności od ilości użytych surowców opisuje funkcja kwadratowa \\( f(x) = -2x^2 + 12x + 10 \\).
+                           - Linia P2, opisana funkcją \\( g(x) = -x^2 + 8x + 15 \\).
+                        
+                           Wyznacz maksymalną wydajność każdej z linii oraz ilość surowców, przy których ta wydajność jest osiągana.
+                        
+                        3. **Optymalizacja produkcji:** Analizując wyniki, porównaj zapasy surowców ze zbiorów \\( A \\) i \\( B \\) z ilościami surowców pozwalającymi na maksymalną wydajność obu linii produkcyjnych. Czy istnieje liczba partii wspólna dla obu funkcji, która odpowiada maksymalnej wydajności? Jakie zmiany w alokacji surowców mogą wesprzeć osiągnięcie maksymalnej wydajności?
+                        
+                        **Rozwiązanie:**
+                        
+                        1. **Zbiory:**\s
+                        
+                           - Iloczyn \\( A \\cap B = \\{100, 150, 200, 250\\} \\)
+                           - Suma \\( A \\cup B = \\{50, 100, 150, 200, 250, 300\\} \\)
+                        
+                           Iloczyn oznacza partie, które mogą być użyte niezależnie od jakości, a suma jest maksymalną liczbą różnych partii surowców dostępnych.
+                        
+                        2. **Funkcje kwadratowe:**
+                        
+                           - Dla \\( f(x) = -2x^2 + 12x + 10 \\), maksymalna wydajność wynosi \\((x=\\frac{-b}{2a} = 3, \\text{wydajność}=28)\\).
+                          \s
+                           - Dla \\( g(x) = -x^2 + 8x + 15 \\), maksymalna wydajność wynosi \\((x=\\frac{-b}{2a} = 4, \\text{wydajność}=31)\\).
+                        
+                        3. **Optymalizacja:**
+                        
+                           - Liczba partii surowców (suma i iloczyn), odpowiadająca maksymalnej wydajności, może być wspólna tylko dla \\(x = 150\\) z iloczynu, ale należy rozważyć zmianę alokacji.
+                           - Optymalne przydzielenie surowców wymaga analizy dostępnych ilości i dostosowania harmonogramów linii produkcyjnych w przypadku braku wystarczającej ilości partii od razu.
+                        """,
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator), SampleSetsLearningRequirement.getLearningRequirement(educator))
+        ));
+
+        Segment third = seedSegment(second, new SeededSegmentDetails(
+                "Optymalizacja Pracy Laboratorium Analiz Chemicznych",
+                "Laboratorium Analiz Chemicznych \"ChemLab\" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze...",
+                """
+                        Niech opis teorii odwołuje się do fabuły podanej poniżej:
+                        Laboratorium Analiz Chemicznych "ChemLab" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze. Jednym z wyzwań, przed którymi stoi laboratorium, jest efektywna organizacja analizy dużej liczby próbek, które są dostarczane z różnych zakątków kraju. Laboratorium to musi jednocześnie uwzględniać wymogi czasowe i precyzję pomiarów.
+                        Umieść metafory i odnośniki do realnego zastosowania zagadnień podnaych w wymaganiach na podstawie fabuły.
+                        """,
+                """
+                        Niech zadanie które stworzysz odnosi się do poniższej fabuły: 
+                        Laboratorium Analiz Chemicznych "ChemLab" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze. Jednym z wyzwań, przed którymi stoi laboratorium, jest efektywna organizacja analizy dużej liczby próbek, które są dostarczane z różnych zakątków kraju. Laboratorium to musi jednocześnie uwzględniać wymogi czasowe i precyzję pomiarów.
+                        Aby zoptymalizować proces analizy, laboratorium zdecydowało się wykorzystać koncepcje trygonometrii i teorii zbiorów do zarządzania rotacją próbek i alokacją sprzętu pomiarowego.
+                        """,
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleSetsLearningRequirement.getLearningRequirement(educator))
+        ));
     };
 
     private void seedSegmentsInFifthLesson(Lesson lesson) {
@@ -285,7 +390,7 @@ public class Seeding {
                 "Rozwiążmy zagadkę: jak wyłowić statek Titanic?",
                 "Zaprezentuj jak można wykorzystać naukowy kontekst i wymagania nauczania do potencjalnej misji wyłowienia zatopionego statku.",
                 "Niech zadanie stawia na kreatywność ucznia. Powinno zawierać pewne wskazówki co do tego jak możnaby było użyć matematycznych właściwości aby wyłowić titanica. Opisz maszyny które możnaby wykorzystać i niech uczeń wykorzysta działania matematyczne aby maszyny wyłowiły zatopiony statek.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator), SampleTrygonometryLearningRequirement.getLearningRequirement(educator))
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator), SampleTrigonometryLearningRequirement.getLearningRequirement(educator))
         ));
 
         Segment second = seedSegment(first, new SeededSegmentDetails(
@@ -293,7 +398,22 @@ public class Seeding {
                 "Rozważmy funkcjonalności helikoptera w kontekście matematycznym...",
                 "Niech teoretyczny kontekst zawiera mało tekstu i dużo przykładów z prostymi wytłumaczeniami. Tłumacząc, odwołuj się do konstrukcji maszyn latających na przykład helikoptera.",
                 "Niech zadanie stawia na kreatywność ucznia. Niech uczeń najpierw obliczy częstotliwość obrotu śmigieł helikoptera. Potem niech obliczy wartości bezwzględne na podstawie wysokości budynków i wysokości na której leci helikopter.",
-                Set.of(SampleTrygonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
+        ));
+
+        Segment third = seedSegment(second, new SeededSegmentDetails(
+                "Nauka z dinozaurami",
+                " Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu...",
+                "Niech opis będzie zawierał referencje dotyczące fabuły: Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu...",
+                """
+                        Dopasuj poniższe zadanie tak, aby pasowało do aktualnych wymagań nauczania:
+                        Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu. Brachiosaurus stoi na wzniesieniu na wysokości 30 metrów nad poziomem morza na punkcie A, a Tyrannosaurus Rex na punkcie B, który leży bezpośrednio na poziomie morza, 1000 metrów w poziomie od punktu A.\s
+                        
+                        1. Wskaż kąt nachylenia α stoku, na którym stoi Brachiosaurus. Załóż, że stok jest równomiernie nachylony. Oblicz ten kąt do dwóch miejsc po przecinku.
+                        
+                        2. W trakcie rozmowy oba dinozaury poruszyły temat swoich głównych szlaków, którymi się poruszają na terenie lasu. Brachiosaurus zazwyczaj chodzi po linii prostej pod kątem 45° do poziomu (w górę), mierząc od punktu A na północ, podczas gdy Tyrannosaurus porusza się po ścieżce nachylonej pod kątem 60° do poziomu również w kierunku północnym, mierząc od punktu B. Oblicz minimalną odległość między tymi dwiema ścieżkami, wyrażając ją jako wartość bezwzględną różnicy ich rzutów poziomych na linię łączącą punkty A i B.
+                        """,
+                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
         ));
     };
 
@@ -366,21 +486,6 @@ public class Seeding {
         );
         learningResourceDefinitionPersistence.save(learningResourceDefinition);
         log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
-        learningResourceDefinitionId = learningResourceDefinition.getId();
-
-        LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
-                student,
-                learningResultPersistence,
-                Set.of(),
-                learningResourceDefinition
-        );
-        LearningResource learningResource = LearningResource.create(
-                learningResourceGenerationSchema,
-                Activity.create("Please calculate the hypotenuse in the right triangle of sides lengths: 6 and 8", Set.of()),
-                Theory.create("Pythagoras theorem is...", "Pythagoras helps to calculate hypotenuses")
-        );
-        learningResourcePersistence.save(learningResource).throwIfFailure();
-        log.info("Seeded Learning Resource with id: {}", learningResource.getId().identifierValue().toString());
     }
 
     /**

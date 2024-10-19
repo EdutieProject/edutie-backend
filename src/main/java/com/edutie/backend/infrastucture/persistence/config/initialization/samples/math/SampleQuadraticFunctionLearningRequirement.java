@@ -32,8 +32,16 @@ public class SampleQuadraticFunctionLearningRequirement {
                 PromptFragment.of(SUB_REQUIREMENT_5)
         );
         learningRequirement.appendSubRequirement(
-                "Uczeń potrafi algebraicznie rozwiązywać równania kwadratowe z jedną niewiadomą; ",
+                "Uczeń potrafi algebraicznie rozwiązywać równania kwadratowe z jedną niewiadomą",
                 PromptFragment.of(SUB_REQUIREMENT_6)
+        );
+        learningRequirement.appendSubRequirement(
+                "Uczeń potrafi graficznie rozwiązywać równania i nierówności kwadratowe z jedną niewiadomą",
+                PromptFragment.of(SUB_REQUIREMENT_7)
+        );
+        learningRequirement.appendSubRequirement(
+                "Uczeń potrafi napisać wzór funkcji kwadratowej o zadanych własnościach\n",
+                PromptFragment.of(SUB_REQUIREMENT_8)
         );
         return learningRequirement;
     }
@@ -70,50 +78,50 @@ public class SampleQuadraticFunctionLearningRequirement {
 
     public static final String SUB_REQUIREMENT_2 = """
             Uczeń musi znać wzór funkcji kwadratowej w postaci **iloczynowej**:
-           \s
-           \\[
-           f(x) = a(x - x_1)(x - x_2)
-           \\]
-                                                            \s
-                                                             gdzie \\(x_1\\) i \\(x_2\\) to **miejsca zerowe** funkcji, czyli punkty, w których \\(f(x) = 0\\).
-                                                            \s
-                                                             Uczeń powinien umieć obliczać miejsca zerowe, korzystając z **równania kwadratowego**:
-                                                            \s
-                                                             \\[
-                                                             x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}
-                                                             \\]
-                                                            \s
-                                                             Miejsca zerowe pozwalają zapisać funkcję w postaci iloczynowej.
-                                                            \s
-                                                             ### Przykład:
-                                                            \s
-                                                             Dla funkcji kwadratowej w postaci ogólnej:
-                                                            \s
-                                                             \\[
-                                                             f(x) = 2x^2 - 4x - 6
-                                                             \\]
-                                                            \s
-                                                             1. Obliczamy **dyskryminant**:
-                                                            \s
-                                                             \\[
-                                                             \\Delta = (-4)^2 - 4 \\cdot 2 \\cdot (-6) = 16 + 48 = 64
-                                                             \\]
-                                                            \s
-                                                             2. Obliczamy miejsca zerowe:
-                                                            \s
-                                                             \\[
-                                                             x_1 = \\frac{-(-4) - \\sqrt{64}}{2 \\cdot 2} = \\frac{4 - 8}{4} = -1
-                                                             \\]
-                                                             \\[
-                                                             x_2 = \\frac{-(-4) + \\sqrt{64}}{2 \\cdot 2} = \\frac{4 + 8}{4} = 3
-                                                             \\]
-                                                            \s
-                                                             3. Zapisujemy funkcję w postaci iloczynowej:
-                                                            \s
-                                                             \\[
-                                                             f(x) = 2(x + 1)(x - 3)
-                                                             \\]
-           \s""";
+            
+            \\[
+            f(x) = a(x - x_1)(x - x_2)
+            \\]
+            
+            gdzie \\(x_1\\) i \\(x_2\\) to **miejsca zerowe** funkcji, czyli punkty, w których \\(f(x) = 0\\).
+            
+            Uczeń powinien umieć obliczać miejsca zerowe, korzystając z **równania kwadratowego**:
+            
+            \\[
+            x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}
+            \\]
+            
+            Miejsca zerowe pozwalają zapisać funkcję w postaci iloczynowej.
+            
+            ### Przykład:
+            
+            Dla funkcji kwadratowej w postaci ogólnej:
+            
+            \\[
+            f(x) = 2x^2 - 4x - 6
+            \\]
+            
+            1. Obliczamy **dyskryminant**:
+            
+            \\[
+            \\Delta = (-4)^2 - 4 \\cdot 2 \\cdot (-6) = 16 + 48 = 64
+            \\]
+            
+            2. Obliczamy miejsca zerowe:
+            
+            \\[
+            x_1 = \\frac{-(-4) - \\sqrt{64}}{2 \\cdot 2} = \\frac{4 - 8}{4} = -1
+            \\]
+            \\[
+            x_2 = \\frac{-(-4) + \\sqrt{64}}{2 \\cdot 2} = \\frac{4 + 8}{4} = 3
+            \\]
+            
+            3. Zapisujemy funkcję w postaci iloczynowej:
+            
+            \\[
+            f(x) = 2(x + 1)(x - 3)
+            \\]
+            """;
 
     public static final String SUB_REQUIREMENT_3 = """
             Uczeń musi umieć narysować wykres funkcji kwadratowej na podstawie wzoru i odczytać z niego podstawowe własności funkcji.
@@ -161,86 +169,86 @@ public class SampleQuadraticFunctionLearningRequirement {
 
     public static final String SUB_REQUIREMENT_4 = """
             Uczeń musi umieć wyznaczyć wzór funkcji kwadratowej na podstawie jej własności, takich jak miejsca zerowe, wierzchołek, czy punkt przecięcia z osią \\(y\\).
-                                                                    
-                                                                    ### Co uczeń powinien wiedzieć:
-                                                                    
-                                                                    1. **Miejsca zerowe**:
-                                                                       - Jeśli są znane miejsca zerowe \\(x_1\\) i \\(x_2\\), funkcję można zapisać w postaci iloczynowej:
-                                                                         \\[
-                                                                         f(x) = a(x - x_1)(x - x_2)
-                                                                         \\]
-                                                                       - Współczynnik \\(a\\) można wyznaczyć, jeśli znany jest dodatkowy punkt (np. punkt przecięcia z osią \\(y\\)).
-                                                                    
-                                                                    2. **Wierzchołek**:
-                                                                       - Jeśli znany jest wierzchołek \\(V(p, q)\\), funkcję można zapisać w postaci kanonicznej:
-                                                                         \\[
-                                                                         f(x) = a(x - p)^2 + q
-                                                                         \\]
-                                                                       - Współczynnik \\(a\\) wyznaczamy, znając dodatkowy punkt na wykresie.
-                                                                    
-                                                                    3. **Punkt przecięcia z osią \\(y\\)**:
-                                                                       - W postaci ogólnej \\(f(x) = ax^2 + bx + c\\), wyraz wolny \\(c\\) to punkt przecięcia z osią \\(y\\).
-                                                                    
-                                                                    ### Przykład:
-                                                                    
-                                                                    Funkcja ma miejsca zerowe \\(x_1 = 1\\) i \\(x_2 = 5\\), oraz przechodzi przez punkt \\( (0, -2) \\).
-                                                                    
-                                                                    1. Zapisujemy funkcję w postaci iloczynowej:
-                                                                       \\[
-                                                                       f(x) = a(x - 1)(x - 5)
-                                                                       \\]
-                                                                    
-                                                                    2. Podstawiamy punkt \\( (0, -2) \\), aby wyznaczyć \\(a\\):
-                                                                       \\[
-                                                                       -2 = a(0 - 1)(0 - 5)
-                                                                       \\]
-                                                                       \\[
-                                                                       -2 = a(1)(5) \\quad \\Rightarrow \\quad a = \\frac{-2}{5}
-                                                                       \\]
-                                                                    
-                                                                    3. Ostateczny wzór funkcji:
-                                                                       \\[
-                                                                       f(x) = \\frac{-2}{5}(x - 1)(x - 5)
-                                                                       \\]
+            
+            ### Co uczeń powinien wiedzieć:
+            
+            1. **Miejsca zerowe**:
+               - Jeśli są znane miejsca zerowe \\(x_1\\) i \\(x_2\\), funkcję można zapisać w postaci iloczynowej:
+                 \\[
+                 f(x) = a(x - x_1)(x - x_2)
+                 \\]
+               - Współczynnik \\(a\\) można wyznaczyć, jeśli znany jest dodatkowy punkt (np. punkt przecięcia z osią \\(y\\)).
+            
+            2. **Wierzchołek**:
+               - Jeśli znany jest wierzchołek \\(V(p, q)\\), funkcję można zapisać w postaci kanonicznej:
+                 \\[
+                 f(x) = a(x - p)^2 + q
+                 \\]
+               - Współczynnik \\(a\\) wyznaczamy, znając dodatkowy punkt na wykresie.
+            
+            3. **Punkt przecięcia z osią \\(y\\)**:
+               - W postaci ogólnej \\(f(x) = ax^2 + bx + c\\), wyraz wolny \\(c\\) to punkt przecięcia z osią \\(y\\).
+            
+            ### Przykład:
+            
+            Funkcja ma miejsca zerowe \\(x_1 = 1\\) i \\(x_2 = 5\\), oraz przechodzi przez punkt \\( (0, -2) \\).
+            
+            1. Zapisujemy funkcję w postaci iloczynowej:
+               \\[
+               f(x) = a(x - 1)(x - 5)
+               \\]
+            
+            2. Podstawiamy punkt \\( (0, -2) \\), aby wyznaczyć \\(a\\):
+               \\[
+               -2 = a(0 - 1)(0 - 5)
+               \\]
+               \\[
+               -2 = a(1)(5) \\quad \\Rightarrow \\quad a = \\frac{-2}{5}
+               \\]
+            
+            3. Ostateczny wzór funkcji:
+               \\[
+               f(x) = \\frac{-2}{5}(x - 1)(x - 5)
+               \\]
             """;
 
     public static final String SUB_REQUIREMENT_5 = """
             Uczeń musi umieć wyznaczyć najmniejszą i największą wartość funkcji kwadratowej w przedziale domkniętym, analizując wartości w wierzchołku oraz na końcach przedziału.
-                                                                                                                                               
-                                                                                                                                               ### Co uczeń powinien wiedzieć:
-                                                                                                                                               
-                                                                                                                                               1. **Wartość w wierzchołku paraboli**:
-                                                                                                                                                  - Współrzędne wierzchołka to \\(x_v = \\frac{-b}{2a}\\). Wartość funkcji w wierzchołku to \\(f(x_v)\\).
-                                                                                                                                                  - Jeśli \\(x_v\\) leży w przedziale, sprawdzamy \\(f(x_v)\\) jako potencjalne maksimum lub minimum.
-                                                                                                                                               
-                                                                                                                                               2. **Wartości na końcach przedziału**:
-                                                                                                                                                  - Obliczamy wartości funkcji w punktach krańcowych przedziału, czyli \\(f(x_1)\\) i \\(f(x_2)\\), gdzie \\( [x_1, x_2] \\) to przedział domknięty.
-                                                                                                                                               
-                                                                                                                                               3. **Porównanie wartości**:
-                                                                                                                                                  - Najmniejsza i największa wartość to odpowiednio minimum i maksimum spośród \\(f(x_1)\\), \\(f(x_2)\\) oraz \\(f(x_v)\\) (jeśli \\(x_v\\) leży w przedziale).
-                                                                                                                                               
-                                                                                                                                               ### Przykład:
-                                                                                                                                               
-                                                                                                                                               Dla funkcji \\(f(x) = 2x^2 - 4x + 1\\) wyznacz największą i najmniejszą wartość w przedziale \\([0, 3]\\).
-                                                                                                                                               
-                                                                                                                                               1. **Wierzchołek**:
-                                                                                                                                                  \\[
-                                                                                                                                                  x_v = \\frac{-(-4)}{2 \\cdot 2} = 1
-                                                                                                                                                  \\]
-                                                                                                                                                  \\[
-                                                                                                                                                  f(1) = 2(1)^2 - 4(1) + 1 = -1
-                                                                                                                                                  \\]
-                                                                                                                                               
-                                                                                                                                               2. **Wartości na końcach przedziału**:
-                                                                                                                                                  \\[
-                                                                                                                                                  f(0) = 2(0)^2 - 4(0) + 1 = 1
-                                                                                                                                                  \\]
-                                                                                                                                                  \\[
-                                                                                                                                                  f(3) = 2(3)^2 - 4(3) + 1 = 7
-                                                                                                                                                  \\]
-                                                                                                                                               
-                                                                                                                                               3. **Porównanie**:
-                                                                                                                                                  Najmniejsza wartość to \\(-1\\) (w wierzchołku \\(x = 1\\)), a największa wartość to \\(7\\) (dla \\(x = 3\\)).
+            
+            ### Co uczeń powinien wiedzieć:
+            
+            1. **Wartość w wierzchołku paraboli**:
+               - Współrzędne wierzchołka to \\(x_v = \\frac{-b}{2a}\\). Wartość funkcji w wierzchołku to \\(f(x_v)\\).
+               - Jeśli \\(x_v\\) leży w przedziale, sprawdzamy \\(f(x_v)\\) jako potencjalne maksimum lub minimum.
+            
+            2. **Wartości na końcach przedziału**:
+               - Obliczamy wartości funkcji w punktach krańcowych przedziału, czyli \\(f(x_1)\\) i \\(f(x_2)\\), gdzie \\( [x_1, x_2] \\) to przedział domknięty.
+            
+            3. **Porównanie wartości**:
+               - Najmniejsza i największa wartość to odpowiednio minimum i maksimum spośród \\(f(x_1)\\), \\(f(x_2)\\) oraz \\(f(x_v)\\) (jeśli \\(x_v\\) leży w przedziale).
+            
+            ### Przykład:
+            
+            Dla funkcji \\(f(x) = 2x^2 - 4x + 1\\) wyznacz największą i najmniejszą wartość w przedziale \\([0, 3]\\).
+            
+            1. **Wierzchołek**:
+               \\[
+               x_v = \\frac{-(-4)}{2 \\cdot 2} = 1
+               \\]
+               \\[
+               f(1) = 2(1)^2 - 4(1) + 1 = -1
+               \\]
+            
+            2. **Wartości na końcach przedziału**:
+               \\[
+               f(0) = 2(0)^2 - 4(0) + 1 = 1
+               \\]
+               \\[
+               f(3) = 2(3)^2 - 4(3) + 1 = 7
+               \\]
+            
+            3. **Porównanie**:
+               Najmniejsza wartość to \\(-1\\) (w wierzchołku \\(x = 1\\)), a największa wartość to \\(7\\) (dla \\(x = 3\\)).
             """;
 
     public static final String SUB_REQUIREMENT_6 = """
@@ -301,71 +309,83 @@ public class SampleQuadraticFunctionLearningRequirement {
             """;
 
     public static final String SUB_REQUIREMENT_7 = """
-            Uczeń musi zrozumieć, jak wartość bezwzględna wpływa na uproszczenie wyrażeń, biorąc pod uwagę przedział, w którym znajduje się zmienna. Kluczowe jest rozpoznanie, czy argument wartości bezwzględnej jest dodatni, ujemny czy równy zero w danym przedziale.
-                        
-            ### Uproszczenie z wartością bezwzględną
-                        
-            1. **Jeśli \\( x \\geq a \\)**, to \\( |x - a| = x - a \\).
-            2. **Jeśli \\( x < a \\)**, to \\( |x - a| = -(x - a) = a - x \\).
-                        
-            ### Przykład 1:
-            Uproszczenie wyrażenia \\( |x - 2| + 3 \\) dla \\( x \\geq 2 \\).
-                        
-            **Uproszczenie:**
-            \\( |x - 2| = x - 2 \\) \s
-            Wyrażenie: \\( (x - 2) + 3 = x + 1 \\)
-                        
-            ### Przykład 2:
-            Uproszczenie wyrażenia \\( |x + 1| - 4 \\) dla \\( x < -1 \\).
-                        
-            **Uproszczenie:**
-            \\( |x + 1| = -(x + 1) = -x - 1 \\) \s
-            Wyrażenie: \\( (-x - 1) - 4 = -x - 5 \\)
-                        
-            ### Przykład 3:
-            Uproszczenie wyrażenia \\( |2x - 4| \\) dla \\( x < 2 \\).
-                        
-            **Uproszczenie:**
-            \\( |2x - 4| = -(2x - 4) = -2x + 4 \\) \s
-            To wyrażenie zostaje \\( -2x + 4 \\).
-                        
-            ### Podsumowanie:
-            Uczeń powinien być w stanie zidentyfikować przedział, w którym znajduje się zmienna, a następnie zastosować odpowiednie zasady przekształcania wartości bezwzględnej w celu uproszczenia wyrażenia.
+            Uczeń musi umieć interpretować wykres funkcji kwadratowej (paraboli) oraz wykorzystywać go do rozwiązywania równań i nierówności kwadratowych.
+            
+            ### Równania kwadratowe:
+            Równanie kwadratowe ma postać \\( ax^2 + bx + c = 0 \\). Graficznie rozwiązania równania to punkty przecięcia wykresu paraboli z osią \\(x\\) (miejsca zerowe).
+            
+            #### Przykład:
+            Rozwiąż równanie \\( x^2 - 4 = 0 \\) graficznie.
+            
+            1. Wykres funkcji \\( y = x^2 - 4 \\) to parabola o wierzchołku w punkcie \\( (0, -4) \\).
+            2. Parabola przecina oś \\( x \\) w punktach \\( x = -2 \\) i \\( x = 2 \\).
+            3. Rozwiązaniem równania są miejsca zerowe: \\( x = -2 \\) i \\( x = 2 \\).
+            
+            ### Nierówności kwadratowe:
+            Dla nierówności \\( ax^2 + bx + c > 0 \\) lub \\( ax^2 + bx + c < 0 \\), uczeń musi określić, w jakich przedziałach wykres paraboli leży nad osią \\( x \\) (dla nierówności \\( > 0 \\)) lub pod osią \\( x \\) (dla nierówności \\( < 0 \\)).
+            
+            #### Przykład:
+            Rozwiąż nierówność \\( x^2 - 4 > 0 \\) graficznie.
+            
+            1. Narysuj wykres funkcji \\( y = x^2 - 4 \\).
+            2. Widzimy, że parabola leży nad osią \\( x \\) dla \\( x < -2 \\) i \\( x > 2 \\).
+            3. Zatem rozwiązaniem nierówności są przedziały \\( (-\\infty, -2) \\cup (2, \\infty) \\).
             """;
 
     public static final String SUB_REQUIREMENT_8 = """
-            Uczeń musi umieć interpretować zbiory rozwiązań nierówności z wartością bezwzględną i na ich podstawie poprawnie zapisać odpowiadające im nierówności. Kluczowe jest zrozumienie, jak fragmenty zbiorów odnoszą się do wartości bezwzględnej.
-                        
-            ### Zasady zapisywania nierówności:
-                        
-            1. **Dla zbioru postaci \\( (a, b) \\)**:
-               - Nierówność ma formę \\( |x - c| < d \\), co oznacza, że \\( c - d < x < c + d \\).
-              \s
-            2. **Dla zbioru postaci \\( (-\\infty, a) \\) lub \\( (b, +\\infty) \\)**:
-               - Nierówność może mieć formę \\( |x - c| > d \\), co oznacza, że \\( x < c - d \\) lub \\( x > c + d \\).
-                        
+            Uczeń musi znać różne postacie funkcji kwadratowej (ogólną, kanoniczną, iloczynową) i potrafić wyznaczyć jej wzór na podstawie zadanych własności, takich jak miejsca zerowe, wierzchołek lub punkty przez które przechodzi wykres.
+            
+            ### Postać ogólna funkcji kwadratowej:
+            Wzór funkcji kwadratowej w postaci ogólnej to:
+            \\[
+            f(x) = ax^2 + bx + c
+            \\]
+            
+            ### Postać kanoniczna:
+            \\[
+            f(x) = a(x - p)^2 + q
+            \\]
+            Gdzie \\( (p, q) \\) to współrzędne wierzchołka paraboli.
+            
+            ### Postać iloczynowa:
+            \\[
+            f(x) = a(x - x_1)(x - x_2)
+            \\]
+            Gdzie \\( x_1 \\) i \\( x_2 \\) to miejsca zerowe funkcji.
+            
             ### Przykład 1:
-            Zbiór rozwiązań: \\( (-3, 1) \\)
-                        
-            **Zapis nierówności:**
-            Dla zbioru \\( |x - (-1)| < 2 \\):
-            - Zapisujemy: \\( -1 - 2 < x < -1 + 2 \\) → \\( -3 < x < 1 \\).
-                        
+            Napisz wzór funkcji kwadratowej o miejscach zerowych \\( x_1 = -1 \\) i \\( x_2 = 3 \\), która przechodzi przez punkt \\( (0, -6) \\).
+            
+            1. Korzystamy z postaci iloczynowej:
+               \\[
+               f(x) = a(x + 1)(x - 3)
+               \\]
+            
+            2. Podstawiamy punkt \\( (0, -6) \\) w celu wyznaczenia \\( a \\):
+               \\[
+               -6 = a(0 + 1)(0 - 3)
+               \\]
+               \\[
+               -6 = a(-3)
+               \\]
+               \\[
+               a = 2
+               \\]
+            
+            3. Ostateczny wzór funkcji:
+               \\[
+               f(x) = 2(x + 1)(x - 3)
+               \\]
+            
             ### Przykład 2:
-            Zbiór rozwiązań: \\( (-\\infty, -2) \\) ∪ \\( (2, +\\infty) \\)
-                        
-            **Zapis nierówności:**
-            Dla zbioru \\( |x| > 2 \\):
-            - Zapisujemy: \\( x < -2 \\) lub \\( x > 2 \\).
-                        
-            ### Przykład 3:
-            Zbiór rozwiązań: \\( [1, 4] \\)
-                        
-            **Zapis nierówności:**
-            Dla zbioru \\( |x - 2.5| \\leq 1.5 \\):
-            - Zapisujemy: \\( 2.5 - 1.5 \\leq x \\leq 2.5 + 1.5 \\) → \\( 1 \\leq x \\leq 4 \\).
-                        
-            Uczeń powinien umieć analizować zbiory, a następnie przekształcać je w odpowiednie nierówności, uwzględniając wartości bezwzględne.
+            Napisz wzór funkcji kwadratowej o wierzchołku \\( (2, -3) \\) i współczynniku \\( a = 1 \\).
+            
+            1. Korzystamy z postaci kanonicznej:
+               \\[
+               f(x) = (x - 2)^2 - 3
+               \\]
+            
+            Ostateczny wzór funkcji: \\( f(x) = (x - 2)^2 - 3 \\).
             """;
 
 }

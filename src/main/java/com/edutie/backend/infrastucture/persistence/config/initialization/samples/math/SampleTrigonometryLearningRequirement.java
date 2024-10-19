@@ -5,7 +5,7 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 
-public class SampleTrygonometryLearningRequirement {
+public class SampleTrigonometryLearningRequirement {
 
     public static LearningRequirement getLearningRequirement(Educator educator) {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
@@ -31,12 +31,18 @@ public class SampleTrygonometryLearningRequirement {
                 "Uczeń umie zbudować w układzie współrzędnych dowolny kąt o mierze a, gdy dana jest wartość jednej funkcji trygonometrycznej tego kąta; ",
                 PromptFragment.of(SUB_REQUIREMENT_5)
         );
-
         learningRequirement.appendSubRequirement(
                 "Uczeń potrafi przeprowadzać dowody tożsamości trygonometrycznych",
                 PromptFragment.of(SUB_REQUIREMENT_6)
         );
-
+        learningRequirement.appendSubRequirement(
+                "Uczeń potrafi uprszaczać wyrażenia zawierające funkcje trygonometryczne",
+                PromptFragment.of(SUB_REQUIREMENT_7)
+        );
+        learningRequirement.appendSubRequirement(
+                "potrafi stosować podstawowe tożsamości trygonometryczne dla dowolnego kąta, dla którego funkcje trygonometryczne są określone",
+                PromptFragment.of(SUB_REQUIREMENT_8)
+        );
         return learningRequirement;
     }
 
@@ -295,5 +301,79 @@ public class SampleTrygonometryLearningRequirement {
                \\]
             
             Odpowiedź: tożsamość została udowodniona.
+            """;
+
+    private static String SUB_REQUIREMENT_7 = """
+            Uczeń musi znać podstawowe tożsamości trygonometryczne oraz umieć stosować je w celu upraszczania wyrażeń. Kluczowe jest również rozumienie zależności między funkcjami trygonometrycznymi, takimi jak \\( \\sin \\), \\( \\cos \\), \\( \\tan \\), \\( \\cot \\) oraz ich właściwości.
+            
+            ### Tożsamości trygonometryczne:
+            1. \\( \\sin^2 \\alpha + \\cos^2 \\alpha = 1 \\)
+            2. \\( 1 + \\tan^2 \\alpha = \\frac{1}{\\cos^2 \\alpha} \\)
+            3. \\( \\tan \\alpha = \\frac{\\sin \\alpha}{\\cos \\alpha} \\)
+            4. \\( \\cot \\alpha = \\frac{1}{\\tan \\alpha} \\)
+            
+            ### Przykład 1:
+            Uprość wyrażenie \\( \\frac{\\sin^2 \\alpha}{1 - \\cos^2 \\alpha} \\).
+            
+            1. Zauważamy, że \\( 1 - \\cos^2 \\alpha = \\sin^2 \\alpha \\) (z podstawowej tożsamości trygonometrycznej).
+            2. Podstawiamy:
+               \\[
+               \\frac{\\sin^2 \\alpha}{\\sin^2 \\alpha} = 1
+               \\]
+            Rozwiązanie: \\( 1 \\).
+            
+            ### Przykład 2:
+            Uprość wyrażenie \\( \\frac{\\tan \\alpha}{\\sec \\alpha} \\).
+            
+            1. Przekształcamy \\( \\sec \\alpha \\) na \\( \\frac{1}{\\cos \\alpha} \\):
+               \\[
+               \\frac{\\tan \\alpha}{\\sec \\alpha} = \\frac{\\frac{\\sin \\alpha}{\\cos \\alpha}}{\\frac{1}{\\cos \\alpha}} = \\sin \\alpha
+               \\]
+            
+            Rozwiązanie: \\( \\sin \\alpha \\).
+            
+            ### Przykład 3:
+            Uprość wyrażenie \\( \\frac{1}{\\cot \\alpha} + \\frac{1}{\\tan \\alpha} \\).
+            
+            1. Zauważamy, że \\( \\cot \\alpha = \\frac{1}{\\tan \\alpha} \\), więc:
+               \\[
+               \\frac{1}{\\cot \\alpha} + \\frac{1}{\\tan \\alpha} = \\tan \\alpha + \\tan \\alpha = 2 \\tan \\alpha
+               \\]
+            
+            Rozwiązanie: \\( 2 \\tan \\alpha \\).
+            """;
+
+    private static String SUB_REQUIREMENT_8 = """
+            Uczeń musi znać i stosować podstawowe tożsamości trygonometryczne dla dowolnych kątów, dla których funkcje trygonometryczne są określone, czyli kątów z różnych ćwiartek układu współrzędnych. Ważne jest rozumienie, jak poszczególne funkcje trygonometryczne przyjmują różne znaki w zależności od ćwiartki.
+            
+            ### Kluczowe tożsamości:
+            1. \\( \\sin^2 \\alpha + \\cos^2 \\alpha = 1 \\)
+            2. \\( \\tan \\alpha = \\frac{\\sin \\alpha}{\\cos \\alpha} \\)
+            3. \\( 1 + \\tan^2 \\alpha = \\frac{1}{\\cos^2 \\alpha} \\)
+            4. \\( \\cot \\alpha = \\frac{1}{\\tan \\alpha} \\)
+            
+            ### Przykład 1:
+            Dla kąta \\( \\alpha = 120^\\circ \\), wyznacz \\( \\sin \\alpha \\), \\( \\cos \\alpha \\), \\( \\tan \\alpha \\) i sprawdź, czy spełniają tożsamość \\( \\sin^2 \\alpha + \\cos^2 \\alpha = 1 \\).
+            
+            Rozwiązanie:
+            1. \\( \\alpha = 120^\\circ \\) leży w II ćwiartce, więc:
+               - \\( \\sin 120^\\circ = \\frac{\\sqrt{3}}{2} \\)
+               - \\( \\cos 120^\\circ = -\\frac{1}{2} \\)
+               - \\( \\tan 120^\\circ = -\\sqrt{3} \\)
+              \s
+            2. Sprawdzamy tożsamość:
+               \\[
+               \\sin^2 120^\\circ + \\cos^2 120^\\circ = \\left( \\frac{\\sqrt{3}}{2} \\right)^2 + \\left( -\\frac{1}{2} \\right)^2 = \\frac{3}{4} + \\frac{1}{4} = 1
+               \\]
+            
+            Tożsamość jest spełniona.
+            
+            ### Przykład 2:
+            Dla kąta \\( \\alpha = 225^\\circ \\), oblicz \\( \\cot \\alpha \\), jeśli \\( \\sin \\alpha = -\\frac{\\sqrt{2}}{2} \\) i \\( \\cos \\alpha = -\\frac{\\sqrt{2}}{2} \\).
+            
+            Rozwiązanie:
+            1. \\( \\cot \\alpha = \\frac{\\cos \\alpha}{\\sin \\alpha} = \\frac{-\\frac{\\sqrt{2}}{2}}{-\\frac{\\sqrt{2}}{2}} = 1 \\)
+            
+            Rozwiązanie: \\( \\cot 225^\\circ = 1 \\).
             """;
 }
