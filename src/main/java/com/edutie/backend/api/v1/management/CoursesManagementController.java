@@ -28,25 +28,25 @@ public class CoursesManagementController {
 	private final CreatedCoursesQueryHandler createdCoursesQueryHandler;
 	private final EducatorAuthorization educatorAuthorization;
 
-	@GetMapping
+	@GetMapping("/retrieve")
 	@Operation(description = "Retrieves courses created by an educator invoking the flow")
 	public ResponseEntity<ApiResult<List<Course>>> getCreatedCourses(Authentication auth) {
 		return new GenericRequestHandler<List<Course>>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createdCoursesQueryHandler.handle(new CreatedCoursesQuery().educatorUserId(userId)));
 	}
 
-	@PostMapping
+	@PostMapping("/create")
 	@Operation(description = "Creates using a given command. May be performed by an educator only")
 	public ResponseEntity<ApiResult<Course>> createCourse(Authentication auth, @RequestBody CreateCourseCommand command) {
 		return new GenericRequestHandler<Course>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createCourseCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
-	@PatchMapping
+	@PatchMapping("/modify")
 	@Operation(description = "Modifies a course using the specified command. May be performed by the author of the course")
 	public ResponseEntity<ApiResult<Result>> modifyCourse(Authentication auth, @RequestBody ModifyCourseCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> modifyCourseCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/remove")
 	@Operation(description = "Removes a course using the specified command. May be performed by the author of the course")
 	public ResponseEntity<ApiResult<Result>> removeCourse(Authentication auth, @RequestBody RemoveCourseCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> removeCourseCommandHandler.handle(command.educatorUserId(userId)));

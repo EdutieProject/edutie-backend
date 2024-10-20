@@ -28,26 +28,26 @@ public class LessonsManagementController {
 	private final CreatedLessonsQueryHandler createdLessonsQueryHandler;
 	private final EducatorAuthorization educatorAuthorization;
 
-	@GetMapping
+	@GetMapping("/retrieve-created")
 	@Operation(description = "Retrieves lessons created by an educator invoking the flow")
 	public ResponseEntity<ApiResult<List<Lesson>>> getCreatedLessons(Authentication auth) {
 		return new GenericRequestHandler<List<Lesson>>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createdLessonsQueryHandler.handle(new CreatedLessonsQuery().educatorUserId(userId)));
 	}
 
-	@PostMapping
+	@PostMapping("/create")
 	@Operation(description = "Creates a lesson using the specified command. May be performed by a privileged educator.")
 	public ResponseEntity<ApiResult<Lesson>> createLesson(Authentication auth, @RequestBody CreateLessonCommand command) {
 		return new GenericRequestHandler<Lesson>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createLessonCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
-	@PatchMapping
+	@PatchMapping("/modify")
 	@Operation(description = "Modifies lesson using the specified command. May be performed by an author educator.")
 	public ResponseEntity<ApiResult<Result>> modifyLesson(Authentication auth, @RequestBody ModifyLessonCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> modifyLessonCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
-	@DeleteMapping
-	@Operation(description = "Deletes lesson specified by an id in the command. May be performed by an author educator")
+	@DeleteMapping("/remove")
+	@Operation(description = "Removes lesson specified by an id in the command. May be performed by an author educator")
 	public ResponseEntity<ApiResult<Result>> removeLesson(Authentication auth, @RequestBody RemoveLessonCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> removeLessonCommandHandler.handle(command.educatorUserId(userId)));
 	}

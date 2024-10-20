@@ -28,26 +28,26 @@ public class SegmentsManagementController {
 	private final CreatedSegmentsQueryHandler createdSegmentsQueryHandler;
 	private final EducatorAuthorization educatorAuthorization;
 
-	@GetMapping
+	@GetMapping("/retrieve-created")
 	@Operation(description = "Retrieves segments created by an educator invoking the flow")
 	public ResponseEntity<ApiResult<List<Segment>>> getCreatedSegments(Authentication auth) {
 		return new GenericRequestHandler<List<Segment>>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createdSegmentsQueryHandler.handle(new CreatedSegmentsQuery().educatorUserId(userId)));
 	}
 
-	@PostMapping
+	@PostMapping("/create")
 	@Operation(description = "Creates a segment using the specified command. May be performed by a privileged educator.")
 	public ResponseEntity<ApiResult<Segment>> createSegment(Authentication auth, @RequestBody CreateSegmentCommand command) {
 		return new GenericRequestHandler<Segment>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> createSegmentCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
-	@PatchMapping
+	@PatchMapping("/modify")
 	@Operation(description = "Modifies a segment using the specified command. May be performed by an author educator.")
 	public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody ModifySegmentCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> modifySegmentCommandHandler.handle(command.educatorUserId(userId)));
 	}
 
-	@DeleteMapping
-	@Operation(description = "Deletes segment specified by an id in the command. May be performed by an author educator")
+	@DeleteMapping("/remove")
+	@Operation(description = "Removes the segment specified by an id in the command. May be performed by an author educator")
 	public ResponseEntity<ApiResult<Result>> modifySegment(Authentication auth, @RequestBody RemoveSegmentCommand command) {
 		return new GenericRequestHandler<Result>().authenticate(auth).authorize(educatorAuthorization).handle((userId) -> removeSegmentCommandHandler.handle(command.educatorUserId(userId)));
 	}
