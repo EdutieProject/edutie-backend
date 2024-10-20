@@ -3,8 +3,10 @@
 * [Learning Requirement](#learning-requirement)
     * [Contained data:](#contained-data)
         * [Name](#name)
-        * [Description](#description)
-        * [Sub requirements](#sub-requirements)
+        * [Elemental requirements](#elemental-requirements)
+            * [Ordinal](#ordinal)
+            * [Scientific description](#scientific-description)
+            * [Requirement text](#requirement-text)
         * [Knowledge Subject Id](#knowledge-subject-id)
     * [References](#references)
 
@@ -23,12 +25,15 @@ knowledge subject id.
 
 The name of the requirement, used both as displayable name and as a prompt
 
-### Sub requirements
+### Elemental requirements
 
-Sub requirements are the contents describing the knowledge requirements of the main requirement.
+Elemental requirements are the elemental subject that can be required from the student. As this is the most 
+singular requirement form, it can be referenced from different context (e.g. personalization context).
 
 #### Ordinal
-Sub requirements have ordinals - the bigger the ordinal, the more complex is the sub requirement knowledge
+
+Sub requirements have ordinals - the bigger the ordinal, the more complex is the sub requirement knowledge.
+Ordinal is regarded in the learning requirement's scope.
 
 #### Scientific description
 
@@ -37,6 +42,7 @@ The scientific description describes the sub requirement's concept in the scient
 #### Requirement text
 
 The sub requirement's text describes briefly what student should understand regarding the command of this requirement.
+This should be written in sense: *Student should understand (or know) XYZ*
 
 ### Knowledge Subject Id
 

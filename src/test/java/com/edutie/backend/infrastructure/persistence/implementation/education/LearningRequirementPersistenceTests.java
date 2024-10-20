@@ -54,6 +54,6 @@ public class LearningRequirementPersistenceTests {
 
 		LearningRequirement fetched = learningRequirementPersistence.getById(learningRequirement.getId()).getValue();
 		assert fetched.equals(learningRequirement);
-		assert fetched.getSubRequirements().size() == 2;
+		assert fetched.getElementalRequirements().size() == 2;
 	}
 }

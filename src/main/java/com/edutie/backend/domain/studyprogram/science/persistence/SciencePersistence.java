@@ -8,10 +8,10 @@ import validation.WrapperResult;
 import java.util.List;
 
 public interface SciencePersistence extends Persistence<Science, ScienceId> {
-	/**
-	 * Retrieve all sciences
-	 *
-	 * @return Science list
-	 */
-	WrapperResult<List<Science>> getAll();
+    /**
+     * Retrieve all sciences
+     *
+     * @return Science list
+     */
+    WrapperResult<List<Science>> getAll();
 }

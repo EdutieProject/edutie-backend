@@ -2,8 +2,11 @@ package com.edutie.backend.domain.administration;
 
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.common.base.identity.Identifier;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import lombok.AccessLevel;
+import lombok.Setter;
 
 /**
  * Restricted role is a base class for a user profile that needs to be assigned by an admin
@@ -13,6 +16,6 @@ import lombok.*;
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
 public abstract class RestrictedRole<TId extends Identifier<?>> extends Role<TId> {
-	@ManyToOne(targetEntity = Administrator.class, fetch = FetchType.EAGER)
-	protected Administrator assignedBy;
+    @ManyToOne(targetEntity = Administrator.class, fetch = FetchType.EAGER)
+    protected Administrator assignedBy;
 }

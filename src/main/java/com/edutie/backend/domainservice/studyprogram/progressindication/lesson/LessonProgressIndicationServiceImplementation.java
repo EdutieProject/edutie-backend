@@ -18,14 +18,14 @@ public class LessonProgressIndicationServiceImplementation implements LessonProg
         //TODO - filter #201 issue
         boolean isLessonNotBegun = lesson.getSegments().stream().filter(o -> o.getLearningResourceDefinitionId() != null)
                 .allMatch(o -> learningResultPersistence
-                        .getLearningResultsForStudentByLearningResourceDefinitionId(student.getId(), o.getLearningResourceDefinitionId())
+                        .getLearningResultsOfStudentByLearningResourceDefinitionId(student.getId(), o.getLearningResourceDefinitionId())
                         .getValue().isEmpty()
                 );
         if (isLessonNotBegun)
             return WrapperResult.successWrapper(LessonProgressState.NONE);
 
         boolean isLessonFinished = lesson.getSegments().stream().filter(o -> o.getLearningResourceDefinitionId() != null).allMatch(o -> learningResultPersistence
-                .getLearningResultsForStudentByLearningResourceDefinitionId(student.getId(), o.getLearningResourceDefinitionId())
+                .getLearningResultsOfStudentByLearningResourceDefinitionId(student.getId(), o.getLearningResourceDefinitionId())
                 .getValue().stream().anyMatch(LearningResult::isSuccessful)
         );
         if (isLessonFinished)

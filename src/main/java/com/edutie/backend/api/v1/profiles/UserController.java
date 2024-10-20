@@ -19,11 +19,12 @@ import validation.Error;
 import validation.Result;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/profiles/user")
 @RequiredArgsConstructor
 @Tag(name = "User Controller", description = """
         Provides operations associated with the user itself. As the user is handled mostly by an identity provider, this controller
-        acts as a higher-level wrapper around operations shared in the Edutie context.
+        acts as a higher-level wrapper around operations shared in the Edutie context. Despite that user is not a profile itself,
+        for the sake of convention it uses the profiles API path.
         """)
 public class UserController {
     private final UserDetailsQueryHandler userDetailsQueryHandler;

@@ -2,10 +2,12 @@
 
 * [Learning Resource Generation Schema](#learning-resource-generation-schema)
     * [Contained data:](#contained-data)
-        * [Learning Resource Definition](#learning-resource-definition)
-        * [Problem Descriptors](#problem-descriptors)
-            * [Personalization Rules](#personalization-rules)
-    * [Visual representation](#visual-representation)
+        * [Chosen Elemental requirements](#chosen-elemental-requirements)
+        * [Personalized Activity Details](#personalized-activity-details)
+            * [Activity Personalization Rule](#activity-personalization-rule)
+        * [Personalized Theory Details](#personalized-theory-details)
+            * [Theory Personalization Rule](#theory-personalization-rule)
+        * [Personalization Rule (Base):](#personalization-rule-base)
     * [References](#references)
 
 <!-- TOC -->
@@ -17,75 +19,38 @@ This entity is read-only as it is meant only to be created and passed to the LLM
 
 ## Contained data:
 
-### Learning Resource Definition
+### Chosen Elemental requirements
 
-This entity embeds learning resource definition as the LR definition contains the necessary information.
+That is the set of chosen elemental requirements that are in the scope of the LR to be generated.
 
-Learning resource definition also contains all learning requirements which are essential in LR generation.
+### Personalized Activity Details
 
-### Problem Descriptors
+Those are the activity details that are the extension of the Activity Details in the LRD but with personalization rules
+included.
 
-During the generation process Learning Requirements from Learning Resource Definition are being considered as a
-problem source. Therefore, every Learning Requirement produces a Problem Descriptor. The reference is kept using both
-the corresponding learning requirement id and its knowledge subject id as well.
+#### Activity Personalization Rule
 
-Problem descriptors contain information about the sub-requirements that are qualified to be a part of the problem. Thus,
-they are not constant and are a part of personalization.
+This type is the extended [Personalization Rule](#personalization-rule-base) for future development regarding activity.
 
-Problems have personalization rules.
+### Personalized Theory Details
 
-#### Personalization Rules
+Those are the theory details that are the extension of the Theory Details in the LRD but with personalization rules
+included.
 
-Personalization rules are the descriptors of personalization that is to be made by LLM under the problem construction.
+#### Theory Personalization Rule
 
-Personalization rules correspond to knowledge correlations provided by Wiki-map. Those are requested using
-the knowledge subject identity of the problem descriptor L.Req.
+This type is the extended [Personalization Rule](#personalization-rule-base) for future development regarding theory.
+
+ --- 
+
+### Personalization Rule (Base):
 
 They are compounded of:
 
-- Related Knowledge Subject Id (referencing the related Knowledge Subject). This should be treated as metadata.
-- Knowledge Correlation Factor
-- List of Learning Results that correspond to the knowledge subject. Those should be represented as a LRGS-specific
-  view. Thus, their contents would be:
-    - Learning result's feedback
-    - Learning result's assessments
+- Knowledge correlation (see definition [here](../education/KnowledgeCorrelation.md))
+- Related assessments
 
-## Visual representation
-
-```mermaid
----
-title: Learning Resource Generation Schema
----
-classDiagram
-    class LearningResourceDefinition {
-        [Absolute descriptors of the \nlearning resource]
-    }
-    class LearningResourceGenerationSchema {
-        Learning Resource Definition
-        List of Problem Descriptors
-    }
-    class ProblemDescriptor {
-        Qualfied sub reqs
-        Corresponding Learning Requirement Id
-        Knowledge Subject Id - metadata
-        List of Personalization Rules
-    }
-    class PersonalizationRule {
-        Knowledge Subject Id
-        Knowledge Correlation Factor
-        Source Learning Requirement Id
-        List of Learning Results
-    }
-    class Student {
-        List of Learning Results [Learning History]
-    }
-    LearningResourceGenerationSchema <-- LearningResourceDefinition
-    LearningResourceGenerationSchema <-- ProblemDescriptor: 1 - N / aggregates
-    ProblemDescriptor <-- PersonalizationRule: 1 - N
-    PersonalizationRule <.. Student: student provides L.History
-
-
-```
+The personalization rule may be extended in the future development
 
 ## References
 

@@ -2,7 +2,7 @@ package com.edutie.backend.domain.education.educator.enums;
 
 import com.edutie.backend.domain.common.enums.PersistableEnum;
 import com.edutie.backend.infrastucture.persistence.config.AbstractEnumConverter;
-import lombok.*;
+import lombok.Getter;
 
 /**
  * Enum describing educator type.
@@ -11,18 +11,18 @@ import lombok.*;
  */
 @Getter
 public enum EducatorType implements PersistableEnum<String> {
-	CONTRIBUTOR("Contributor"), TUTOR("Tutor"), PEDAGOGUE("Pedagogue"), ADMINISTRATOR("Administrator");
+    CONTRIBUTOR("Contributor"), TUTOR("Tutor"), PEDAGOGUE("Pedagogue"), ADMINISTRATOR("Administrator");
 
-	final String code;
+    final String code;
 
-	EducatorType(String code) {
-		this.code = code;
-	}
+    EducatorType(String code) {
+        this.code = code;
+    }
 
-	public static class Converter extends AbstractEnumConverter<EducatorType, String> {
-		public Converter() {
-			super(EducatorType.class);
-		}
+    public static class Converter extends AbstractEnumConverter<EducatorType, String> {
+        public Converter() {
+            super(EducatorType.class);
+        }
 
-	}
+    }
 }
