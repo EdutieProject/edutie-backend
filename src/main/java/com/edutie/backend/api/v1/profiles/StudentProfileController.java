@@ -30,7 +30,7 @@ public class StudentProfileController {
     private final StudentAuthorization studentAuthorization;
     private final GetLatestLearningResultsQueryHandler getLatestLearningResultsQueryHandler;
 
-    @GetMapping("/learning-results/latest")
+    @GetMapping("/learning-results/retrieve-latest")
     @Operation(description = "Retrieves latest learning results for given student")
     public ResponseEntity<ApiResult<List<LearningResult>>> getLatestLearningResults(Authentication authentication,
                                                                                     @RequestParam(required = false) Integer amount,

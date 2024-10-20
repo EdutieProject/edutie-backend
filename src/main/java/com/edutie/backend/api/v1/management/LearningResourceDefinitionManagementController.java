@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/management/learning-resource")
+@RequestMapping("/api/v1/management/learning-resource-definitions")
 @RequiredArgsConstructor
 @Tag(name = "Learning Resource Definition Management Controller", description = "Provides operations regarding learning res. definitions in the management context")
 public class LearningResourceDefinitionManagementController {
     private final EducatorAuthorization educatorAuthorization;
     private final CreateLearningResourceDefinitionCommandHandler createLearningResourceDefinitionCommandHandler;
 
-    @PostMapping("/definitions")
+    @PostMapping("/create")
     @Operation(description = "Creates learning resource definition. May be performed only by an educator")
     public ResponseEntity<ApiResult<LearningResourceDefinition>> createLearningResourceDefinition(Authentication authentication, @RequestBody CreateLearningResourceDefinitionCommand command) {
         return new GenericRequestHandler<LearningResourceDefinition>()
