@@ -17,10 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,7 +33,7 @@ public class StudyProgramLearningController {
     private final ViewLessonsFromCourseQueryHandler viewLessonsFromCourseQueryHandler;
     private final ViewSegmentsFromLessonQueryHandler viewSegmentsFromLessonQueryHandler;
 
-    @GetMapping("/sciences")
+    @GetMapping("/sciences/retrieve-accessible")
     @Operation(description = "Retrieves all accessible sciences")
     public ResponseEntity<ApiResult<List<Science>>> getAccessibleSciences(Authentication auth) {
         return new GenericRequestHandler<List<Science>>()
@@ -48,7 +45,7 @@ public class StudyProgramLearningController {
 
     }
 
-    @GetMapping("/courses")
+    @GetMapping("/courses/retrieve-by-science")
     @Operation(description = "Retrieves all courses associated with a given science")
     public ResponseEntity<ApiResult<List<Course>>> getCoursesByScience(Authentication auth, @RequestParam ScienceId scienceId) {
         return new GenericRequestHandler<List<Course>>()
@@ -59,10 +56,10 @@ public class StudyProgramLearningController {
                 ));
     }
 
-    @GetMapping("/courses/by-id")
+    @GetMapping("/courses/{courseId}")
     @Operation(description = "Retrieves a course by its identifier")
-    public ResponseEntity<ApiResult<List<Course>>> getCourseById(Authentication auth, @RequestParam CourseId courseId) {
-        return new GenericRequestHandler<List<Course>>()
+    public ResponseEntity<ApiResult<Course>> getCourseById(Authentication auth, @PathVariable CourseId courseId) {
+        return new GenericRequestHandler<Course>()
                 .authenticate(auth)
                 .authorize(studentAuthorization)
                 .handle((userId) -> courseByIdQueryHandler.handle(
@@ -70,7 +67,7 @@ public class StudyProgramLearningController {
                 ));
     }
 
-    @GetMapping("/lessons")
+    @GetMapping("/lessons/retrieve-by-course")
     @Operation(description = "Retrieves lesson views for the student invoking the flow from the given course")
     public ResponseEntity<ApiResult<List<LessonView>>> getLessonsForStudentFromCourse(Authentication auth, @RequestParam CourseId courseId) {
         return new GenericRequestHandler<List<LessonView>>()
@@ -81,7 +78,7 @@ public class StudyProgramLearningController {
                 ));
     }
 
-    @GetMapping("/segments")
+    @GetMapping("/segments/retrieve-by-lesson")
     @Operation(description = "Retrieves segment views for student invoking the flow from the given lesson")
     public ResponseEntity<ApiResult<List<SegmentView>>> getSegmentsForStudentFromLesson(Authentication auth, @RequestParam LessonId lessonId) {
         return new GenericRequestHandler<List<SegmentView>>()
