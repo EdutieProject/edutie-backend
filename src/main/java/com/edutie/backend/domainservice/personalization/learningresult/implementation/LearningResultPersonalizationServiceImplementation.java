@@ -5,7 +5,7 @@ import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubm
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.learningresult.LearningResultPersonalizationService;
 import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
-import com.edutie.backend.infrastucture.external.llm.LargeLanguageModelService;
+import com.edutie.backend.infrastructure.external.llm.LargeLanguageModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;

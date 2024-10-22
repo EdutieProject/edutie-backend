@@ -1,7 +1,7 @@
 package com.edutie.backend.api.common;
 
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.infrastucture.authorization.base.AuthorizationBase;
+import com.edutie.backend.infrastructure.authorization.base.AuthorizationBase;
 import validation.Error;
 import validation.*;
 import org.springframework.http.*;

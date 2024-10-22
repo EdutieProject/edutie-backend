@@ -5,7 +5,7 @@ import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.management.learningresourcedefinition.CreateLearningResourceDefinitionCommandHandler;
 import com.edutie.backend.application.management.learningresourcedefinition.commands.CreateLearningResourceDefinitionCommand;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastructure.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

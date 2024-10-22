@@ -16,8 +16,8 @@ import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackTy
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
-import com.edutie.backend.infrastucture.external.knowledgemap.KnowledgeMapService;
-import com.edutie.backend.infrastucture.external.llm.LargeLanguageModelService;
+import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
+import com.edutie.backend.infrastructure.external.llm.LargeLanguageModelService;
 import validation.WrapperResult;
 
 import java.util.Set;

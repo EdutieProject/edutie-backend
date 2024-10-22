@@ -1,7 +1,7 @@
 package com.edutie.backend.domain.education.educator.enums;
 
 import com.edutie.backend.domain.common.enums.PersistableEnum;
-import com.edutie.backend.infrastucture.persistence.config.AbstractEnumConverter;
+import com.edutie.backend.infrastructure.persistence.config.AbstractEnumConverter;
 import lombok.Getter;
 
 /**

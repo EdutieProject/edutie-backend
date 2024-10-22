@@ -6,7 +6,7 @@ import com.edutie.backend.application.management.lesson.*;
 import com.edutie.backend.application.management.lesson.commands.*;
 import com.edutie.backend.application.management.lesson.queries.CreatedLessonsQuery;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
-import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastructure.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import validation.Result;

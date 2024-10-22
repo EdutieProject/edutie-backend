@@ -1,0 +1,52 @@
+package com.edutie.backend.infrastructure.authorization.educator.implementation;
+
+import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.administration.administrator.Administrator;
+import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.educator.enums.EducatorType;
+import com.edutie.backend.infrastructure.authorization.AuthorizationError;
+import com.edutie.backend.infrastructure.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.AdministratorRepository;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.EducatorRepository;
+import validation.Result;
+import org.springframework.security.core.*;
+import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.server.resource.authentication.*;
+import org.springframework.stereotype.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
+
+import java.util.UUID;
+
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class EducatorAuthorizationImplementation implements EducatorAuthorization {
+	private final EducatorRepository educatorRepository;
+	private final AdministratorRepository administratorRepository;
+
+	@Override
+	public Result authorize(UserId userId) {
+		return educatorRepository.findByOwnerUserId(userId).isEmpty() ? Result.failure(AuthorizationError.roleExpected(Educator.class)) : Result.success();
+	}
+
+	/**
+	 * Pre-inject roles if any injectable exist in authentication token.
+	 *
+	 * @param authentication authentication token
+	 */
+	@Override
+	public void injectRoles(JwtAuthenticationToken authentication) {
+		UserId userId = new UserId(UUID.fromString(authentication.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
+		boolean adminRoleIsInToken = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().contains("edutie-admin");
+		boolean adminProfileDoesNotExist = administratorRepository.findByOwnerUserId(userId).isEmpty();
+
+		if (adminRoleIsInToken && adminProfileDoesNotExist) {
+			log.info("Injecting administrator & educator role for user {}", userId);
+			Administrator administrator = administratorRepository.save(Administrator.create(userId));
+			Educator educator = Educator.create(userId, administrator);
+			educator.setType(EducatorType.ADMINISTRATOR);
+			educatorRepository.save(educator);
+		}
+	}
+}

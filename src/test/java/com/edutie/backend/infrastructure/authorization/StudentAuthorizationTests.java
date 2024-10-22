@@ -2,7 +2,7 @@ package com.edutie.backend.infrastructure.authorization;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
-import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import com.edutie.backend.infrastructure.authorization.student.StudentAuthorization;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
