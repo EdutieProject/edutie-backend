@@ -61,7 +61,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
                     }
 
                     LearningResourceCreationDto learningResourceCreationDto = new ObjectMapper().readValue(responseBody, LearningResourceCreationDto.class);
-                    return WrapperResult.successWrapper(learningResourceCreationDto.intoLearningResource(learningResourceGenerationSchema));
+                    return WrapperResult.successWrapper(learningResourceCreationDto.intoDomainEntity(learningResourceGenerationSchema));
                 }
             }
         } catch (Exception ex) {
@@ -100,7 +100,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
                     }
 
                     LearningResultCreationDto learningResultCreationDto = new ObjectMapper().readValue(responseBody, LearningResultCreationDto.class);
-                    return WrapperResult.successWrapper(learningResultCreationDto.intoLearningResult(assessmentSchema));
+                    return WrapperResult.successWrapper(learningResultCreationDto.intoDomainEntity(assessmentSchema));
                 }
             }
         } catch (Exception ex) {

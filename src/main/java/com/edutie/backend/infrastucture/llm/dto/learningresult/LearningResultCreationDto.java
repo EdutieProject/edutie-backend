@@ -6,6 +6,7 @@ import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackTy
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
+import com.edutie.backend.infrastucture.common.external.dto.ExternalInfrastructureDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
  * DTO used for communication with LLM service. This DTO is the published language entity used between
  * LLM service and Edutie Backend for Learning Result creation purpose.
  */
-public class LearningResultCreationDto {
+public class LearningResultCreationDto implements ExternalInfrastructureDto<LearningResult, AssessmentSchema> {
     @JsonProperty
     private final Set<AssessmentDto> assessments = new HashSet<>();
     @JsonProperty
@@ -24,7 +25,8 @@ public class LearningResultCreationDto {
     @JsonProperty
     private String feedbackLevel;
 
-    public LearningResult intoLearningResult(AssessmentSchema assessmentSchema) {
+    @Override
+    public LearningResult intoDomainEntity(AssessmentSchema assessmentSchema) {
         return LearningResult.create(
                 assessmentSchema.getStudent(),
                 assessmentSchema.getSolutionSubmission(),
