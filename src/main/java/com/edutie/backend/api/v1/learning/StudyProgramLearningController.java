@@ -11,7 +11,7 @@ import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.lesson.identities.LessonId;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.identities.ScienceId;
-import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import com.edutie.backend.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

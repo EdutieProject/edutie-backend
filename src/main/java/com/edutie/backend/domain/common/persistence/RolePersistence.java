@@ -4,8 +4,8 @@ import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.base.identity.Identifier;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.infrastucture.persistence.PersistenceError;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.common.RoleRepository;
+import com.edutie.backend.infrastructure.persistence.PersistenceError;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.common.RoleRepository;
 import validation.Result;
 
 import java.util.NoSuchElementException;

@@ -6,7 +6,7 @@ import com.edutie.backend.application.management.segment.*;
 import com.edutie.backend.application.management.segment.commands.*;
 import com.edutie.backend.application.management.segment.queries.CreatedSegmentsQuery;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
-import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastructure.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import validation.Result;

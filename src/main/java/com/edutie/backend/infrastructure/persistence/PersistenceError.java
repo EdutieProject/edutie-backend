@@ -1,0 +1,17 @@
+package com.edutie.backend.infrastructure.persistence;
+
+import com.edutie.backend.domain.common.base.EntityBase;
+import validation.Error;
+
+/**
+ * Common persistence errors.
+ */
+public class PersistenceError {
+	public static Error exceptionEncountered(Exception ex) {
+		return new Error("PERSISTENCE-EXCEPTION-500", ex.getMessage());
+	}
+
+	public static Error notFound(Class<? extends EntityBase<?>> entityClass) {
+		return new Error("PERSISTENCE-NOT-FOUND-404", entityClass.getSimpleName() + " was not found in persistence");
+	}
+}

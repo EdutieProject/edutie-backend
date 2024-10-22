@@ -2,9 +2,9 @@ package com.edutie.backend.api.v1.testing;
 
 import com.edutie.backend.api.common.*;
 import com.edutie.backend.domain.administration.UserId;
-import com.edutie.backend.infrastucture.authorization.administrator.AdministratorAuthorization;
-import com.edutie.backend.infrastucture.authorization.educator.EducatorAuthorization;
-import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import com.edutie.backend.infrastructure.authorization.administrator.AdministratorAuthorization;
+import com.edutie.backend.infrastructure.authorization.educator.EducatorAuthorization;
+import com.edutie.backend.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import validation.Result;
 import validation.WrapperResult;
