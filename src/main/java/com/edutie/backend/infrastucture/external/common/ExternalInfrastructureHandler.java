@@ -45,6 +45,7 @@ public class ExternalInfrastructureHandler<TOutputDomainEntity, TExternalService
     public WrapperResult<TOutputDomainEntity> handle(TExternalServiceRequest requestBody, Class<TExternalServiceResponse> responseClass) {
         try {
             String serializedBody = requestObjectMapper
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                     .registerModule(new JavaTimeModule())
                     .writeValueAsString(requestBody);
 

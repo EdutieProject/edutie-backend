@@ -11,6 +11,7 @@ import com.edutie.backend.infrastucture.external.llm.LargeLanguageModelService;
 import com.edutie.backend.infrastucture.external.llm.dto.learningresource.LearningResourceCreationDto;
 import com.edutie.backend.infrastucture.external.llm.dto.learningresult.LearningResultCreationDto;
 import com.edutie.backend.infrastucture.external.llm.dto.randomfact.RandomFactDto;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
         final String RANDOM_FACT_LLM_URL = LLM_SERVICE_HOST + "/random-fact";
         return new ExternalInfrastructureHandler<RandomFact, RandomFactGenerationSchema, RandomFactDto>(this.getClass())
                 .setActionUrl(RANDOM_FACT_LLM_URL)
+                .disableSerializationFeatures(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                 .handle(randomFactGenerationSchema, RandomFactDto.class);
     }
 }
