@@ -6,12 +6,13 @@ import com.edutie.backend.domainservice.personalization.learningresult.schema.As
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.infrastucture.external.common.ExternalService;
 import validation.WrapperResult;
 
 /**
  * Service for interaction with externally implemented LLM.
  */
-public interface LargeLanguageModelService {
+public interface LargeLanguageModelService extends ExternalService {
     /**
      * Generates a learning resource based on the provided schema
      *
