@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.common.external.dto;
+package com.edutie.backend.infrastucture.external.common.dto;
 
 /**
  * A DTO usually defined in the external service incoming to the Edutie backend app.

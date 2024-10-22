@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.llm.implementation;
+package com.edutie.backend.infrastucture.external.llm.implementation;
 
 import validation.Error;
 

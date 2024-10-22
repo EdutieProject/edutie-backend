@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.knowledgemap;
+package com.edutie.backend.infrastucture.external.knowledgemap;
 
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;

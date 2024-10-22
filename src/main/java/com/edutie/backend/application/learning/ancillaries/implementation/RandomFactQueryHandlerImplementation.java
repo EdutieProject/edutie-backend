@@ -4,7 +4,7 @@ import com.edutie.backend.application.learning.ancillaries.RandomFactQueryHandle
 import com.edutie.backend.application.learning.ancillaries.queries.RandomFactQuery;
 import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
-import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
+import com.edutie.backend.infrastucture.external.llm.LargeLanguageModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import validation.WrapperResult;

@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.llm.dto.learningresult;
+package com.edutie.backend.infrastucture.external.llm.dto.learningresult;
 
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
@@ -6,7 +6,7 @@ import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackTy
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
-import com.edutie.backend.infrastucture.common.external.dto.ExternalInfrastructureDto;
+import com.edutie.backend.infrastucture.external.common.dto.ExternalInfrastructureDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;

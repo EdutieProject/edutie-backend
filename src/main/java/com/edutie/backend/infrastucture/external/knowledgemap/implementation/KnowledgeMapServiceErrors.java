@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.knowledgemap.implementation;
+package com.edutie.backend.infrastucture.external.knowledgemap.implementation;
 
 import validation.Error;
 

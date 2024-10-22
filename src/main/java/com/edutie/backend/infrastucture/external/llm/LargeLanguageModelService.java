@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.llm;
+package com.edutie.backend.infrastucture.external.llm;
 
 import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;

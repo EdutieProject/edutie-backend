@@ -1,9 +1,9 @@
-package com.edutie.backend.infrastucture.knowledgemap.implementation;
+package com.edutie.backend.infrastucture.external.knowledgemap.implementation;
 
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
-import com.edutie.backend.infrastucture.knowledgemap.dto.KnowledgeCorrelationCreationDto;
+import com.edutie.backend.infrastucture.external.knowledgemap.KnowledgeMapService;
+import com.edutie.backend.infrastucture.external.knowledgemap.dto.KnowledgeCorrelationCreationDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;

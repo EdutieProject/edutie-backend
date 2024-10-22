@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.llm.implementation;
+package com.edutie.backend.infrastucture.external.llm.implementation;
 
 import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
@@ -6,9 +6,9 @@ import com.edutie.backend.domainservice.personalization.learningresult.schema.As
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
-import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
-import com.edutie.backend.infrastucture.llm.dto.learningresource.LearningResourceCreationDto;
-import com.edutie.backend.infrastucture.llm.dto.learningresult.LearningResultCreationDto;
+import com.edutie.backend.infrastucture.external.llm.LargeLanguageModelService;
+import com.edutie.backend.infrastucture.external.llm.dto.learningresource.LearningResourceCreationDto;
+import com.edutie.backend.infrastucture.external.llm.dto.learningresult.LearningResultCreationDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

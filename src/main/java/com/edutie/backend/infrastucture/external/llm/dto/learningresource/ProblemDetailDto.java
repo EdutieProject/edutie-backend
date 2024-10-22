@@ -1,4 +1,4 @@
-package com.edutie.backend.infrastucture.llm.dto.learningresource;
+package com.edutie.backend.infrastucture.external.llm.dto.learningresource;
 
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.fasterxml.jackson.annotation.*;

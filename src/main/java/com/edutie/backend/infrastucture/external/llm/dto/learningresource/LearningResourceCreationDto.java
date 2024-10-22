@@ -1,11 +1,11 @@
-package com.edutie.backend.infrastucture.llm.dto.learningresource;
+package com.edutie.backend.infrastucture.external.llm.dto.learningresource;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
-import com.edutie.backend.infrastucture.common.external.dto.ExternalInfrastructureDto;
+import com.edutie.backend.infrastucture.external.common.dto.ExternalInfrastructureDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Set;
