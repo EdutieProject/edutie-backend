@@ -34,7 +34,6 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private TheoryPersonalizedDetails theoryDetails;
     @JsonIgnore
     private Student studentMetadata;
-    @Nullable
     private LearningResourceDefinitionId learningResourceDefinitionId;
 
     /**

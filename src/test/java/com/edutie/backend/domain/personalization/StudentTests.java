@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.*;
 
 @SpringBootTest
-public class StudentLearningHistoryTests {
+public class StudentTests {
 	private final UserId userId = new UserId();
 	private final Educator educator = Educator.create(userId, Administrator.create(userId));
 

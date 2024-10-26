@@ -35,7 +35,12 @@ public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId
     @Column(columnDefinition = "TEXT")
     private String reportText;
 
-    public static SolutionSubmission create(Student student, LearningResource learningResource, String reportText, int hintsRevealed) {
+    public static SolutionSubmission create(
+            Student student,
+            LearningResource learningResource,
+            String reportText,
+            int hintsRevealed
+    ) {
         SolutionSubmission solutionSubmission = new SolutionSubmission();
         solutionSubmission.setId(new SolutionSubmissionId());
         solutionSubmission.setCreatedBy(student.getOwnerUserId());

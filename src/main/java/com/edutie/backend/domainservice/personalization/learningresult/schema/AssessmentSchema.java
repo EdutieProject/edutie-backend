@@ -29,13 +29,12 @@ public class AssessmentSchema {
     /**
      * Creates assessment schema
      *
-     * @param student            student profile
      * @param solutionSubmission solution submission
      * @return new Assessment Schema
      */
-    public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission) {
+    public static AssessmentSchema create(SolutionSubmission solutionSubmission) {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
-        assessmentSchema.setStudent(student);
+        assessmentSchema.setStudent(solutionSubmission.getStudent());
         assessmentSchema.setSolutionSubmission(solutionSubmission);
         assessmentSchema.setQualifiedRequirements(solutionSubmission.getLearningResource().getQualifiedRequirements());
         assessmentSchema.setLearningResourceDefinitionId(solutionSubmission.getLearningResource().getDefinitionId());
