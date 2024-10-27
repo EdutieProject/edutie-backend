@@ -11,7 +11,6 @@ import com.edutie.backend.domain.personalization.learningresult.valueobjects.Fee
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.edutie.backend.mocks.LearningResourceMocks;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +27,6 @@ public class LearningResultTests {
     @Test
     public void isSuccessfulFalseTest() {
         LearningResult learningResult = LearningResult.create(
-                student,
                 SolutionSubmission.create(student, null, "Report text", 0),
                 new Feedback("That is a feedback", FeedbackType.NEUTRAL),
                 Set.of(
@@ -43,7 +41,6 @@ public class LearningResultTests {
     @Test
     public void isSuccessfulTrueTest() {
         LearningResult learningResult = LearningResult.create(
-                student,
                 SolutionSubmission.create(student, null, "Report text", 0),
                 new Feedback("That is a feedback", FeedbackType.NEUTRAL),
                 Set.of(

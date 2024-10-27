@@ -21,7 +21,7 @@ public interface LearningResultPersistence extends Persistence<LearningResult, L
      * @param amount    learning result amount
      * @return Wrapper Result of Learning Results
      */
-    WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate);
+    WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate);
 
     /**
      * Provides learning results associated with certain learning resource definition id created by given student.

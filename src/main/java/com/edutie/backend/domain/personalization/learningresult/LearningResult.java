@@ -11,10 +11,7 @@ import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,12 +26,13 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class LearningResult extends AuditableEntityBase<LearningResultId> {
     @OneToMany(targetEntity = Assessment.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private final Set<Assessment> assessments = new HashSet<>();
     @Embedded
     private Feedback feedback = new Feedback();
-    @ManyToOne(targetEntity = SolutionSubmission.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = SolutionSubmission.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
     private SolutionSubmission solutionSubmission;
@@ -47,22 +45,20 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     /**
      * Recommended constructor associating learning result with Student and solution submission
      *
-     * @param student            student reference
      * @param solutionSubmission solution submission reference
      * @param feedback           feedback
      * @param assessments        assessments
      * @return new Learning Result
      */
     public static LearningResult create(
-            Student student,
             SolutionSubmission solutionSubmission,
             Feedback feedback,
             Set<Assessment> assessments
     ) {
         LearningResult learningResult = new LearningResult();
         learningResult.setId(new LearningResultId());
-        learningResult.setCreatedBy(student.getOwnerUserId());
-        learningResult.setStudent(student);
+        learningResult.setCreatedBy(solutionSubmission.getStudent().getOwnerUserId());
+        learningResult.setStudent(solutionSubmission.getStudent());
         learningResult.setSolutionSubmission(solutionSubmission);
         learningResult.setFeedback(feedback);
         learningResult.assessments.addAll(assessments);

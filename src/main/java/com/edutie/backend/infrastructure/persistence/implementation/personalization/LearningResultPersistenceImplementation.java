@@ -59,15 +59,15 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
      * @return Wrapper Result of Learning Results
      */
     @Override
-    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate) {
+    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
         try {
             Optional<Student> student = studentRepository.findById(studentId);
             if (student.isEmpty())
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
             List<LearningResult> learningResults;
-            if (maxDate != null)
-                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOnDesc(
-                        student.get(), maxDate, amount == null ? Limit.unlimited() : Limit.of(amount)
+            if (maxPastDate != null)
+                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnAfterOrderByCreatedOnDesc(
+                        student.get(), maxPastDate, amount == null ? Limit.unlimited() : Limit.of(amount)
                 );
             else
                 learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOnDesc(student.get(), Limit.of(amount));

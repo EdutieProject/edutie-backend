@@ -51,7 +51,6 @@ public class ExternalServiceMocks {
             public WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema) {
                 Set<LearningRequirementId> learningRequirementIds = assessmentSchema.getQualifiedRequirements().stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
                 LearningResult learningResult = LearningResult.create(
-                        assessmentSchema.getStudent(),
                         assessmentSchema.getSolutionSubmission(),
                         new Feedback("Great!", FeedbackType.POSITIVE),
                         learningRequirementIds.stream().map(

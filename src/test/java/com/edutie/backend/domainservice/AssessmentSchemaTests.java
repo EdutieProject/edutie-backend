@@ -39,7 +39,7 @@ public class AssessmentSchemaTests {
 
     private final LearningResultPersistence learningResultPersistence = new LearningResultPersistence() {
         @Override
-        public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate) {
+        public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
             return WrapperResult.successWrapper(List.of());
         }
 
