@@ -22,6 +22,8 @@ public class AdministratorAuthorizationImplementation implements AdministratorAu
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	private final AdministratorRepository administratorRepository;
 
+	private static final String IDENTITY_PROVIDER_EDUTIE_ADMIN_ROLE = "edutie-admin";
+
 	@Override
 	public Result authorize(UserId userId) {
 		return administratorRepository.findByOwnerUserId(userId).isPresent() ? Result.success() : Result.failure(AuthorizationError.roleExpected(Administrator.class));
@@ -33,10 +35,10 @@ public class AdministratorAuthorizationImplementation implements AdministratorAu
 	 * @param authentication authentication token
 	 */
 	@Override
-	public void injectRoles(JwtAuthenticationToken authentication) {
+	public synchronized void injectRoles(JwtAuthenticationToken authentication) {
 		UserId userId = new UserId(UUID.fromString(authentication.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
 
-		boolean tokenHasAdminRole = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(o -> o.equals("edutie-admin"));
+		boolean tokenHasAdminRole = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).anyMatch(o -> o.equals(IDENTITY_PROVIDER_EDUTIE_ADMIN_ROLE));
 		boolean noAdminRoleInEdutie = administratorRepository.findByOwnerUserId(userId).isEmpty();
 
 		if (tokenHasAdminRole && noAdminRoleInEdutie) {
