@@ -1,6 +1,9 @@
 package com.edutie.backend.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
@@ -8,6 +11,7 @@ import com.edutie.backend.domain.personalization.learningresult.persistence.Lear
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
+import com.edutie.backend.mocks.LearningResourceMocks;
 import com.edutie.backend.mocks.MockUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +30,8 @@ public class LearningResultPersistenceTests {
     private MockUser mockUser;
     @Autowired
     private LearningResultPersistence learningResultPersistence;
+    @Autowired
+    private LearningResourcePersistence learningResourcePersistence;
 
     @BeforeEach
     public void testSetup() {
@@ -67,5 +73,62 @@ public class LearningResultPersistenceTests {
 
         Assertions.assertTrue(learningResultsWrapper.isSuccess());
         Assertions.assertFalse(learningResultsWrapper.getValue().contains(learningResult));
+    }
+
+    @Test
+    public void getLearningResultsOfStudentByLearningResourceDefinitionIdSingleTest() {
+        LearningResource sampleLearningResource = LearningResourceMocks.sampleLearningResource(
+                mockUser.getStudentProfile(),
+                learningResultPersistence,
+                mockUser.getEducatorProfile()
+        );
+        learningResourcePersistence.save(sampleLearningResource).throwIfFailure();
+
+        LearningResult learningResult = LearningResult.create(
+                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
+                new Feedback("Feedback", FeedbackType.POSITIVE),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+        );
+        learningResultPersistence.save(learningResult).throwIfFailure();
+
+        WrapperResult<List<LearningResult>> learningResultsWrapper = learningResultPersistence.getLearningResultsOfStudentByLearningResourceDefinitionId(
+                mockUser.getStudentProfile().getId(), sampleLearningResource.getDefinitionId()
+        );
+        Assertions.assertTrue(learningResultsWrapper.isSuccess());
+        Assertions.assertFalse(learningResultsWrapper.getValue().isEmpty());
+        Assertions.assertTrue(learningResultsWrapper.getValue().contains(learningResult));
+     }
+
+    @Test
+    public void getLearningResultsOfStudentByLearningResourceDefinitionIdEmptyTest() {
+        LearningResource sampleLearningResource = LearningResourceMocks.sampleLearningResource(
+                mockUser.getStudentProfile(),
+                learningResultPersistence,
+                mockUser.getEducatorProfile()
+        );
+        learningResourcePersistence.save(sampleLearningResource).throwIfFailure();
+
+        LearningResult learningResult = LearningResult.create(
+                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
+                new Feedback("Feedback", FeedbackType.POSITIVE),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+        );
+        learningResultPersistence.save(learningResult).throwIfFailure();
+
+        WrapperResult<List<LearningResult>> learningResultsWrapper = learningResultPersistence.getLearningResultsOfStudentByLearningResourceDefinitionId(
+                mockUser.getStudentProfile().getId(), new LearningResourceDefinitionId()
+        );
+        Assertions.assertTrue(learningResultsWrapper.isSuccess());
+        Assertions.assertTrue(learningResultsWrapper.getValue().isEmpty());
+    }
+
+    @Test
+    public void getLearningResultsOfStudentByKnowledgeSubjectIdSingleTest() {
+
+    }
+
+    @Test
+    public void getLearningResultsOfStudentByKnowledgeSubjectIdEmptyTest() {
+
     }
 }
