@@ -5,7 +5,7 @@ import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.ancillaries.RandomFactQueryHandler;
 import com.edutie.backend.application.learning.ancillaries.queries.RandomFactQuery;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
-import com.edutie.backend.infrastucture.authorization.student.StudentAuthorization;
+import com.edutie.backend.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -16,8 +16,8 @@ import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackTy
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
-import com.edutie.backend.infrastucture.knowledgemap.KnowledgeMapService;
-import com.edutie.backend.infrastucture.llm.LargeLanguageModelService;
+import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
+import com.edutie.backend.infrastructure.external.llm.LargeLanguageModelService;
 import validation.WrapperResult;
 
 import java.util.Set;
@@ -51,7 +51,6 @@ public class ExternalServiceMocks {
             public WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema) {
                 Set<LearningRequirementId> learningRequirementIds = assessmentSchema.getQualifiedRequirements().stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
                 LearningResult learningResult = LearningResult.create(
-                        assessmentSchema.getStudent(),
                         assessmentSchema.getSolutionSubmission(),
                         new Feedback("Great!", FeedbackType.POSITIVE),
                         learningRequirementIds.stream().map(
@@ -63,12 +62,6 @@ public class ExternalServiceMocks {
                 return WrapperResult.successWrapper(learningResult);
             }
 
-            /**
-             * Generates a random fact on the provided schema
-             *
-             * @param randomFactGenerationSchema random fact generation schema
-             * @return Wrapper Result of Random Fact
-             */
             @Override
             public WrapperResult<RandomFact> generateRandomFact(RandomFactGenerationSchema randomFactGenerationSchema) {
                 return WrapperResult.successWrapper(new RandomFact("Mount Everest is the highest mountain in the world"));

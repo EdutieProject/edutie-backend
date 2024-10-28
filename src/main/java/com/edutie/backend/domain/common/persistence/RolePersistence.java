@@ -4,8 +4,9 @@ import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.common.base.identity.Identifier;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.infrastucture.persistence.PersistenceError;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.common.RoleRepository;
+import com.edutie.backend.infrastructure.authorization.AuthorizationException;
+import com.edutie.backend.infrastructure.persistence.PersistenceError;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.common.RoleRepository;
 import validation.Result;
 
 import java.util.NoSuchElementException;
@@ -28,7 +29,11 @@ public interface RolePersistence<TEntity extends Role<TId>, TId extends Identifi
      * @return Role profile of a user
      */
     default TEntity getByAuthorizedUserId(UserId userId) {
-        return getRepository().findByOwnerUserId(userId).isPresent() ? getRepository().findByOwnerUserId(userId).get() : null;
+        try {
+            return getRepository().findByOwnerUserId(userId).get();
+        } catch (NoSuchElementException unused) {
+            throw new AuthorizationException(this.getClass());
+        }
     }
 
     /**

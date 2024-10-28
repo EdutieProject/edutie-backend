@@ -15,7 +15,7 @@ Educator profile is the user profile responsible for creating the learning mater
 
 ### Educator type
 
-Educator type represents the rank of the educator
+Educator type represents the rank and the privileges of the educator
 
 ## References
 

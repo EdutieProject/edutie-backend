@@ -2,24 +2,35 @@ package com.edutie.backend.infrastructure.persistence.implementation.profiles;
 
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
+import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
+import com.edutie.backend.mocks.MockUser;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 
 @SpringBootTest
 public class RolePersistenceTests {
-	private final UserId userId = new UserId();
-	private final Administrator administrator = Administrator.create(new UserId());
+	@Autowired
+	private MockUser mockUser;
+	@Autowired
+	AdministratorPersistence administratorPersistence;
 	@Autowired
 	private EducatorPersistence educatorPersistence;
 
+	@BeforeEach
+	public void testSetup() {
+		mockUser.saveToPersistence();
+	}
+
 	@Test
 	public void getByAuthorizedUserIdTest() {
-		Educator educator = Educator.create(userId, administrator);
+		UserId newUserId = new UserId();
+		Educator educator = Educator.create(newUserId, mockUser.getAdministratorProfile());
 		assert educatorPersistence.save(educator).isSuccess();
 
-		assert educatorPersistence.getByAuthorizedUserId(userId).equals(educator);
+		assert educatorPersistence.getByAuthorizedUserId(newUserId).equals(educator);
 	}
 }

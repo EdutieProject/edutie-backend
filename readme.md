@@ -10,17 +10,19 @@ The structure of the dev-docs:
 
 ### `/architecture`
 
-This folder contains documentation regarding the overall project architecture, encompassing also different
+This folder contains documentation regarding the overall project architecture, describing different
 repositories and sub-systems as well as the communication with them.
 
 ### `/auth`
 
-This folder documents authentication and authorization used in the application.
+This folder contains documents about the authentication and authorization used in the application.
 
 ### `/edutie`
 
-This folder contains documentation of the Edutie application. This part defines the domain entities as well as the 
+This folder contains documentation of the Edutie domain and application. This part defines the entities as well as the 
 business flows in the application.
+
+Business flows are implemented as concrete use case handlers and defined entities are implemented as aggregates.
 
 ## OpenApi documentation
 

@@ -4,6 +4,7 @@ import com.edutie.backend.domain.education.learningrequirement.entities.Elementa
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domainservice.personalization.common.PersonalizationSchema;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -19,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AssessmentSchema {
+public class AssessmentSchema implements PersonalizationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     @JsonIgnore
     private Student student;
@@ -29,13 +30,12 @@ public class AssessmentSchema {
     /**
      * Creates assessment schema
      *
-     * @param student            student profile
      * @param solutionSubmission solution submission
      * @return new Assessment Schema
      */
-    public static AssessmentSchema create(Student student, SolutionSubmission solutionSubmission) {
+    public static AssessmentSchema create(SolutionSubmission solutionSubmission) {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
-        assessmentSchema.setStudent(student);
+        assessmentSchema.setStudent(solutionSubmission.getStudent());
         assessmentSchema.setSolutionSubmission(solutionSubmission);
         assessmentSchema.setQualifiedRequirements(solutionSubmission.getLearningResource().getQualifiedRequirements());
         assessmentSchema.setLearningResourceDefinitionId(solutionSubmission.getLearningResource().getDefinitionId());

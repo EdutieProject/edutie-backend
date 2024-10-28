@@ -4,7 +4,7 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.backend.infrastucture.persistence.jpa.repositories.*;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.*;

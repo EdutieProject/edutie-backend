@@ -1,6 +1,7 @@
 # Architecture
 
-Edutie application architecture consists of multiple systems which have their defined responsibilities.
+Edutie application is made in the monolith-with-satellites style, where certain tasks are delegated to the stateless
+microservices that are designed to perform a task and provide a value to for the Edutie Backend app. 
 
 These are the systems with their responsibilities described:
 
@@ -30,7 +31,7 @@ susceptible to immense conceptual changes, the general idea states that we abstr
 
 The service responsible for knowledge correlation identification. This system was extracted because of uncertainty
 regarding
-the used technology. Currently, it is based on wikipedia API and graph-like links structure between wikipedia articles.
+the used technology. Currently, it is based on wikimedia API and graph-like links structure between wikipedia articles.
 
 ## LLM Service
 

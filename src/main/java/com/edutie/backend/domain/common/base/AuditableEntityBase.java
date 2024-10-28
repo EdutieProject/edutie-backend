@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +22,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public abstract class AuditableEntityBase<TId extends Identifier<?>> extends EntityBase<TId> {
     @Setter(AccessLevel.PRIVATE)
-    @Column(name = "created_on", nullable = false)
+    @Column(name = "created_on", nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime createdOn = LocalDateTime.now();
     private LocalDateTime updatedOn;
     @Embedded
