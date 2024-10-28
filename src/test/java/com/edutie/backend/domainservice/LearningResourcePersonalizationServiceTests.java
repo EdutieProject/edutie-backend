@@ -30,6 +30,11 @@ public class LearningResourcePersonalizationServiceTests {
     }
 
     @Test
+    public void personalizationSchemaTest() {
+        //TODO after personalization v 2 implementation
+    }
+
+    @Test
     public void personalizationServiceTest() {
         //TODO after personalization v 2 implementation
     }

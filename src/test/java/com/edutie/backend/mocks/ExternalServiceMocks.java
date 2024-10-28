@@ -62,12 +62,6 @@ public class ExternalServiceMocks {
                 return WrapperResult.successWrapper(learningResult);
             }
 
-            /**
-             * Generates a random fact on the provided schema
-             *
-             * @param randomFactGenerationSchema random fact generation schema
-             * @return Wrapper Result of Random Fact
-             */
             @Override
             public WrapperResult<RandomFact> generateRandomFact(RandomFactGenerationSchema randomFactGenerationSchema) {
                 return WrapperResult.successWrapper(new RandomFact("Mount Everest is the highest mountain in the world"));
