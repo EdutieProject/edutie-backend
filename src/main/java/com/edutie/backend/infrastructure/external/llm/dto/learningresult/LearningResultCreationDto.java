@@ -28,7 +28,6 @@ public class LearningResultCreationDto implements ExternalInfrastructureDto<Lear
     @Override
     public LearningResult intoDomainEntity(AssessmentSchema assessmentSchema) {
         return LearningResult.create(
-                assessmentSchema.getStudent(),
                 assessmentSchema.getSolutionSubmission(),
                 new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel)),
                 assessments.stream().map(o -> Assessment.create(

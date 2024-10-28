@@ -16,6 +16,6 @@ public class LearningResultPersonalizationServiceImplementation implements Learn
     private final LargeLanguageModelService largeLanguageModelService;
     @Override
     public WrapperResult<LearningResult> personalize(SolutionSubmission solutionSubmission, Student student) {
-        return largeLanguageModelService.generateLearningResult(AssessmentSchema.create(student, solutionSubmission));
+        return largeLanguageModelService.generateLearningResult(AssessmentSchema.create(solutionSubmission));
     }
 }

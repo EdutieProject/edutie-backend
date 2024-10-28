@@ -36,7 +36,7 @@ public class EducatorAuthorizationImplementation implements EducatorAuthorizatio
 	 * @param authentication authentication token
 	 */
 	@Override
-	public void injectRoles(JwtAuthenticationToken authentication) {
+	public synchronized void injectRoles(JwtAuthenticationToken authentication) {
 		UserId userId = new UserId(UUID.fromString(authentication.getTokenAttributes().get(JwtClaimNames.SUB).toString()));
 		boolean adminRoleIsInToken = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList().contains("edutie-admin");
 		boolean adminProfileDoesNotExist = administratorRepository.findByOwnerUserId(userId).isEmpty();

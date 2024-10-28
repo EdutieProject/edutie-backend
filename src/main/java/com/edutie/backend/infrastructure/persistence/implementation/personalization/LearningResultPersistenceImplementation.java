@@ -10,7 +10,6 @@ import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.infrastructure.persistence.PersistenceError;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
-import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResourceDefinitionRepository;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResultRepository;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,6 @@ import java.util.Optional;
 public class LearningResultPersistenceImplementation implements LearningResultPersistence {
     private final LearningResultRepository learningResultRepository;
     private final StudentRepository studentRepository;
-    private final LearningResourceDefinitionRepository learningResourceDefinitionRepository;
     private final LearningRequirementRepository learningRequirementRepository;
 
     /**
@@ -61,15 +59,15 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
      * @return Wrapper Result of Learning Results
      */
     @Override
-    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxDate) {
+    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
         try {
             Optional<Student> student = studentRepository.findById(studentId);
             if (student.isEmpty())
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
             List<LearningResult> learningResults;
-            if (maxDate != null)
-                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOnDesc(
-                        student.get(), maxDate, amount == null ? Limit.unlimited() : Limit.of(amount)
+            if (maxPastDate != null)
+                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnAfterOrderByCreatedOnDesc(
+                        student.get(), maxPastDate, amount == null ? Limit.unlimited() : Limit.of(amount)
                 );
             else
                 learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOnDesc(student.get(), Limit.of(amount));

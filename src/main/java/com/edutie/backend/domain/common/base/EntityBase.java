@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +22,10 @@ import java.io.Serializable;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @MappedSuperclass
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class EntityBase<TId extends Identifier<?> & Serializable> {
     @EmbeddedId
     @AttributeOverride(name = "identifierValue", column = @Column(name = "id"))
+    @EqualsAndHashCode.Include
     private TId id;
 }

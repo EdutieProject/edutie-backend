@@ -16,7 +16,7 @@ import java.util.List;
 public interface LearningResultRepository extends JpaRepository<LearningResult, LearningResultId> {
     List<LearningResult> findLearningResultsByStudentOrderByCreatedOnDesc(Student student, Limit limit);
 
-    List<LearningResult> findLearningResultsByStudentAndCreatedOnGreaterThanOrderByCreatedOnDesc(Student student, LocalDateTime localDate, Limit limit);
+    List<LearningResult> findLearningResultsByStudentAndCreatedOnAfterOrderByCreatedOnDesc(Student student, LocalDateTime localDate, Limit limit);
 
     List<LearningResult> findLearningResultsBySolutionSubmissionLearningResourceDefinitionIdAndStudent(LearningResourceDefinitionId solutionSubmission_learningResource_definitionId, Student student);
 

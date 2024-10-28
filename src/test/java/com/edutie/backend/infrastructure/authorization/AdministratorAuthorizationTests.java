@@ -31,7 +31,7 @@ public class AdministratorAuthorizationTests {
 	public void roleInjectionSuccessTest() {
 		var jwt = Jwt.withTokenValue("token").header("alg", "none").claim("sub", userId.identifierValue().toString()).build();
 		var authorities = AuthorityUtils.createAuthorityList("edutie-admin");
-		JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(null, null);
+		JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt, authorities);
 		administratorAuthorization.injectRoles(jwtAuthenticationToken);
 
 		assert administratorPersistence.getByAuthorizedUserId(userId) != null;
@@ -40,7 +40,7 @@ public class AdministratorAuthorizationTests {
 	@Test
 	public void roleInjectionFailureTest() {
 		var jwt = Jwt.withTokenValue("token").header("alg", "none").claim("sub", userId.identifierValue().toString()).build();
-		JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(null);
+		JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(jwt);
 		administratorAuthorization.injectRoles(jwtAuthenticationToken);
 
 		assertThrows(Exception.class, () -> administratorPersistence.getByAuthorizedUserId(userId));
