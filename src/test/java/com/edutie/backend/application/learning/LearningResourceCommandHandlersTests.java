@@ -12,6 +12,7 @@ import com.edutie.backend.domain.education.learningrequirement.persistence.Learn
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
@@ -129,6 +130,7 @@ public class LearningResourceCommandHandlersTests {
         WrapperResult<LearningResource> learningResourceWrapper = createRandomFactDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
 
         Assertions.assertTrue(learningResourceWrapper.isSuccess());
+        Assertions.assertEquals(DefinitionType.DYNAMIC, learningResourceWrapper.getValue().getDefinitionType());
         Assertions.assertFalse(learningResourceWrapper.getValue().getQualifiedRequirements().isEmpty());
     }
 }
