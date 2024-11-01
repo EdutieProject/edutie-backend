@@ -3,8 +3,8 @@ package com.edutie.backend.domainservice.personalization.learningresource.schema
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -13,7 +13,6 @@ import com.edutie.backend.domainservice.personalization.common.PersonalizationSc
 import com.edutie.backend.domainservice.personalization.learningresource.schema.details.ActivityPersonalizedDetails;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.details.TheoryPersonalizedDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +34,10 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private TheoryPersonalizedDetails theoryDetails;
     @JsonIgnore
     private Student studentMetadata;
+    @JsonIgnore
     private LearningResourceDefinitionId learningResourceDefinitionId;
+    @JsonIgnore
+    private DefinitionType learningResourceDefinitionType;
 
     /**
      * Creation method for learning resource generation schema
@@ -53,6 +55,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
             LearningResourceDefinitionBase learningResourceDefinition
     ) {
         LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
+        learningResourceGenerationSchema.setLearningResourceDefinitionType(learningResourceDefinition.getDefinitionType());
         learningResourceGenerationSchema.setStudentMetadata(student);
         learningResourceGenerationSchema.setTheoryDetails(
                 TheoryPersonalizedDetails.create(learningResourceDefinition.getTheoryDetails(), student, learningResultPersistence, knowledgeCorrelations)

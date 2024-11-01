@@ -9,11 +9,10 @@ import com.edutie.backend.domain.education.learningrequirement.identities.Learni
 import com.edutie.backend.domain.personalization.common.AbsoluteDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@MappedSuperclass
 public abstract class LearningResourceDefinitionBase extends AuditableEntityBase<LearningResourceDefinitionId> implements AbsoluteDefinition {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     protected final Set<LearningRequirement> learningRequirements = new HashSet<>();
@@ -32,6 +32,12 @@ public abstract class LearningResourceDefinitionBase extends AuditableEntityBase
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     protected TheoryDetails theoryDetails;
 
+    /**
+     * Retrieves the definition type.
+     * @return
+     */
+    @JsonProperty("definitionType")
+    public abstract DefinitionType getDefinitionType();
 
     /**
      * Retrieves all knowledge subject ids assigned to the associated learning requirements

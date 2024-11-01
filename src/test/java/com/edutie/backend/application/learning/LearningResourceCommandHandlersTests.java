@@ -73,7 +73,6 @@ public class LearningResourceCommandHandlersTests {
                 studentPersistence,
                 learningResultPersistence,
                 learningRequirementPersistence,
-                learningResourceDefinitionPersistence,
                 learningResourcePersonalizationService,
                 learningResourcePersistence
         );
@@ -125,7 +124,7 @@ public class LearningResourceCommandHandlersTests {
     public void createRandomFactDynamicLearningResourceTest() {
         CreateRandomFactDynamicLearningResourceCommand command = new CreateRandomFactDynamicLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())
-                .randomFact("123456789");
+                .randomFact("A tortoise can weigh as much as 100 kilogrammes");
 
         WrapperResult<LearningResource> learningResourceWrapper = createRandomFactDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
 

@@ -1,28 +1,23 @@
 package com.edutie.backend.domain.personalization.learningresourcedefinition;
 
-import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.common.base.EducatorCreated;
-import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.personalization.common.AbsoluteDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Learning Resource Definition is a definition of how Learning Resource should be generated
@@ -75,15 +70,8 @@ public class LearningResourceDefinition extends LearningResourceDefinitionBase i
         );
     }
 
-    //TODO ? DO sth with this shit it should not be that way
-    public LearningResourceDefinition adjustRandomFactExercise(String randomFact) {
-        this.activityDetails.setExerciseDescription(
-                PromptFragment.of(String.format("""
-                        Exercise must be related to the provided random fact:
-                        <random-fact>%s</random-fact>
-                        Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
-                        All problems in this exercise should refer to the random fact and similar topics.
-                        """, randomFact)));
-        return this;
+    @Override
+    public DefinitionType getDefinitionType() {
+        return DefinitionType.STATIC;
     }
 }
