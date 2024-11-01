@@ -6,7 +6,9 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,5 +44,12 @@ public class Student extends Role<StudentId> {
 
     public List<LearningResult> getLearningHistoryByKnowledgeSubject(LearningResultPersistence persistence, KnowledgeSubjectId knowledgeSubjectId) {
         return persistence.getLearningResultsOfStudentByKnowledgeSubjectId(this.getId(), knowledgeSubjectId).getValue();
+    }
+
+    public List<Assessment> getLatestAssessmentsByMaxGrade(LearningResultPersistence persistence, Grade maxGrade) {
+        return persistence.getLatestResultsOfStudent(this.getId(), 10, LocalDateTime.now().minusDays(7)).getValue()
+                .stream().flatMap(o -> o.getAssessments().stream())
+                .filter(o -> o.getGrade().lessThanOrEqual(maxGrade))
+                .collect(Collectors.toList());
     }
 }

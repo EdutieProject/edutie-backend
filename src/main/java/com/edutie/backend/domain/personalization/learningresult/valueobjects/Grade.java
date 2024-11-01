@@ -17,4 +17,8 @@ public record Grade(
     public boolean greaterThanOrEqual(Grade grade) {
         return this.gradeNumber >= grade.gradeNumber;
     }
+
+    public boolean lessThanOrEqual(Grade grade) {
+        return this.gradeNumber <= grade.gradeNumber;
+    }
 }
