@@ -72,6 +72,7 @@ public class LearningResourceCommandHandlersTests {
         createRandomFactDynamicLearningResourceCommandHandler = new CreateRandomFactDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
                 learningResultPersistence,
+                learningRequirementPersistence,
                 learningResourceDefinitionPersistence,
                 learningResourcePersonalizationService,
                 learningResourcePersistence
@@ -122,20 +123,10 @@ public class LearningResourceCommandHandlersTests {
 
     @Test
     public void createRandomFactDynamicLearningResourceTest() {
-        // Create a resource definition
-        LearningRequirement relatedRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(relatedRequirement);
-        LearningResourceDefinition definition = LearningResourceDefinition.create(
-                mockUser.getEducatorProfile(),
-                PromptFragment.of("Theory DESC!"),
-                PromptFragment.of("Exercise DESC!"),
-                Set.of(relatedRequirement)
-        );
-        learningResourceDefinitionPersistence.save(definition).throwIfFailure();
-
         CreateRandomFactDynamicLearningResourceCommand command = new CreateRandomFactDynamicLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())
                 .randomFact("123456789");
+
         WrapperResult<LearningResource> learningResourceWrapper = createRandomFactDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
 
         Assertions.assertTrue(learningResourceWrapper.isSuccess());

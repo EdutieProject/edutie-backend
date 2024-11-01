@@ -48,9 +48,4 @@ public class LearningResourceDefinitionPersistenceImplementation implements Lear
 		Optional<List<LearningResourceDefinition>> learningResourceDefinitionList = educatorRepository.findById(educatorId).map(learningResourceDefinitionRepository::getByAuthorEducator);
 		return learningResourceDefinitionList.map(WrapperResult::successWrapper).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(Educator.class)));
 	}
-
-	@Override
-	public WrapperResult<LearningResourceDefinition> getAny() {
-		return Result.successWrapper(learningResourceDefinitionRepository.findRandom().get());
-	}
 }

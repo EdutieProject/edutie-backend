@@ -11,5 +11,4 @@ import java.util.List;
 public interface LearningResourceDefinitionPersistence extends Persistence<LearningResourceDefinition, LearningResourceDefinitionId> {
 
     WrapperResult<List<LearningResourceDefinition>> getByAuthorEducator(EducatorId educatorId);
-    WrapperResult<LearningResourceDefinition> getAny();
 }

@@ -1,5 +1,7 @@
 package com.edutie.backend.domain.personalization.learningresourcedefinition;
 
+import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.common.base.EducatorCreated;
 import com.edutie.backend.domain.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
@@ -7,10 +9,12 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.common.AbsoluteDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,16 +30,12 @@ import java.util.stream.Collectors;
  * the learning requirements are imperative regarding the LR creation.
  */
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
-public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<LearningResourceDefinitionId> implements AbsoluteDefinition {
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private final Set<LearningRequirement> learningRequirements = new HashSet<>();
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private ActivityDetails activityDetails;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private TheoryDetails theoryDetails;
+public class LearningResourceDefinition extends LearningResourceDefinitionBase implements EducatorCreated {
+    @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
+    @Setter(AccessLevel.PRIVATE)
+    private Educator authorEducator;
 
     public static LearningResourceDefinition create(
             Educator educator,
@@ -73,43 +73,6 @@ public class LearningResourceDefinition extends EducatorCreatedAuditableEntity<L
                 ActivityDetails.create(exerciseDescription, PromptFragment.empty()),
                 learningRequirements
         );
-    }
-
-    /**
-     * Retrieves all knowledge subject ids assigned to the associated learning requirements
-     *
-     * @return Set of knowledge subject ids
-     */
-    public Set<KnowledgeSubjectId> getKnowledgeSubjectIds() {
-        return learningRequirements.stream().map(LearningRequirement::getKnowledgeSubjectId).collect(Collectors.toSet());
-    }
-
-    /**
-     * Retrieves learning requirement of the given id if it is associated with this LRD.
-     *
-     * @param learningRequirementId learning requirement Id
-     * @return Optional Learning Requirement
-     */
-    public Optional<LearningRequirement> getLearningRequirementOfId(LearningRequirementId learningRequirementId) {
-        return learningRequirements.stream().filter(o -> o.getId().equals(learningRequirementId)).findFirst();
-    }
-
-    /**
-     * Adds learning requirement to this LRD
-     *
-     * @param learningRequirement learning requirement to add
-     */
-    public void addLearningRequirement(LearningRequirement learningRequirement) {
-        learningRequirements.add(learningRequirement);
-    }
-
-    /**
-     * Removes learning requirement given its id
-     *
-     * @param learningRequirementId learning requirement Id
-     */
-    public void removeLearningRequirement(LearningRequirementId learningRequirementId) {
-        learningRequirements.removeIf(o -> o.getId().equals(learningRequirementId));
     }
 
     //TODO ? DO sth with this shit it should not be that way

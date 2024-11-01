@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import validation.WrapperResult;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,7 +45,10 @@ public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
         Set<LearningRequirement> learningRequirements = student.getLatestAssessmentsByMaxGrade(learningResultPersistence, new Grade(3))
                 .stream().map(o -> learningRequirementPersistence.getById(o.getLearningRequirementId()).getValue()).collect(Collectors.toSet());
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(null, PromptFragment.empty(), PromptFragment.empty(), learningRequirements).adjustRandomFactExercise(command.randomFact());
+        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(null,
+                PromptFragment.empty(),
+                PromptFragment.empty(),
+                !learningRequirements.isEmpty() ? learningRequirements : new HashSet<>(learningRequirementPersistence.getAny(2).getValue())).adjustRandomFactExercise(command.randomFact());
         learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
         LearningResource learningResource = learningResourcePersonalizationService.personalize(learningResourceDefinition, student).getValue();
         learningResourcePersistence.save(learningResource).throwIfFailure();
