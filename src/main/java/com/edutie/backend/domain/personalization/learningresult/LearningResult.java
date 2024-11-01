@@ -94,4 +94,13 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
         return this.getAssessments().stream().allMatch(a -> a.getGrade().greaterThanOrEqual(Grade.SUCCESS_GRADE));
     }
 
+    /**
+     * Returns the average grade as a double
+     * @return average grade as double
+     */
+    @JsonProperty("averageGrade")
+    public double getAverageGrade() {
+        return (double) assessments.stream().map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).sum() / assessments.size();
+    }
+
 }
