@@ -4,6 +4,7 @@ import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrela
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -49,7 +50,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
             Student student,
             LearningResultPersistence learningResultPersistence,
             Set<KnowledgeCorrelation> knowledgeCorrelations,
-            LearningResourceDefinition learningResourceDefinition
+            LearningResourceDefinitionBase learningResourceDefinition
     ) {
         LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
         learningResourceGenerationSchema.setStudentMetadata(student);

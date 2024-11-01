@@ -1,10 +1,8 @@
 package com.edutie.backend.domainservice.personalization.learningresource;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.student.Student;
-import validation.WrapperResult;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
+import com.edutie.backend.domainservice.personalization.common.PersonalizationService;
 
-public interface LearningResourcePersonalizationService {
-    WrapperResult<LearningResource> personalize(LearningResourceDefinition learningResourceDefinition, Student student);
+public interface LearningResourcePersonalizationService extends PersonalizationService<LearningResource, LearningResourceDefinitionBase> {
 }
