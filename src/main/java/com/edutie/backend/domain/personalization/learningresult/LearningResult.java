@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
@@ -75,13 +76,23 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     }
 
     /**
-     * Getter added mainly for json serialization purposes. Retrieves associated LRD
+     * Getter added mainly for json serialization purposes. Retrieves associated LRD id
      *
-     * @return LRD
+     * @return Learning Resource Definition Identifier
      */
     @JsonProperty("learningResourceDefinitionId")
     public LearningResourceDefinitionId getLearningResourceDefinitionId() {
         return solutionSubmission.getLearningResource().getDefinitionId();
+    }
+
+    /**
+     * Getter added mainly for serialization purposes. Retrieves LRD type.
+     *
+     * @return LRD type.
+     */
+    @JsonProperty("learningResourceDefinitionType")
+    public DefinitionType getLearningResourceDefinitionType() {
+        return solutionSubmission.getLearningResource().getDefinitionType();
     }
 
     /**
@@ -96,6 +107,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
 
     /**
      * Returns the average grade as a double
+     *
      * @return average grade as double
      */
     @JsonProperty("averageGrade")

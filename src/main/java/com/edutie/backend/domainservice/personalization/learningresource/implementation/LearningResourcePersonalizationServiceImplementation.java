@@ -1,7 +1,7 @@
 package com.edutie.backend.domainservice.personalization.learningresource.implementation;
 
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
@@ -20,7 +20,7 @@ public class LearningResourcePersonalizationServiceImplementation implements Lea
     private final LargeLanguageModelService largeLanguageModelService;
 
     @Override
-    public WrapperResult<LearningResource> personalize(LearningResourceDefinition learningResourceDefinition, Student student) {
+    public WrapperResult<LearningResource> personalize(LearningResourceDefinitionBase learningResourceDefinition, Student student) {
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
                 student,
                 learningResultPersistence,

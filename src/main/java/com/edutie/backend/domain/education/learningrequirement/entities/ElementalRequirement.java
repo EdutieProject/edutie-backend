@@ -34,11 +34,6 @@ public class ElementalRequirement extends EntityBase<ElementalRequirementId> {
         return learningRequirement.getId();
     }
 
-    @JsonProperty("learningRequirementName")
-    String getLearningRequirementName() {
-        return learningRequirement.getName();
-    }
-
     public static ElementalRequirement create(LearningRequirement learningRequirement, PromptFragment requirementText, PromptFragment scientificDescription, int orderIndex) {
         ElementalRequirement elementalRequirement = new ElementalRequirement();
         elementalRequirement.setId(new ElementalRequirementId());
