@@ -12,8 +12,10 @@ import com.edutie.backend.domain.education.learningrequirement.persistence.Learn
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import com.edutie.backend.domainservice.personalization.learningresource.implementation.LearningResourcePersonalizationServiceImplementation;
@@ -69,10 +71,12 @@ public class LearningResourceCommandHandlersTests {
                 learningResourcePersistence,
                 learningResourcePersonalizationService
         );
+        // save the learning req for mocking purpose
+        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
         createRandomFactDynamicLearningResourceCommandHandler = new CreateRandomFactDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
-                learningResultPersistence,
-                learningResourceDefinitionPersistence,
+                (Student student) -> WrapperResult.successWrapper(Set.of(learningRequirement)),
                 learningResourcePersonalizationService,
                 learningResourcePersistence
         );
@@ -122,23 +126,14 @@ public class LearningResourceCommandHandlersTests {
 
     @Test
     public void createRandomFactDynamicLearningResourceTest() {
-        // Create a resource definition
-        LearningRequirement relatedRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(relatedRequirement);
-        LearningResourceDefinition definition = LearningResourceDefinition.create(
-                mockUser.getEducatorProfile(),
-                PromptFragment.of("Theory DESC!"),
-                PromptFragment.of("Exercise DESC!"),
-                Set.of(relatedRequirement)
-        );
-        learningResourceDefinitionPersistence.save(definition).throwIfFailure();
-
         CreateRandomFactDynamicLearningResourceCommand command = new CreateRandomFactDynamicLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())
-                .randomFact("123456789");
+                .randomFact("A tortoise can weigh as much as 100 kilogrammes");
+
         WrapperResult<LearningResource> learningResourceWrapper = createRandomFactDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
 
         Assertions.assertTrue(learningResourceWrapper.isSuccess());
+        Assertions.assertEquals(DefinitionType.DYNAMIC, learningResourceWrapper.getValue().getDefinitionType());
         Assertions.assertFalse(learningResourceWrapper.getValue().getQualifiedRequirements().isEmpty());
     }
 }

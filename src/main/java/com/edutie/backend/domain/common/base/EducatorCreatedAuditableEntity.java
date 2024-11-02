@@ -16,7 +16,7 @@ import lombok.Setter;
  */
 @Getter
 @MappedSuperclass
-public abstract class EducatorCreatedAuditableEntity<TId extends Identifier<?>> extends AuditableEntityBase<TId> {
+public abstract class EducatorCreatedAuditableEntity<TId extends Identifier<?>> extends AuditableEntityBase<TId> implements EducatorCreated {
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PROTECTED)
     private Educator authorEducator;

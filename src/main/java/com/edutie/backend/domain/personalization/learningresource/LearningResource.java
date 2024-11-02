@@ -5,6 +5,7 @@ import com.edutie.backend.domain.education.learningrequirement.entities.Elementa
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
@@ -31,8 +32,6 @@ import java.util.stream.Collectors;
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     @ManyToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
-    private LearningResourceDefinitionId definitionId;
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
     private StudentId studentId;
@@ -41,6 +40,9 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     @OneToOne(targetEntity = Theory.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Theory theory;
 
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
+    private LearningResourceDefinitionId definitionId;
+    private DefinitionType definitionType;
     /**
      * Recommended constructor that creates learning resource from L.R.G.S. and other different details.
      *
@@ -59,6 +61,7 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setCreatedBy(generationSchema.getStudentMetadata().getOwnerUserId());
         learningResource.setStudentId(generationSchema.getStudentMetadata().getId());
         learningResource.setDefinitionId(generationSchema.getLearningResourceDefinitionId());
+        learningResource.setDefinitionType(generationSchema.getLearningResourceDefinitionType());
         learningResource.setQualifiedRequirements(generationSchema.getQualifiedRequirements());
         learningResource.setActivity(activity);
         learningResource.setTheory(theory);

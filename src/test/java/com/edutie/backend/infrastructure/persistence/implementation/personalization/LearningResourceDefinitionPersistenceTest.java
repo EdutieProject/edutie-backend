@@ -37,14 +37,4 @@ class LearningResourceDefinitionPersistenceTest {
         assertTrue(definitionsWrapper.isSuccess());
         assertTrue(definitionsWrapper.getValue().contains(learningResourceDefinition));
     }
-
-    @Test
-    void getAny() {
-        LearningResourceDefinition learningResourceDefinition = LearningResourceMocks.sampleLearningResourceDefinition(mockUser.getEducatorProfile());
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-
-        WrapperResult<LearningResourceDefinition> definitionWrapper = learningResourceDefinitionPersistence.getAny();
-
-        assertTrue(definitionWrapper.isSuccess());
-    }
 }

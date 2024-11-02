@@ -22,14 +22,12 @@ public class LearningResultCreationDto implements ExternalInfrastructureDto<Lear
     private final Set<AssessmentDto> assessments = new HashSet<>();
     @JsonProperty
     private String feedbackText;
-    @JsonProperty
-    private String feedbackLevel;
 
     @Override
     public LearningResult intoDomainEntity(AssessmentSchema assessmentSchema) {
         return LearningResult.create(
                 assessmentSchema.getSolutionSubmission(),
-                new Feedback(feedbackText, FeedbackType.fromString(feedbackLevel)),
+                new Feedback(feedbackText, FeedbackType.NEUTRAL),
                 assessments.stream().map(o -> Assessment.create(
                         o.learningRequirementId,
                         new Grade(o.gradeNumber),
