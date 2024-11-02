@@ -12,6 +12,7 @@ import com.edutie.backend.domain.personalization.learningresult.persistence.Lear
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
+import com.edutie.backend.domainservice.personalization.learningrequirement.DynamicLearningRequirementSelectionService;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation implements CreateRandomFactDynamicLearningResourceCommandHandler {
     private final StudentPersistence studentPersistence;
-    private final LearningResultPersistence learningResultPersistence;
-    private final LearningRequirementPersistence learningRequirementPersistence;
+    private final DynamicLearningRequirementSelectionService learningRequirementSelectionService;
     private final LearningResourcePersonalizationService learningResourcePersonalizationService;
     private final LearningResourcePersistence learningResourcePersistence;
 
@@ -37,11 +37,9 @@ public class CreateRandomFactDynamicLearningResourceCommandHandlerImplementation
     public WrapperResult<LearningResource> handle(CreateRandomFactDynamicLearningResourceCommand command) {
         log.info("Creating dynamic learning resource for student user of id {} using a random fact:\n\"{}\"", command.studentUserId(), command.randomFact());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-        Set<LearningRequirement> learningRequirements = student.getLatestAssessmentsByMaxGrade(learningResultPersistence, new Grade(3))
-                .stream().map(o -> learningRequirementPersistence.getById(o.getLearningRequirementId()).getValue()).collect(Collectors.toSet());
         DynamicLearningResourceDefinition definition = DynamicLearningResourceDefinition.createRandomFact(
                 command.randomFact(),
-                !learningRequirements.isEmpty() ? learningRequirements : new HashSet<>(learningRequirementPersistence.getAny(2).getValue())
+                learningRequirementSelectionService.selectRequirementsForStudent(student).getValue()
         );
         LearningResource learningResource = learningResourcePersonalizationService.personalize(definition, student).getValue();
         learningResourcePersistence.save(learningResource).throwIfFailure();
