@@ -15,6 +15,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Lear
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import com.edutie.backend.domainservice.personalization.learningresource.implementation.LearningResourcePersonalizationServiceImplementation;
@@ -70,10 +71,12 @@ public class LearningResourceCommandHandlersTests {
                 learningResourcePersistence,
                 learningResourcePersonalizationService
         );
+        // save the learning req for mocking purpose
+        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
         createRandomFactDynamicLearningResourceCommandHandler = new CreateRandomFactDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
-                learningResultPersistence,
-                learningRequirementPersistence,
+                (Student student) -> WrapperResult.successWrapper(Set.of(learningRequirement)),
                 learningResourcePersonalizationService,
                 learningResourcePersistence
         );
