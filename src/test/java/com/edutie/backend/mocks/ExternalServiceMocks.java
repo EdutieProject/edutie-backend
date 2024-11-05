@@ -12,7 +12,6 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
@@ -52,7 +51,7 @@ public class ExternalServiceMocks {
                 Set<LearningRequirementId> learningRequirementIds = assessmentSchema.getQualifiedRequirements().stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
                 LearningResult learningResult = LearningResult.create(
                         assessmentSchema.getSolutionSubmission(),
-                        new Feedback("Great!", FeedbackType.POSITIVE),
+                        new Feedback("Great!"),
                         learningRequirementIds.stream().map(
                                 o -> Assessment.create(o, new Grade((int) (Math.random() * 6)),
                                         "Thats a feedback for a student",

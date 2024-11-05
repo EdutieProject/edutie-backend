@@ -2,7 +2,6 @@ package com.edutie.backend.infrastructure.external.llm.dto.learningresult;
 
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
@@ -27,7 +26,7 @@ public class LearningResultCreationDto implements ExternalInfrastructureDto<Lear
     public LearningResult intoDomainEntity(AssessmentSchema assessmentSchema) {
         return LearningResult.create(
                 assessmentSchema.getSolutionSubmission(),
-                new Feedback(feedbackText, FeedbackType.NEUTRAL),
+                new Feedback(feedbackText),
                 assessments.stream().map(o -> Assessment.create(
                         o.learningRequirementId,
                         new Grade(o.gradeNumber),

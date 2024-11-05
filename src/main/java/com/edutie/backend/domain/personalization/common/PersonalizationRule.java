@@ -2,6 +2,7 @@ package com.edutie.backend.domain.personalization.common;
 
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import lombok.Getter;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * related past assessments that could be used for personalization.
  */
 @Getter
-public abstract class PersonalizationRule {
-    private KnowledgeCorrelation knowledgeCorrelation;
-    private List<Assessment> relatedAssessments;
+public class PersonalizationRule {
+    private Feedback pastFeedback;
+    private PersonalizationRuleType type;
 }

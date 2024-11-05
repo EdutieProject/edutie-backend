@@ -13,7 +13,6 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.enti
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
@@ -83,7 +82,7 @@ public class LearningResultQueryHandlersTests {
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), learningResource, "Report", 0),
-                new Feedback("Feedback text", FeedbackType.POSITIVE),
+                new Feedback("Feedback text"),
                 learningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), "", List.of())).collect(Collectors.toSet())
         );
         learningResultPersistence.save(learningResult).throwIfFailure();

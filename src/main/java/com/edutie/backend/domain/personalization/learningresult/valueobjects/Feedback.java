@@ -1,15 +1,13 @@
 package com.edutie.backend.domain.personalization.learningresult.valueobjects;
 
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public record Feedback(
-        @Column(columnDefinition = "TEXT") String text,
-        @Convert(converter = FeedbackType.Converter.class) FeedbackType type) {
+        @Column(columnDefinition = "TEXT") String text
+) {
     public Feedback() {
-        this("Feedback could not be generated", FeedbackType.NEUTRAL);
+        this("*Feedback could not be generated*");
     }
 }
