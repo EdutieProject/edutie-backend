@@ -9,7 +9,9 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.base
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
@@ -57,12 +59,32 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
         generationSchema.setLearningResourceDefinitionType(definition.getDefinitionType());
         generationSchema.setStudentMetadata(student);
         generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition(definition));
-        for (LearningRequirement learningRequirement : definition.getLearningRequirements()) {
-            List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
-            generationSchema.qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
-        }
+        generationSchema.qualifyElementalRequirements(definition.getLearningRequirements(), student, learningResultPersistence);
+        generationSchema.createPersonalizationRules(student, learningResultPersistence);
         generationSchema.setLearningResourceDefinitionId(definition.getId());
         return generationSchema;
+    }
+
+    /**
+     * This function qualifies elemental requirements of given learning requirements.
+     * Should only be used for schema creation purposes.
+     */
+    private void qualifyElementalRequirements(Set<LearningRequirement> learningRequirements, Student student, LearningResultPersistence learningResultPersistence) {
+        for (LearningRequirement learningRequirement : learningRequirements) {
+            List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
+            qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
+        }
+    }
+
+    /**
+     * This function creates personalization rules for this learning resource schema.
+     * Should only be used for schema creation purposes.
+     */
+    private void createPersonalizationRules(Student student, LearningResultPersistence learningResultPersistence) {
+        List<Assessment> pastAssessments = student.getLatestAssessmentsByMaxGrade(learningResultPersistence, new Grade(3));
+        // Choose random assessment
+        Assessment chosenAssessment = pastAssessments.get((int) Math.floor(Math.random() * pastAssessments.size()));
+        personalizationRules.add(PersonalizationRule.fromAssessment(chosenAssessment));
     }
 
 }

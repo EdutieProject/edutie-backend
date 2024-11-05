@@ -56,12 +56,13 @@ flowchart TD
     n4["Student"] --> n5["Past Learning Results"]
     n5 --> n6["Assessments"] & n7(["Choose qualified requirements based on the whole Learning Results"])
     n2 --> n7
-    n7 --> n8["Zakwalifikowane wymagania elementarne"]
-    n6 --> n9(["Create personalization rules based on past assessments of given L.Req"])
-    n9 --> n10["Zasady personalizacji"]
+    n7 --> n8["Qualified elemental requirements"]
+    n6 & km["Knowledge map"] --> n9(["Create personalization rules based on \npast assessments and their correlations"])
+    n9 --> n10["Personalization Rules"]
     n8 --> n11["LR GenerationSchema"]
     n10 --> n11
     n3 --> n11
+    n2 --> n9
     n11 -- LLM --> n12["Learning Resource"]
     style n7 stroke-width:4px,stroke-dasharray: 5
     style n9 stroke-width:4px,stroke-dasharray: 5

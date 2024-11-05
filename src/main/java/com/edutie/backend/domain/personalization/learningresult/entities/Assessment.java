@@ -7,6 +7,7 @@ import com.edutie.backend.domain.education.learningrequirement.entities.Elementa
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.PersonalizationError;
 import com.edutie.backend.domain.personalization.learningresult.identities.AssessmentId;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -30,8 +31,8 @@ public class Assessment extends EntityBase<AssessmentId> {
     @Embedded
     @AttributeOverride(name = "gradeNumber", column = @Column(name = "grade_number"))
     private Grade grade;
-    @Column(columnDefinition = "TEXT")
-    private String feedbackText;
+    @AttributeOverride(name = "text", column = @Column(columnDefinition = "TEXT", name = "feedback_text"))
+    private Feedback feedback;
     @JsonSerialize(using = IdOnlyCollectionSerializer.class)
     @ManyToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER)
     private List<ElementalRequirement> qualifiedElementalRequirements = new ArrayList<>();
@@ -41,16 +42,16 @@ public class Assessment extends EntityBase<AssessmentId> {
      *
      * @param learningRequirementId          assessed learning requirement id
      * @param grade                          assessment grade
-     * @param feedbackText                   feedback text
+     * @param feedback                   feedback text
      * @param qualifiedElementalRequirements qualified sub requirements list
      * @return new Assessment
      */
-    public static Assessment create(LearningRequirementId learningRequirementId, Grade grade, String feedbackText, List<ElementalRequirement> qualifiedElementalRequirements) {
+    public static Assessment create(LearningRequirementId learningRequirementId, Grade grade, Feedback feedback, List<ElementalRequirement> qualifiedElementalRequirements) {
         Assessment assessment = new Assessment();
         assessment.setId(new AssessmentId());
         assessment.setLearningRequirementId(learningRequirementId);
         assessment.setGrade(grade);
-        assessment.setFeedbackText(feedbackText);
+        assessment.setFeedback(feedback);
         assessment.setQualifiedElementalRequirements(qualifiedElementalRequirements);
         return assessment;
     }
@@ -64,6 +65,11 @@ public class Assessment extends EntityBase<AssessmentId> {
         return getCorrespondingLearningRequirement().getName();
     }
 
+    /**
+     * Returns a difficulty factor as double. This represents the percentage of fulfilling the
+     * whole learning requirement.
+     * @return difficulty factor as double.
+     */
     @JsonProperty("difficultyFactor")
     public double getCalculatedDifficulty() {
         return (double) Math.round(
