@@ -6,7 +6,7 @@ This flow creates personalized, dedicated learning resource for a student using 
 
 ```mermaid
 ---
-title: Learning Resource creation
+title: Learning Resource creation - personalization version 2
 ---
 sequenceDiagram
     participant Client
@@ -14,7 +14,7 @@ sequenceDiagram
     participant Application
     participant Domain
     participant Persistence
-    participant Wikimap
+    participant Knowledge Map
     participant LLM
     autonumber
     Client ->> Rest API: Create learning resource request
@@ -24,15 +24,15 @@ sequenceDiagram
     Persistence ->> Application: Persisted entities:<br/>Learning Resource Definition<br/>Student profile
     Application ->> Domain: Create personalized Learning Resource using<br/>LRD for the provided student
     critical Create Learning Resource Schema
-        Domain ->> Wikimap: Get knowledge correlations
-        Wikimap ->> Domain: Knowledge correlations
         Domain ->> Persistence: Get Learning History for<br/>elemental requirement qualification
-        Persistence ->> Domain: Chosen Learning Results
+        Persistence ->> Domain: Learning Results
         Domain ->> Domain: Calculate qualified requirements
-        Domain ->> Domain: Create Personalized Theory & Activity<br/>details
         Domain ->> Persistence: Get Learning History for personalization rules
-        Persistence ->> Domain: Chosen Learning Results
-        Domain ->> Domain: Compute personalization rules for every personalized details
+        Persistence ->> Domain: Learning Results
+        Domain ->> Knowledge Map: Get Knowledge Correlations for personalization rules
+        Knowledge Map ->> Domain: Knowledge Correlations
+        Domain ->> Domain: Compute personalization rules
+        Domain ->> Domain: Map educator's instructions from LRD
     end
     Domain ->> LLM: Learning Resource Generation Schema
     LLM ->> Domain: Learning Resource
@@ -53,25 +53,24 @@ sequenceDiagram
 
 ## Description
 
-This flow creates a learning resource. It is created using learning resource definition as an absolute definition
-and a student's learning history for personalization purposes.
+This flow creates a learning resource. It is created using static learning resource definition as an absolute definition
+and student's learning history for personalization purposes.
 
 1. Input data: Student id and Learning Resource Definition id
 2. Load the data - student profile and LR Definition
 3. Create a Personalized Learning Resource:
-    1. Fetch knowledge correlations from knowledge map
-    2. Create Learning Resource Generation Schema
-        1. Compute qualified learning requirements using recent learning history
-        2. Create Personalized Activity Details
-            - Use activity prompts provided in the Learning Resource Definition
-            - Create Activity Personalization Rules using Knowledge map
-        3. Create Personalized Theory Details
-            - Use theory prompts provided in the Learning Resource Definition
-            - Create Theory Personalization Rules using Knowledge map
-    3. Use LLM to generate LR dto from LRGS
-    4. Create Learning Resource from the DTO
+   1. Create Learning Resource Generation Schema
+      1. Compute qualified learning requirements using recent learning history:
+         - Mathematical function may be used for difficulty stage computing. F: Grade list -> Percentage of L.Req. qualification
+      2. Create personalization rules:
+         - Get the latest Learning Results. Could be up to week ago or sth like that.
+         - Choose personalization types qualified for the LR. Base the choice on meeting the criteria with the latest Learning Result list.
+         - If more than 2 personalization types are qualified, randomize the choice by choosing only 2 of them.
+         - Search for assessments in the latest learning result list that satisfy the personalization type condition. Let the assessments be of strong correlation with the activity learning requirements.
+         - Create a personalization rule using a Feedback and a personalization context from the given strategy.
+      3. Map Educator Instructions to Additional Instructions 
+   2. Use LLM to generate LR dto from LRGS
+   3. Create Learning Resource from the DTO
 4. Save & return the LR.
-
-Personalized theory & activity details may be offloaded as they can be created separately
 
 The LRGS is sent to the LLM and the response is being restructured to match Learning Resource.
