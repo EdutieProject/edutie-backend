@@ -67,7 +67,7 @@ public class LearningResultQueryHandlersTests {
 
     private LearningResource createAndSaveLearningResource(LearningResourceDefinition learningResourceDefinition) {
         LearningResource learningResource = LearningResource.create(
-                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, Set.of(), learningResourceDefinition),
+                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()),
                 Activity.create("", Set.of()),
                 Theory.create("", "")
         );

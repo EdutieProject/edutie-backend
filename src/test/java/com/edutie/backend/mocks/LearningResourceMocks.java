@@ -28,8 +28,7 @@ public class LearningResourceMocks {
         return LearningResourceGenerationSchema.create(
                 student,
                 learningResultPersistence,
-                Set.of(),
-                sampleLearningResourceDefinition(educator)
+                sampleLearningResourceDefinition(educator), Set.of()
         );
     }
 

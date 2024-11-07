@@ -1,6 +1,5 @@
 package com.edutie.backend.domainservice.personalization.learningresource.schema;
 
-import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
@@ -8,9 +7,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.base
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
-import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
-import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,15 +42,14 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
      *
      * @param student                   student which is the recipient of the latter learning result
      * @param learningResultPersistence persistence of learning results used to fetch past results of the student
-     * @param personalizationRules      personalization rules to be used in the LR generation
      * @param definition                learning resource definition
+     * @param personalizationRules      personalization rules to be used in the LR generation
      * @return new Learning Resource Generation Schema
      */
     public static LearningResourceGenerationSchema create(
             Student student,
             LearningResultPersistence learningResultPersistence,
-            Set<PersonalizationRule<?>> personalizationRules,
-            LearningResourceDefinitionBase definition
+            LearningResourceDefinitionBase definition, Set<PersonalizationRule<?>> personalizationRules
     ) {
         LearningResourceGenerationSchema generationSchema = new LearningResourceGenerationSchema();
         generationSchema.setLearningResourceDefinitionType(definition.getDefinitionType());
