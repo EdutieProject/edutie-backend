@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 public class ElementalRequirement extends EntityBase<ElementalRequirementId> {
     @Embedded
-    @AttributeOverride(name = "text", column = @Column(name = "requirement_text", columnDefinition = "TEXT"))
+    @AttributeOverride(name = "text", column = @Column(name = "objective_text", columnDefinition = "TEXT"))
     private PromptFragment objectiveText;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "scientific_description", columnDefinition = "TEXT"))

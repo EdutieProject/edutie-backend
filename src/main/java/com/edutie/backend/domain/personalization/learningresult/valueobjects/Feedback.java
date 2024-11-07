@@ -10,4 +10,8 @@ public record Feedback(
     public Feedback() {
         this("*Feedback could not be generated*");
     }
+
+    public static Feedback of(String text) {
+        return new Feedback(text);
+    }
 }

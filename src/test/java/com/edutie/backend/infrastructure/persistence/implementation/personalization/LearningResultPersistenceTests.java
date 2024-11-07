@@ -78,7 +78,7 @@ public class LearningResultPersistenceTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), null, "Text of the report", 0),
                 new Feedback(""),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -98,7 +98,7 @@ public class LearningResultPersistenceTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), null, "Text of the report", 0),
                 new Feedback(""),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult);
 
@@ -118,7 +118,7 @@ public class LearningResultPersistenceTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
                 new Feedback("Feedback"),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -140,7 +140,7 @@ public class LearningResultPersistenceTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
                 new Feedback("Feedback"),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -161,7 +161,7 @@ public class LearningResultPersistenceTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
                 new Feedback("Feedback"),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -182,7 +182,7 @@ public class LearningResultPersistenceTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
                 new Feedback("Feedback"),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 

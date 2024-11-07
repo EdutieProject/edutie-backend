@@ -83,7 +83,7 @@ public class LearningResultQueryHandlersTests {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), learningResource, "Report", 0),
                 new Feedback("Feedback text"),
-                learningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), "", List.of())).collect(Collectors.toSet())
+                learningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), Feedback.of(""), List.of())).collect(Collectors.toSet())
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
