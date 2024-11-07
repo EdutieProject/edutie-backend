@@ -11,8 +11,8 @@ import lombok.Getter;
 public abstract class PersonalizationRule<T> {
     private T context;
 
-    @JsonProperty("personalizationPrefix")
-    public String getPersonalizationPrefix() {
+    @JsonProperty("personalizationType")
+    public String getPersonalizationTypeCode() {
         return this.getClass().getSimpleName().replace("PersonalizationRule", "");
     }
 }
