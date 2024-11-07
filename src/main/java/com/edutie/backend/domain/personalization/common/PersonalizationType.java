@@ -6,5 +6,7 @@ public enum PersonalizationType {
     /** For reinforcement of the knowledge that was once known, but could be forgotten */
     REINFORCEMENT,
     /** For targeting the weak understanding of a concept */
-    REMEDIATION;
+    REMEDIATION,
+    /** Recommending the correlated but not fully discovered subject */
+    RECOMMENDATION;
 }
