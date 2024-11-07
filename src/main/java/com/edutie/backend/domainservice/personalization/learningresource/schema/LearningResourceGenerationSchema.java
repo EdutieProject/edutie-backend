@@ -3,7 +3,6 @@ package com.edutie.backend.domainservice.personalization.learningresource.schema
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
-import com.edutie.backend.domain.personalization.common.PersonalizationRule;
 import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
@@ -12,6 +11,7 @@ import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
+import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
@@ -31,7 +31,7 @@ import java.util.Set;
 @Setter(AccessLevel.PRIVATE)
 public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
-    private Set<PersonalizationRule> personalizationRules = new HashSet<>();
+    private Set<PersonalizationRule<?>> personalizationRules = new HashSet<>();
     private AdditionalInstructions additionalInstructions;
     @JsonIgnore
     private Student studentMetadata;
@@ -43,16 +43,16 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     /**
      * Creation method for learning resource generation schema
      *
-     * @param student                    student which is the recipient of the latter learning result
-     * @param learningResultPersistence  persistence of learning results used to fetch past results of the student
-     * @param knowledgeCorrelations      knowledge correlation list
-     * @param definition learning resource definition
+     * @param student                   student which is the recipient of the latter learning result
+     * @param learningResultPersistence persistence of learning results used to fetch past results of the student
+     * @param personalizationRules      personalization rules to be used in the LR generation
+     * @param definition                learning resource definition
      * @return new Learning Resource Generation Schema
      */
     public static LearningResourceGenerationSchema create(
             Student student,
             LearningResultPersistence learningResultPersistence,
-            Set<KnowledgeCorrelation> knowledgeCorrelations,
+            Set<PersonalizationRule<?>> personalizationRules,
             LearningResourceDefinitionBase definition
     ) {
         LearningResourceGenerationSchema generationSchema = new LearningResourceGenerationSchema();
@@ -60,7 +60,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
         generationSchema.setStudentMetadata(student);
         generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition(definition));
         generationSchema.qualifyElementalRequirements(definition.getLearningRequirements(), student, learningResultPersistence);
-        generationSchema.createPersonalizationRules(student, learningResultPersistence);
+        generationSchema.setPersonalizationRules(personalizationRules);
         generationSchema.setLearningResourceDefinitionId(definition.getId());
         return generationSchema;
     }
@@ -74,17 +74,6 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
             List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
             qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
         }
-    }
-
-    /**
-     * This function creates personalization rules for this learning resource schema.
-     * Should only be used for schema creation purposes.
-     */
-    private void createPersonalizationRules(Student student, LearningResultPersistence learningResultPersistence) {
-        List<Assessment> pastAssessments = student.getLatestAssessmentsByMaxGrade(learningResultPersistence, new Grade(3));
-        // Choose random assessment
-        Assessment chosenAssessment = pastAssessments.get((int) Math.floor(Math.random() * pastAssessments.size()));
-        personalizationRules.add(PersonalizationRule.fromAssessment(chosenAssessment));
     }
 
 }

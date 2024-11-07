@@ -1,11 +1,13 @@
 <!-- TOC -->
-
-* [Assessment Schema](#assessment-schema)
-    * [Contained data:](#contained-data)
-        * [Solution submission](#solution-submission)
-        * [Assessment Problem descriptor list](#assessment-problem-descriptor-list)
-    * [References](#references)
-
+* [Personalization Rule](#personalization-rule)
+  * [Implementation note](#implementation-note)
+  * [Contained data:](#contained-data)
+    * [Context](#context)
+    * [Personalization Type](#personalization-type)
+  * [Sample implementation - Remediation rule:](#sample-implementation---remediation-rule)
+    * [Context - Past Feedback](#context---past-feedback)
+    * [Personalization Type - Remediation](#personalization-type---remediation)
+  * [References](#references)
 <!-- TOC -->
 
 # Personalization Rule
@@ -14,21 +16,37 @@ Personalization rule is a fragment of personalization produced for personalizati
 computed in a flow during a personalization schema creation and then used by LLM to perform
 personalization on the personalized resource.
 
+## Implementation note
+
+The implementation follows a convention that a concrete class is named like: *PersonalizationType*PersonalizationRule
+naming pattern. Following this pattern is required for [personalization type](#personalization-type) to work.
+
 ## Contained data:
 
-### Past Feedback
+### Context
+
+That is the personalization context that will be later used by the personalization technology, e.g. LLM. In this case,
+the LLM should have the way of handling the context hardcoded by the personalization type.
+
+### Personalization Type
+
+That is not the contained data field, instead the personalization type is coded inside the implementation class name.
+
+The personalization type should be interpreted as an information "code" for the LLM telling it how to utilize
+the context in the personalization purpose.
+
+## Sample implementation - Remediation rule:
+
+### Context - Past Feedback
 
 The past feedback, gathered from a Learning Result's [assessment](../education/LearningRequirement.md) related to the 
-particular Learning Requirement.
+particular Learning Requirement. Used for remediation, as the remediation is the personalization type.
 
-### Personalization Rule Type
+### Personalization Type - Remediation
 
-The type describes the purpose of the rule.
-
-These are:
- - Refresh - To refresh the knowledge. Should be created from the distant assessments.
- - Reinforcement - To reinforce understanding of concepts where the learner has shown partial mastery.
- - Application - To encourage real-world application of learned knowledge.
+As the class name is `RemediationPersonalizationRule` the inferred personalization type is *Remediation* - meaning
+that the past feedback will be used by the LLM as the context for remediating certain subject that student has weak
+understanding of.
 
 ## References
 

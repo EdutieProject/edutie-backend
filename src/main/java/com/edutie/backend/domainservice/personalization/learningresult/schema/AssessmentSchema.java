@@ -2,6 +2,7 @@ package com.edutie.backend.domainservice.personalization.learningresult.schema;
 
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
@@ -45,5 +46,10 @@ public class AssessmentSchema implements PersonalizationSchema {
     @JsonProperty("activityText")
     public String getActivityText() {
         return solutionSubmission.getLearningResource().getActivity().getActivityText();
+    }
+
+    @Override
+    public Set<PersonalizationRule<?>> getPersonalizationRules() {
+        return Set.of(); //TODO!
     }
 }
