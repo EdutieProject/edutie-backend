@@ -19,7 +19,7 @@ import lombok.Setter;
 public class ElementalRequirement extends EntityBase<ElementalRequirementId> {
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "requirement_text", columnDefinition = "TEXT"))
-    private PromptFragment requirementText;
+    private PromptFragment objectiveText;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "scientific_description", columnDefinition = "TEXT"))
     private PromptFragment scientificDescription;
@@ -38,7 +38,7 @@ public class ElementalRequirement extends EntityBase<ElementalRequirementId> {
         ElementalRequirement elementalRequirement = new ElementalRequirement();
         elementalRequirement.setId(new ElementalRequirementId());
         elementalRequirement.learningRequirement = learningRequirement;
-        elementalRequirement.requirementText = requirementText;
+        elementalRequirement.objectiveText = requirementText;
         elementalRequirement.setScientificDescription(scientificDescription);
         elementalRequirement.ordinal = orderIndex;
         return elementalRequirement;
