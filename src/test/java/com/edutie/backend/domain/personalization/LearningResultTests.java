@@ -29,8 +29,8 @@ public class LearningResultTests {
                 SolutionSubmission.create(student, null, "Report text", 0),
                 new Feedback("That is a feedback"),
                 Set.of(
-                        Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "Text of the feedback", List.of()),
-                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, "Text of the feedback part 2", List.of())
+                        Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of("Text of the feedback"), List.of()),
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback part 2"), List.of())
                 )
         );
 
@@ -43,8 +43,8 @@ public class LearningResultTests {
                 SolutionSubmission.create(student, null, "Report text", 0),
                 new Feedback("That is a feedback"),
                 Set.of(
-                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, "Text of the feedback", List.of()),
-                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, "Text of the feedback part 2", List.of())
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"), List.of()),
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback part 2"), List.of())
                 )
         );
 

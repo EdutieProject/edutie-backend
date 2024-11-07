@@ -54,7 +54,7 @@ public class ExternalServiceMocks {
                         new Feedback("Great!"),
                         learningRequirementIds.stream().map(
                                 o -> Assessment.create(o, new Grade((int) (Math.random() * 6)),
-                                        "Thats a feedback for a student",
+                                        Feedback.of("Thats a feedback for a student"),
                                         assessmentSchema.getQualifiedRequirements().stream().filter(x -> x.getLearningRequirement().getId().equals(o)).toList())
                         ).collect(Collectors.toSet())
                 );

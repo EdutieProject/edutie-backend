@@ -30,7 +30,7 @@ public class LearningResultCreationDto implements ExternalInfrastructureDto<Lear
                 assessments.stream().map(o -> Assessment.create(
                         o.learningRequirementId,
                         new Grade(o.gradeNumber),
-                        o.feedbackText,
+                        Feedback.of(o.feedbackText),
                         assessmentSchema.getQualifiedRequirements().stream()
                                 .filter(x -> x.getLearningRequirement().getId().equals(o.learningRequirementId)).toList()
                 )).collect(Collectors.toSet()));
