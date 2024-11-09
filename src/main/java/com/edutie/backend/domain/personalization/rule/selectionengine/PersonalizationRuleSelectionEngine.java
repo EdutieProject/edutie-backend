@@ -6,6 +6,7 @@ import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,11 @@ public class PersonalizationRuleSelectionEngine {
         this.knowledgeMapService = knowledgeMapService;
     }
 
-    public Set<PersonalizationRule<?>> chooseRulesByRequirementsAndHistory(Set<LearningRequirement> learningRequirements, List<LearningResult> pastResults) {
+    public Set<PersonalizationRule<?>> chooseRulesByRequirementsAndHistory(
+            Set<LearningRequirement> learningRequirements,
+            List<LearningResult> pastResults
+    ) {
+        /* Consider queue-like implementation in student profile */
         return Set.of(); //TODO
     }
 }
