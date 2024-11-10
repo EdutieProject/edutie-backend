@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.rule;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
@@ -11,11 +12,10 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A personalization strategy for recommending additional learning requirements.
+ * Personalization strategy for refreshing the knowledge of given elemental req
  */
 @Component
-public class RecommendationPersonalizationStrategy implements PersonalizationStrategy<LearningRequirement, RecommendationPersonalizationStrategy.RecommendationRule> {
-
+public class RefreshPersonalizationStrategy implements PersonalizationStrategy<ElementalRequirement, RefreshPersonalizationStrategy.RefreshRule> {
 
     /**
      * Function qualifying the rule of the personalization strategy. When the personalization strategy
@@ -26,15 +26,13 @@ public class RecommendationPersonalizationStrategy implements PersonalizationStr
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<RecommendationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+    public Optional<RefreshRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
         return Optional.empty();
     }
 
-    public static class RecommendationRule extends PersonalizationRule<LearningRequirement> {
-        public RecommendationRule(LearningRequirement context) {
+    public static class RefreshRule extends PersonalizationRule<ElementalRequirement> {
+        public RefreshRule(ElementalRequirement context) {
             super(context);
         }
     }
 }
-
-

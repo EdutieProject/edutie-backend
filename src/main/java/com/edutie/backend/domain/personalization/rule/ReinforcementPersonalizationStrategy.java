@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.rule;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
@@ -11,10 +12,10 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A personalization strategy for recommending additional learning requirements.
+ * Reinforcement strategy for ensuring that previously learned content is still understood.
  */
 @Component
-public class RecommendationPersonalizationStrategy implements PersonalizationStrategy<LearningRequirement, RecommendationPersonalizationStrategy.RecommendationRule> {
+public class ReinforcementPersonalizationStrategy implements PersonalizationStrategy<ElementalRequirement, ReinforcementPersonalizationStrategy.ReinforcementRule> {
 
 
     /**
@@ -26,15 +27,14 @@ public class RecommendationPersonalizationStrategy implements PersonalizationStr
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<RecommendationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+    public Optional<ReinforcementRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
         return Optional.empty();
     }
 
-    public static class RecommendationRule extends PersonalizationRule<LearningRequirement> {
-        public RecommendationRule(LearningRequirement context) {
+    public static class ReinforcementRule extends PersonalizationRule<ElementalRequirement> {
+        public ReinforcementRule(ElementalRequirement context) {
             super(context);
         }
     }
+
 }
-
-

@@ -14,7 +14,7 @@ public abstract class PersonalizationRule<T> {
     private T context;
 
     @JsonProperty("personalizationType")
-    public String getPersonalizationTypeCode() { //TODO: change
-        return this.getClass().getSimpleName().replace("PersonalizationRule", "").toUpperCase();
+    public String getPersonalizationTypeCode() {
+        return this.getClass().getSimpleName().replace("Rule", "").toUpperCase();
     }
 }

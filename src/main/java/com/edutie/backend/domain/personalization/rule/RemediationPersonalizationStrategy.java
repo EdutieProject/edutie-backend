@@ -2,6 +2,7 @@ package com.edutie.backend.domain.personalization.rule;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
 import org.springframework.stereotype.Component;
@@ -11,10 +12,10 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A personalization strategy for recommending additional learning requirements.
+ * Remediation personalization strategy for remediating the content based on the previous feedback.
  */
 @Component
-public class RecommendationPersonalizationStrategy implements PersonalizationStrategy<LearningRequirement, RecommendationPersonalizationStrategy.RecommendationRule> {
+public class RemediationPersonalizationStrategy implements PersonalizationStrategy<Feedback, RemediationPersonalizationStrategy.RemediationRule> {
 
 
     /**
@@ -26,15 +27,14 @@ public class RecommendationPersonalizationStrategy implements PersonalizationStr
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<RecommendationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+    public Optional<RemediationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
         return Optional.empty();
     }
 
-    public static class RecommendationRule extends PersonalizationRule<LearningRequirement> {
-        public RecommendationRule(LearningRequirement context) {
+    public static class RemediationRule extends PersonalizationRule<Feedback> {
+
+        public RemediationRule(Feedback context) {
             super(context);
         }
     }
 }
-
-
