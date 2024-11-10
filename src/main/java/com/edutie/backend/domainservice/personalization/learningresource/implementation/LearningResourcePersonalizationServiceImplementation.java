@@ -19,14 +19,15 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Component
 public class LearningResourcePersonalizationServiceImplementation implements LearningResourcePersonalizationService {
-    private final KnowledgeMapService knowledgeMapService;
     private final LearningResultPersistence learningResultPersistence;
     private final LargeLanguageModelService largeLanguageModelService;
+    private final PersonalizationRuleSelectionEngine ruleSelectionEngine;
 
     @Override
     public WrapperResult<LearningResource> personalize(LearningResourceDefinitionBase learningResourceDefinition, Student student) {
-        Set<PersonalizationRule<?>> personalizationRules = new PersonalizationRuleSelectionEngine(student, knowledgeMapService)
-                .chooseRulesByRequirementsAndHistory(learningResourceDefinition.getLearningRequirements(), student.getLatestLearningResults(learningResultPersistence));
+        Set<PersonalizationRule<?>> personalizationRules = ruleSelectionEngine.chooseRulesByRequirementsAndHistory(
+                learningResourceDefinition.getLearningRequirements(), student.getLatestLearningResults(learningResultPersistence)
+        );
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
                 student,
                 learningResultPersistence,

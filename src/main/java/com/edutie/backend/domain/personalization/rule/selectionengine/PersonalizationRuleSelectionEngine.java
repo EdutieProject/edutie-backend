@@ -2,28 +2,38 @@ package com.edutie.backend.domain.personalization.rule.selectionengine;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.rule.RecommendationPersonalizationStrategy;
 import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.student.Student;
-import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
+import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
+@Component
 public class PersonalizationRuleSelectionEngine {
-    private final Student student;
-    private final KnowledgeMapService knowledgeMapService;
+    private final RecommendationPersonalizationStrategy recommendationPersonalizationStrategy;
 
-    public PersonalizationRuleSelectionEngine(Student student, KnowledgeMapService knowledgeMapService) {
-        this.student = student;
-        this.knowledgeMapService = knowledgeMapService;
+
+    private List<PersonalizationStrategy<?, ? extends PersonalizationRule<?>>> getPersonalizationStrategies() {
+        return List.of(
+                recommendationPersonalizationStrategy
+        );
     }
 
     public Set<PersonalizationRule<?>> chooseRulesByRequirementsAndHistory(
             Set<LearningRequirement> learningRequirements,
             List<LearningResult> pastResults
     ) {
-        /* Consider queue-like implementation in student profile */
-        return Set.of(); //TODO
+        Set<PersonalizationRule<?>> rules = new HashSet<>();
+        for (PersonalizationStrategy<?, ? extends PersonalizationRule<?>> strategy : getPersonalizationStrategies()) {
+            strategy.qualifyRule(learningRequirements, pastResults).ifPresent(rules::add);
+        }
+        return rules.stream().limit(2L).collect(Collectors.toSet());
     }
 }
