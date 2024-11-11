@@ -18,4 +18,12 @@ public interface PersonalizationStrategy<TPersonalizationContext, TRule extends 
      * @return Optional Personalization Rule
      */
     Optional<TRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance);
+
+    /**
+     * Returns the priority level of this strategy. Higher values indicate higher priority.
+     */
+    default int getPriority() {
+        return 0;
+    }
+
 }

@@ -15,6 +15,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Lear
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.rule.selectionengine.PersonalizationRuleSelectionEngine;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
@@ -49,6 +50,8 @@ public class LearningResourceCommandHandlersTests {
     // Service
     @Autowired
     LearningResourcePersonalizationService learningResourcePersonalizationService;
+    @Autowired
+    PersonalizationRuleSelectionEngine personalizationRuleSelectionEngine;
     // Handlers
     @Autowired
     CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
@@ -56,14 +59,15 @@ public class LearningResourceCommandHandlersTests {
     CreateRandomFactDynamicLearningResourceCommandHandler createRandomFactDynamicLearningResourceCommandHandler;
 
 
+
     @BeforeEach
     public void testSetup() {
         mockUser.saveToPersistence();
         // Remove mocking out the external services to integration test
         learningResourcePersonalizationService = new LearningResourcePersonalizationServiceImplementation(
-                ExternalServiceMocks.knowledgeMapServiceMock(),
                 learningResultPersistence,
-                ExternalServiceMocks.largeLanguageModelServiceMock()
+                ExternalServiceMocks.largeLanguageModelServiceMock(),
+                personalizationRuleSelectionEngine
         );
         createLearningResourceCommandHandler = new CreateLearningResourceCommandHandlerImplementation(
                 studentPersistence,

@@ -8,7 +8,6 @@ import com.edutie.backend.domain.personalization.rule.selectionengine.Personaliz
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
-import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
 import com.edutie.backend.infrastructure.external.llm.LargeLanguageModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
