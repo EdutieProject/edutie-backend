@@ -1,9 +1,9 @@
-package com.edutie.backend.domain.personalization.rule.selectionengine;
+package com.edutie.backend.domain.personalization.strategy.selectionengine;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

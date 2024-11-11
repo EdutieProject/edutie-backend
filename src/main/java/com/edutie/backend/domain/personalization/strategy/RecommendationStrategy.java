@@ -1,9 +1,9 @@
-package com.edutie.backend.domain.personalization.rule;
+package com.edutie.backend.domain.personalization.strategy;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationStrategy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,8 +14,7 @@ import java.util.Set;
  * A personalization strategy for recommending additional learning requirements.
  */
 @Component
-public class RecommendationPersonalizationStrategy implements PersonalizationStrategy<LearningRequirement, RecommendationPersonalizationStrategy.RecommendationRule> {
-
+public class RecommendationStrategy implements PersonalizationStrategy<LearningRequirement, RecommendationStrategy.RecommendationRule> {
 
     /**
      * Function qualifying the rule of the personalization strategy. When the personalization strategy

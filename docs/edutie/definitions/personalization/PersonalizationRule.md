@@ -13,12 +13,11 @@
 # Personalization Rule
 
 Personalization rule is a fragment of personalization produced for personalization schemas. These are usually
-computed in a flow during a personalization schema creation and then used by LLM to perform
-personalization on the personalized resource.
+computed as a result of [personalization strategy](./PersonalizationStrategy.md) qualification.
 
 ## Implementation note
 
-The implementation follows a convention that a concrete class is named like: *PersonalizationType*PersonalizationRule
+The implementation follows a convention that a concrete class is named like: *PersonalizationType*Rule
 naming pattern. Following this pattern is required for [personalization type](#personalization-type) to work.
 
 ## Contained data:
@@ -44,7 +43,7 @@ particular Learning Requirement. Used for remediation, as the remediation is the
 
 ### Personalization Type - Remediation
 
-As the class name is `RemediationPersonalizationRule` the inferred personalization type is *Remediation* - meaning
+As the class name is `FeedbackRemediationRule` the inferred personalization type is *FeedbackRemediation* - meaning
 that the past feedback will be used by the LLM as the context for remediating certain subject that student has weak
 understanding of.
 

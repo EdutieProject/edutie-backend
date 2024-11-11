@@ -8,7 +8,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.enum
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;

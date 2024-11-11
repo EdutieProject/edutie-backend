@@ -1,6 +1,7 @@
 package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
@@ -16,6 +17,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A result of learning activities that is used
@@ -105,14 +107,23 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
         return this.getAssessments().stream().allMatch(a -> a.getGrade().greaterThanOrEqual(Grade.SUCCESS_GRADE));
     }
 
+    public Set<LearningRequirementId> getLearningRequirementIds() {
+        return assessments.stream().map(Assessment::getLearningRequirementId).collect(Collectors.toSet());
+    }
+
     /**
      * Returns the average grade as a double
      *
      * @return average grade as double
      */
     @JsonProperty("averageGrade")
-    public double getAverageGrade() {
+    public double getAverageGradeAsDouble() {
         return (double) assessments.stream().map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).sum() / assessments.size();
+    }
+
+    @JsonProperty("averageGradeRounded")
+    public Grade getAverageGrade() {
+        return new Grade((int) Math.round(getAverageGradeAsDouble()));
     }
 
 }

@@ -1,10 +1,10 @@
-package com.edutie.backend.domain.personalization.rule;
+package com.edutie.backend.domain.personalization.strategy;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationStrategy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Remediation personalization strategy for remediating the content based on the previous feedback.
+ * Remediation personalization strategy for remediating the content based on the knowledge of
+ * a strongly correlated subject that is well understood.
  */
 @Component
-public class RemediationPersonalizationStrategy implements PersonalizationStrategy<Feedback, RemediationPersonalizationStrategy.RemediationRule> {
-
+public class FamiliarRemediationStrategy implements PersonalizationStrategy<Feedback, FamiliarRemediationStrategy.FamiliarRemediationRule> {
 
     /**
      * Function qualifying the rule of the personalization strategy. When the personalization strategy
@@ -27,13 +27,13 @@ public class RemediationPersonalizationStrategy implements PersonalizationStrate
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<RemediationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+    public Optional<FamiliarRemediationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
         return Optional.empty();
     }
 
-    public static class RemediationRule extends PersonalizationRule<Feedback> {
+    public static class FamiliarRemediationRule extends PersonalizationRule<Feedback> {
 
-        public RemediationRule(Feedback context) {
+        public FamiliarRemediationRule(Feedback context) {
             super(context);
         }
     }

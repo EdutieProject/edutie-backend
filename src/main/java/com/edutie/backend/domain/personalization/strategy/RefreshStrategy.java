@@ -1,21 +1,20 @@
-package com.edutie.backend.domain.personalization.rule;
+package com.edutie.backend.domain.personalization.strategy;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationStrategy;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationStrategy;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Personalization strategy for refreshing the knowledge of given elemental req
  */
 @Component
-public class RefreshPersonalizationStrategy implements PersonalizationStrategy<ElementalRequirement, RefreshPersonalizationStrategy.RefreshRule> {
+public class RefreshStrategy implements PersonalizationStrategy<ElementalRequirement, RefreshStrategy.RefreshRule> {
+    private final int REQUIRED_STREAK_SIZE = 3;
 
     /**
      * Function qualifying the rule of the personalization strategy. When the personalization strategy

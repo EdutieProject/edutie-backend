@@ -1,6 +1,6 @@
 package com.edutie.backend.domain.personalization.common;
 
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 
 import java.util.Set;
 

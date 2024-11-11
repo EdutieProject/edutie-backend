@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.personalization.rule.base;
+package com.edutie.backend.domain.personalization.strategy.base;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;

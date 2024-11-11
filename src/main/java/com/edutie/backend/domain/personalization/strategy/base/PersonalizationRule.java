@@ -1,4 +1,4 @@
-package com.edutie.backend.domain.personalization.rule.base;
+package com.edutie.backend.domain.personalization.strategy.base;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

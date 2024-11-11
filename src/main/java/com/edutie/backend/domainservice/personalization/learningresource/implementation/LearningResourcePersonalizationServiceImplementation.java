@@ -3,8 +3,8 @@ package com.edutie.backend.domainservice.personalization.learningresource.implem
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
-import com.edutie.backend.domain.personalization.rule.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.rule.selectionengine.PersonalizationRuleSelectionEngine;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.strategy.selectionengine.PersonalizationRuleSelectionEngine;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;

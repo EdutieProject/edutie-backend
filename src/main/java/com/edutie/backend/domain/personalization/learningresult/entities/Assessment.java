@@ -71,7 +71,7 @@ public class Assessment extends EntityBase<AssessmentId> {
      * @return difficulty factor as double.
      */
     @JsonProperty("difficultyFactor")
-    public double getCalculatedDifficulty() {
+    public double getDifficultyFactor() {
         return (double) Math.round(
                 ((float) this.qualifiedElementalRequirements.stream().mapToInt(ElementalRequirement::getOrdinal)
                         .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId())))
