@@ -1,6 +1,8 @@
 package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
@@ -107,8 +109,25 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
         return this.getAssessments().stream().allMatch(a -> a.getGrade().greaterThanOrEqual(Grade.SUCCESS_GRADE));
     }
 
+    /**
+     * Retrieve ids of associated learning requirements.
+     *
+     * @return set of learning requirement ids
+     */
     public Set<LearningRequirementId> getLearningRequirementIds() {
         return assessments.stream().map(Assessment::getLearningRequirementId).collect(Collectors.toSet());
+    }
+
+    /**
+     * Retrieves a set of associated learning requirements.
+     *
+     * @return Set of learning requirements associated with the L. Resource of the result.
+     */
+    public Set<LearningRequirement> getAssociatedLearningRequirements() {
+        return assessments.stream()
+                .flatMap(o -> o.getQualifiedElementalRequirements().stream())
+                .map(ElementalRequirement::getLearningRequirement)
+                .collect(Collectors.toSet());
     }
 
     /**
