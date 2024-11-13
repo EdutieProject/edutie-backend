@@ -17,66 +17,107 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Personalization strategy for refreshing the knowledge of given elemental req
+ * Personalization strategy for refreshing the knowledge of given elemental requirements.
  */
 @Component
 @RequiredArgsConstructor
 public class RefreshStrategy implements PersonalizationStrategy<ElementalRequirement, RefreshStrategy.RefreshRule> {
     private final KnowledgeMapService knowledgeMapService;
     private final LearningResultPersistence learningResultPersistence;
-    private final int REQUIRED_STREAK_SIZE = 3;
+    private static final int REQUIRED_STREAK_SIZE = 3;
+    private static final int REQUIRED_STREAK_COUNT = 3;
 
-    /**
-     * Function qualifying the rule of the personalization strategy. When the personalization strategy
-     * does not apply, the returned optional is empty.
-     *
-     * @param learningRequirements learning requirements to consider
-     * @param pastPerformance      learning history to consider when deciding qualification
-     * @return Optional Personalization Rule
-     */
     @Override
     public Optional<RefreshRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
-        if (pastPerformance.isEmpty())
+        if (pastPerformance.isEmpty()) {
             return Optional.empty();
+        }
+
         pastPerformance.sort(Comparator.comparing(AuditableEntityBase::getCreatedOn));
-        // get the learning streaks happening in the past
-        final Set<LearningRequirementId> learningRequirementIds = new HashSet<>();
+        List<List<LearningResult>> learningStreaks = getLearningStreaks(pastPerformance, learningRequirements);
+
+        if (learningStreaks.size() < REQUIRED_STREAK_COUNT) {
+            return Optional.empty();
+        }
+
+        Set<LearningRequirement> learningRequirementsToRefresh = getLearningRequirementsToRefresh(learningStreaks);
+        LearningRequirement learningRequirementToRefresh = findMostCorrelatedRequirement(learningRequirements, learningRequirementsToRefresh);
+
+        if (learningRequirementToRefresh == null) {
+            return Optional.empty();
+        }
+
+        ElementalRequirement elementalRequirementToRefresh = findQualifiedElementalRequirement(pastPerformance, learningRequirementToRefresh);
+
+        return Optional.of(new RefreshRule(elementalRequirementToRefresh));
+    }
+
+    /**
+     * Collects learning streaks from the provided past performances.
+     */
+    private List<List<LearningResult>> getLearningStreaks(List<LearningResult> pastPerformance, Set<LearningRequirement> learningRequirements) {
         List<List<LearningResult>> learningStreaks = new ArrayList<>();
         List<LearningResult> currentStreak = new ArrayList<>();
-        for (int i = 1; i < learningRequirements.size(); i++) {
-            learningRequirementIds.clear();
-            learningRequirementIds.addAll(pastPerformance.get(i - 1).getLearningRequirementIds());
-            LearningResult learningResult = pastPerformance.get(i);
-            if (learningResult.getLearningRequirementIds().stream().anyMatch(learningRequirementIds::contains)) {
-                currentStreak.add(learningResult);
+        Set<LearningRequirementId> requirementIdsInCurrentResult = new HashSet<>();
+
+        for (int i = 1; i < pastPerformance.size(); i++) {
+            requirementIdsInCurrentResult.clear();
+            requirementIdsInCurrentResult.addAll(pastPerformance.get(i - 1).getLearningRequirementIds());
+
+            LearningResult currentResult = pastPerformance.get(i);
+            if (currentResult.getLearningRequirementIds().stream().anyMatch(requirementIdsInCurrentResult::contains)) {
+                currentStreak.add(currentResult);
+
                 if (currentStreak.size() >= REQUIRED_STREAK_SIZE) {
-                    learningStreaks.add(currentStreak);
+                    learningStreaks.add(new ArrayList<>(currentStreak));
                     currentStreak.clear();
                 }
             } else {
                 currentStreak.clear();
             }
-            if (learningStreaks.size() >= 3) {
+
+            if (learningStreaks.size() >= REQUIRED_STREAK_COUNT) {
                 break;
             }
         }
-        if (learningStreaks.isEmpty())
-            return Optional.empty();
-        Set<LearningRequirement> learningRequirementsToRefresh = learningStreaks.stream().flatMap(Collection::stream)
-                .flatMap(o -> o.getAssociatedLearningRequirements().stream()).collect(Collectors.toSet());
-        // measure the correlations of requirements to be refreshed
-        LearningRequirementCorrelation mostCorrelatedCorrelation = knowledgeMapService
-                .getLearningRequirementCorrelations(learningRequirements, learningRequirementsToRefresh).getValue()
-                .stream().max(Comparator.comparing(LearningRequirementCorrelation::getCorrelationFactor)).get();
-        LearningRequirement learningRequirementToRefresh = learningRequirementsToRefresh.stream()
-                .filter(o -> o.getId().equals(mostCorrelatedCorrelation.getCorrelatedLearningRequirementId()))
-                .toList().getFirst();
 
-        ElementalRequirement elementalRequirementToRefresh = learningRequirementToRefresh.calculateQualifiedElementalRequirements(
-                pastPerformance.get(0).getStudent().getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirementToRefresh.getKnowledgeSubjectId())
-        ).stream().max(Comparator.comparingInt(ElementalRequirement::getOrdinal)).get();
+        return learningStreaks;
+    }
 
-        return Optional.of(new RefreshRule(elementalRequirementToRefresh));
+    /**
+     * Collects the unique learning requirements from the list of learning streaks.
+     */
+    private Set<LearningRequirement> getLearningRequirementsToRefresh(List<List<LearningResult>> learningStreaks) {
+        return learningStreaks.stream()
+                .flatMap(Collection::stream)
+                .flatMap(result -> result.getAssociatedLearningRequirements().stream())
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Finds the most correlated learning requirement from the learning requirements to be refreshed.
+     */
+    private LearningRequirement findMostCorrelatedRequirement(Set<LearningRequirement> baseRequirements, Set<LearningRequirement> targetRequirements) {
+        return knowledgeMapService.getLearningRequirementCorrelations(baseRequirements, targetRequirements).getValue()
+                .stream()
+                .max(Comparator.comparing(LearningRequirementCorrelation::getCorrelationFactor))
+                .map(LearningRequirementCorrelation::getCorrelatedLearningRequirementId)
+                .flatMap(correlatedId -> targetRequirements.stream()
+                        .filter(requirement -> requirement.getId().equals(correlatedId))
+                        .findFirst())
+                .orElse(null);
+    }
+
+    /**
+     * Finds the most qualified elemental requirement to refresh from the learning requirement.
+     */
+    private ElementalRequirement findQualifiedElementalRequirement(List<LearningResult> pastPerformance, LearningRequirement learningRequirementToRefresh) {
+        return learningRequirementToRefresh.calculateQualifiedElementalRequirements(
+                        pastPerformance.get(0).getStudent()
+                                .getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirementToRefresh.getKnowledgeSubjectId()))
+                .stream()
+                .max(Comparator.comparingInt(ElementalRequirement::getOrdinal))
+                .orElse(null);
     }
 
     public static class RefreshRule extends PersonalizationRule<ElementalRequirement> {
