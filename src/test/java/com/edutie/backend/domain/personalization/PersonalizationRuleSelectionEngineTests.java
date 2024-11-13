@@ -1,12 +1,14 @@
 package com.edutie.backend.domain.personalization;
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
-import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.strategy.base.PersonalizationStrategy;
 import com.edutie.backend.domain.personalization.strategy.selectionengine.PersonalizationRuleSelectionEngine;
+import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.mocks.MockUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -34,10 +36,13 @@ class ThirdMockPersonalizationRule extends PersonalizationRule<Object> {
 
 @SpringBootTest
 public class PersonalizationRuleSelectionEngineTests {
+    @Autowired
+    private MockUser mockUser;
+
     PersonalizationRuleSelectionEngine ruleSelectionEngine = new PersonalizationRuleSelectionEngine(List.of(
             new PersonalizationStrategy<Object, MockPersonalizationRule>() {
                 @Override
-                public Optional<MockPersonalizationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+                public Optional<MockPersonalizationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
                     return Optional.of(new MockPersonalizationRule(learningRequirements));
                 }
 
@@ -48,7 +53,7 @@ public class PersonalizationRuleSelectionEngineTests {
             },
             new PersonalizationStrategy<Object, AnotherMockPersonalizationRule>() {
                 @Override
-                public Optional<AnotherMockPersonalizationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+                public Optional<AnotherMockPersonalizationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
                     return Optional.of(new AnotherMockPersonalizationRule(learningRequirements));
                 }
 
@@ -59,7 +64,7 @@ public class PersonalizationRuleSelectionEngineTests {
             },
             new PersonalizationStrategy<Object, ThirdMockPersonalizationRule>() {
                 @Override
-                public Optional<ThirdMockPersonalizationRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+                public Optional<ThirdMockPersonalizationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
                     return Optional.of(new ThirdMockPersonalizationRule(learningRequirements));
                 }
 
@@ -72,7 +77,7 @@ public class PersonalizationRuleSelectionEngineTests {
 
     @Test
     public void ruleSelectionTest() {
-        Set<PersonalizationRule<?>> personalizationRules = ruleSelectionEngine.chooseRulesByRequirementsAndHistory(Set.of(), List.of());
+        Set<PersonalizationRule<?>> personalizationRules = ruleSelectionEngine.chooseRules(mockUser.getStudentProfile(), Set.of());
 
         System.out.println(personalizationRules.stream().map(o -> o.getClass().getSimpleName() + ", ").collect(Collectors.joining()));
 

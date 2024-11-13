@@ -9,6 +9,7 @@ import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.strategy.base.PersonalizationStrategy;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,8 @@ public class RefreshStrategy implements PersonalizationStrategy<ElementalRequire
     private static final int REQUIRED_STREAK_COUNT = 3;
 
     @Override
-    public Optional<RefreshRule> qualifyRule(Set<LearningRequirement> learningRequirements, List<LearningResult> pastPerformance) {
+    public Optional<RefreshRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
+        List<LearningResult> pastPerformance = student.getLatestLearningResults(learningResultPersistence);
         if (pastPerformance.isEmpty()) {
             return Optional.empty();
         }

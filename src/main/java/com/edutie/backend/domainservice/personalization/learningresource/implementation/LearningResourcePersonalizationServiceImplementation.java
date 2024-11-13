@@ -24,9 +24,8 @@ public class LearningResourcePersonalizationServiceImplementation implements Lea
 
     @Override
     public WrapperResult<LearningResource> personalize(LearningResourceDefinitionBase learningResourceDefinition, Student student) {
-        Set<PersonalizationRule<?>> personalizationRules = ruleSelectionEngine.chooseRulesByRequirementsAndHistory(
-                learningResourceDefinition.getLearningRequirements(), student.getLatestLearningResults(learningResultPersistence)
-        );
+        Set<PersonalizationRule<?>> personalizationRules = ruleSelectionEngine.chooseRules(
+                student, learningResourceDefinition.getLearningRequirements());
         LearningResourceGenerationSchema learningResourceGenerationSchema = LearningResourceGenerationSchema.create(
                 student,
                 learningResultPersistence,
