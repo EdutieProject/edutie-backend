@@ -77,7 +77,7 @@ in the other, strongly correlated, subject.
 
 #### Description & Criteria
 
-The strategy searches for learning streaks in the latest learning streak which is of the learning requirement
+The strategy searches for learning streaks in the latest learning history which regards the learning requirement
 that is strongly correlated with the learning requirements of the definition being used.
 
 ### Recommendation Strategy
