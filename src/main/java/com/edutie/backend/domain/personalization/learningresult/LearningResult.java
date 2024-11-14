@@ -130,6 +130,10 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
                 .collect(Collectors.toSet());
     }
 
+    public boolean hasOverlappingLearningRequirements(LearningResult otherResult) {
+        return this.getLearningRequirementIds().stream().anyMatch(otherResult.getLearningRequirementIds()::contains);
+    }
+
     /**
      * Returns the average grade as a double
      *

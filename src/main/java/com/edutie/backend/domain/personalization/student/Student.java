@@ -2,6 +2,7 @@ package com.edutie.backend.domain.personalization.student;
 
 import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
@@ -17,6 +18,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,12 +71,15 @@ public class Student extends Role<StudentId> {
     }
 
     /**
-     * Retrieves latest learning results
+     * Retrieves latest learning results in the chronological order. Where the results gathering moment begin is
+     * defined by a <code>getLatestResultsDateThreshold</code> function
      *
      * @param persistence persistence of learning results
+     * @see #getLatestResultsDateThreshold() date treshold getter
      * @return list of learning results
      */
     public List<LearningResult> getLatestLearningResults(LearningResultPersistence persistence) {
-        return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue();
+        return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue()
+                .stream().sorted(Comparator.comparing(AuditableEntityBase::getCreatedOn)).collect(Collectors.toList());
     }
 }

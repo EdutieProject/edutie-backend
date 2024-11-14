@@ -43,7 +43,8 @@ public class ExternalServiceMocks {
                 return WrapperResult.successWrapper(
                         sourceRequirements.stream().flatMap(
                                 o -> comparedLearningRequirements.stream().map(
-                                        compared -> new LearningRequirementCorrelation(o.getId(), compared.getId(), (int) Math.floor(Math.random() * 100)))
+                                        compared -> new LearningRequirementCorrelation(o.getId(), compared.getId(), (int) Math.floor(Math.random() * 100))
+                                )
                         ).collect(Collectors.toSet()));
             }
         };

@@ -1,6 +1,5 @@
 package com.edutie.backend.domain.education.knowledgecorrelation;
 
-import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +18,11 @@ public class LearningRequirementCorrelation {
         this.sourceLearningRequirementId = sourceLearningRequirementId;
         this.correlatedLearningRequirementId = correlatedLearningRequirementId;
         this.correlationFactor = correlationFactor;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[Learning Requirement Correlation: {%s} -> {%s} | Factor: %s]",
+                sourceLearningRequirementId, correlatedLearningRequirementId, correlationFactor);
     }
 }

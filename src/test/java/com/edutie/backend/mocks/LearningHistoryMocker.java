@@ -1,8 +1,11 @@
 package com.edutie.backend.mocks;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
@@ -42,9 +45,9 @@ public class LearningHistoryMocker {
     }
 
     public static LearningResultPersistence learningResultPersistenceForFeedbackRemediationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
-        return new LearningResultPersistence() {
+        return new MockLearningResultPersistence() {
             @Override
-            public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate){
+            public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
                 try {
                     return WrapperResult.successWrapper(List.of(
                             createLearningResultWithCreatedOnInThePast(
@@ -63,26 +66,154 @@ public class LearningHistoryMocker {
                     return WrapperResult.failureWrapper(new Error("??? no code", ""));
                 }
             }
+        };
+    }
 
+    public static LearningResultPersistence learningResultPersistenceForRefreshStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+        return new MockLearningResultPersistence() {
             @Override
-            public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
-                return null;
+            public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
+                try {
+                    return WrapperResult.successWrapper(List.of(
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "a", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(new LearningRequirementId(), grade, Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(1)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "b", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                    LocalDateTime.now().minusDays(2).minusMinutes(1)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "c", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                    LocalDateTime.now().minusDays(2).minusMinutes(2)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "d", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                    LocalDateTime.now().minusDays(2).minusMinutes(3)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "e", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(new LearningRequirementId(), grade, Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(2).minusMinutes(5)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "f", 0),
+                                    Feedback.of("World"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(3)
+                            )));
+                } catch (Throwable throwable) {
+                    return WrapperResult.failureWrapper(new Error("??? no code", ""));
+                }
             }
 
+            /**
+             * Provides learning results associated with the L. requirement of certain knowledge subject id created by given student.
+             *
+             * @param studentId
+             * @param knowledgeSubjectId knowledge subject id
+             * @return Learning Result List Wrapper Result
+             */
             @Override
             public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId) {
-                return null;
-            }
+                try {
+                    return WrapperResult.successWrapper(
+                            List.of(
+                                    createLearningResultWithCreatedOnInThePast(
+                                            SolutionSubmission.create(student, null, "b", 0),
+                                            Feedback.of("Hello"),
+                                            Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                            LocalDateTime.now().minusDays(2).minusMinutes(1)
+                                    ),
+                                    createLearningResultWithCreatedOnInThePast(
+                                            SolutionSubmission.create(student, null, "c", 0),
+                                            Feedback.of("Hello"),
+                                            Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                            LocalDateTime.now().minusDays(2).minusMinutes(2)
+                                    ),
+                                    createLearningResultWithCreatedOnInThePast(
+                                            SolutionSubmission.create(student, null, "d", 0),
+                                            Feedback.of("Hello"),
+                                            Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                            LocalDateTime.now().minusDays(2).minusMinutes(3)
+                                    )
+                            )
+                    );
+                } catch (Throwable ex) {
+                    return WrapperResult.failureWrapper(new Error("??? no code", ""));
+                }
 
-            @Override
-            public JpaRepository<LearningResult, LearningResultId> getRepository() {
-                return null;
-            }
-
-            @Override
-            public Class<LearningResult> entityClass() {
-                return null;
             }
         };
+    }
+}
+
+class MockLearningResultPersistence implements LearningResultPersistence {
+
+    /**
+     * Retrieves latest results associated with given student. Results are ordered from the latest to the older.
+     * The retrieved amount is supplied as a result
+     *
+     * @param studentId   student id
+     * @param amount      learning result amount
+     * @param maxPastDate
+     * @return Wrapper Result of Learning Results
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
+        return null;
+    }
+
+    /**
+     * Provides learning results associated with certain learning resource definition id created by given student.
+     *
+     * @param studentId
+     * @param learningResourceDefinitionId learning resource definition id
+     * @return Learning Result List Wrapper Result
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
+        return null;
+    }
+
+    /**
+     * Provides learning results associated with the L. requirement of certain knowledge subject id created by given student.
+     *
+     * @param studentId
+     * @param knowledgeSubjectId knowledge subject id
+     * @return Learning Result List Wrapper Result
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId) {
+        return null;
+    }
+
+    /**
+     * Override this to provide repository for default methods
+     *
+     * @return crud jpa repository
+     */
+    @Override
+    public JpaRepository<LearningResult, LearningResultId> getRepository() {
+        return null;
+    }
+
+    /**
+     * Override this to provide entity class for default methods
+     *
+     * @return class of persistence entity
+     */
+    @Override
+    public Class<LearningResult> entityClass() {
+        return null;
     }
 }
