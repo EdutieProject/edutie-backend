@@ -38,22 +38,42 @@ public class Student extends Role<StudentId> {
         student.setId(new StudentId());
         return student;
     }
-    
+
     private static LocalDateTime getLatestResultsDateThreshold() {
         return LocalDateTime.now().minusDays(7);
     }
 
+    /**
+     * Retrieves Learning Results of student associated with learning requirements linked to a given knowledge subject.
+     *
+     * @param persistence        persistence of learning results
+     * @param knowledgeSubjectId knowledge subject id
+     * @return list of learning results.
+     */
     public List<LearningResult> getLearningHistoryByKnowledgeSubject(LearningResultPersistence persistence, KnowledgeSubjectId knowledgeSubjectId) {
         return persistence.getLearningResultsOfStudentByKnowledgeSubjectId(this.getId(), knowledgeSubjectId).getValue();
     }
 
+    /**
+     * Retrieves latest assessments filtering them by maximal grade
+     *
+     * @param persistence persistence of learning results
+     * @param maxGrade    max grade
+     * @return list of assessments
+     */
     public List<Assessment> getLatestAssessmentsByMaxGrade(LearningResultPersistence persistence, Grade maxGrade) {
         return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue()
                 .stream().flatMap(o -> o.getAssessments().stream())
                 .filter(o -> o.getGrade().lessThanOrEqual(maxGrade))
                 .collect(Collectors.toList());
     }
-    
+
+    /**
+     * Retrieves latest learning results
+     *
+     * @param persistence persistence of learning results
+     * @return list of learning results
+     */
     public List<LearningResult> getLatestLearningResults(LearningResultPersistence persistence) {
         return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue();
     }
