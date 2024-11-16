@@ -1,0 +1,26 @@
+package com.edutie.backend.infrastructure.external.knowledgemap.dto;
+
+import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubject;
+import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.backend.infrastructure.external.common.dto.ExternalInfrastructureDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.UUID;
+
+public class KnowledgeSubjectDto implements ExternalInfrastructureDto<KnowledgeSubject, Void> {
+    @JsonProperty
+    UUID knowledgeSubjectId;
+    @JsonProperty
+    String title;
+    @JsonProperty
+    String description;
+
+    @Override
+    public KnowledgeSubject intoDomainEntity(Void unused) {
+        return KnowledgeSubject.create(
+                new KnowledgeSubjectId(knowledgeSubjectId),
+                title,
+                description
+        );
+    }
+}

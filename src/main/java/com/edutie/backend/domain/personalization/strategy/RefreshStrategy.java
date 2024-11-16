@@ -50,7 +50,8 @@ public class RefreshStrategy implements PersonalizationStrategy<ElementalRequire
             currentStreak.clear();
         }
         Set<LearningRequirement> learningRequirementsToRefresh = learningStreaks
-                .stream().flatMap(o -> o.stream().filter(x -> x.getAverageGrade().greaterThanOrEqual(Grade.of(3))))
+                .stream().limit(MAX_STREAK_COUNT)
+                .flatMap(o -> o.stream().filter(x -> x.getAverageGrade().greaterThanOrEqual(Grade.of(3))))
                 .flatMap(o -> o.getAssociatedLearningRequirements().stream())
                 .collect(Collectors.toSet());
         if (learningRequirementsToRefresh.isEmpty())

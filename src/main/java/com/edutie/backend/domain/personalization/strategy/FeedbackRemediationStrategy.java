@@ -26,11 +26,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FeedbackRemediationStrategy implements PersonalizationStrategy<Feedback, FeedbackRemediationStrategy.FeedbackRemediationRule> {
     private final LearningResultPersistence learningResultPersistence;
+
     /**
      * Function qualifying the rule of the personalization strategy. When the personalization strategy
      * does not apply, the returned optional is empty.
      *
-     * @param student
+     * @param student              student
      * @param learningRequirements learning requirements to consider
      * @return Optional Personalization Rule
      */

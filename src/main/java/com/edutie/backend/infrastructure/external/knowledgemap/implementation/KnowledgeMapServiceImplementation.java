@@ -2,6 +2,7 @@ package com.edutie.backend.infrastructure.external.knowledgemap.implementation;
 
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.knowledgecorrelation.LearningRequirementCorrelation;
+import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.infrastructure.external.common.ExternalInfrastructureHandler;
@@ -31,6 +32,11 @@ public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
 
     @Override
     public WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(Set<LearningRequirement> sourceRequirements, Set<LearningRequirement> comparedLearningRequirements) {
+        return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED-503", ""));
+    }
+
+    @Override
+    public WrapperResult<KnowledgeSubject> getAssociatedKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectIds) {
         return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED-503", ""));
     }
 }
