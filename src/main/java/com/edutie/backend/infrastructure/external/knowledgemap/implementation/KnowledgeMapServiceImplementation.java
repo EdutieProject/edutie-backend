@@ -4,28 +4,36 @@ import com.edutie.backend.domain.education.knowledgecorrelation.LearningRequirem
 import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.infrastructure.external.common.ExternalInfrastructureHandler;
 import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
-import lombok.extern.slf4j.Slf4j;
+import com.edutie.backend.infrastructure.external.knowledgemap.messages.LearningRequirementCorrelationsRequest;
+import com.edutie.backend.infrastructure.external.knowledgemap.messages.LearningRequirementsCorrelationResponse;
+import com.edutie.backend.infrastructure.external.knowledgemap.messages.MostCorrelatedSubjectRequest;
+import com.edutie.backend.infrastructure.external.knowledgemap.messages.MostCorrelatedSubjectResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import validation.Error;
 import validation.WrapperResult;
 
 import java.util.Set;
 
 @Component
-@Slf4j
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
     @Value("${knowledge-map-host}")
     private String KNOWLEDGE_MAP_HOST;
 
     @Override
     public WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(Set<LearningRequirement> sourceRequirements, Set<LearningRequirement> comparedLearningRequirements) {
-        return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED-503", ""));
+        final String LEARNING_REQUIREMENTS_CORRELATIONS_URL = KNOWLEDGE_MAP_HOST + "/correlations/learning-requirements";
+        return new ExternalInfrastructureHandler<Set<LearningRequirementCorrelation>, LearningRequirementCorrelationsRequest, LearningRequirementsCorrelationResponse>(this.getClass())
+                .setActionUrl(LEARNING_REQUIREMENTS_CORRELATIONS_URL)
+                .handle(new LearningRequirementCorrelationsRequest(sourceRequirements, comparedLearningRequirements), LearningRequirementsCorrelationResponse.class);
     }
 
     @Override
     public WrapperResult<KnowledgeSubject> getMostCorrelatedKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
-        return WrapperResult.failureWrapper(new Error("NOT-IMPLEMENTED-503", ""));
+        final String MOST_CORRELATED_KNOWLEDGE_SUBJECT_URL = KNOWLEDGE_MAP_HOST + "/knowledge-subjects/most-correlated";
+        return new ExternalInfrastructureHandler<KnowledgeSubject, MostCorrelatedSubjectRequest, MostCorrelatedSubjectResponse>(this.getClass())
+                .setActionUrl(MOST_CORRELATED_KNOWLEDGE_SUBJECT_URL)
+                .handle(new MostCorrelatedSubjectRequest(knowledgeSubjectId), MostCorrelatedSubjectResponse.class);
     }
 }
