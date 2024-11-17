@@ -34,7 +34,7 @@ public class FamiliarRemediationStrategyTests {
     public void feedbackRemediationStrategyQualifiesTest() {
         familiarRemediationStrategy = new FamiliarRemediationStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(2))
+                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), learningRequirement, Grade.of(6))
         );
 
         Optional<FamiliarRemediationStrategy.FamiliarRemediationRule> rule = familiarRemediationStrategy.qualifyRule(
@@ -48,7 +48,7 @@ public class FamiliarRemediationStrategyTests {
     public void feedbackRemediationStrategyNoQualificationTest() {
         familiarRemediationStrategy = new FamiliarRemediationStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(4))
+                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), learningRequirement, Grade.of(2))
         );
 
         Optional<FamiliarRemediationStrategy.FamiliarRemediationRule> rule = familiarRemediationStrategy.qualifyRule(
