@@ -69,6 +69,56 @@ public class LearningHistoryMocker {
         };
     }
 
+    public static LearningResultPersistence learningResultPersistenceForRecommendationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+        return new MockLearningResultPersistence() {
+            @Override
+            public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
+                try {
+                    return WrapperResult.successWrapper(List.of(
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), new Grade(1), Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(1)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "", 0),
+                                    Feedback.of("World"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(2)
+                            )));
+                } catch (Throwable throwable) {
+                    return WrapperResult.failureWrapper(new Error("??? no code", ""));
+                }
+            }
+        };
+    }
+
+    public static LearningResultPersistence learningResultPersistenceForFamiliarRemediationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+        return new MockLearningResultPersistence() {
+            @Override
+            public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
+                try {
+                    return WrapperResult.successWrapper(List.of(
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "", 0),
+                                    Feedback.of("Hello"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(1)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, null, "", 0),
+                                    Feedback.of("World"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                    LocalDateTime.now().minusDays(2)
+                            )));
+                } catch (Throwable throwable) {
+                    return WrapperResult.failureWrapper(new Error("??? no code", ""));
+                }
+            }
+        };
+    }
+
     public static LearningResultPersistence learningResultPersistenceForRefreshStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
         return new MockLearningResultPersistence() {
             @Override

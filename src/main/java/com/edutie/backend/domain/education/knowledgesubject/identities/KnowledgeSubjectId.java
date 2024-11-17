@@ -1,19 +1,17 @@
 package com.edutie.backend.domain.education.knowledgesubject.identities;
 
-import com.edutie.backend.domain.common.base.identity.UuidIdentifier;
+import com.edutie.backend.domain.common.base.identity.WikidataIdentifier;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.Embeddable;
 
-import java.util.UUID;
-
 @Embeddable
-public class KnowledgeSubjectId extends UuidIdentifier {
+public class KnowledgeSubjectId extends WikidataIdentifier {
     public KnowledgeSubjectId() {
-        super();
+        super("Q" + Integer.valueOf((int) Math.floor(Math.random() * 1000)).toString());
     }
 
     @JsonCreator
-    public KnowledgeSubjectId(UUID uuid) {
-        super(uuid);
+    public KnowledgeSubjectId(String wikidataId) {
+        super(wikidataId);
     }
 }

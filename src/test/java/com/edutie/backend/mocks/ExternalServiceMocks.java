@@ -4,6 +4,7 @@ import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGen
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
 import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.knowledgecorrelation.LearningRequirementCorrelation;
+import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
@@ -22,22 +23,11 @@ import com.edutie.backend.infrastructure.external.llm.LargeLanguageModelService;
 import validation.WrapperResult;
 
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ExternalServiceMocks {
     public static KnowledgeMapService knowledgeMapServiceMock() {
         return new KnowledgeMapService() {
-            @Override
-            public WrapperResult<Set<KnowledgeCorrelation>> getKnowledgeCorrelations(Set<KnowledgeSubjectId> knowledgeSubjectIds) {
-                return WrapperResult.successWrapper(Set.of(
-                        new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")), 2),
-                        new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("4e92752a-5ef8-420e-ba45-260b6b7af5fe")), 4),
-                        new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("201b3e63-5340-4a35-8f51-8de8275dae1e")), 7),
-                        new KnowledgeCorrelation(knowledgeSubjectIds.stream().findFirst().get(), new KnowledgeSubjectId(UUID.fromString("7ad5fd80-6337-4b69-8048-8a97e39aa963")), 8)
-                ));
-            }
-
             @Override
             public WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(Set<LearningRequirement> sourceRequirements, Set<LearningRequirement> comparedLearningRequirements) {
                 return WrapperResult.successWrapper(
@@ -46,6 +36,15 @@ public class ExternalServiceMocks {
                                         compared -> new LearningRequirementCorrelation(o.getId(), compared.getId(), (int) Math.floor(Math.random() * 100))
                                 )
                         ).collect(Collectors.toSet()));
+            }
+
+            @Override
+            public WrapperResult<KnowledgeSubject> getMostCorrelatedKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
+                return WrapperResult.successWrapper(KnowledgeSubject.create(
+                        new KnowledgeSubjectId(),
+                        "Mount everest",
+                        "A big ass mountain"
+                ));
             }
         };
     }

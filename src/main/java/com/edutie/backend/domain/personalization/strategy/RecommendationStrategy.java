@@ -44,19 +44,22 @@ public class RecommendationStrategy implements PersonalizationStrategy<Knowledge
 
         LearningResult randomResult = topResults.get((int) Math.floor(Math.random() * topResults.size()));
 
-        Optional<LearningRequirement> highestCorrelationRequirement = randomResult.getAssociatedLearningRequirements().stream()
-                .max(Comparator.comparing(requirement -> {
-                    Set<LearningRequirementCorrelation> learningRequirementsCorrelation = knowledgeMapService
-                            .getLearningRequirementCorrelations(learningRequirements, Set.of(requirement)).getValue();
-                    return learningRequirementsCorrelation.stream()
-                            .mapToDouble(LearningRequirementCorrelation::getCorrelationFactor)
-                            .average()
-                            .orElse(Double.MIN_VALUE); // Default if no correlations are present
-                }));
+        Optional<LearningRequirement> highestCorrelationRequirement = randomResult.getAssociatedLearningRequirements().size() == 1 ?
+                randomResult.getAssociatedLearningRequirements().stream().findFirst() :
+                randomResult.getAssociatedLearningRequirements().stream()
+                        .max(Comparator.comparing(requirement -> {
+                            Set<LearningRequirementCorrelation> learningRequirementsCorrelation = knowledgeMapService
+                                    .getLearningRequirementCorrelations(learningRequirements, Set.of(requirement)).getValue();
+                            return learningRequirementsCorrelation.stream()
+                                    .mapToDouble(LearningRequirementCorrelation::getCorrelationFactor)
+                                    .average()
+                                    .orElse(Double.MIN_VALUE); // Default if no correlations are present
+                        }));
+
         if (highestCorrelationRequirement.isEmpty())
             return Optional.empty();
 
-        KnowledgeSubject knowledgeSubject = knowledgeMapService.getAssociatedKnowledgeSubject(highestCorrelationRequirement.get().getKnowledgeSubjectId()).getValue();
+        KnowledgeSubject knowledgeSubject = knowledgeMapService.getMostCorrelatedKnowledgeSubject(highestCorrelationRequirement.get().getKnowledgeSubjectId()).getValue();
 
         return Optional.of(new RecommendationRule(knowledgeSubject));
     }
