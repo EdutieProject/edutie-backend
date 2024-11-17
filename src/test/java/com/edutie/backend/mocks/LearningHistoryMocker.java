@@ -78,13 +78,14 @@ public class LearningHistoryMocker {
                             createLearningResultWithCreatedOnInThePast(
                                     SolutionSubmission.create(student, null, "", 0),
                                     Feedback.of("Hello"),
-                                    Set.of(Assessment.create(learningRequirement.getId(), new Grade(1), Feedback.of(""), List.of())),
+                                    Set.of(Assessment.create(learningRequirement.getId(), Grade.of(1), Feedback.of(""), List.of())),
                                     LocalDateTime.now().minusDays(1)
                             ),
                             createLearningResultWithCreatedOnInThePast(
                                     SolutionSubmission.create(student, null, "", 0),
                                     Feedback.of("World"),
-                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""),
+                                            List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                     LocalDateTime.now().minusDays(2)
                             )));
                 } catch (Throwable throwable) {

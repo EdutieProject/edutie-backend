@@ -28,12 +28,11 @@ public class RecommendationStrategyTests {
         learningRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
     }
 
-
     @Test
     public void recommendationStrategyQualifiesTest() {
         recommendationStrategy = new RecommendationStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(5))
+                LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningRequirement, Grade.of(5))
         );
 
         Optional<RecommendationStrategy.RecommendationRule> rule = recommendationStrategy.qualifyRule(

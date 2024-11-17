@@ -42,6 +42,9 @@ public class RecommendationStrategy implements PersonalizationStrategy<Knowledge
                 .filter(o -> o.getAverageGrade().greaterThanOrEqual(Grade.of(5)))
                 .toList();
 
+        if (topResults.isEmpty())
+            return Optional.empty();
+
         LearningResult randomResult = topResults.get((int) Math.floor(Math.random() * topResults.size()));
 
         Optional<LearningRequirement> highestCorrelationRequirement = randomResult.getAssociatedLearningRequirements().size() == 1 ?
