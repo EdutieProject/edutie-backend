@@ -5,11 +5,9 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import com.edutie.backend.infrastructure.external.common.dto.ExternalInfrastructureDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
-
 public class KnowledgeSubjectDto implements ExternalInfrastructureDto<KnowledgeSubject, Void> {
     @JsonProperty
-    UUID knowledgeSubjectId;
+    String knowledgeSubjectId;
     @JsonProperty
     String title;
     @JsonProperty

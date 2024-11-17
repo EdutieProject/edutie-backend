@@ -41,7 +41,7 @@ public class FamiliarRemediationStrategyTests {
                 mockUser.getStudentProfile(), Set.of(learningRequirement));
 
         Assertions.assertTrue(rule.isPresent());
-        Assertions.assertEquals(Feedback.of("Hello"), rule.get().getContext());
+        Assertions.assertEquals(Feedback.of("World"), rule.get().getContext());
     }
 
     @Test

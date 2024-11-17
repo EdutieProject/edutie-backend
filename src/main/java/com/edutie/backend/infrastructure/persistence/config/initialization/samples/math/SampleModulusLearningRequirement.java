@@ -11,7 +11,7 @@ public class SampleModulusLearningRequirement {
 
     public static LearningRequirement getLearningRequirement(Educator educator) {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
-        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("3dcf1a7d-d9ea-4e9b-becb-af730841056f")));
+        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
         learningRequirement.setName(LEARNING_REQUIREMENT_NAME);
         learningRequirement.appendSubRequirement(
                 "Uczeń zna definicję wartości bezwzględnej liczby rzeczywistej i jej interpretację geometryczną",
