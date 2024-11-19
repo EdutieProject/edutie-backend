@@ -42,8 +42,7 @@ public class ExternalServiceMocks {
             public WrapperResult<KnowledgeSubject> getMostCorrelatedKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
                 return WrapperResult.successWrapper(KnowledgeSubject.create(
                         new KnowledgeSubjectId(),
-                        "Mount everest",
-                        "A big ass mountain"
+                        "Mount everest"
                 ));
             }
         };

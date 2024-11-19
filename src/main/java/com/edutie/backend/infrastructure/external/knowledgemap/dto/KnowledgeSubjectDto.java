@@ -10,15 +10,12 @@ public class KnowledgeSubjectDto implements ExternalInfrastructureDto<KnowledgeS
     String knowledgeSubjectId;
     @JsonProperty
     String title;
-    @JsonProperty
-    String description;
 
     @Override
     public KnowledgeSubject intoDomainEntity(Void unused) {
         return KnowledgeSubject.create(
                 new KnowledgeSubjectId(knowledgeSubjectId),
-                title,
-                description
+                title
         );
     }
 }

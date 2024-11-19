@@ -10,19 +10,17 @@ import lombok.Setter;
 /**
  * Knowledge subject is a wikidata knowledge node representation.
  */
+@Getter
 public class KnowledgeSubject extends EntityBase<KnowledgeSubjectId> {
     private String title;
-    private String description;
 
     public static KnowledgeSubject create(
             KnowledgeSubjectId id,
-            String title,
-            String description
+            String title
     ) {
         KnowledgeSubject knowledgeSubject = new KnowledgeSubject();
         knowledgeSubject.setId(id);
         knowledgeSubject.title = title;
-        knowledgeSubject.description = description;
         return knowledgeSubject;
     }
 }
