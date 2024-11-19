@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Setter(AccessLevel.PRIVATE)
 @Entity
 public class LearningResource extends AuditableEntityBase<LearningResourceId> {
-    @ManyToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
