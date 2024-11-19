@@ -2,7 +2,6 @@ package com.edutie.backend.mocks;
 
 import com.edutie.backend.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
-import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.knowledgecorrelation.LearningRequirementCorrelation;
 import com.edutie.backend.domain.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
@@ -11,7 +10,7 @@ import com.edutie.backend.domain.education.learningrequirement.identities.Learni
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -54,8 +53,9 @@ public class ExternalServiceMocks {
             public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
                 LearningResource learningResource = LearningResource.create(
                         learningResourceGenerationSchema,
+                        "graph TD",
                         Activity.create("Hello there it is activity text here!", Set.of(Hint.create("Hello!"), Hint.create("World!"))),
-                        Theory.create("The general idea is simple...", "graph TD [more graph below]")
+                        learningResourceGenerationSchema.getLearningRequirementIds().stream().map(o -> TheoryCard.create(o, "The general idea is simple...")).collect(Collectors.toSet())
                 );
                 return WrapperResult.successWrapper(learningResource);
             }

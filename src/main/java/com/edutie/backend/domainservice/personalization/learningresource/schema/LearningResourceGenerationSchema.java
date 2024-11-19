@@ -2,6 +2,7 @@ package com.edutie.backend.domainservice.personalization.learningresource.schema
 
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
@@ -19,6 +20,7 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Schema used in personalized Learning Resource generation.
@@ -70,6 +72,10 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
             List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
             qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
         }
+    }
+
+    public Set<LearningRequirementId> getLearningRequirementIds() {
+        return qualifiedRequirements.stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
     }
 
 }

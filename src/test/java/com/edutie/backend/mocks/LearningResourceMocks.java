@@ -2,10 +2,11 @@ package com.edutie.backend.mocks;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -35,8 +36,9 @@ public class LearningResourceMocks {
     public static LearningResource sampleLearningResource(Student student, LearningResultPersistence learningResultPersistence, Educator educator) {
                 return LearningResource.create(
                 sampleLearningResourceGenerationSchema(student, learningResultPersistence, educator),
+"graph TD",
                 Activity.create("Hello", Set.of(Hint.create("Wrld!"))),
-                Theory.create("Theory overview", "mermaid diagram!")
+                Set.of(TheoryCard.create(new LearningRequirementId(), "Theory overview"))
         );
     }
 }

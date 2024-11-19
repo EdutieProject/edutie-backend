@@ -6,7 +6,7 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
@@ -32,6 +32,7 @@ import validation.WrapperResult;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class LearningResultPersistenceTests {
@@ -66,8 +67,9 @@ public class LearningResultPersistenceTests {
     private LearningResource createAndSaveLearningResource(LearningResourceDefinition learningResourceDefinition) {
         LearningResource learningResource = LearningResource.create(
                 LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()),
+                "graph TD",
                 Activity.create("", Set.of()),
-                Theory.create("", "")
+                learningResourceDefinition.getLearningRequirements().stream().map(o -> TheoryCard.create(o.getId(), "Something")).collect(Collectors.toSet())
         );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         return learningResource;

@@ -3,7 +3,7 @@ package com.edutie.backend.domain.personalization.learningresource;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
@@ -37,24 +37,27 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private StudentId studentId;
     @OneToOne(targetEntity = Activity.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Activity activity;
-    @OneToOne(targetEntity = Theory.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Theory theory;
-
+    @OneToMany(targetEntity = TheoryCard.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<TheoryCard> theoryCards;
+    @Column(columnDefinition = "TEXT")
+    private String mermaidVisualisationString;
     @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
     private LearningResourceDefinitionId definitionId;
     private DefinitionType definitionType;
+
     /**
      * Recommended constructor that creates learning resource from L.R.G.S. and other different details.
      *
      * @param generationSchema generation schema
      * @param activity         activity
-     * @param theory           theory
+     * @param theoryCards      theory cards
      * @return new Learning Resource
      */
     public static LearningResource create(
             LearningResourceGenerationSchema generationSchema,
+            String mermaidVisualisationString,
             Activity activity,
-            Theory theory
+            Set<TheoryCard> theoryCards
     ) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
@@ -64,7 +67,8 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         learningResource.setDefinitionType(generationSchema.getLearningResourceDefinitionType());
         learningResource.setQualifiedRequirements(generationSchema.getQualifiedRequirements());
         learningResource.setActivity(activity);
-        learningResource.setTheory(theory);
+        learningResource.setMermaidVisualisationString(mermaidVisualisationString);
+        learningResource.setTheoryCards(theoryCards);
         return learningResource;
     }
 
