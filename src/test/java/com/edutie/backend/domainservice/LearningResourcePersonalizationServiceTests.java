@@ -1,6 +1,7 @@
 package com.edutie.backend.domainservice;
 
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.strategy.selectionengine.PersonalizationRuleSelectionEngine;
 import com.edutie.backend.domainservice.personalization.learningresource.LearningResourcePersonalizationService;
 import com.edutie.backend.domainservice.personalization.learningresource.implementation.LearningResourcePersonalizationServiceImplementation;
 import com.edutie.backend.mocks.ExternalServiceMocks;
@@ -18,10 +19,13 @@ public class LearningResourcePersonalizationServiceTests {
     @Autowired
     private LearningResultPersistence learningResultPersistence;
 
+    @Autowired
+    private PersonalizationRuleSelectionEngine personalizationRuleSelectionEngine;
+
     private LearningResourcePersonalizationService learningResourcePersonalizationService = new LearningResourcePersonalizationServiceImplementation(
-            ExternalServiceMocks.knowledgeMapServiceMock(),
             learningResultPersistence,
-            ExternalServiceMocks.largeLanguageModelServiceMock()
+            ExternalServiceMocks.largeLanguageModelServiceMock(),
+            personalizationRuleSelectionEngine
     );
 
     @BeforeEach

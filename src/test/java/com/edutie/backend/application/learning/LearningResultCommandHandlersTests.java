@@ -6,7 +6,7 @@ import com.edutie.backend.application.learning.learningresult.implementation.Ass
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
@@ -29,6 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import validation.WrapperResult;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class LearningResultCommandHandlersTests {
@@ -76,9 +77,10 @@ public class LearningResultCommandHandlersTests {
 
     private LearningResource createAndSaveLearningResource(LearningResourceDefinition learningResourceDefinition) {
         LearningResource learningResource = LearningResource.create(
-                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, Set.of(), learningResourceDefinition),
+                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()),
+                "graph LR",
                 Activity.create("", Set.of()),
-                Theory.create("", "")
+                learningResourceDefinition.getLearningRequirements().stream().map(o -> TheoryCard.create(o.getId(), "Something")).collect(Collectors.toSet())
         );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         return learningResource;

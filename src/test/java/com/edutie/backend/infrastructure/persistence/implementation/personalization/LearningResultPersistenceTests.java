@@ -6,7 +6,7 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
@@ -15,14 +15,12 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.iden
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.mocks.EducationMocks;
-import com.edutie.backend.mocks.LearningResourceMocks;
 import com.edutie.backend.mocks.MockUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +32,7 @@ import validation.WrapperResult;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class LearningResultPersistenceTests {
@@ -67,9 +66,10 @@ public class LearningResultPersistenceTests {
 
     private LearningResource createAndSaveLearningResource(LearningResourceDefinition learningResourceDefinition) {
         LearningResource learningResource = LearningResource.create(
-                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, Set.of(), learningResourceDefinition),
+                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()),
+                "graph TD",
                 Activity.create("", Set.of()),
-                Theory.create("", "")
+                learningResourceDefinition.getLearningRequirements().stream().map(o -> TheoryCard.create(o.getId(), "Something")).collect(Collectors.toSet())
         );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         return learningResource;
@@ -79,8 +79,8 @@ public class LearningResultPersistenceTests {
     public void getLatestResultsOfStudentSingleTest() {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), null, "Text of the report", 0),
-                new Feedback("", FeedbackType.NEUTRAL),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                new Feedback(""),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -99,8 +99,8 @@ public class LearningResultPersistenceTests {
     public void getLatestResultsOfStudentEmptyTest() {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), null, "Text of the report", 0),
-                new Feedback("", FeedbackType.NEUTRAL),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                new Feedback(""),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult);
 
@@ -119,8 +119,8 @@ public class LearningResultPersistenceTests {
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
-                new Feedback("Feedback", FeedbackType.POSITIVE),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                new Feedback("Feedback"),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -141,8 +141,8 @@ public class LearningResultPersistenceTests {
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
-                new Feedback("Feedback", FeedbackType.POSITIVE),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                new Feedback("Feedback"),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -162,8 +162,8 @@ public class LearningResultPersistenceTests {
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
-                new Feedback("Feedback", FeedbackType.POSITIVE),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                new Feedback("Feedback"),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 
@@ -183,8 +183,8 @@ public class LearningResultPersistenceTests {
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
-                new Feedback("Feedback", FeedbackType.POSITIVE),
-                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "", List.of()))
+                new Feedback("Feedback"),
+                Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 

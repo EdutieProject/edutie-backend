@@ -1,17 +1,16 @@
 package com.edutie.backend.domainservice.personalization.learningresource.schema;
 
-import com.edutie.backend.domain.education.knowledgecorrelation.KnowledgeCorrelation;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.edutie.backend.domainservice.personalization.common.PersonalizationSchema;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.details.ActivityPersonalizedDetails;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.details.TheoryPersonalizedDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,6 +20,7 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Schema used in personalized Learning Resource generation.
@@ -30,8 +30,8 @@ import java.util.Set;
 @Setter(AccessLevel.PRIVATE)
 public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
-    private ActivityPersonalizedDetails activityDetails;
-    private TheoryPersonalizedDetails theoryDetails;
+    private Set<PersonalizationRule<?>> personalizationRules = new HashSet<>();
+    private AdditionalInstructions additionalInstructions;
     @JsonIgnore
     private Student studentMetadata;
     @JsonIgnore
@@ -42,33 +42,40 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     /**
      * Creation method for learning resource generation schema
      *
-     * @param student                    student which is the recipient of the latter learning result
-     * @param learningResultPersistence  persistence of learning results used to fetch past results of the student
-     * @param knowledgeCorrelations      knowledge correlation list
-     * @param learningResourceDefinition learning resource definition
+     * @param student                   student which is the recipient of the latter learning result
+     * @param learningResultPersistence persistence of learning results used to fetch past results of the student
+     * @param definition                learning resource definition
+     * @param personalizationRules      personalization rules to be used in the LR generation
      * @return new Learning Resource Generation Schema
      */
     public static LearningResourceGenerationSchema create(
             Student student,
             LearningResultPersistence learningResultPersistence,
-            Set<KnowledgeCorrelation> knowledgeCorrelations,
-            LearningResourceDefinitionBase learningResourceDefinition
+            LearningResourceDefinitionBase definition, Set<PersonalizationRule<?>> personalizationRules
     ) {
-        LearningResourceGenerationSchema learningResourceGenerationSchema = new LearningResourceGenerationSchema();
-        learningResourceGenerationSchema.setLearningResourceDefinitionType(learningResourceDefinition.getDefinitionType());
-        learningResourceGenerationSchema.setStudentMetadata(student);
-        learningResourceGenerationSchema.setTheoryDetails(
-                TheoryPersonalizedDetails.create(learningResourceDefinition.getTheoryDetails(), student, learningResultPersistence, knowledgeCorrelations)
-        );
-        learningResourceGenerationSchema.setActivityDetails(
-                ActivityPersonalizedDetails.create(learningResourceDefinition.getActivityDetails(), student, learningResultPersistence, knowledgeCorrelations)
-        );
-        for (LearningRequirement learningRequirement : learningResourceDefinition.getLearningRequirements()) {
+        LearningResourceGenerationSchema generationSchema = new LearningResourceGenerationSchema();
+        generationSchema.setLearningResourceDefinitionType(definition.getDefinitionType());
+        generationSchema.setStudentMetadata(student);
+        generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition(definition));
+        generationSchema.qualifyElementalRequirements(definition.getLearningRequirements(), student, learningResultPersistence);
+        generationSchema.setPersonalizationRules(personalizationRules);
+        generationSchema.setLearningResourceDefinitionId(definition.getId());
+        return generationSchema;
+    }
+
+    /**
+     * This function qualifies elemental requirements of given learning requirements.
+     * Should only be used for schema creation purposes.
+     */
+    private void qualifyElementalRequirements(Set<LearningRequirement> learningRequirements, Student student, LearningResultPersistence learningResultPersistence) {
+        for (LearningRequirement learningRequirement : learningRequirements) {
             List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
-            learningResourceGenerationSchema.qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
+            qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(learningResultsOfRequirement));
         }
-        learningResourceGenerationSchema.setLearningResourceDefinitionId(learningResourceDefinition.getId());
-        return learningResourceGenerationSchema;
+    }
+
+    public Set<LearningRequirementId> getLearningRequirementIds() {
+        return qualifiedRequirements.stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
     }
 
 }
