@@ -1,7 +1,9 @@
 package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
@@ -72,9 +74,15 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
         return learningResource;
     }
 
-    @JsonProperty("learningRequirementNames")
-    public Set<String> getLearningRequirementNames() {
-        return qualifiedRequirements.stream().map(o -> o.getLearningRequirement().getName()).collect(Collectors.toSet());
+
+    protected record LearningRequirementSnippet(LearningRequirementId learningRequirementId, String name) {
+        //TODO: json view for Learning Requirements
+    }
+
+    @JsonProperty("learningRequirements")
+    public Set<LearningRequirementSnippet> getAssociatedLearningRequirements() {
+        return qualifiedRequirements.stream().map(ElementalRequirement::getLearningRequirement)
+                .map(o -> new LearningRequirementSnippet(o.getId(), o.getName())).collect(Collectors.toSet());
     }
 
 }
