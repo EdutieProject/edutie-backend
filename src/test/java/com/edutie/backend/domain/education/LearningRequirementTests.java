@@ -28,8 +28,8 @@ public class LearningRequirementTests {
 		learningRequirement.appendSubRequirement("R2", PromptFragment.of(""));
 		learningRequirement.appendSubRequirement("R3", PromptFragment.of(""));
 
-		assert learningRequirement.getElementalRequirements().get(0).getRequirementText().text().equals("R1");
-		assert learningRequirement.getElementalRequirements().get(2).getRequirementText().text().equals("R3");
+		assert learningRequirement.getElementalRequirements().get(0).getObjectiveText().text().equals("R1");
+		assert learningRequirement.getElementalRequirements().get(2).getObjectiveText().text().equals("R3");
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class LearningRequirementTests {
 		learningRequirement.appendSubRequirement("R3", PromptFragment.of(""));
 		assert learningRequirement.insertSubRequirement("Hello!", PromptFragment.of(""), 1).isSuccess();
 
-		assert learningRequirement.getElementalRequirements().get(1).getRequirementText().text().equals("Hello!");
+		assert learningRequirement.getElementalRequirements().get(1).getObjectiveText().text().equals("Hello!");
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class LearningRequirementTests {
 		assert learningRequirement.getElementalRequirements().size() == 3;
 
 		assert learningRequirement.removeSubRequirement(0).isSuccess();
-		assert learningRequirement.getElementalRequirements().getFirst().getRequirementText().text().equals("R2");
+		assert learningRequirement.getElementalRequirements().getFirst().getObjectiveText().text().equals("R2");
 	}
 
 }

@@ -30,7 +30,7 @@ public class EducationMocks {
     public static LearningRequirement relatedLearningRequirement(Educator educator) {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setName("Integration by substitution");
-        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId(UUID.fromString("73658904-a20e-41f0-8274-6c000e0760da")));
+        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
         learningRequirement.appendSubRequirement(
                 "Substituting an expression with a variable",
                 PromptFragment.of("")

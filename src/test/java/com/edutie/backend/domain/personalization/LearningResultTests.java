@@ -6,7 +6,6 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
@@ -28,10 +27,10 @@ public class LearningResultTests {
     public void isSuccessfulFalseTest() {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(student, null, "Report text", 0),
-                new Feedback("That is a feedback", FeedbackType.NEUTRAL),
+                new Feedback("That is a feedback"),
                 Set.of(
-                        Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, "Text of the feedback", List.of()),
-                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, "Text of the feedback part 2", List.of())
+                        Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of("Text of the feedback"), List.of()),
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback part 2"), List.of())
                 )
         );
 
@@ -42,10 +41,10 @@ public class LearningResultTests {
     public void isSuccessfulTrueTest() {
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(student, null, "Report text", 0),
-                new Feedback("That is a feedback", FeedbackType.NEUTRAL),
+                new Feedback("That is a feedback"),
                 Set.of(
-                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, "Text of the feedback", List.of()),
-                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, "Text of the feedback part 2", List.of())
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"), List.of()),
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback part 2"), List.of())
                 )
         );
 

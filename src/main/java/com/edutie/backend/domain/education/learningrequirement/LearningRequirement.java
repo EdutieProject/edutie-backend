@@ -131,6 +131,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
      * @return Set of elemental requirements.
      */
     public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults) {
+        //TODO: math function of sqrt to better calculate the difficulty
         double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
                 .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
         double gradeAsPercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();

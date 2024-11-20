@@ -10,6 +10,10 @@ public record Grade(
     public static final Grade MIN_GRADE = new Grade(1);
     public static final Grade SUCCESS_GRADE = new Grade(5);
 
+    public static Grade of(int gradeNumber) {
+        return new Grade(gradeNumber);
+    }
+
     public Grade() {
         this(0);
     }

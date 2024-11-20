@@ -5,7 +5,7 @@ import com.edutie.backend.application.learning.learningresult.queries.GetLearnin
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
-import com.edutie.backend.domain.personalization.learningresource.entities.Theory;
+import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
@@ -13,7 +13,6 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.enti
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
-import com.edutie.backend.domain.personalization.learningresult.enums.FeedbackType;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
@@ -68,9 +67,10 @@ public class LearningResultQueryHandlersTests {
 
     private LearningResource createAndSaveLearningResource(LearningResourceDefinition learningResourceDefinition) {
         LearningResource learningResource = LearningResource.create(
-                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, Set.of(), learningResourceDefinition),
+                LearningResourceGenerationSchema.create(mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()),
+                "graph LR",
                 Activity.create("", Set.of()),
-                Theory.create("", "")
+                learningResourceDefinition.getLearningRequirements().stream().map(o -> TheoryCard.create(o.getId(), "Something")).collect(Collectors.toSet())
         );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         return learningResource;
@@ -83,8 +83,8 @@ public class LearningResultQueryHandlersTests {
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), learningResource, "Report", 0),
-                new Feedback("Feedback text", FeedbackType.POSITIVE),
-                learningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), "", List.of())).collect(Collectors.toSet())
+                new Feedback("Feedback text"),
+                learningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), Feedback.of(""), List.of())).collect(Collectors.toSet())
         );
         learningResultPersistence.save(learningResult).throwIfFailure();
 

@@ -1,6 +1,9 @@
 package com.edutie.backend.domain.personalization.learningresult;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
+import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
@@ -16,6 +19,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A result of learning activities that is used
@@ -106,13 +110,43 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     }
 
     /**
+     * Retrieve ids of associated learning requirements.
+     *
+     * @return set of learning requirement ids
+     */
+    public Set<LearningRequirementId> getLearningRequirementIds() {
+        return assessments.stream().map(Assessment::getLearningRequirementId).collect(Collectors.toSet());
+    }
+
+    /**
+     * Retrieves a set of associated learning requirements.
+     *
+     * @return Set of learning requirements associated with the L. Resource of the result.
+     */
+    public Set<LearningRequirement> getAssociatedLearningRequirements() {
+        return assessments.stream()
+                .flatMap(o -> o.getQualifiedElementalRequirements().stream())
+                .map(ElementalRequirement::getLearningRequirement)
+                .collect(Collectors.toSet());
+    }
+
+    public boolean hasOverlappingLearningRequirements(LearningResult otherResult) {
+        return this.getLearningRequirementIds().stream().anyMatch(otherResult.getLearningRequirementIds()::contains);
+    }
+
+    /**
      * Returns the average grade as a double
      *
      * @return average grade as double
      */
     @JsonProperty("averageGrade")
-    public double getAverageGrade() {
+    public double getAverageGradeAsDouble() {
         return (double) assessments.stream().map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).sum() / assessments.size();
+    }
+
+    @JsonProperty("averageGradeRounded")
+    public Grade getAverageGrade() {
+        return new Grade((int) Math.round(getAverageGradeAsDouble()));
     }
 
 }

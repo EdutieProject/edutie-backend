@@ -24,23 +24,56 @@ be functional.
 Learning requirements are the primary descriptors of what the LR should require from the student. Therefore, they are
 the most important when it comes to the true knowledge student exercises.
 
-### Theory context sources
+### Educator instructions
 
-Learning Resource Definition has a theory context source.
-The theory context source describes how the theory context in the learning resource should look like.
-The contents of this part are:
+These are the additional instructions given from educator for LR generation. These encompass:
+ - Theory context instructions - instructions applied for theory generation
+ - Activity instructions - analogous to the previous one
 
-- Theory description - a description used for theory context generation
-- Theory summary additions - an additional prompt used for summary generation
+## Implementations
 
-### Activity context sources
+LRD can be implemented in various ways.
 
-Learning Resource Definition has an activity context source.
-Activity context source describes how the activity for the learning resource should look like.
-The contents of this part are:
+### Static Learning Resource Definition
 
-- Activity description - a description used for task generation
-- Hints description additions - an additional description used for hint generation
+The static one is an LRD created by an Educator to serve as an absolute material definition in a study program element.
+
+Thus, it is static, meaning that it is stored and its state can be changed because it *exists*. For instance, in the
+course created by an educator.
+
+Below - a scheme of how static LRD works in terms of LR creation.
+
+```mermaid
+---
+config:
+  theme: mc
+  layout: elk
+  look: neo
+title: Static LRD utilization - Personalization version 2
+---
+flowchart TD
+    n1["Static Learning Resource Definition"] --> n2["Learning Requirements"] & n3["Educator Instructions"]
+    n4["Student"] --> n5["Past Learning Results"]
+    n5 --> n6["Assessments"] & n7(["Choose qualified requirements based on the whole Learning Results"])
+    n2 --> n7
+    n7 --> n8["Qualified elemental requirements"]
+    n6 & km["Knowledge map"] --> n9(["Create personalization rules based on \npast assessments and their correlations"])
+    n9 --> n10["Personalization Rules"]
+    n8 --> n11["LR GenerationSchema"]
+    n10 --> n11
+    n3 --> n11
+    n2 --> n9
+    n11 -- LLM --> n12["Learning Resource"]
+    style n7 stroke-width:4px,stroke-dasharray: 5
+    style n9 stroke-width:4px,stroke-dasharray: 5
+```
+
+### Dynamic Learning Resource Definition
+
+The dynamic one is similar to the static, however it is not persisted as it is created dynamically based on dynamically
+provided learning requirements. Moreover, it has no Educator instructions associated with it.
+
+> *Schemes TBD*
 
 ## References
 
