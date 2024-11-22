@@ -43,6 +43,6 @@ sequenceDiagram
 
 ## Description
 
-Flow retrieves a latest activity view encompassing latest activity descriptors such as:
+Flow retrieves the latest activity view encompassing latest activity descriptors such as:
  - Latest learning result
  - Latest Course View consisting of the course itself and a course progress indicator
