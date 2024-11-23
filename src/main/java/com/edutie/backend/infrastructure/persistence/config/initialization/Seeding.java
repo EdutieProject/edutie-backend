@@ -180,6 +180,7 @@ public class Seeding {
         Course course = Course.create(educator, science);
         course.setName(name);
         course.setDescription(description);
+        course.setImageSource(imageSource);
         coursePersistence.save(course);
         seedSampleLessonsInCourse(course);
     }
