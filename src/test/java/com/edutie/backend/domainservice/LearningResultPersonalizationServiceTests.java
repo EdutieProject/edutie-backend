@@ -16,6 +16,7 @@ import com.edutie.backend.domainservice.personalization.learningresult.implement
 import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResultRepository;
 import com.edutie.backend.mocks.ExternalServiceMocks;
+import com.edutie.backend.mocks.LearningHistoryMocker;
 import com.edutie.backend.mocks.LearningResourceMocks;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,32 +45,7 @@ public class LearningResultPersonalizationServiceTests {
     @Mock
     LearningResultRepository learningResultRepository;
 
-    private final LearningResultPersistence learningResultPersistence = new LearningResultPersistence() {
-        @Override
-        public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
-            return WrapperResult.successWrapper(List.of());
-        }
-
-        @Override
-        public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
-            return WrapperResult.successWrapper(List.of());
-        }
-
-        @Override
-        public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId) {
-            return WrapperResult.successWrapper(List.of());
-        }
-
-        @Override
-        public JpaRepository<LearningResult, LearningResultId> getRepository() {
-            return learningResultRepository;
-        }
-
-        @Override
-        public Class<LearningResult> entityClass() {
-            return LearningResult.class;
-        }
-    };
+    private final LearningResultPersistence learningResultPersistence = LearningHistoryMocker.baseLearningHistoryMock();
 
     @Test
     public void personalizationSchemaTest() {

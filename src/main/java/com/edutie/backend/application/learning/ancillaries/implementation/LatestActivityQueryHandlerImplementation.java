@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.ancillaries.implementation;
 
 import com.edutie.backend.application.learning.ancillaries.LatestActivityQueryHandler;
-import com.edutie.backend.application.learning.ancillaries.queries.RandomFactQuery;
+import com.edutie.backend.application.learning.ancillaries.queries.LatestActivityQuery;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.LatestActivityView;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -25,7 +25,7 @@ public class LatestActivityQueryHandlerImplementation implements LatestActivityQ
     private final CourseProgressIndicationService courseProgressIndicationService;
 
     @Override
-    public WrapperResult<LatestActivityView> handle(RandomFactQuery query) {
+    public WrapperResult<LatestActivityView> handle(LatestActivityQuery query) {
         log.info("Retrieving latest activity for student user of id {}", query.studentUserId());
         Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         LearningResult latestResult = student.getLatestLearningResult(learningResultPersistence).getValue();

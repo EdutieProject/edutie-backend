@@ -2,8 +2,11 @@ package com.edutie.backend.api.v1.learning;
 
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
+import com.edutie.backend.application.learning.ancillaries.LatestActivityQueryHandler;
 import com.edutie.backend.application.learning.ancillaries.RandomFactQueryHandler;
+import com.edutie.backend.application.learning.ancillaries.queries.LatestActivityQuery;
 import com.edutie.backend.application.learning.ancillaries.queries.RandomFactQuery;
+import com.edutie.backend.application.learning.ancillaries.viewmodels.LatestActivityView;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.RandomFact;
 import com.edutie.backend.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AncillariesController {
     private final StudentAuthorization studentAuthorization;
     private final RandomFactQueryHandler randomFactQueryHandler;
+    private final LatestActivityQueryHandler latestActivityQueryHandler;
 
     @GetMapping("/random-fact")
     @Operation(description = "Retrieves a random fact")
@@ -31,6 +35,17 @@ public class AncillariesController {
                 .authorize(studentAuthorization)
                 .handle((userId) -> randomFactQueryHandler.handle(
                         new RandomFactQuery().studentUserId(userId)
+                ));
+    }
+
+    @GetMapping("/latest-activity")
+    @Operation(description = "Retrieves latest student's activity details")
+    public ResponseEntity<ApiResult<LatestActivityView>> getLatestActivity(Authentication authentication) {
+        return new GenericRequestHandler<LatestActivityView>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle((userId) -> latestActivityQueryHandler.handle(
+                        new LatestActivityQuery().studentUserId(userId)
                 ));
     }
 }

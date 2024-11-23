@@ -15,6 +15,6 @@ public class DomainErrors {
     }
 
     public static <T> Error noContent(Class<T> entityClass) {
-        return new Error("NO-CONTENT-204", String.format("The potential %s of the operation had no content to be returned.", entityClass.getSimpleName()));
+        return new Error("NO-CONTENT-200", String.format("Operation has been proceeded successfully, but there is no %s to be returned.", entityClass.getSimpleName()));
     }
 }

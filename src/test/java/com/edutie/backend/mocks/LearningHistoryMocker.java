@@ -44,6 +44,10 @@ public class LearningHistoryMocker {
         return learningResult;
     }
 
+    public static LearningResultPersistence baseLearningHistoryMock() {
+        return new MockLearningResultPersistence();
+    }
+
     public static LearningResultPersistence learningResultPersistenceForFeedbackRemediationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
         return new MockLearningResultPersistence() {
             @Override
@@ -210,6 +214,8 @@ public class LearningHistoryMocker {
 
 class MockLearningResultPersistence implements LearningResultPersistence {
 
+    private final static Error notImplementedError = new Error("NOT-IMPLEMENTED-MOCK", "Not implemented mocked functionality");
+
     /**
      * Retrieves latest results associated with given student. Results are ordered from the latest to the older.
      * The retrieved amount is supplied as a result
@@ -221,7 +227,7 @@ class MockLearningResultPersistence implements LearningResultPersistence {
      */
     @Override
     public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
-        return null;
+        return WrapperResult.successWrapper(List.of());
     }
 
     /**
@@ -232,7 +238,19 @@ class MockLearningResultPersistence implements LearningResultPersistence {
      */
     @Override
     public WrapperResult<LearningResult> getSingleLatestResultOfStudent(StudentId studentId) {
-        return null;
+        return WrapperResult.failureWrapper(notImplementedError);
+    }
+
+    /**
+     * Provides learning results associated with given learning resource definition ids.
+     *
+     * @param studentId                     student id
+     * @param learningResourceDefinitionIds learning resource definition ids set
+     * @return Wrapper result of Learning Result list
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionIds(StudentId studentId, Set<LearningResourceDefinitionId> learningResourceDefinitionIds) {
+        return WrapperResult.successWrapper(List.of());
     }
 
     /**
@@ -244,7 +262,7 @@ class MockLearningResultPersistence implements LearningResultPersistence {
      */
     @Override
     public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
-        return null;
+        return WrapperResult.successWrapper(List.of());
     }
 
     /**
@@ -256,7 +274,7 @@ class MockLearningResultPersistence implements LearningResultPersistence {
      */
     @Override
     public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId) {
-        return null;
+        return WrapperResult.successWrapper(List.of());
     }
 
     /**
