@@ -30,7 +30,7 @@ import java.util.List;
 public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
-    @OneToMany(mappedBy = "lesson")
+    @OneToMany(mappedBy = "lesson", fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
     private List<Segment> segments = new ArrayList<>();
