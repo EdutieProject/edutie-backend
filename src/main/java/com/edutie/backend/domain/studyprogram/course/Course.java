@@ -44,7 +44,6 @@ public class Course extends EducatorCreatedAuditableEntity<CourseId> {
     @ManyToOne(targetEntity = Science.class)
     @JoinColumn(name = "science_id")
     @Setter(AccessLevel.PRIVATE)
-    @JsonSerialize(using = IdOnlySerializer.class)
     private Science science;
 
     /**

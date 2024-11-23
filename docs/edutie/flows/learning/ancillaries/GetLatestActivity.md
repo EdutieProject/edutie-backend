@@ -22,6 +22,11 @@ sequenceDiagram
     Domain ->> Persistence: Get learning result of student
     Persistence ->> Domain: Learning Result
     Domain ->> Application: Learning Result
+    opt Learning Result Definition Type is DYNAMIC
+        Application ->> Application: Create Latest Activity View with<br/>Latest Result only
+        Application ->> Rest API: Wrapper Result of Latest Activity View
+        Rest API ->> Client: Latest Activity View Response
+    end
     Application ->> Domain: Get source course of result
     Domain ->> Persistence: Get Latest Result's course
     Persistence ->> Domain: Course
