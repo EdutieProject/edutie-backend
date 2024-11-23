@@ -76,4 +76,16 @@ public class WrapperResult<T> extends Result {
 		return value;
 	}
 
+	/**
+	 * Changes the error of the wrapper result to the one specified as an argument, if the
+	 * result is a failure.
+	 * @param error error to replace with
+	 * @return The alternated Wrapper Result
+	 */
+	public WrapperResult<T> ofOtherError(Error error) {
+		if (this.error != null)
+			this.error = error;
+		return this;
+	}
+
 }
