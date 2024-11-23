@@ -155,8 +155,8 @@ public class Seeding {
      */
     private void seedStudyProgram() {
         log.info("Seeding study program...");
-        Science science = seedScience("Matematyka", "Królowa nauk");
-        seedSampleCourse(science, "Przykładowy kurs", "Kurs to może trochę przesadzona nazwa... powinniśmy te programy nazwać inaczej");
+        Science science = seedScience("Matematyka", "Królowa nauk", "https://www.svgrepo.com/show/453302/mobius-strip.svg");
+        seedSampleCourse(science, "Przykładowy zestaw", "Ten zestaw to przykładowy zestaw z materiałami do nauki :)", "https://www.svgrepo.com/show/452651/globe.svg");
     }
 
 
@@ -167,15 +167,16 @@ public class Seeding {
      * @param description science description
      * @return seeded science
      */
-    private Science seedScience(String name, String description) {
+    private Science seedScience(String name, String description, String imageSource) {
         Science science = Science.create(educator).getValue();
         science.setName(name);
         science.setDescription(description);
+        science.setImageSource(imageSource);
         sciencePersistence.save(science);
         return science;
     }
 
-    private void seedSampleCourse(Science science, String name, String description) {
+    private void seedSampleCourse(Science science, String name, String description, String imageSource) {
         Course course = Course.create(educator, science);
         course.setName(name);
         course.setDescription(description);

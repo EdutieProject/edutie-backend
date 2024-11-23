@@ -2,6 +2,7 @@ package com.edutie.backend.domain.personalization.student;
 
 import com.edutie.backend.domain.administration.Role;
 import com.edutie.backend.domain.administration.UserId;
+import com.edutie.backend.domain.common.DomainErrors;
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
@@ -15,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import validation.WrapperResult;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,11 +77,21 @@ public class Student extends Role<StudentId> {
      * defined by a <code>getLatestResultsDateThreshold</code> function
      *
      * @param persistence persistence of learning results
-     * @see #getLatestResultsDateThreshold() date treshold getter
      * @return list of learning results
+     * @see #getLatestResultsDateThreshold() date treshold getter
      */
     public List<LearningResult> getLatestLearningResults(LearningResultPersistence persistence) {
         return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue()
                 .stream().sorted(Comparator.comparing(AuditableEntityBase::getCreatedOn)).collect(Collectors.toList());
+    }
+
+    /**
+     * Returns latest learning result, if any. Otherwise, returns a domain error of no available content to be returned.
+     *
+     * @param learningResultPersistence persistence to be used
+     * @return Wrapper result of Learning Result
+     */
+    public WrapperResult<LearningResult> getLatestLearningResult(LearningResultPersistence learningResultPersistence) {
+        return learningResultPersistence.getSingleLatestResultOfStudent(this.getId()).ofOtherError(DomainErrors.noContent(LearningResult.class));
     }
 }

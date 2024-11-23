@@ -37,14 +37,13 @@ public class Course extends EducatorCreatedAuditableEntity<CourseId> {
     private String name;
     private String description;
     private String imageSource;
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
     private List<Lesson> lessons = new ArrayList<>();
     @ManyToOne(targetEntity = Science.class)
     @JoinColumn(name = "science_id")
     @Setter(AccessLevel.PRIVATE)
-    @JsonSerialize(using = IdOnlySerializer.class)
     private Science science;
 
     /**
