@@ -10,6 +10,7 @@ import validation.WrapperResult;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface LearningResultPersistence extends Persistence<LearningResult, LearningResultId> {
 
@@ -22,6 +23,22 @@ public interface LearningResultPersistence extends Persistence<LearningResult, L
      * @return Wrapper Result of Learning Results
      */
     WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate);
+
+    /**
+     * Retrieves latest learning result of student, if any.
+     *
+     * @param studentId student id
+     * @return Wrapper Result of Learning Result
+     */
+    WrapperResult<LearningResult> getSingleLatestResultOfStudent(StudentId studentId);
+
+    /**
+     * Provides learning results associated with given learning resource definition ids.
+     * @param studentId student id
+     * @param learningResourceDefinitionIds learning resource definition ids set
+     * @return Wrapper result of Learning Result list
+     */
+    WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionIds(StudentId studentId, Set<LearningResourceDefinitionId> learningResourceDefinitionIds);
 
     /**
      * Provides learning results associated with certain learning resource definition id created by given student.

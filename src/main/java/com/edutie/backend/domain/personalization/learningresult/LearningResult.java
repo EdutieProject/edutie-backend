@@ -12,6 +12,8 @@ import com.edutie.backend.domain.personalization.learningresult.valueobjects.Fee
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domain.studyprogram.course.Course;
+import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -80,9 +82,9 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     }
 
     /**
-     * Getter added mainly for json serialization purposes. Retrieves associated LRD id
+     * Returns definition id of associated learning resource. It may be not valid if definition type is dynamic
      *
-     * @return Learning Resource Definition Identifier
+     * @return Learning Resource Definition id
      */
     @JsonProperty("learningResourceDefinitionId")
     public LearningResourceDefinitionId getLearningResourceDefinitionId() {
@@ -149,4 +151,14 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
         return new Grade((int) Math.round(getAverageGradeAsDouble()));
     }
 
+    /**
+     * Retrieves a course that is the source of given learning result. Method basically utilizes the learning resource
+     * definition id to search for a course that has a study program element associated with a definition id.
+     *
+     * @param coursePersistence course persistence to use
+     * @return Course
+     */
+    public Course getAssociatedCourse(CoursePersistence coursePersistence) {
+        return coursePersistence.getByLearningResourceDefinitionId(getLearningResourceDefinitionId()).getValue();
+    }
 }

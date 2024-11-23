@@ -225,6 +225,17 @@ class MockLearningResultPersistence implements LearningResultPersistence {
     }
 
     /**
+     * Retrieves latest learning result of student, if any.
+     *
+     * @param studentId student id
+     * @return Wrapper Result of Learning Result
+     */
+    @Override
+    public WrapperResult<LearningResult> getSingleLatestResultOfStudent(StudentId studentId) {
+        return null;
+    }
+
+    /**
      * Provides learning results associated with certain learning resource definition id created by given student.
      *
      * @param studentId
