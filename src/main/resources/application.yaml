@@ -1,6 +1,6 @@
 # ==== EXTERNAL SERVICES URLs ====
-knowledge-map-host: ${KNOWLEDGE_MAP_HOST}
-llm-service-host: ${LLM_SERVICE_HOST}
+knowledge-map-url: ${KNOWLEDGE_MAP_URL}
+llm-service-url: ${LLM_SERVICE_URL}
 
 # ==== SERVER CONFIG ====
 server:
@@ -27,8 +27,6 @@ spring:
           issuer-uri: ${TOKEN_ISSUER}
 
 # ==== AUTH CONFIG ====
-authorization-url: ${AUTHORIZATION_URL}
-token-url: ${TOKEN_URL}
 com:
   c4-soft:
     springaddons:

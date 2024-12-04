@@ -18,12 +18,12 @@ import java.util.Set;
 
 @Component
 public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
-    @Value("${knowledge-map-host}")
-    private String KNOWLEDGE_MAP_HOST;
+    @Value("${knowledge-map-url}")
+    private String KNOWLEDGE_MAP_URL;
 
     @Override
     public WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(Set<LearningRequirement> sourceRequirements, Set<LearningRequirement> comparedLearningRequirements) {
-        final String LEARNING_REQUIREMENTS_CORRELATIONS_URL = KNOWLEDGE_MAP_HOST + "/correlations/learning-requirements";
+        final String LEARNING_REQUIREMENTS_CORRELATIONS_URL = KNOWLEDGE_MAP_URL + "/correlations/learning-requirements";
         return new ExternalInfrastructureHandler<Set<LearningRequirementCorrelation>, LearningRequirementCorrelationsRequest, LearningRequirementsCorrelationResponse>(this.getClass())
                 .setActionUrl(LEARNING_REQUIREMENTS_CORRELATIONS_URL)
                 .handle(new LearningRequirementCorrelationsRequest(sourceRequirements, comparedLearningRequirements), LearningRequirementsCorrelationResponse.class);
@@ -31,7 +31,7 @@ public class KnowledgeMapServiceImplementation implements KnowledgeMapService {
 
     @Override
     public WrapperResult<KnowledgeSubject> getMostCorrelatedKnowledgeSubject(KnowledgeSubjectId knowledgeSubjectId) {
-        final String MOST_CORRELATED_KNOWLEDGE_SUBJECT_URL = KNOWLEDGE_MAP_HOST + "/knowledge-subjects/most-correlated";
+        final String MOST_CORRELATED_KNOWLEDGE_SUBJECT_URL = KNOWLEDGE_MAP_URL + "/knowledge-subjects/most-correlated";
         return new ExternalInfrastructureHandler<KnowledgeSubject, MostCorrelatedSubjectRequest, MostCorrelatedSubjectResponse>(this.getClass())
                 .setActionUrl(MOST_CORRELATED_KNOWLEDGE_SUBJECT_URL)
                 .handle(new MostCorrelatedSubjectRequest(knowledgeSubjectId), MostCorrelatedSubjectResponse.class);

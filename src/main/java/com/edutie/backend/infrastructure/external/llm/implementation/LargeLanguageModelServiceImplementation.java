@@ -21,12 +21,12 @@ import validation.WrapperResult;
 @Slf4j
 public class LargeLanguageModelServiceImplementation implements LargeLanguageModelService {
 
-    @Value("${llm-service-host}")
-    private String LLM_SERVICE_HOST;
+    @Value("${llm-service-url}")
+    private String LLM_SERVICE_URL;
 
     @Override
     public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
-        final String LEARNING_RESOURCE_LLM_URL = LLM_SERVICE_HOST + "/learning-resource";
+        final String LEARNING_RESOURCE_LLM_URL = LLM_SERVICE_URL + "/learning-resource";
         return new ExternalInfrastructureHandler<LearningResource, LearningResourceGenerationSchema, LearningResourceCreationDto>(this.getClass())
                 .setActionUrl(LEARNING_RESOURCE_LLM_URL)
                 .handle(learningResourceGenerationSchema, LearningResourceCreationDto.class);
@@ -34,7 +34,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
 
     @Override
     public WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema) {
-        final String LEARNING_RESULT_LLM_URL = LLM_SERVICE_HOST + "/learning-result";
+        final String LEARNING_RESULT_LLM_URL = LLM_SERVICE_URL + "/learning-result";
         return new ExternalInfrastructureHandler<LearningResult, AssessmentSchema, LearningResultCreationDto>(this.getClass())
                 .setActionUrl(LEARNING_RESULT_LLM_URL)
                 .handle(assessmentSchema, LearningResultCreationDto.class);
@@ -42,7 +42,7 @@ public class LargeLanguageModelServiceImplementation implements LargeLanguageMod
 
     @Override
     public WrapperResult<RandomFact> generateRandomFact(RandomFactGenerationSchema randomFactGenerationSchema) {
-        final String RANDOM_FACT_LLM_URL = LLM_SERVICE_HOST + "/random-fact";
+        final String RANDOM_FACT_LLM_URL = LLM_SERVICE_URL + "/random-fact";
         return new ExternalInfrastructureHandler<RandomFact, RandomFactGenerationSchema, RandomFactDto>(this.getClass())
                 .setActionUrl(RANDOM_FACT_LLM_URL)
                 .disableSerializationFeatures(SerializationFeature.FAIL_ON_EMPTY_BEANS)
