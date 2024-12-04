@@ -27,6 +27,8 @@ spring:
           issuer-uri: ${TOKEN_ISSUER}
 
 # ==== AUTH CONFIG ====
+authorization-url: ${AUTHORIZATION_URL}
+token-url: ${TOKEN_URL}
 com:
   c4-soft:
     springaddons:
