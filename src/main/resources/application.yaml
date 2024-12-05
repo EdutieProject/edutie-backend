@@ -1,6 +1,8 @@
 # ==== EXTERNAL SERVICES URLs ====
 knowledge-map-url: ${KNOWLEDGE_MAP_URL}
 llm-service-url: ${LLM_SERVICE_URL}
+# Main url for host (reverse proxy) - used for app origin (CORS handling)
+host-main-url: ${HOST_MAIN_URL}
 
 # ==== SERVER CONFIG ====
 server:
@@ -43,6 +45,11 @@ com:
         resourceserver:
           permit-all:
             - /**
+
+# ==== BASIC SPRING LOGGING ====
+logging:
+  level:
+    web: debug
 
 # ==== SWAGGER CONFIG ====
 springdoc:
