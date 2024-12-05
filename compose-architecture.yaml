@@ -48,12 +48,12 @@ services:
     networks:
       - private
 
-  wikimap-service:
-    container_name: wikimap-service
+  knowledge-map-service:
+    container_name: knowledge-map-service
     build:
-      context: ../edutie-wikimap #TODO: repo name change
+      context: ../edutie-knowledge-map
       dockerfile: Dockerfile
-    image: edutie/wikimap-service
+    image: edutie/knowledge-map-service
     command: uvicorn main:app --host 0.0.0.0 --port 80 --reload
     volumes:
       - ../edutie-wikimap:/app
@@ -93,7 +93,7 @@ services:
     env_file:
       - .env
     build:
-      context: ../bff
+      context: ../edutie-bff
       dockerfile: Dockerfile
     ports:
       - "7081:7081"
@@ -113,7 +113,7 @@ services:
     env_file:
       - .env
     build:
-      context: ../apigateway #TODO: repo name change
+      context: ../edutie-api-gateway
       dockerfile: Dockerfile
     ports:
       - "7080:7080"
