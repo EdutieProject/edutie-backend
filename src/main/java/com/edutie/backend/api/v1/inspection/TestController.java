@@ -1,4 +1,4 @@
-package com.edutie.backend.api.v1.testing;
+package com.edutie.backend.api.v1.inspection;
 
 import com.edutie.backend.api.common.*;
 import com.edutie.backend.domain.administration.UserId;
@@ -19,13 +19,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth-test")
+@RequestMapping("api/v1/inspection")
 @RequiredArgsConstructor
-@Tag(name = "Test Controller", description = "Controller made for playground & testing purposes.")
+@Tag(name = "Inspection Controller", description = "Controller made for inspection purposes, such as healthcheck or authentication validity check.")
 public class TestController {
 	private final AdministratorAuthorization administratorAuthorization;
 	private final EducatorAuthorization educatorAuthorization;
 	private final StudentAuthorization studentAuthorization;
+
+	@GetMapping("/healthcheck")
+	public String healthcheck() {
+		return "Healthy!";
+	}
 
 	@GetMapping("/test-authentication")
 	public String authenticated(Authentication authentication) {
