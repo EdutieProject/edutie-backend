@@ -116,7 +116,7 @@ services:
       context: ../edutie-api-gateway
       dockerfile: Dockerfile
     ports:
-      - "7080:7080"
+      - "80:80"
     networks:
       - public
       - private
