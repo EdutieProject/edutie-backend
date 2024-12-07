@@ -124,8 +124,6 @@ services:
   frontend-app:
     container_name: edutie-frontend
     image: edutie/frontend-app
-    env_file:
-      - .env
     build:
       context: ../edutie-frontend
       dockerfile: Dockerfile

@@ -54,7 +54,7 @@ which all the sub-system repositories are a sibling folders to the edutie-backen
 If repositories are structured this way, we can use collective compose to run all the backend systems at once:
 
 ```shell
-docker-compose -f compose-collective.yaml up
+docker-compose -f compose-dev.yaml up
 ```
 
 #### ⚠ Caution!
