@@ -32,42 +32,60 @@ The JSON OpenApi specification is present under http://localhost:8081/docs/spec 
 
 ## Run inside docker
 
-### Default docker-compose
+### Default docker-compose: standalone
 
-Running the app using *docker-compose.yaml* is the default. It runs the edutie-backend with the database only.
+Running the app using *compose-standalone.yaml* is the default. It runs the edutie-backend with the database only.
 
-1. `docker-compose build` - this ensures the codebase is refreshed and up-to-date
-2. `docker-compose up`
+1. `docker-compose -f compose-standalone.yaml build` - this ensures the codebase is refreshed and up-to-date
+2. `docker-compose -f compose-standalone.yaml up`
 
-To run those commands you must be in the exact same folder as the `docker-compose.yaml` file.
+### Development environment - collective compose
 
-### Collective compose
+Running the app using *compose-dev.yaml* is the recommended way of running Edutie app. The compose sets up the development
+environment.
 
-Running the app using *compose-collective.yaml* is the new way of running Edutie. This way utilizes the convention in
-which all the sub-system repositories are a sibling folders to the edutie-backend folder. Example:
+This way utilizes the convention in which all the sub-system repositories are a sibling folders to the edutie-backend 
+folder. Example:
  - *Top-level-folder*
    - edutie-backend
    - edutie-llm
-   - edutie-wikimap
+   - edutie-knowledge-map
    - *etc.*
 
-If repositories are structured this way, we can use collective compose to run all the backend systems at once:
+If repositories are structured this way, we can use collective dev compose to run the whole backend system at once:
 
 ```shell
 docker-compose -f compose-dev.yaml up
 ```
 
-#### ⚠ Caution!
-To update the images it is still better to use the default *docker-compose.yaml* as it builds the same image.
+### Production environment
 
-To do so type:
+Running the production environment is supported by *compose-prod.yaml*. It behaves in the same way as the dev compose,
+but runs more applications. Note that the production env has different connection structure. Moreover, it uses different
+environment .env file.
+
+Run the prod env using:
 
 ```shell
-docker-compose build
+docker-compose -f compose-prod.yaml up
 ```
 
-This will update the image. The collective compose will use the image built by the default docker-compose.
+### Environment configuration
 
-This approach is recommended and is supported by the rest of repositories. The singular (default) docker-composes should
-be used to build an image, which will be later used for collective compose. It is advised to use collective compose unless
-testing a specific app in the separated context.
+Environment configurations requires certain .env files to be set up. The sample .env files for given settings are provided,
+however for production setup it requires replacing some values.
+
+Note that the main .env file that is provided in this repo, provides most of but not all environment vars & secrets. 
+There are also .env files in frontend & subsystem repos that need to be filled in.
+
+### Building images
+To build docker images use docker-composes associated with the environment you want to run, e.g.
+
+```shell
+docker-compose -f compose-prod.yaml build bff 
+```
+
+This will update the BFF app image.
+
+Building the image with the default (standalone) composes should work too, as the image names are unified across 
+environments.
