@@ -1,6 +1,8 @@
 # ==== EXTERNAL SERVICES URLs ====
-knowledge-map-host: ${KNOWLEDGE_MAP_HOST}
-llm-service-host: ${LLM_SERVICE_HOST}
+knowledge-map-url: ${KNOWLEDGE_MAP_URL}
+llm-service-url: ${LLM_SERVICE_URL}
+# Main url for host (reverse proxy) - used for app origin (CORS handling)
+host-main-url: ${HOST_MAIN_URL}
 
 # ==== SERVER CONFIG ====
 server:
@@ -44,6 +46,11 @@ com:
           permit-all:
             - /**
 
+# ==== BASIC SPRING LOGGING ====
+logging:
+  level:
+    web: debug
+
 # ==== SWAGGER CONFIG ====
 springdoc:
   api-docs:
@@ -71,9 +78,9 @@ springdoc:
     - group: Profiles
       packages-to-scan:
         - com.edutie.backend.api.v1.profiles
-    - group: Testing
+    - group: Inspection
       packages-to-scan:
-        - com.edutie.backend.api.v1.testing
+        - com.edutie.backend.api.v1.inspection
   show-actuator: true
   show-login-endpoint: true
   show-oauth2-endpoints: true
