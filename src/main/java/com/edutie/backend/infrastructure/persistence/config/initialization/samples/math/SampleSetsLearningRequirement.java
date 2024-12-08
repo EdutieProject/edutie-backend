@@ -4,15 +4,16 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 
 public class SampleSetsLearningRequirement {
+    private static boolean isSeeded = false;
+    private static LearningRequirement requirement = null;
 
-    public static final String LEARNING_REQUIREMENT_NAME = "Operacje na zbiorach";
-
-    public static LearningRequirement getLearningRequirement(Educator educator) {
+    public static void seedInDatabase(Educator educator, LearningRequirementPersistence learningRequirementPersistence) {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningRequirement.setName(LEARNING_REQUIREMENT_NAME);
+        learningRequirement.setName("Operacje na zbiorach");
         learningRequirement.appendSubRequirement(
                 "Uczeń potrafi sprawnie posługiwać się symboliką matematyczną dotyczącą zbiorów",
                 PromptFragment.of("""
@@ -150,7 +151,16 @@ public class SampleSetsLearningRequirement {
                         Załóżmy nie wprost, że istnieje najmniejsza liczba dodatnia, nazwana \\( x \\). Rozważmy liczbę \\( \\frac{x}{2} \\), która również jest dodatnia i mniejsza od \\( x \\). Sprzeczność! Zatem nie istnieje najmniejsza liczba dodatnia.
                         """)
         );
-        return learningRequirement;
+        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
+        isSeeded = true;
+        requirement = learningRequirement;
+    }
+
+    public static LearningRequirement getLearningRequirement() {
+        if (!isSeeded) {
+            throw new RuntimeException(SampleModulusLearningRequirement.class.getSimpleName() + " not seeded!");
+        }
+        return requirement;
     }
 
 }
