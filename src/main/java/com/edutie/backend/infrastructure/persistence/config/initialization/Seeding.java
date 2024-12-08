@@ -22,6 +22,7 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
+import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ElectrostaticsAndCircuitsCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.SampleCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ThermodynamicsCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
@@ -71,6 +72,7 @@ public class Seeding {
     private CourseTag courseTag;
     private final SampleCourseSeeding sampleCourseSeeding;
     private final ThermodynamicsCourseSeeding thermodynamicsCourseSeeding;
+    private final ElectrostaticsAndCircuitsCourseSeeding electrostaticsAndCircuitsCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -94,6 +96,14 @@ public class Seeding {
         SampleSecondLawThermodynamicsRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleTemperatureAndHeatLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleThermalEngineEfficiencyRequirement.seedInDatabase(educator, learningRequirementPersistence);
+
+        SampleCircuitComponentsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCoulombLawLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricChargesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricCurrentLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricFieldLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricPotentialLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleKirchhoffsLawLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
     }
 
     public record SeededSegmentDetails(
@@ -103,7 +113,9 @@ public class Seeding {
             String learningResourceDefinitionExerciseOverview,
             Set<LearningRequirement> learningRequirements
     ) {
-    };
+    }
+
+    ;
 
     /**
      * Seed database with sample study program
@@ -150,7 +162,13 @@ public class Seeding {
                 "Zestaw zawierający zadania dzięki którym nauczysz się termodynamiki - dziedziny fizyki opisującej transfer energii pomiędzy ciałami.",
                 "https://www.svgrepo.com/show/452675/bomb.svg",
                 thermodynamicsCourseSeeding::thermodynamicsCourseSeeding
-                );
+        );
+        seedGivenCourse(physics,
+                "Elektrostatyka",
+                "Zadania dające ci okazję nauczenia się elektrostatyki i obwodów elektrycznych.",
+                "https://www.svgrepo.com/show/452647/computer-chip.svg",
+                electrostaticsAndCircuitsCourseSeeding::electrostaticsAndCircuitsCourseSeeding
+        );
 
     }
 
