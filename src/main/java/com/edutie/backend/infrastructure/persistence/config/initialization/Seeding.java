@@ -24,12 +24,17 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ElectrostaticsAndCircuitsCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.SampleCourseSeeding;
+import com.edutie.backend.infrastructure.persistence.config.initialization.courses.StatisticsCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ThermodynamicsCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleBasicStatisticsLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleBernoulliDistributionLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleGeometricDistributionLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleHypergeometricDistributionLearningRequirement;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +78,7 @@ public class Seeding {
     private final SampleCourseSeeding sampleCourseSeeding;
     private final ThermodynamicsCourseSeeding thermodynamicsCourseSeeding;
     private final ElectrostaticsAndCircuitsCourseSeeding electrostaticsAndCircuitsCourseSeeding;
+    private final StatisticsCourseSeeding statisticsCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -104,6 +110,11 @@ public class Seeding {
         SampleElectricFieldLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleElectricPotentialLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleKirchhoffsLawLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        // ==== STATISTICS ====
+        SampleBasicStatisticsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleBernoulliDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleGeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleHypergeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
     }
 
     public record SeededSegmentDetails(
@@ -156,6 +167,13 @@ public class Seeding {
                 "Ten zestaw to przykładowy zestaw z materiałami do nauki matematyki :) Jeśli chcesz poćwiczyć ogólne zagadnienia z różnych dziedzin, to może być dobry zestaw dla Ciebie",
                 "https://www.svgrepo.com/show/452651/globe.svg",
                 sampleCourseSeeding::sampleCourseLessonSeeding
+        );
+        seedGivenCourse(
+                math,
+                "Rozkłady w statystyce",
+                "Zestaw przygotowany z myślą o osobach lubiących hazard, loterie i gry losowe.",
+                "https://www.svgrepo.com/show/453300/graph.svg",
+                statisticsCourseSeeding::statisticsCourseSeeding
         );
         seedGivenCourse(physics,
                 "Termodynamika",
