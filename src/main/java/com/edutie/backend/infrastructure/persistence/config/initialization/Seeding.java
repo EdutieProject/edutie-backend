@@ -3,13 +3,11 @@ package com.edutie.backend.infrastructure.persistence.config.initialization;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
-import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -25,10 +23,12 @@ import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersist
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.SampleCourseSeeding;
+import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ThermodynamicsCourseSeeding;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +70,7 @@ public class Seeding {
     private final Student student = Student.create(new UserId());
     private CourseTag courseTag;
     private final SampleCourseSeeding sampleCourseSeeding;
+    private final ThermodynamicsCourseSeeding thermodynamicsCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -80,10 +81,19 @@ public class Seeding {
 
     private void initializeLearningRequirements() {
         log.info("Seeding learning requirements...");
+        // ==== MATH - SAMPLE ====
         SampleModulusLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleQuadraticFunctionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleSetsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        // ==== PHYSICS ====
+        SampleFirstLawThermodynamicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleHeatEngineLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleIdealGasTheoryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleKineticMolecularTheoryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSecondLawThermodynamicsRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleTemperatureAndHeatLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleThermalEngineEfficiencyRequirement.seedInDatabase(educator, learningRequirementPersistence);
     }
 
     public record SeededSegmentDetails(
@@ -129,16 +139,22 @@ public class Seeding {
                 "Fizyka", "Nauka badająca materię i jej zachowania", "https://www.svgrepo.com/show/452639/atom.svg");
         Science economy = seedScience(
                 "Ekonomia", "Nauka nie tylko o pieniądzu", "https://www.svgrepo.com/show/452712/money-stack.svg");
-        seedSampleCourse(math,
+        seedGivenCourse(math,
                 "Przykładowy zestaw",
-                "Ten zestaw to przykładowy zestaw z materiałami do nauki matematyki :) Zawiera różne zadania z różnych dziedzin matematyki",
+                "Ten zestaw to przykładowy zestaw z materiałami do nauki matematyki :) Jeśli chcesz poćwiczyć ogólne zagadnienia z różnych dziedzin, to może być dobry zestaw dla Ciebie",
                 "https://www.svgrepo.com/show/452651/globe.svg",
                 sampleCourseSeeding::sampleCourseLessonSeeding
         );
+        seedGivenCourse(physics,
+                "Termodynamika",
+                "Zestaw zawierający zadania dzięki którym nauczysz się termodynamiki - dziedziny fizyki opisującej transfer energii pomiędzy ciałami.",
+                "https://www.svgrepo.com/show/452675/bomb.svg",
+                thermodynamicsCourseSeeding::thermodynamicsCourseSeeding
+                );
 
     }
 
-    private void seedSampleCourse(Science science, String name, String description, String imageSource, Consumer<Course> lessonSeedingFunction) {
+    private void seedGivenCourse(Science science, String name, String description, String imageSource, Consumer<Course> lessonSeedingFunction) {
         Course course = Course.create(educator, science);
         course.setName(name);
         course.setDescription(description);
