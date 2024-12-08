@@ -36,7 +36,6 @@ public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
     private List<Segment> segments = new ArrayList<>();
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
-    @JsonIgnore
     @Setter(AccessLevel.PRIVATE)
     @JsonSerialize(using = IdOnlySerializer.class)
     private Course course;
