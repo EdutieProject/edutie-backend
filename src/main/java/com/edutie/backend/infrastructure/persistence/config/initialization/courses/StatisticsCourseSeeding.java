@@ -88,6 +88,20 @@ public class StatisticsCourseSeeding {
                 "Zadania mogą obejmować proste obliczenia wartości oczekiwanej i wariancji na przykładzie rzutów monetą.",
                 Set.of(SampleBasicStatisticsLearningRequirement.getLearningRequirement())
         ));
+        Segment second = seedSegment(first, new Seeding.SeededSegmentDetails(
+                "Dystrybuanta",
+                "Tutaj dowiesz się o dystrybuancie, czyli temacie który będzie przewijał się nieustannie w statystyce.",
+                "",
+                "",
+                Set.of(SampleCumulativeDistributionFunctionLearningRequirement.getLearningRequirement())
+        ));
+        Segment third = seedSegment(first, new Seeding.SeededSegmentDetails(
+                "Zmienne dyskretne",
+                "Zmienne ciągłe i dyskretne, czyli to czemu jesteś jedyną taką osobą na świecie.",
+                "",
+                "",
+                Set.of(SampleDiscreteRandomVariableDistributionLearningRequirement.getLearningRequirement())
+        ));
     }
 
     private void seedSegmentsInSecondLesson(Lesson lesson) {
@@ -103,7 +117,14 @@ public class StatisticsCourseSeeding {
                 "Naucz się obliczać średnią i wariancję dla rozkładu Bernoulliego.",
                 "Opis powinien uwzględniać wzory matematyczne oraz przykłady.",
                 "Zadanie może obejmować obliczenia średniej i wariancji przy danych parametrach p.",
-                Set.of(SampleBernoulliDistributionLearningRequirement.getLearningRequirement())
+                Set.of(SampleBernoulliDistributionLearningRequirement.getLearningRequirement(), SampleCumulativeDistributionFunctionLearningRequirement.getLearningRequirement())
+        ));
+        Segment third = seedSegment(first, new Seeding.SeededSegmentDetails(
+                "Bernoulli i powtórki z poprzednich lekcji",
+                "",
+                "",
+                "",
+                Set.of(SampleBernoulliDistributionLearningRequirement.getLearningRequirement(), SampleDiscreteRandomVariableDistributionLearningRequirement.getLearningRequirement())
         ));
     }
 
@@ -120,7 +141,7 @@ public class StatisticsCourseSeeding {
                 "Dowiedz się, jak obliczać średnią i wariancję dla rozkładu geometrycznego.",
                 "Opis powinien zawierać wzory i konkretne przykłady zastosowań.",
                 "Zadanie może obejmować obliczenia wartości średniej i wariancji dla rozkładu geometrycznego z danym p.",
-                Set.of(SampleGeometricDistributionLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeometricDistributionLearningRequirement.getLearningRequirement(), SampleBernoulliDistributionLearningRequirement.getLearningRequirement())
         ));
     }
 
@@ -137,7 +158,14 @@ public class StatisticsCourseSeeding {
                 "Naucz się stosować wzory do obliczania prawdopodobieństw w rozkładzie hipergeometrycznym.",
                 "Opis powinien zawierać matematyczne wzory i konkretne przykłady zastosowań.",
                 "Zadanie może dotyczyć obliczeń związanych z losowaniem próbek z określonych populacji.",
-                Set.of(SampleHypergeometricDistributionLearningRequirement.getLearningRequirement())
+                Set.of(SampleHypergeometricDistributionLearningRequirement.getLearningRequirement(), SampleCumulativeDistributionFunctionLearningRequirement.getLearningRequirement())
+        ));
+        Segment third = seedSegment(first, new Seeding.SeededSegmentDetails(
+                "Wzory dla rozkładu hipergeometrycznego",
+                "Naucz się stosować wzory do obliczania prawdopodobieństw w rozkładzie hipergeometrycznym.",
+                "Opis powinien zawierać matematyczne wzory i konkretne przykłady zastosowań.",
+                "Zadanie może dotyczyć obliczeń związanych z losowaniem próbek z określonych populacji.",
+                Set.of(SampleHypergeometricDistributionLearningRequirement.getLearningRequirement(), SampleGeometricDistributionLearningRequirement.getLearningRequirement())
         ));
     }
 }

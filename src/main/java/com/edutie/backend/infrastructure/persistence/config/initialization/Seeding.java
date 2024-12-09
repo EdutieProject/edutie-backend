@@ -31,10 +31,7 @@ import com.edutie.backend.infrastructure.persistence.config.initialization.sampl
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleBasicStatisticsLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleBernoulliDistributionLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleGeometricDistributionLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.SampleHypergeometricDistributionLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.*;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -115,6 +112,8 @@ public class Seeding {
         SampleBernoulliDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleGeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleHypergeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleDiscreteRandomVariableDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCumulativeDistributionFunctionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
     }
 
     public record SeededSegmentDetails(
