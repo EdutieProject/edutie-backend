@@ -79,7 +79,7 @@ public class ElectrostaticsAndCircuitsCourseSeeding {
         lessonPersistence.save(fourthLesson);
         seedSegmentsInFourthLesson(fourthLesson);
 
-        Lesson fifthLesson = Lesson.create(course.getAuthorEducator(), fourthLesson);
+        Lesson fifthLesson = Lesson.create(course.getAuthorEducator(), thirdLesson);
         fifthLesson.setName("Zastosowania obwodów elektrycznych");
         lessonPersistence.save(fifthLesson);
         seedSegmentsInFifthLesson(fifthLesson);
