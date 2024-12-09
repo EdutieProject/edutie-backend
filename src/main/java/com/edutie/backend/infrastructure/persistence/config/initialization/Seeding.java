@@ -22,10 +22,8 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ElectrostaticsAndCircuitsCourseSeeding;
-import com.edutie.backend.infrastructure.persistence.config.initialization.courses.SampleCourseSeeding;
-import com.edutie.backend.infrastructure.persistence.config.initialization.courses.StatisticsCourseSeeding;
-import com.edutie.backend.infrastructure.persistence.config.initialization.courses.ThermodynamicsCourseSeeding;
+import com.edutie.backend.infrastructure.persistence.config.initialization.courses.*;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.finance.*;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
@@ -76,6 +74,7 @@ public class Seeding {
     private final ThermodynamicsCourseSeeding thermodynamicsCourseSeeding;
     private final ElectrostaticsAndCircuitsCourseSeeding electrostaticsAndCircuitsCourseSeeding;
     private final StatisticsCourseSeeding statisticsCourseSeeding;
+    private final InvestingCourseSeeding investingCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -114,6 +113,18 @@ public class Seeding {
         SampleHypergeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleDiscreteRandomVariableDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleCumulativeDistributionFunctionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        // ==== INVESTMENTS ====
+        SampleStockBasicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleAlternativeInvestmentsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCompanyTypesInvestmentLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleEconomicCyclesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleFinancialInstrumentsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleMarketEfficiencyLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SamplePoliticalCyclesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSectorCorrelationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSentimentalCyclesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleStockValuationLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCreditCycleImpactOnStockMarketLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
     }
 
     public record SeededSegmentDetails(
@@ -167,8 +178,7 @@ public class Seeding {
                 "https://www.svgrepo.com/show/452651/globe.svg",
                 sampleCourseSeeding::sampleCourseLessonSeeding
         );
-        seedGivenCourse(
-                math,
+        seedGivenCourse(math,
                 "Rozkłady w statystyce",
                 "Zestaw przygotowany z myślą o osobach lubiących hazard, loterie i gry losowe.",
                 "https://www.svgrepo.com/show/453300/graph.svg",
@@ -185,6 +195,12 @@ public class Seeding {
                 "Zadania dające ci okazję nauczenia się elektrostatyki i obwodów elektrycznych.",
                 "https://www.svgrepo.com/show/452647/computer-chip.svg",
                 electrostaticsAndCircuitsCourseSeeding::electrostaticsAndCircuitsCourseSeeding
+        );
+        seedGivenCourse(economy,
+                "Podstawy rynku akcji",
+                "Nauczysz się czym są akcje i jak działa ich rynek.",
+                "https://www.svgrepo.com/show/452723/piggybank.svg",
+                investingCourseSeeding::investingCourseSeeding
         );
 
     }
