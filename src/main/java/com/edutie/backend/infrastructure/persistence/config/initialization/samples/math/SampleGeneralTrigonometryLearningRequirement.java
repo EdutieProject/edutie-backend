@@ -6,7 +6,7 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 
-public class SampleTrigonometryLearningRequirement {
+public class SampleGeneralTrigonometryLearningRequirement {
     private static boolean isSeeded = false;
     private static LearningRequirement requirement = null;
 

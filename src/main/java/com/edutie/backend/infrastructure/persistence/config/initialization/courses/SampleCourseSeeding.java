@@ -12,7 +12,7 @@ import com.edutie.backend.infrastructure.persistence.config.initialization.Seedi
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleGeneralTrigonometryLearningRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -120,14 +120,14 @@ public class SampleCourseSeeding {
                 "Zobaczymy jak wyglądają fale radiowe przy pomocy trygonometrii.",
                 "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w opisie fal stosowanych we współczesnych technologiach.",
                 "Zadanie powinno zawierać przykład zastosowania trygonometrii jako fale radiowe w krótkofalówkach.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement())
         ));
         Segment third = seedSegment(first, new Seeding.SeededSegmentDetails(
                 "Maszt i nadawanie internetu",
                 "Fale radiowe nadawane przez maszty dają nam dostęp do internetu. Nauczmy się na ich przykładzie!",
                 "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w emitowaniu fal 5G które daja nam internet",
                 "Zadanie powinno opisywać za pomocą trygonometrii geometrię i zastosowanie fal 5G. Potem, obliczmy za pomocą wartosci bezwzględnej wysokości masztu nadawczego nad poziomem morza ale również wysokość względną.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(), SampleModulusLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement(), SampleModulusLearningRequirement.getLearningRequirement())
         ));
         Segment fourth = seedSegment(third, new Seeding.SeededSegmentDetails(
                 "Kapelusz grzyba jako parabola",
@@ -156,14 +156,14 @@ public class SampleCourseSeeding {
                 "Sytuacja z którą pewnie możesz się utożsamiać...",
                 "Zaprezentuj że trygonometria może opisywać częstotliwość w różnych badaniach i w społeczeństwie.",
                 "Zadanie powinno opisywać częstotliwość stresowania się uczniów na maturze jako funkcja trygonometryczna.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement())
         ));
         Segment second = seedSegment(first, new Seeding.SeededSegmentDetails(
                 "Wykresy i inne",
                 "Tym razem bardziej matematycznie...",
                 "Spróbuj uczniowi opisać korelację i podobieństwa funkcji kwadratowej i zagadnień trygonometrycznych na płaszczyźnie kartezjańskiej.",
                 "Niech zadanie poleci uczniowi narysowanie wykresów na osobnej kartce i opisanie ich w odpowiedzi na zadanie.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(), SampleQuadraticFunctionLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement(), SampleQuadraticFunctionLearningRequirement.getLearningRequirement())
         ));
     }
 
@@ -205,7 +205,7 @@ public class SampleCourseSeeding {
                         Laboratorium Analiz Chemicznych "ChemLab" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze. Jednym z wyzwań, przed którymi stoi laboratorium, jest efektywna organizacja analizy dużej liczby próbek, które są dostarczane z różnych zakątków kraju. Laboratorium to musi jednocześnie uwzględniać wymogi czasowe i precyzję pomiarów.
                         Aby zoptymalizować proces analizy, laboratorium zdecydowało się wykorzystać koncepcje trygonometrii i teorii zbiorów do zarządzania rotacją próbek i alokacją sprzętu pomiarowego.
                         """,
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(), SampleSetsLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement(), SampleSetsLearningRequirement.getLearningRequirement())
         ));
     }
 
@@ -217,7 +217,7 @@ public class SampleCourseSeeding {
                 "Rozwiążmy zagadkę: jak wyłowić statek Titanic?",
                 "Zaprezentuj jak można wykorzystać naukowy kontekst i wymagania nauczania do potencjalnej misji wyłowienia zatopionego statku.",
                 "Niech zadanie stawia na kreatywność ucznia. Powinno zawierać pewne wskazówki co do tego jak możnaby było użyć matematycznych właściwości aby wyłowić titanica. Opisz maszyny które możnaby wykorzystać i niech uczeń wykorzysta działania matematyczne aby maszyny wyłowiły zatopiony statek.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(), SampleTrigonometryLearningRequirement.getLearningRequirement())
+                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(), SampleGeneralTrigonometryLearningRequirement.getLearningRequirement())
         ));
 
         Segment second = seedSegment(first, new Seeding.SeededSegmentDetails(
@@ -225,7 +225,7 @@ public class SampleCourseSeeding {
                 "Rozważmy funkcjonalności helikoptera w kontekście matematycznym...",
                 "Niech teoretyczny kontekst zawiera mało tekstu i dużo przykładów z prostymi wytłumaczeniami. Tłumacząc, odwołuj się do konstrukcji maszyn latających na przykład helikoptera.",
                 "Niech zadanie stawia na kreatywność ucznia. Niech uczeń najpierw obliczy częstotliwość obrotu śmigieł helikoptera. Potem niech obliczy wartości bezwzględne na podstawie wysokości budynków i wysokości na której leci helikopter.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(), SampleModulusLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement(), SampleModulusLearningRequirement.getLearningRequirement())
         ));
 
         Segment third = seedSegment(second, new Seeding.SeededSegmentDetails(
@@ -236,7 +236,7 @@ public class SampleCourseSeeding {
                         Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu.
                         Dopasuj zadanie tak, aby wykorzystywało otaczające drzewa czy długości ciał dinozaurów do obliczeń.
                         """,
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(), SampleModulusLearningRequirement.getLearningRequirement())
+                Set.of(SampleGeneralTrigonometryLearningRequirement.getLearningRequirement(), SampleModulusLearningRequirement.getLearningRequirement())
         ));
     }
 }

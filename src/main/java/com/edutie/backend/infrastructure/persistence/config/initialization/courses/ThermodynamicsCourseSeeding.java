@@ -9,10 +9,6 @@ import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersisten
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import com.edutie.backend.infrastructure.persistence.config.initialization.Seeding;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

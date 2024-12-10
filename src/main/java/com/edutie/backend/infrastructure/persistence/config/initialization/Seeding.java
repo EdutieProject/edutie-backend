@@ -24,10 +24,7 @@ import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
 import com.edutie.backend.infrastructure.persistence.config.initialization.courses.*;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.finance.*;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.*;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.*;
 import jakarta.annotation.PostConstruct;
@@ -75,6 +72,7 @@ public class Seeding {
     private final ElectrostaticsAndCircuitsCourseSeeding electrostaticsAndCircuitsCourseSeeding;
     private final StatisticsCourseSeeding statisticsCourseSeeding;
     private final InvestingCourseSeeding investingCourseSeeding;
+    private final TrigonometryCourseSeeding trigonometryCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -85,11 +83,18 @@ public class Seeding {
 
     private void initializeLearningRequirements() {
         log.info("Seeding learning requirements...");
-        // ==== MATH - SAMPLE ====
+        // ==== MATH  ====
         SampleModulusLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleQuadraticFunctionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
-        SampleTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleGeneralTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleSetsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+
+        SampleUnitCircleLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleTrigonometricRelationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleTrigonometricIdentitiesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleLawOfSinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleLawOfCosinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleBasicTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         // ==== PHYSICS ====
         SampleFirstLawThermodynamicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleHeatEngineLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
@@ -135,8 +140,6 @@ public class Seeding {
             Set<LearningRequirement> learningRequirements
     ) {
     }
-
-    ;
 
     /**
      * Seed database with sample study program
@@ -201,6 +204,12 @@ public class Seeding {
                 "Nauczysz się czym są akcje i jak działa ich rynek.",
                 "https://www.svgrepo.com/show/452723/piggybank.svg",
                 investingCourseSeeding::investingCourseSeeding
+        );
+        seedGivenCourse(math,
+                "Trygonometria",
+                "Zestaw zadań poświęcony stricte trygonometrii, aby pomóc ci zrozumieć kąty i zależności między nimi.",
+                "https://www.svgrepo.com/show/452420/sine-curve.svg",
+                trigonometryCourseSeeding::trigonometryCourseSeeding
         );
 
     }
