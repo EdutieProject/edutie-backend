@@ -22,6 +22,7 @@ import validation.WrapperResult;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -76,6 +77,35 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
         }
 
+    }
+
+    /**
+     * Retrieves latest learning result of student, if any.
+     *
+     * @param studentId student id
+     * @return Wrapper Result of Learning Result
+     */
+    @Override
+    public WrapperResult<LearningResult> getSingleLatestResultOfStudent(StudentId studentId) {
+        Optional<Student> student = studentRepository.findById(studentId);
+        return student.map(value -> learningResultRepository.findLearningResultsByStudentOrderByCreatedOnDesc(value, Limit.of(1)).stream().findFirst()
+                .map(WrapperResult::successWrapper)
+                .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)))).orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
+    }
+
+    /**
+     * Provides learning results associated with given learning resource definition ids.
+     *
+     * @param studentId                     student id
+     * @param learningResourceDefinitionIds learning resource definition ids set
+     * @return Wrapper result of Learning Result list
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionIds(StudentId studentId, Set<LearningResourceDefinitionId> learningResourceDefinitionIds) {
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        return studentOptional.map(student -> learningResultRepository.findLearningResultsByDefinitionIdsAndStudent(student, learningResourceDefinitionIds))
+                .map(WrapperResult::successWrapper)
+                .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
     }
 
     /**

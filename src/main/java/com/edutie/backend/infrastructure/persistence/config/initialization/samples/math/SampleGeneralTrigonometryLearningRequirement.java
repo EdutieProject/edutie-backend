@@ -4,10 +4,13 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 
-public class SampleTrigonometryLearningRequirement {
+public class SampleGeneralTrigonometryLearningRequirement {
+    private static boolean isSeeded = false;
+    private static LearningRequirement requirement = null;
 
-    public static LearningRequirement getLearningRequirement(Educator educator) {
+    public static void seedInDatabase(Educator educator, LearningRequirementPersistence learningRequirementPersistence) {
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
         learningRequirement.setName(LEARNING_REQUIREMENT_NAME);
@@ -43,8 +46,18 @@ public class SampleTrigonometryLearningRequirement {
                 "potrafi stosować podstawowe tożsamości trygonometryczne dla dowolnego kąta, dla którego funkcje trygonometryczne są określone",
                 PromptFragment.of(SUB_REQUIREMENT_8)
         );
-        return learningRequirement;
+        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
+        isSeeded = true;
+        requirement = learningRequirement;
     }
+
+    public static LearningRequirement getLearningRequirement() {
+        if (!isSeeded) {
+            throw new RuntimeException(SampleModulusLearningRequirement.class.getSimpleName() + " not seeded!");
+        }
+        return requirement;
+    }
+
 
     private static String LEARNING_REQUIREMENT_NAME = "Trygonometria";
 

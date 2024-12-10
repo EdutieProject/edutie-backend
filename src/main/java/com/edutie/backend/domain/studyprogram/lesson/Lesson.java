@@ -30,13 +30,12 @@ import java.util.List;
 public class Lesson extends TreeElementEntityBase<Lesson, LessonId> {
     private String name;
     private String description;
-    @OneToMany(mappedBy = "lesson")
+    @OneToMany(mappedBy = "lesson", fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
     private List<Segment> segments = new ArrayList<>();
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
-    @JsonIgnore
     @Setter(AccessLevel.PRIVATE)
     @JsonSerialize(using = IdOnlySerializer.class)
     private Course course;

@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface LearningResultRepository extends JpaRepository<LearningResult, LearningResultId> {
     List<LearningResult> findLearningResultsByStudentOrderByCreatedOnDesc(Student student, Limit limit);
@@ -29,4 +30,12 @@ public interface LearningResultRepository extends JpaRepository<LearningResult, 
             "AND lr.student = :student"
     )
     List<LearningResult> findLearningResultsByLearningRequirement(@Param("student") Student student, @Param("learningRequirement") LearningRequirement learningRequirement);
+
+    @Query("SELECT lr FROM LearningResult lr " +
+            "JOIN lr.solutionSubmission ss " +
+            "JOIN ss.learningResource lrsc " +
+            "WHERE lrsc.definitionId IN :learningResourceDefinitionIds " +
+            "AND lr.student = :student"
+    )
+    List<LearningResult> findLearningResultsByDefinitionIdsAndStudent(@Param("student") Student student, @Param("learningResourceDefinitionIds") Set<LearningResourceDefinitionId> learningResourceDefinitionIds);
 }

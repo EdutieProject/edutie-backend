@@ -37,12 +37,6 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     private KnowledgeSubjectId knowledgeSubjectId;
 
     /**
-     * The value which limits the amount of elemental requirements
-     * assigned to the learning resources created with learning requirements
-     */
-    private static final int MAX_ELEMENTAL_REQUIREMENTS = 2;
-
-    /**
      * Recommended constructor associating Learning Requirement with an educator and a science
      *
      * @param educator creator reference
@@ -127,18 +121,24 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     /**
      * Retrieves the qualified elemental requirements based on the past results provided.
      *
-     * @param pastResults past results provided as list
+     * @param pastResults   past results provided as list. Their grading will affect the qualification.
+     * @param desiredAmount amount of the elemental reqs to pick
      * @return Set of elemental requirements.
      */
-    public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults) {
-        //TODO: math function of sqrt to better calculate the difficulty
+    public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults, int desiredAmount) {
+        // handle no past performance case
+        if (pastResults.isEmpty()) {
+            return elementalRequirements.stream().filter(o -> o.getOrdinal() < desiredAmount).collect(Collectors.toSet());
+        }
+        // calculate qualified requirements based on past performance
         double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
                 .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
-        double gradeAsPercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
-        int maxQualifiedRequirementOrdinal = (int) Math.ceil(gradeAsPercentage * elementalRequirements.size());
+        double desiredGradeAsPercentage = ((meanOverallGrade + pastResults.getLast().getAverageGradeAsDouble()) / 2) / Grade.MAX_GRADE.gradeNumber();
+        ;
+        int maxQualifiedRequirementOrdinal = (int) Math.ceil(desiredGradeAsPercentage * elementalRequirements.size());
         return elementalRequirements.stream().filter(o ->
                 o.getOrdinal() <= maxQualifiedRequirementOrdinal &&
-                        o.getOrdinal() > maxQualifiedRequirementOrdinal - MAX_ELEMENTAL_REQUIREMENTS
+                        o.getOrdinal() > maxQualifiedRequirementOrdinal - desiredAmount
         ).collect(Collectors.toSet());
     }
 }

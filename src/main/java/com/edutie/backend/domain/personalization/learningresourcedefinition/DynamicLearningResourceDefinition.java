@@ -14,7 +14,8 @@ public class DynamicLearningResourceDefinition extends LearningResourceDefinitio
 
     /**
      * Creates a random-fact dynamic LRD
-     * @param randomFact random fact as string
+     *
+     * @param randomFact           random fact as string
      * @param learningRequirements learning requirement set
      * @return Dynamic Learning Resource Definition
      */
@@ -22,12 +23,13 @@ public class DynamicLearningResourceDefinition extends LearningResourceDefinitio
         DynamicLearningResourceDefinition dynamicLearningResourceDefinition = new DynamicLearningResourceDefinition();
         dynamicLearningResourceDefinition.setId(new LearningResourceDefinitionId());
         dynamicLearningResourceDefinition.setTheoryDetails(TheoryDetails.create(PromptFragment.empty(), PromptFragment.empty()));
-        dynamicLearningResourceDefinition.setActivityDetails(ActivityDetails.create(PromptFragment.empty(), PromptFragment.of(String.format("""
-                Exercise must be related to the provided random fact:
-                <random-fact>%s</random-fact>
-                Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
-                All problems in this exercise should refer to the random fact and similar topics.
-                """, randomFact))));
+        dynamicLearningResourceDefinition.setActivityDetails(ActivityDetails.create(PromptFragment.of(String.format("""
+                        Exercise must be related to the provided random fact:
+                        <random-fact>%s</random-fact>
+                        Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
+                        All problems in this exercise should refer to the random fact and similar topics.
+                        """, randomFact)),
+                PromptFragment.empty()));
         learningRequirements.forEach(dynamicLearningResourceDefinition::addLearningRequirement);
         return dynamicLearningResourceDefinition;
     }
