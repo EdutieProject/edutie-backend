@@ -121,16 +121,21 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     /**
      * Retrieves the qualified elemental requirements based on the past results provided.
      *
-     * @param pastResults   past results provided as list
-     * @param desiredAmount
+     * @param pastResults   past results provided as list. Their grading will affect the qualification.
+     * @param desiredAmount amount of the elemental reqs to pick
      * @return Set of elemental requirements.
      */
     public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults, int desiredAmount) {
-        //TODO: math function of sqrt to better calculate the difficulty
+        // handle no past performance case
+        if (pastResults.isEmpty()) {
+            return elementalRequirements.stream().filter(o -> o.getOrdinal() < desiredAmount).collect(Collectors.toSet());
+        }
+        // calculate qualified requirements based on past performance
         double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
                 .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
-        double gradeAsPercentage = meanOverallGrade / Grade.MAX_GRADE.gradeNumber();
-        int maxQualifiedRequirementOrdinal = (int) Math.ceil(gradeAsPercentage * elementalRequirements.size());
+        double desiredGradeAsPercentage = ((meanOverallGrade + pastResults.getLast().getAverageGradeAsDouble()) / 2) / Grade.MAX_GRADE.gradeNumber();
+        ;
+        int maxQualifiedRequirementOrdinal = (int) Math.ceil(desiredGradeAsPercentage * elementalRequirements.size());
         return elementalRequirements.stream().filter(o ->
                 o.getOrdinal() <= maxQualifiedRequirementOrdinal &&
                         o.getOrdinal() > maxQualifiedRequirementOrdinal - desiredAmount

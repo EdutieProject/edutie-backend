@@ -69,9 +69,8 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
      */
     private void qualifyElementalRequirements(Set<LearningRequirement> learningRequirements, Student student, LearningResultPersistence learningResultPersistence) {
         for (LearningRequirement learningRequirement : learningRequirements) {
-            List<LearningResult> learningResultsOfRequirement = student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId());
             qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(
-                    learningResultsOfRequirement,
+                    student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId()),
                     (int) Math.ceil((double) 2 / learningRequirements.size())
             ));
         }
