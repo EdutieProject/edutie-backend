@@ -74,7 +74,7 @@ public class Assessment extends EntityBase<AssessmentId> {
     public double getDifficultyFactor() {
         return (double) Math.round(
                 ((float) this.qualifiedElementalRequirements.stream().mapToInt(ElementalRequirement::getOrdinal)
-                        .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId())))
+                        .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId()))) + 1F
                         / getCorrespondingLearningRequirement().getElementalRequirements().size() * 100))
                 / 100;
     }
