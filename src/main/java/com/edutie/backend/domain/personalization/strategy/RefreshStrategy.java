@@ -68,7 +68,8 @@ public class RefreshStrategy implements PersonalizationStrategy<ElementalRequire
                 .toList().getFirst();
 
         ElementalRequirement elementalRequirementToRefresh = learningRequirementToRefresh.calculateQualifiedElementalRequirements(
-                student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirementToRefresh.getKnowledgeSubjectId())
+                student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirementToRefresh.getKnowledgeSubjectId()),
+                1
         ).stream().max(Comparator.comparingInt(ElementalRequirement::getOrdinal)).get();
 
         return Optional.of(new RefreshRule(elementalRequirementToRefresh));

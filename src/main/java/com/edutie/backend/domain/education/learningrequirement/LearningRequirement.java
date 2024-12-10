@@ -37,12 +37,6 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     private KnowledgeSubjectId knowledgeSubjectId;
 
     /**
-     * The value which limits the amount of elemental requirements
-     * assigned to the learning resources created with learning requirements
-     */
-    private static final int MAX_ELEMENTAL_REQUIREMENTS = 2;
-
-    /**
      * Recommended constructor associating Learning Requirement with an educator and a science
      *
      * @param educator creator reference
@@ -127,10 +121,11 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
     /**
      * Retrieves the qualified elemental requirements based on the past results provided.
      *
-     * @param pastResults past results provided as list
+     * @param pastResults   past results provided as list
+     * @param desiredAmount
      * @return Set of elemental requirements.
      */
-    public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults) {
+    public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults, int desiredAmount) {
         //TODO: math function of sqrt to better calculate the difficulty
         double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
                 .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
@@ -138,7 +133,7 @@ public class LearningRequirement extends EducatorCreatedAuditableEntity<Learning
         int maxQualifiedRequirementOrdinal = (int) Math.ceil(gradeAsPercentage * elementalRequirements.size());
         return elementalRequirements.stream().filter(o ->
                 o.getOrdinal() <= maxQualifiedRequirementOrdinal &&
-                        o.getOrdinal() > maxQualifiedRequirementOrdinal - MAX_ELEMENTAL_REQUIREMENTS
+                        o.getOrdinal() > maxQualifiedRequirementOrdinal - desiredAmount
         ).collect(Collectors.toSet());
     }
 }
