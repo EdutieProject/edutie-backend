@@ -3,13 +3,11 @@ package com.edutie.backend.infrastructure.persistence.config.initialization;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
-import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -24,10 +22,11 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleModulusLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleQuadraticFunctionLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleSetsLearningRequirement;
-import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.SampleTrigonometryLearningRequirement;
+import com.edutie.backend.infrastructure.persistence.config.initialization.courses.*;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.finance.*;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.*;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
+import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.*;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +35,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Seeding class for seeding database with sample data
@@ -67,6 +67,12 @@ public class Seeding {
     private final Educator educator = Educator.create(uid, administrator);
     private final Student student = Student.create(new UserId());
     private CourseTag courseTag;
+    private final SampleCourseSeeding sampleCourseSeeding;
+    private final ThermodynamicsCourseSeeding thermodynamicsCourseSeeding;
+    private final ElectrostaticsAndCircuitsCourseSeeding electrostaticsAndCircuitsCourseSeeding;
+    private final StatisticsCourseSeeding statisticsCourseSeeding;
+    private final InvestingCourseSeeding investingCourseSeeding;
+    private final TrigonometryCourseSeeding trigonometryCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -77,53 +83,62 @@ public class Seeding {
 
     private void initializeLearningRequirements() {
         log.info("Seeding learning requirements...");
-        learningRequirementPersistence.save(SampleModulusLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
-        learningRequirementPersistence.save(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
-        learningRequirementPersistence.save(SampleTrigonometryLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
-        learningRequirementPersistence.save(SampleSetsLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
+        // ==== MATH  ====
+        SampleModulusLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleQuadraticFunctionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleGeneralTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSetsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+
+        SampleUnitCircleLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleTrigonometricRelationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleTrigonometricIdentitiesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleLawOfSinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleLawOfCosinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleBasicTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        // ==== PHYSICS ====
+        SampleFirstLawThermodynamicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleHeatEngineLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleIdealGasTheoryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleKineticMolecularTheoryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSecondLawThermodynamicsRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleTemperatureAndHeatLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleThermalEngineEfficiencyRequirement.seedInDatabase(educator, learningRequirementPersistence);
+
+        SampleCircuitComponentsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCoulombLawLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricChargesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricCurrentLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricFieldLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleElectricPotentialLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleKirchhoffsLawLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        // ==== STATISTICS ====
+        SampleBasicStatisticsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleBernoulliDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleGeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleHypergeometricDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleDiscreteRandomVariableDistributionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCumulativeDistributionFunctionLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        // ==== INVESTMENTS ====
+        SampleStockBasicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleAlternativeInvestmentsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCompanyTypesInvestmentLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleEconomicCyclesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleFinancialInstrumentsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleMarketEfficiencyLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SamplePoliticalCyclesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSectorCorrelationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSentimentalCyclesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleStockValuationLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleCreditCycleImpactOnStockMarketLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
     }
 
-    private record SeededSegmentDetails(
+    public record SeededSegmentDetails(
             String segmentName,
             String segmentDescription,
             String learningResourceDefinitionTheoryOverview,
             String learningResourceDefinitionExerciseOverview,
             Set<LearningRequirement> learningRequirements
     ) {
-    }
-
-    ;
-
-    private Segment seedSegment(Lesson lesson, SeededSegmentDetails details) {
-        Segment segment = Segment.create(educator, lesson);
-        segment.setName(details.segmentName);
-        segment.setSnippetDescription(details.segmentDescription);
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of(details.learningResourceDefinitionTheoryOverview),
-                PromptFragment.of(details.learningResourceDefinitionExerciseOverview),
-                details.learningRequirements
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
-        segmentPersistence.save(segment).throwIfFailure();
-        return segment;
-    }
-
-    private Segment seedSegment(Segment previousSegment, SeededSegmentDetails details) {
-        Segment segment = Segment.create(educator, previousSegment);
-        segment.setName(details.segmentName);
-        segment.setSnippetDescription(details.segmentDescription);
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of(details.learningResourceDefinitionTheoryOverview),
-                PromptFragment.of(details.learningResourceDefinitionExerciseOverview),
-                details.learningRequirements
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
-        segmentPersistence.save(segment).throwIfFailure();
-        return segment;
     }
 
     /**
@@ -141,7 +156,6 @@ public class Seeding {
         log.info("======================");
         initializeProfiles();
         initializeLearningRequirements();
-        seedLearningResourceDefinition();
         seedStudyProgram();
         log.info("=====================");
         log.info("  DB SEEDING - END   ");
@@ -155,10 +169,59 @@ public class Seeding {
      */
     private void seedStudyProgram() {
         log.info("Seeding study program...");
-        Science science = seedScience("Matematyka", "Królowa nauk", "https://www.svgrepo.com/show/453302/mobius-strip.svg");
-        seedSampleCourse(science, "Przykładowy zestaw", "Ten zestaw to przykładowy zestaw z materiałami do nauki :)", "https://www.svgrepo.com/show/452651/globe.svg");
+        Science math = seedScience(
+                "Matematyka", "Królowa nauk", "https://www.svgrepo.com/show/453302/mobius-strip.svg");
+        Science physics = seedScience(
+                "Fizyka", "Nauka badająca materię i jej zachowania", "https://www.svgrepo.com/show/452639/atom.svg");
+        Science economy = seedScience(
+                "Ekonomia", "Nauka nie tylko o pieniądzu", "https://www.svgrepo.com/show/452712/money-stack.svg");
+        seedGivenCourse(math,
+                "Przykładowy zestaw",
+                "Ten zestaw to przykładowy zestaw z materiałami do nauki matematyki :) Jeśli chcesz poćwiczyć ogólne zagadnienia z różnych dziedzin, to może być dobry zestaw dla Ciebie",
+                "https://www.svgrepo.com/show/452651/globe.svg",
+                sampleCourseSeeding::sampleCourseLessonSeeding
+        );
+        seedGivenCourse(math,
+                "Rozkłady w statystyce",
+                "Zestaw przygotowany z myślą o osobach lubiących hazard, loterie i gry losowe.",
+                "https://www.svgrepo.com/show/453300/graph.svg",
+                statisticsCourseSeeding::statisticsCourseSeeding
+        );
+        seedGivenCourse(physics,
+                "Termodynamika",
+                "Zestaw zawierający zadania dzięki którym nauczysz się termodynamiki - dziedziny fizyki opisującej transfer energii pomiędzy ciałami.",
+                "https://www.svgrepo.com/show/452675/bomb.svg",
+                thermodynamicsCourseSeeding::thermodynamicsCourseSeeding
+        );
+        seedGivenCourse(physics,
+                "Elektrostatyka",
+                "Zadania dające ci okazję nauczenia się elektrostatyki i obwodów elektrycznych.",
+                "https://www.svgrepo.com/show/452647/computer-chip.svg",
+                electrostaticsAndCircuitsCourseSeeding::electrostaticsAndCircuitsCourseSeeding
+        );
+        seedGivenCourse(economy,
+                "Podstawy rynku akcji",
+                "Nauczysz się czym są akcje i jak działa ich rynek.",
+                "https://www.svgrepo.com/show/452723/piggybank.svg",
+                investingCourseSeeding::investingCourseSeeding
+        );
+        seedGivenCourse(math,
+                "Trygonometria",
+                "Zestaw zadań poświęcony stricte trygonometrii, aby pomóc ci zrozumieć kąty i zależności między nimi.",
+                "https://www.svgrepo.com/show/452420/sine-curve.svg",
+                trigonometryCourseSeeding::trigonometryCourseSeeding
+        );
+
     }
 
+    private void seedGivenCourse(Science science, String name, String description, String imageSource, Consumer<Course> lessonSeedingFunction) {
+        Course course = Course.create(educator, science);
+        course.setName(name);
+        course.setDescription(description);
+        course.setImageSource(imageSource);
+        coursePersistence.save(course);
+        lessonSeedingFunction.accept(course);
+    }
 
     /**
      * Seeds science
@@ -176,194 +239,8 @@ public class Seeding {
         return science;
     }
 
-    private void seedSampleCourse(Science science, String name, String description, String imageSource) {
-        Course course = Course.create(educator, science);
-        course.setName(name);
-        course.setDescription(description);
-        course.setImageSource(imageSource);
-        coursePersistence.save(course);
-        seedSampleLessonsInCourse(course);
-    }
 
-    private void seedSampleLessonsInCourse(Course course) {
-        Lesson firstLesson = Lesson.create(educator, course);
-        firstLesson.setName("Pierwsza lekcja");
-        lessonPersistence.save(firstLesson);
-        seedSegmentsInFirstLesson(firstLesson);
-
-        Lesson secondLesson = Lesson.create(educator, firstLesson);
-        secondLesson.setName("Poszerzanie horyzontów");
-        lessonPersistence.save(secondLesson);
-        seedSegmentsInSecondLesson(secondLesson);
-
-        Lesson thirdLesson = Lesson.create(educator, secondLesson);
-        thirdLesson.setName("Następna lekcja");
-        lessonPersistence.save(thirdLesson);
-        seedSegmentsInThirdLesson(thirdLesson);
-
-        Lesson fourthLesson = Lesson.create(educator, secondLesson);
-        fourthLesson.setName("Zadania dodatkowe");
-        lessonPersistence.save(fourthLesson);
-        seedSegmentsInFourthLesson(fourthLesson);
-
-        Lesson fifthLesson = Lesson.create(educator, fourthLesson);
-        fifthLesson.setName("Tu jest najciężej...");
-        lessonPersistence.save(fifthLesson);
-        seedSegmentsInFifthLesson(fifthLesson);
-    }
-
-    private void seedSegmentsInFirstLesson(Lesson lesson) {
-        Segment first = seedSegment(lesson, new SeededSegmentDetails(
-                "Wartość bewzwzględna w oceanie",
-                "Naucz się wartości bezwzględnej w otoczeniu oceanu. Myśl o głębokości jak o osi liczbowej!",
-                "Podczas opisywania teorii miej na uwadzę to, że jest to początek nauki ucznia! Bądź miły i zachęć go nauki, podkreślając użyteczność wymagań nauczania.",
-                "Zadanie powinno zawierać metaforę wartości bezwzględnej jako głębokości morza. Niech fabuła w zadaniu dotyczy skakania z różnych punktów pływającego statku.",
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator))));
-        Segment second = seedSegment(first, new SeededSegmentDetails(
-                "Owoce i warzywa",
-                "Pomyśl o zbiorach metaforycznie...",
-                "Podkreśl fundamentalne i ważne znaczenie zbiorów w matematyce, również na bardziej zaawansowanym jej poziomie. Używaj przykładów i metafor porównujących elementy zbiorów do owoców i warzyw.",
-                "Niech zadanie porównuje zbiory i ich elementy do koszyka warzyw i owoców.",
-                Set.of(SampleSetsLearningRequirement.getLearningRequirement(educator))
-        ));
-    }
-
-    ;
-
-    private void seedSegmentsInSecondLesson(Lesson lesson) {
-        Segment first = seedSegment(lesson, new SeededSegmentDetails(
-                "Zbudujmy taras",
-                "Chcesz wybudować taras dla swojego domu. Będziesz opisywał jego kształt za pomocą równań!",
-                "Opis teorii powinien zawierać przykłady na temat tego jak funkcja kwadratowa może opisywać budowanie różnych struktur.",
-                "Zadanie powinno zawierać metaforę paraboli funkcji kwadratowej jako kształt tarasu. Niech uczeń opisze równaniami kształt tarasu w domu którym buduje! Dodatkowo, może opisywać równaniami kształty terkatory i balustrady.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-        ));
-        Segment second = seedSegment(first, new SeededSegmentDetails(
-                "Fale radiowe",
-                "Zobaczymy jak wyglądają fale radiowe przy pomocy trygonometrii.",
-                "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w opisie fal stosowanych we współczesnych technologiach.",
-                "Zadanie powinno zawierać przykład zastosowania trygonometrii jako fale radiowe w krótkofalówkach.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator))
-        ));
-        Segment third = seedSegment(first, new SeededSegmentDetails(
-                "Maszt i nadawanie internetu",
-                "Fale radiowe nadawane przez maszty dają nam dostęp do internetu. Nauczmy się na ich przykładzie!",
-                "Opis teorii powinien zawierać przykłady na temat tego jakie zastosowanie ma trygonometria w emitowaniu fal 5G które daja nam internet",
-                "Zadanie powinno opisywać za pomocą trygonometrii geometrię i zastosowanie fal 5G. Potem, obliczmy za pomocą wartosci bezwzględnej wysokości masztu nadawczego nad poziomem morza ale również wysokość względną.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
-        ));
-        Segment fourth = seedSegment(third, new SeededSegmentDetails(
-                "Kapelusz grzyba jako parabola",
-                "Zauważ kształty obecne wokół nas... Czy grzyby nie przypominają ci paraboli?",
-                "Umieść w opisie teorii odnośniki do różnych rodzai grzybów. Wpleć to umiejętnie w zagadnienia teoretyczne tak, aby zaciekawić ucznia.",
-                "Zadanie powinno porównywać odwróconą parabolę funkcji kwadratowej do kształtu kapelusza grzyba.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-        ));
-        Segment fifth = seedSegment(third, new SeededSegmentDetails(
-                "Misja na planetę Zettarion",
-                "Astronauci z Ziemi, Kapitan Alva i Doktor Nero, zostali wysłani na misję eksploracyjną na nowo odkrytą planetę Zettarion. Zettarion jest niezwykłą planetą, ponieważ jej powierzchnia składa się z tajemniczych kryształów energetycznych o różnych właściwościach. Kryształy te dzielą się na dwie kategorie: kryształy A i kryształy B. Każdy kryształ emituje różną ilość energii, mierzoną w jednostkach absolutnych (wartość bezwzględna), a zbiory kryształów są szczególnie ważne dla rozwiązania zagadki planetarnej energii.",
-                "Umieść w opisie teoretycznym odnośniki i metafory do tego jak zagadnienia mogą być wykorzystywane w odkrywaniu kosmosu.",
-                """
-                        Niech zadanie dotyczy poniższej fabuły:
-                        Astronauci z Ziemi, Kapitan Alva i Doktor Nero, zostali wysłani na misję eksploracyjną na nowo odkrytą planetę Zettarion. Zettarion jest niezwykłą planetą, ponieważ jej powierzchnia składa się z tajemniczych kryształów energetycznych o różnych właściwościach. Kryształy te dzielą się na dwie kategorie: **kryształy A** i **kryształy B**. Każdy kryształ emituje różną ilość energii, mierzoną w jednostkach absolutnych (wartość bezwzględna), a zbiory kryształów są szczególnie ważne dla rozwiązania zagadki planetarnej energii.
-                        """,
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator), SampleSetsLearningRequirement.getLearningRequirement(educator))
-        ));
-    }
-
-    ;
-
-    private void seedSegmentsInThirdLesson(Lesson lesson) {
-        Segment first = seedSegment(lesson, new SeededSegmentDetails(
-                "Uczniowie na maturze",
-                "Sytuacja z którą pewnie możesz się utożsamiać...",
-                "Zaprezentuj że trygonometria może opisywać częstotliwość w różnych badaniach i w społeczeństwie.",
-                "Zadanie powinno opisywać częstotliwość stresowania się uczniów na maturze jako funkcja trygonometryczna.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator))
-        ));
-        Segment second = seedSegment(first, new SeededSegmentDetails(
-                "Wykresy i inne",
-                "Tym razem bardziej matematycznie...",
-                "Spróbuj uczniowi opisać korelację i podobieństwa funkcji kwadratowej i zagadnień trygonometrycznych na płaszczyźnie kartezjańskiej.",
-                "Niech zadanie poleci uczniowi narysowanie wykresów na osobnej kartce i opisanie ich w odpowiedzi na zadanie.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-        ));
-    }
-
-    ;
-
-    private void seedSegmentsInFourthLesson(Lesson lesson) {
-        Segment first = seedSegment(lesson, new SeededSegmentDetails(
-                "Praca domowa dla uczniów",
-                "Uczniowie nie lubią prac domowych!",
-                "Zaprezentuj funkcje kwadratową oraz jej monotoniczność na przykładzie uczniów którzy nie lubią prac domowych. Niech opis nakreśli w wyobraźni ucznia wykres mający kształt paraboli, opisujący to ile uczniów nie lubi robić prac domowych.",
-                "Niech zadanie zakłada że zależność ilości uczniów robiących prace domowe do zadawanych prac domowych ma kształt funkcji kwadratowej o ujemnym współczynniku. Niech uczeń obliczy właściwości tej funkcji.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-        ));
-
-        Segment second = seedSegment(first, new SeededSegmentDetails(
-                "Zarządzanie Produkcją w Fabryce Stal-Mach",
-                "W nowoczesnej fabryce Stal-Mach specjalizującej się w produkcji wyrobów ze stali, wykorzystywanych w branży budowlanej, zarządcy napotkali problem optymalizacji procesów produkcyjnych...",
-                """
-                        Dopasuj kontekst teoretyczny do fabuły podanej poniżej. Niech teoria zawiera metafory i odnośniki dotyczące fabuły.
-                        W nowoczesnej fabryce Stal-Mach specjalizującej się w produkcji wyrobów ze stali, wykorzystywanych w branży budowlanej, zarządcy napotkali problem optymalizacji procesów produkcyjnych. Fabryka posiada kilka linii produkcyjnych o różnych parametrach wydajności, a także różnorodne ilości surowców stalowych, które muszą być efektywnie wykorzystane.\s
-                        """,
-                """
-                        Niech zadanie dotyczy poniższej fabuły:
-                        W nowoczesnej fabryce Stal-Mach specjalizującej się w produkcji wyrobów ze stali, wykorzystywanych w branży budowlanej, zarządcy napotkali problem optymalizacji procesów produkcyjnych. Fabryka posiada kilka linii produkcyjnych o różnych parametrach wydajności, a także różnorodne ilości surowców stalowych, które muszą być efektywnie wykorzystane.\s
-                        """,
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator), SampleSetsLearningRequirement.getLearningRequirement(educator))
-        ));
-
-        Segment third = seedSegment(second, new SeededSegmentDetails(
-                "Optymalizacja Pracy Laboratorium Analiz Chemicznych",
-                "Laboratorium Analiz Chemicznych \"ChemLab\" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze...",
-                """
-                        Niech opis teorii odwołuje się do fabuły podanej poniżej:
-                        Laboratorium Analiz Chemicznych "ChemLab" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze. Jednym z wyzwań, przed którymi stoi laboratorium, jest efektywna organizacja analizy dużej liczby próbek, które są dostarczane z różnych zakątków kraju. Laboratorium to musi jednocześnie uwzględniać wymogi czasowe i precyzję pomiarów.
-                        Umieść metafory i odnośniki do realnego zastosowania zagadnień podnaych w wymaganiach na podstawie fabuły.
-                        """,
-                """
-                        Niech zadanie które stworzysz odnosi się do poniższej fabuły: 
-                        Laboratorium Analiz Chemicznych "ChemLab" specjalizuje się w analizie próbek środowiskowych, takich jak woda, gleba i powietrze. Jednym z wyzwań, przed którymi stoi laboratorium, jest efektywna organizacja analizy dużej liczby próbek, które są dostarczane z różnych zakątków kraju. Laboratorium to musi jednocześnie uwzględniać wymogi czasowe i precyzję pomiarów.
-                        Aby zoptymalizować proces analizy, laboratorium zdecydowało się wykorzystać koncepcje trygonometrii i teorii zbiorów do zarządzania rotacją próbek i alokacją sprzętu pomiarowego.
-                        """,
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleSetsLearningRequirement.getLearningRequirement(educator))
-        ));
-    }
-
-    ;
-
-    private void seedSegmentsInFifthLesson(Lesson lesson) {
-        Segment first = seedSegment(lesson, new SeededSegmentDetails(
-                "Wyłowienie titanica",
-                "Rozwiążmy zagadkę: jak wyłowić statek Titanic?",
-                "Zaprezentuj jak można wykorzystać naukowy kontekst i wymagania nauczania do potencjalnej misji wyłowienia zatopionego statku.",
-                "Niech zadanie stawia na kreatywność ucznia. Powinno zawierać pewne wskazówki co do tego jak możnaby było użyć matematycznych właściwości aby wyłowić titanica. Opisz maszyny które możnaby wykorzystać i niech uczeń wykorzysta działania matematyczne aby maszyny wyłowiły zatopiony statek.",
-                Set.of(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator), SampleTrigonometryLearningRequirement.getLearningRequirement(educator))
-        ));
-
-        Segment second = seedSegment(first, new SeededSegmentDetails(
-                "Konstruowanie helikoptera",
-                "Rozważmy funkcjonalności helikoptera w kontekście matematycznym...",
-                "Niech teoretyczny kontekst zawiera mało tekstu i dużo przykładów z prostymi wytłumaczeniami. Tłumacząc, odwołuj się do konstrukcji maszyn latających na przykład helikoptera.",
-                "Niech zadanie stawia na kreatywność ucznia. Niech uczeń najpierw obliczy częstotliwość obrotu śmigieł helikoptera. Potem niech obliczy wartości bezwzględne na podstawie wysokości budynków i wysokości na której leci helikopter.",
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
-        ));
-
-        Segment third = seedSegment(second, new SeededSegmentDetails(
-                "Nauka z dinozaurami",
-                " Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu...",
-                "Niech opis będzie zawierał referencje dotyczące fabuły: Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu...",
-                """
-                        Na terenach dzisiejszej Patagonii żyły dwa gigantyczne dinozaury, Brachiosaurus i Tyrannosaurus Rex. Pewnego dnia postanowiły spotkać się na polanie w środku gęstego lasu.
-                        Dopasuj zadanie tak, aby wykorzystywało otaczające drzewa czy długości ciał dinozaurów do obliczeń.
-                        """,
-                Set.of(SampleTrigonometryLearningRequirement.getLearningRequirement(educator), SampleModulusLearningRequirement.getLearningRequirement(educator))
-        ));
-    }
-
-    ;
+    // ==== RANDOM COURSE SEEDING BELOW ====
 
     /**
      * Seed random number of courses in science
@@ -413,27 +290,6 @@ public class Seeding {
     private void seedLessons(Course course) {
         LessonSeeder ls = new LessonSeeder(course);
         ls.seedLessons();
-    }
-
-    private void seedLearningResourceDefinition() {
-        log.info("Seeding LRD...");
-
-        learningRequirementPersistence.save(SampleModulusLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
-        learningRequirementPersistence.save(SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator)).throwIfFailure();
-
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
-                educator,
-                PromptFragment.of("Opisz również rozwiązywanie równań kwadratowych z wartością bezwzględną. Dopasuj trudność do trudności podanych wymagań"),
-                PromptFragment.of("""
-                        Zadanie powinno zawierać fabułę dotyczącą projektowania miasta.
-                        Niech problemy dotyczą wytyczenia miejsc ścieżek, budynków, tras autobusowych lub ulic.
-                        Niech zadanie uwzględnia chociaż jeden przykład równania kwadratowego z wartością bezwzględną.
-                        Przykład ten powinien być dopasowany trudnością do trudności podanych wcześniej wymagań
-                        """),
-                Set.of(SampleModulusLearningRequirement.getLearningRequirement(educator), SampleQuadraticFunctionLearningRequirement.getLearningRequirement(educator))
-        );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition);
-        log.info("Seeded LRD with id: {}", learningResourceDefinition.getId().identifierValue().toString());
     }
 
     /**
