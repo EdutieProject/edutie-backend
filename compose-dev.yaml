@@ -75,7 +75,7 @@ services:
       - private
 
   frontend-app:
-    container_name: edutie-frontend
+    container_name: frontend-app
     image: edutie/frontend-app
     build:
       context: ../edutie-frontend
