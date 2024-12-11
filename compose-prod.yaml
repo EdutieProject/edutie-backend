@@ -122,7 +122,7 @@ services:
       - private
 
   frontend-app:
-    container_name: edutie-frontend
+    container_name: frontend-app
     image: edutie/frontend-app
     build:
       context: ../edutie-frontend
@@ -135,6 +135,18 @@ services:
     volumes:
       - ../edutie-frontend/node_modules:/app/node_modules
       - ../edutie-frontend/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - public
+
+  website:
+    image: node:16.15.0-alpine
+    container_name: website
+    working_dir: /app
+    volumes:
+      - ../edutie.nowanauka.pl:/app
+    command: npm start
+    expose:
+      - "8080"
     networks:
       - public
 
