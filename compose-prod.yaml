@@ -144,7 +144,7 @@ services:
     working_dir: /app
     volumes:
       - ../edutie.nowanauka.pl:/app
-    command: npm start
+    command: /bin/sh -c "chown -R 1000:1001 /root/.npm && npm start"
     expose:
       - "8080"
     networks:
