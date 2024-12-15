@@ -27,6 +27,7 @@ import com.edutie.backend.infrastructure.persistence.config.initialization.sampl
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.math.*;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.physics.*;
 import com.edutie.backend.infrastructure.persistence.config.initialization.samples.statistics.*;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.ScienceRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,7 @@ public class Seeding {
     private final Administrator administrator = Administrator.create(uid);
     private final Educator educator = Educator.create(uid, administrator);
     private final Student student = Student.create(new UserId());
+    private final ScienceRepository scienceRepository;
     private CourseTag courseTag;
     private final SampleCourseSeeding sampleCourseSeeding;
     private final ThermodynamicsCourseSeeding thermodynamicsCourseSeeding;
@@ -151,6 +153,10 @@ public class Seeding {
     @PostConstruct
     @Transactional
     public void seeding() {
+        if (!scienceRepository.findAll().isEmpty()) {
+            log.info("Database already seeded - performing no DB seeding now.");
+            return;
+        }
         log.info("======================");
         log.info("  DB SEEDING - START  ");
         log.info("======================");

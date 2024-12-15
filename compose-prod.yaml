@@ -139,12 +139,13 @@ services:
       - public
 
   website:
-    image: node:16.15.0-alpine
+    image: node:23.4.0-alpine
+    user: root
     container_name: website
     working_dir: /app
     volumes:
       - ../edutie.nowanauka.pl:/app
-    command: npm start
+    command: npm run debug
     expose:
       - "8080"
     networks:

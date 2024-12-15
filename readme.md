@@ -34,10 +34,10 @@ The JSON OpenApi specification is present under http://localhost:8081/docs/spec 
 
 ### Default docker-compose: standalone
 
-Running the app using *compose-standalone.yaml* is the default. It runs the edutie-backend with the database only.
+Running the app using *docker-compose.yaml* is the default. It runs the edutie-backend with the database only.
 
-1. `docker-compose -f compose-standalone.yaml build` - this ensures the codebase is refreshed and up-to-date
-2. `docker-compose -f compose-standalone.yaml up`
+1. `docker-compose build` - this ensures the codebase is refreshed and up-to-date
+2. `docker-compose up` - runs the app with the DB
 
 ### Development environment - collective compose
 
@@ -61,8 +61,8 @@ docker-compose -f compose-dev.yaml up
 ### Production environment
 
 Running the production environment is supported by *compose-prod.yaml*. It behaves in the same way as the dev compose,
-but runs more applications. Note that the production env has different connection structure. Moreover, it uses different
-environment .env file.
+but runs more applications. This setup is prepared for the deployment architecture. Note that the production env has 
+different connection structure. Moreover, it uses different environment .env file.
 
 Run the prod env using:
 
