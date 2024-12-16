@@ -153,10 +153,6 @@ public class Seeding {
     @PostConstruct
     @Transactional
     public void seeding() {
-        if (!scienceRepository.findAll().isEmpty()) {
-            log.info("Database already seeded - performing no DB seeding now.");
-            return;
-        }
         log.info("======================");
         log.info("  DB SEEDING - START  ");
         log.info("======================");
@@ -221,6 +217,12 @@ public class Seeding {
     }
 
     private void seedGivenCourse(Science science, String name, String description, String imageSource, Consumer<Course> lessonSeedingFunction) {
+        if (coursePersistence.getAllOfScienceId(science.getId()).getValue().stream().anyMatch(o -> o.getName().equals(name))) {
+            log.info("Skipping {} course seeding (found one with the same name).", name);
+            return;
+        } else {
+            log.info("Seeding {} course...", name);
+        }
         Course course = Course.create(educator, science);
         course.setName(name);
         course.setDescription(description);
