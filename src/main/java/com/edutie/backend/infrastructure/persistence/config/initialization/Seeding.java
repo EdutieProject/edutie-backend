@@ -98,6 +98,15 @@ public class Seeding {
         SampleLawOfSinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleLawOfCosinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleBasicTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+
+        SampleBellNumbersLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleDiophantineEquationLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleEquivalenceRelationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleFerrersDiagramLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleGeneratingFunctionsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleNewtonPolynomialsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SamplePermutationsAndCombinationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSetsWithRepetitionsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         // ==== PHYSICS ====
         SampleFirstLawThermodynamicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleHeatEngineLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
