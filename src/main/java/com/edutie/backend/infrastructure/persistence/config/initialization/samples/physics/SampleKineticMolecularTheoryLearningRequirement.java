@@ -12,6 +12,7 @@ public class SampleKineticMolecularTheoryLearningRequirement {
 
     public static void seedInDatabase(Educator educator, LearningRequirementPersistence learningRequirementPersistence) {
         if (learningRequirementPersistence.getRepository().findAll().stream().anyMatch(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME))) {
+            requirement = learningRequirementPersistence.getRepository().findAll().stream().filter(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME)).findFirst().get();
             isSeeded = true;
             return;
         }
