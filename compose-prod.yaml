@@ -165,7 +165,7 @@ services:
     working_dir: /app
     volumes:
       - ../edutie.nowanauka.pl:/app
-    command: npm run debug
+    command: npm start
     expose:
       - "8080"
     networks:
