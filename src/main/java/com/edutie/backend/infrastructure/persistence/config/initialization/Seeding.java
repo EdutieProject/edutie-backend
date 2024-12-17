@@ -255,6 +255,9 @@ public class Seeding {
      * @return seeded science
      */
     private Science seedScience(String name, String description, String imageSource) {
+        if(sciencePersistence.getRepository().findAll().stream().anyMatch(o -> o.getName().equals(name))) {
+            return sciencePersistence.getRepository().findAll().stream().filter(o -> o.getName().equals(name)).findFirst().get();
+        }
         Science science = Science.create(educator).getValue();
         science.setName(name);
         science.setDescription(description);

@@ -63,32 +63,33 @@ public class DiscreteMathCourseSeeding {
         lessonPersistence.save(firstLesson);
         seedSegmentsInPermutationsAndCombinations(firstLesson);
 
+
         Lesson secondLesson = Lesson.create(course.getAuthorEducator(), firstLesson);
         secondLesson.setName("Wielomiany Newtona");
         lessonPersistence.save(secondLesson);
         seedSegmentsInNewtonPolynomials(secondLesson);
 
-        Lesson thirdLesson = Lesson.create(course.getAuthorEducator(), firstLesson);
-        thirdLesson.setName("Podziały zbiorów");
+        Lesson thirdLesson = Lesson.create(course.getAuthorEducator(), secondLesson);
+        thirdLesson.setName("Diagramy Ferresa");
         lessonPersistence.save(thirdLesson);
-        seedSegmentsInSetPartitions(thirdLesson);
+        seedSegmentsInFerrersDiagrams(thirdLesson);
 
-        Lesson fourthLesson = Lesson.create(course.getAuthorEducator(), firstLesson);
+        Lesson fourthLesson = Lesson.create(course.getAuthorEducator(), secondLesson);
         fourthLesson.setName("Relacje równoważności");
         lessonPersistence.save(fourthLesson);
         seedSegmentsInEquivalenceRelations(fourthLesson);
 
-        Lesson fifthLesson = Lesson.create(course.getAuthorEducator(), firstLesson);
-        fifthLesson.setName("Diagramy Ferresa");
+        Lesson fifthLesson = Lesson.create(course.getAuthorEducator(), fourthLesson);
+        fifthLesson.setName("Podziały zbiorów");
         lessonPersistence.save(fifthLesson);
-        seedSegmentsInFerrersDiagrams(fifthLesson);
+        seedSegmentsInSetPartitions(fifthLesson);
 
-        Lesson sixthLesson = Lesson.create(course.getAuthorEducator(), firstLesson);
+        Lesson sixthLesson = Lesson.create(course.getAuthorEducator(), secondLesson);
         sixthLesson.setName("Równania diofantyczne");
         lessonPersistence.save(sixthLesson);
         seedSegmentsInDiophantineEquations(sixthLesson);
 
-        Lesson seventhLesson = Lesson.create(course.getAuthorEducator(), firstLesson);
+        Lesson seventhLesson = Lesson.create(course.getAuthorEducator(), sixthLesson);
         seventhLesson.setName("Liczba Bella i funkcje tworzące");
         lessonPersistence.save(seventhLesson);
         seedSegmentsInBellNumbersAndGeneratingFunctions(seventhLesson);
