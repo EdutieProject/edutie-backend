@@ -12,12 +12,12 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-    password: ${POSTGRES_PASSWORD}
-    username: ${POSTGRES_USER}
+    url: jdbc:postgresql://${EDUTIE_DB_HOST}:${EDUTIE_DB_PORT}/${EDUTIE_DB_NAME}
+    password: ${EDUTIE_DB_PASSWORD}
+    username: ${EDUTIE_DB_USER}
   jpa:
     hibernate:
-      ddl-auto: ${DB_MODE}
+      ddl-auto: ${EDUTIE_DB_MODE}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

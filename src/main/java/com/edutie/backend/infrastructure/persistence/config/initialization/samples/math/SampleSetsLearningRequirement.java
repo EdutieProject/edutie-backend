@@ -9,11 +9,19 @@ import com.edutie.backend.domain.education.learningrequirement.persistence.Learn
 public class SampleSetsLearningRequirement {
     private static boolean isSeeded = false;
     private static LearningRequirement requirement = null;
+    private static final String LEARNING_REQUIREMENT_NAME = "Operacje na zbiorach";
 
     public static void seedInDatabase(Educator educator, LearningRequirementPersistence learningRequirementPersistence) {
+        if (learningRequirementPersistence.getRepository().findAll().stream().anyMatch(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME))) {
+            requirement = learningRequirementPersistence.getRepository().findAll().stream().filter(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME)).findFirst().get();
+            isSeeded = true;
+            return;
+        }
+
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningRequirement.setName("Operacje na zbiorach");
+
+        learningRequirement.setName(LEARNING_REQUIREMENT_NAME);
         learningRequirement.appendSubRequirement(
                 "Uczeń potrafi sprawnie posługiwać się symboliką matematyczną dotyczącą zbiorów",
                 PromptFragment.of("""

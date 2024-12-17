@@ -75,6 +75,7 @@ public class Seeding {
     private final StatisticsCourseSeeding statisticsCourseSeeding;
     private final InvestingCourseSeeding investingCourseSeeding;
     private final TrigonometryCourseSeeding trigonometryCourseSeeding;
+    private final DiscreteMathCourseSeeding discreteMathCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -97,6 +98,15 @@ public class Seeding {
         SampleLawOfSinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleLawOfCosinesLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleBasicTrigonometryLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+
+        SampleBellNumbersLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleDiophantineEquationLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleEquivalenceRelationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleFerrersDiagramLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleGeneratingFunctionsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleNewtonPolynomialsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SamplePermutationsAndCombinationsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
+        SampleSetsWithRepetitionsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         // ==== PHYSICS ====
         SampleFirstLawThermodynamicsLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
         SampleHeatEngineLearningRequirement.seedInDatabase(educator, learningRequirementPersistence);
@@ -153,10 +163,6 @@ public class Seeding {
     @PostConstruct
     @Transactional
     public void seeding() {
-        if (!scienceRepository.findAll().isEmpty()) {
-            log.info("Database already seeded - performing no DB seeding now.");
-            return;
-        }
         log.info("======================");
         log.info("  DB SEEDING - START  ");
         log.info("======================");
@@ -217,10 +223,22 @@ public class Seeding {
                 "https://www.svgrepo.com/show/452420/sine-curve.svg",
                 trigonometryCourseSeeding::trigonometryCourseSeeding
         );
+        seedGivenCourse(math,
+                "Tajniki matematyki dyskretnej",
+                "Poznasz matematykę dyskretną - dziedzinę matematyki która stoi za współczesnymi komputerami.",
+                "https://www.svgrepo.com/show/452638/abacus.svg",
+                discreteMathCourseSeeding::discreteMathCourseSeeding
+        );
 
     }
 
     private void seedGivenCourse(Science science, String name, String description, String imageSource, Consumer<Course> lessonSeedingFunction) {
+        if (coursePersistence.getAllOfScienceId(science.getId()).getValue().stream().anyMatch(o -> o.getName().equals(name))) {
+            log.info("Skipping {} course seeding (found one with the same name).", name);
+            return;
+        } else {
+            log.info("Seeding {} course...", name);
+        }
         Course course = Course.create(educator, science);
         course.setName(name);
         course.setDescription(description);
@@ -237,6 +255,9 @@ public class Seeding {
      * @return seeded science
      */
     private Science seedScience(String name, String description, String imageSource) {
+        if(sciencePersistence.getRepository().findAll().stream().anyMatch(o -> o.getName().equals(name))) {
+            return sciencePersistence.getRepository().findAll().stream().filter(o -> o.getName().equals(name)).findFirst().get();
+        }
         Science science = Science.create(educator).getValue();
         science.setName(name);
         science.setDescription(description);
