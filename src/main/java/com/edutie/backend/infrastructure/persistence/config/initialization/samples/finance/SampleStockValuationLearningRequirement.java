@@ -11,6 +11,10 @@ public class SampleStockValuationLearningRequirement {
     private static LearningRequirement requirement = null;
 
     public static void seedInDatabase(Educator educator, LearningRequirementPersistence learningRequirementPersistence) {
+        if (learningRequirementPersistence.getRepository().findAll().stream().anyMatch(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME))) {
+            isSeeded = true;
+            return;
+        }
         LearningRequirement learningRequirement = LearningRequirement.create(educator);
         learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
         learningRequirement.setName(LEARNING_REQUIREMENT_NAME);
