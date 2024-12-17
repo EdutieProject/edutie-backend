@@ -75,6 +75,7 @@ public class Seeding {
     private final StatisticsCourseSeeding statisticsCourseSeeding;
     private final InvestingCourseSeeding investingCourseSeeding;
     private final TrigonometryCourseSeeding trigonometryCourseSeeding;
+    private final DiscreteMathCourseSeeding discreteMathCourseSeeding;
 
     private void initializeProfiles() {
         log.info("Seeding profiles for user of id {}", uid);
@@ -212,6 +213,12 @@ public class Seeding {
                 "Zestaw zadań poświęcony stricte trygonometrii, aby pomóc ci zrozumieć kąty i zależności między nimi.",
                 "https://www.svgrepo.com/show/452420/sine-curve.svg",
                 trigonometryCourseSeeding::trigonometryCourseSeeding
+        );
+        seedGivenCourse(math,
+                "Tajniki matematyki dyskretnej",
+                "Poznasz matematykę dyskretną - dziedzinę matematyki która stoi za współczesnymi komputerami.",
+                "https://www.svgrepo.com/show/452638/abacus.svg",
+                discreteMathCourseSeeding::discreteMathCourseSeeding
         );
 
     }
