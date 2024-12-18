@@ -1,7 +1,6 @@
 package com.edutie.backend.application.learning;
 
 import com.edutie.backend.application.learning.ancillaries.LatestActivityQueryHandler;
-import com.edutie.backend.application.learning.ancillaries.implementation.LatestActivityQueryHandlerImplementation;
 import com.edutie.backend.application.learning.ancillaries.queries.LatestActivityQuery;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.LatestActivityView;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
@@ -11,7 +10,6 @@ import com.edutie.backend.domain.personalization.learningresource.LearningResour
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -25,8 +23,8 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.mocks.EducationMocks;
+import com.edutie.backend.mocks.LearningResourceMocks;
 import com.edutie.backend.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,9 +88,7 @@ public class LatestActivityQueryHandlerTests {
         segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
         segmentPersistence.save(segment).throwIfFailure();
 
-        LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(
-                mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()
-        ), "", Activity.create("", Set.of()), Set.of());
+        LearningResource learningResource = LearningResourceMocks.sampleLearningResource(mockUser.getStudentProfile(), mockUser.getEducatorProfile());
         learningResourcePersistence.save(learningResource).throwIfFailure();
         learningResult = LearningResult.create(SolutionSubmission.create(
                 mockUser.getStudentProfile(), learningResource, "", 0

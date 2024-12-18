@@ -11,6 +11,7 @@ import com.edutie.backend.domain.personalization.learningresource.LearningResour
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
+import com.edutie.backend.domain.personalization.learningresource.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -50,12 +51,14 @@ public class ExternalServiceMocks {
     public static LargeLanguageModelService largeLanguageModelServiceMock() {
         return new LargeLanguageModelService() {
             @Override
-            public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema learningResourceGenerationSchema) {
+            public WrapperResult<LearningResource> generateLearningResource(LearningResourceGenerationSchema schema) {
                 LearningResource learningResource = LearningResource.create(
-                        learningResourceGenerationSchema,
-                        "graph TD",
-                        Activity.create("Hello there it is activity text here!", Set.of(Hint.create("Hello!"), Hint.create("World!"))),
-                        learningResourceGenerationSchema.getLearningRequirementIds().stream().map(o -> TheoryCard.create(o, "The general idea is simple...")).collect(Collectors.toSet())
+                        schema.getStudentMetadata(),
+                        schema.getLearningResourceDefinition(),
+                        schema.getQualifiedRequirements(),
+                        Activity.create("Hello this is sample activity", Set.of(Hint.create("Only one hint"))),
+                        Set.of(TheoryCard.create(new LearningRequirementId(), "One theory card for now")),
+                        new Visualisation("")
                 );
                 return WrapperResult.successWrapper(learningResource);
             }

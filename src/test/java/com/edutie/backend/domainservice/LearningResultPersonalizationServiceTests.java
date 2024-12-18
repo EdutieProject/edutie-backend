@@ -3,19 +3,12 @@ package com.edutie.backend.domainservice;
 import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
-import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.backend.domain.personalization.learningresult.LearningResult;
-import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.domainservice.personalization.learningresult.LearningResultPersonalizationService;
-import com.edutie.backend.domainservice.personalization.learningresult.implementation.LearningResultPersonalizationServiceImplementation;
 import com.edutie.backend.domainservice.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResultRepository;
-import com.edutie.backend.mocks.ExternalServiceMocks;
 import com.edutie.backend.mocks.LearningHistoryMocker;
 import com.edutie.backend.mocks.LearningResourceMocks;
 import org.junit.jupiter.api.Test;
@@ -24,11 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.repository.JpaRepository;
-import validation.WrapperResult;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,7 +39,7 @@ public class LearningResultPersonalizationServiceTests {
     public void personalizationSchemaTest() {
         SolutionSubmission solutionSubmission = SolutionSubmission.create(
                 student,
-                LearningResourceMocks.sampleLearningResource(student, learningResultPersistence, educator),
+                LearningResourceMocks.sampleLearningResource(student, educator),
                 "Solution report text",
                 0);
 
