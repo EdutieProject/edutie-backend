@@ -1,16 +1,17 @@
 package com.edutie.backend.domain.personalization.learningresource;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
-import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.learningresource.valueobjects.Visualisation;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -41,42 +42,47 @@ public class LearningResource extends AuditableEntityBase<LearningResourceId> {
     private Activity activity;
     @OneToMany(targetEntity = TheoryCard.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<TheoryCard> theoryCards;
-    @Column(columnDefinition = "TEXT")
-    private String mermaidVisualisationString;
+    @Embedded
+    private Visualisation visualisation;
     @AttributeOverride(name = "identifierValue", column = @Column(name = "definition_id"))
     private LearningResourceDefinitionId definitionId;
     private DefinitionType definitionType;
 
     /**
-     * Recommended constructor that creates learning resource from L.R.G.S. and other different details.
+     * Recommended constructor that creates learning resource using provided details.
      *
-     * @param generationSchema generation schema
-     * @param activity         activity
-     * @param theoryCards      theory cards
+     * @param student                    student for which Learning Resource is created
+     * @param learningResourceDefinition the definition used in the creation process
+     * @param activity                   activity
+     * @param theoryCards                theory cards
+     * @param visualisation              visualisation
+     * @param qualifiedRequirements      qualified elemental requirements
      * @return new Learning Resource
      */
     public static LearningResource create(
-            LearningResourceGenerationSchema generationSchema,
-            String mermaidVisualisationString,
+            Student student,
+            LearningResourceDefinitionBase learningResourceDefinition,
+            Set<ElementalRequirement> qualifiedRequirements,
             Activity activity,
-            Set<TheoryCard> theoryCards
+            Set<TheoryCard> theoryCards,
+            Visualisation visualisation
     ) {
         LearningResource learningResource = new LearningResource();
         learningResource.setId(new LearningResourceId());
-        learningResource.setCreatedBy(generationSchema.getStudentMetadata().getOwnerUserId());
-        learningResource.setStudentId(generationSchema.getStudentMetadata().getId());
-        learningResource.setDefinitionId(generationSchema.getLearningResourceDefinitionId());
-        learningResource.setDefinitionType(generationSchema.getLearningResourceDefinitionType());
-        learningResource.setQualifiedRequirements(generationSchema.getQualifiedRequirements());
+        learningResource.setCreatedBy(student.getOwnerUserId());
+        learningResource.setStudentId(student.getId());
+        learningResource.setDefinitionId(learningResourceDefinition.getId());
+        learningResource.setDefinitionType(learningResourceDefinition.getDefinitionType());
+        learningResource.setQualifiedRequirements(qualifiedRequirements);
         learningResource.setActivity(activity);
-        learningResource.setMermaidVisualisationString(mermaidVisualisationString);
+        learningResource.setVisualisation(visualisation);
         learningResource.setTheoryCards(theoryCards);
         return learningResource;
     }
 
 
-    protected record LearningRequirementSnippet(LearningRequirementId learningRequirementId, String name) {
-        //TODO: json view for Learning Requirements
+    public record LearningRequirementSnippet(LearningRequirementId learningRequirementId, String name) {
+        //TODO: better include json view for Learning Requirements
     }
 
     @JsonProperty("learningRequirements")

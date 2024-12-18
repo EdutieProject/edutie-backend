@@ -4,6 +4,7 @@ import com.edutie.backend.domain.personalization.learningresource.LearningResour
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.entities.Hint;
 import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
+import com.edutie.backend.domain.personalization.learningresource.valueobjects.Visualisation;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.infrastructure.external.common.dto.ExternalInfrastructureDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,13 +27,16 @@ public class LearningResourceCreationDto implements ExternalInfrastructureDto<Le
     private Set<String> hints;
 
     @Override
-    public LearningResource intoDomainEntity(LearningResourceGenerationSchema learningResourceGenerationSchema) {
+    public LearningResource intoDomainEntity(LearningResourceGenerationSchema schema) {
         Set<Hint> hints = this.hints.stream().map(Hint::create).collect(Collectors.toSet());
+        Set<TheoryCard> theoryCards = this.theoryCards.stream().map(o -> TheoryCard.create(o.learningRequirementId, o.text)).collect(Collectors.toSet());
         return LearningResource.create(
-                learningResourceGenerationSchema,
-                mermaidGraphString,
+                schema.getStudentMetadata(),
+                schema.getLearningResourceDefinition(),
+                schema.getQualifiedRequirements(),
                 Activity.create(activityText, hints),
-                theoryCards.stream().map(o -> TheoryCard.create(o.learningRequirementId, o.text)).collect(Collectors.toSet())
+                theoryCards,
+                new Visualisation(mermaidGraphString)
         );
     }
 }
