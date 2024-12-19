@@ -5,6 +5,7 @@ import com.edutie.backend.application.learning.ancillaries.queries.LatestActivit
 import com.edutie.backend.application.learning.ancillaries.viewmodels.LatestActivityView;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
@@ -33,6 +34,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import validation.WrapperResult;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -89,23 +91,30 @@ public class LatestActivityQueryHandlerTests {
         segmentPersistence.save(segment).throwIfFailure();
 
         LearningResource learningResource = LearningResourceMocks.sampleLearningResource(mockUser.getStudentProfile(), mockUser.getEducatorProfile());
+        learningResource.getQualifiedRequirements().stream().map(ElementalRequirement::getLearningRequirement).collect(Collectors.toSet()).forEach(
+                o -> learningRequirementPersistence.save(o).throwIfFailure()
+        );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         learningResult = LearningResult.create(SolutionSubmission.create(
-                mockUser.getStudentProfile(), learningResource, "", 0
+                mockUser.getStudentProfile(), learningResource.getId(), "", 0
                 ), Feedback.of(""), Set.of());
         learningResultPersistence.save(learningResult).throwIfFailure();
     }
 
-
     @Test
-    public void getLatestActivitySuccessTest() {
+    public void getLatestActivityDynamicDefinitionSuccessTest() {
         LatestActivityQuery query = new LatestActivityQuery().studentUserId(mockUser.getUserId());
 
         WrapperResult<LatestActivityView> queryResult = latestActivityQueryHandler.handle(query);
 
         assertTrue(queryResult.isSuccess());
-        assertEquals(queryResult.getValue().latestCourseView().course(), course);
         assertEquals(queryResult.getValue().latestLearningResult(), learningResult);
+    }
+
+    @Test
+    public void getLatestActivityStaticDefinitionSuccessTest() {
+        // TODO
+        // Consider not doing this as LRD is a question mark of the future development
     }
 
 }

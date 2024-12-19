@@ -61,7 +61,10 @@ public class LearningResultCommandHandlersTests {
                 studentPersistence,
                 solutionSubmissionPersistence,
                 learningResultPersistence,
-                new LearningResultPersonalizationServiceImplementation(ExternalServiceMocks.largeLanguageModelServiceMock())
+                new LearningResultPersonalizationServiceImplementation(
+                        ExternalServiceMocks.largeLanguageModelServiceMock(),
+                        learningResourcePersistence
+                )
         );
     }
 

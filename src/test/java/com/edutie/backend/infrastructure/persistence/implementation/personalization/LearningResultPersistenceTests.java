@@ -122,7 +122,7 @@ public class LearningResultPersistenceTests {
         LearningResource sampleLearningResource = createAndSaveLearningResource(learningResourceDefinition);
 
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
+                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource.getId(), "My report", 0),
                 new Feedback("Feedback"),
                 Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
@@ -144,7 +144,7 @@ public class LearningResultPersistenceTests {
         learningResourcePersistence.save(sampleLearningResource).throwIfFailure();
 
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
+                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource.getId(), "My report", 0),
                 new Feedback("Feedback"),
                 Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
@@ -165,7 +165,7 @@ public class LearningResultPersistenceTests {
         learningResourcePersistence.save(sampleLearningResource).throwIfFailure();
 
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
+                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource.getId(), "My report", 0),
                 new Feedback("Feedback"),
                 Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );
@@ -186,7 +186,7 @@ public class LearningResultPersistenceTests {
         learningResourcePersistence.save(sampleLearningResource).throwIfFailure();
 
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource, "My report", 0),
+                SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningResource.getId(), "My report", 0),
                 new Feedback("Feedback"),
                 Set.of(Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of(""), List.of()))
         );

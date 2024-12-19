@@ -1,13 +1,16 @@
 package com.edutie.backend.infrastructure.persistence;
 
 import com.edutie.backend.domain.common.base.EntityBase;
+import lombok.extern.slf4j.Slf4j;
 import validation.Error;
 
 /**
  * Common persistence errors.
  */
+@Slf4j
 public class PersistenceError {
 	public static Error exceptionEncountered(Exception ex) {
+		log.error(ex.getMessage(), ex);
 		return new Error("PERSISTENCE-EXCEPTION-500", ex.getMessage());
 	}
 
