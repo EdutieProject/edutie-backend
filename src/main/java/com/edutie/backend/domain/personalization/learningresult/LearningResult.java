@@ -4,16 +4,13 @@ import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
-import com.edutie.backend.domain.studyprogram.course.Course;
-import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -73,35 +70,6 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     }
 
     /**
-     * Adds assessment to this Learning Result
-     *
-     * @param assessment assessment to be added
-     */
-    public void addAssessment(Assessment assessment) {
-        assessments.add(assessment);
-    }
-
-    /**
-     * Returns definition id of associated learning resource. It may be not valid if definition type is dynamic
-     *
-     * @return Learning Resource Definition id
-     */
-    @JsonProperty("learningResourceDefinitionId")
-    public LearningResourceDefinitionId getLearningResourceDefinitionId() {
-        return solutionSubmission.getLearningResource().getDefinitionId();
-    }
-
-    /**
-     * Getter added mainly for serialization purposes. Retrieves LRD type.
-     *
-     * @return LRD type.
-     */
-    @JsonProperty("learningResourceDefinitionType")
-    public DefinitionType getLearningResourceDefinitionType() {
-        return solutionSubmission.getLearningResource().getDefinitionType();
-    }
-
-    /**
      * Indicates whether learning result is successful based on the grade that needs to be met in order
      * to be successful
      *
@@ -151,14 +119,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
         return new Grade((int) Math.round(getAverageGradeAsDouble()));
     }
 
-    /**
-     * Retrieves a course that is the source of given learning result. Method basically utilizes the learning resource
-     * definition id to search for a course that has a study program element associated with a definition id.
-     *
-     * @param coursePersistence course persistence to use
-     * @return Course
-     */
-    public Course getAssociatedCourse(CoursePersistence coursePersistence) {
-        return coursePersistence.getByLearningResourceDefinitionId(getLearningResourceDefinitionId()).getValue();
+    public LearningResourceId getAssociatedLearningResourceId() {
+        return solutionSubmission.getLearningResourceId();
     }
 }

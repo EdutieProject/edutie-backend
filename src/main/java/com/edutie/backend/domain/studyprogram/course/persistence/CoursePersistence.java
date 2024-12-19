@@ -2,6 +2,7 @@ package com.edutie.backend.domain.studyprogram.course.persistence;
 
 import com.edutie.backend.domain.common.persistence.Persistence;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
@@ -29,11 +30,11 @@ public interface CoursePersistence extends Persistence<Course, CourseId> {
     WrapperResult<List<Course>> getAllAccessibleOfScienceId(ScienceId scienceId);
 
     /**
-     * Finds a course that utilizes the learning resource definition of given id.
-     * @param learningResourceDefinitionId learning resource definition id
-     * @return Wrapper result of Course
+     * Finds the course by the learning resource id that should be created by a definition encompassed in a course.
+     * @param learningResourceId learning resource ird
+     * @return Wrapper Result of a course.
      */
-    WrapperResult<Course> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId);
+    WrapperResult<Course> findByRelatedLearningResourceId(LearningResourceId learningResourceId);
 
     /**
      * Retrieve all courses created by given educator

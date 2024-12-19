@@ -2,14 +2,11 @@ package com.edutie.backend.domain.personalization.solutionsubmission;
 
 import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.personalization.common.AbsoluteDefinition;
-import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.solutionsubmission.identities.SolutionSubmissionId;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,16 +25,14 @@ public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId
     @Setter(AccessLevel.PRIVATE)
     @JsonIgnore
     private Student student;
-    @ManyToOne(targetEntity = LearningResource.class, fetch = FetchType.EAGER)
-    @Setter(AccessLevel.PRIVATE)
-    @JsonIgnore
-    private LearningResource learningResource;
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "learning_resource_id"))
+    private LearningResourceId learningResourceId;
     @Column(columnDefinition = "TEXT")
     private String reportText;
 
     public static SolutionSubmission create(
             Student student,
-            LearningResource learningResource,
+            LearningResourceId learningResourceId,
             String reportText,
             int hintsRevealed
     ) {
@@ -45,7 +40,7 @@ public class SolutionSubmission extends AuditableEntityBase<SolutionSubmissionId
         solutionSubmission.setId(new SolutionSubmissionId());
         solutionSubmission.setCreatedBy(student.getOwnerUserId());
         solutionSubmission.setStudent(student);
-        solutionSubmission.setLearningResource(learningResource);
+        solutionSubmission.setLearningResourceId(learningResourceId);
         solutionSubmission.setHintsRevealed(hintsRevealed);
         solutionSubmission.setReportText(reportText);
         return solutionSubmission;
