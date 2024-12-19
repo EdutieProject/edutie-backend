@@ -8,7 +8,6 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
@@ -96,7 +95,7 @@ public class LatestActivityQueryHandlerTests {
         );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         learningResult = LearningResult.create(SolutionSubmission.create(
-                mockUser.getStudentProfile(), learningResource.getId(), "", 0
+                mockUser.getStudentProfile(), learningResource.getId(), learningResource.getDefinitionType() , "", 0
                 ), Feedback.of(""), Set.of());
         learningResultPersistence.save(learningResult).throwIfFailure();
     }

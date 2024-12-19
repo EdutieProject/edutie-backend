@@ -87,7 +87,7 @@ public class LearningResultQueryHandlersTests {
         LearningResource learningResource = createAndSaveLearningResource(learningResourceDefinition);
 
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(mockUser.getStudentProfile(), learningResource.getId(), "Report", 0),
+                SolutionSubmission.create(mockUser.getStudentProfile(), learningResource.getId(), learningResource.getDefinitionType(), "Report", 0),
                 new Feedback("Feedback text"),
                 learningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), Feedback.of(""), List.of())).collect(Collectors.toSet())
         );

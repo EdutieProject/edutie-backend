@@ -5,6 +5,7 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -117,6 +118,13 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     @JsonProperty("averageGradeRounded")
     public Grade getAverageGrade() {
         return new Grade((int) Math.round(getAverageGradeAsDouble()));
+    }
+
+    // THis method should be removed in the future as this metadata should not be present in the solution submission.
+    @Deprecated
+    @JsonProperty("learningResourceDefinitionType")
+    public DefinitionType getDefinitionType() {
+        return solutionSubmission.getLearningResourceDefinitionType();
     }
 
     public LearningResourceId getAssociatedLearningResourceId() {

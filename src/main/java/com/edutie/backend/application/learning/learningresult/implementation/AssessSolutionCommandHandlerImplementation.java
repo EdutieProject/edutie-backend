@@ -33,7 +33,13 @@ public class AssessSolutionCommandHandlerImplementation extends HandlerBase impl
 		Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
 		LearningResource learningResource = learningResourcePersistence.getById(command.learningResourceId()).getValue();
 
-		SolutionSubmission solutionSubmission = SolutionSubmission.create(student, learningResource.getId(), command.solutionSubmissionText(), command.hintsRevealedCount());
+		SolutionSubmission solutionSubmission = SolutionSubmission.create(
+				student,
+				learningResource.getId(),
+				learningResource.getDefinitionType(),
+				command.solutionSubmissionText(),
+				command.hintsRevealedCount()
+		);
 		solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
 
 		LearningResult learningResult = learningResultPersonalizationService.personalize(solutionSubmission, student).getValue();
