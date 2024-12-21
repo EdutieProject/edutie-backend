@@ -1,7 +1,6 @@
 package com.edutie.backend.application.learning.learningresource.commands;
 
 import com.edutie.backend.application.common.actions.StudentAction;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -15,12 +14,12 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class CreateRandomFactDynamicLearningResourceCommand extends StudentAction<CreateRandomFactDynamicLearningResourceCommand> {
+public final class CreateDynamicLearningResourceCommand extends StudentAction<CreateDynamicLearningResourceCommand> {
 	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-	private @NonNull String randomFact;
+	private @NonNull String context;
 
 	@Override
-	protected CreateRandomFactDynamicLearningResourceCommand getThis() {
+	protected CreateDynamicLearningResourceCommand getThis() {
 		return this;
 	}
 }

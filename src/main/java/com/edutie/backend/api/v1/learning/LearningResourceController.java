@@ -4,7 +4,7 @@ import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.learningresource.*;
 import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
-import com.edutie.backend.application.learning.learningresource.commands.CreateRandomFactDynamicLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
@@ -29,7 +29,7 @@ public class LearningResourceController {
     private final GetLearningResourceByIdQueryHandler getLearningResourceByIdQueryHandler;
     private final GetLearningResourcesByDefinitionIdQueryHandler getLearningResourcesByDefinitionIdQueryHandler;
     private final CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
-    private final CreateRandomFactDynamicLearningResourceCommandHandler createRandomFactDynamicLearningResourceCommandHandler;
+    private final CreateDynamicLearningResourceCommandHandler createDynamicLearningResourceCommandHandler;
 
     @GetMapping("/{learningResourceId}")
     @Operation(description = "Retrieves a learning resource by its identifier")
@@ -71,11 +71,11 @@ public class LearningResourceController {
             and altering the exercise to be about the provided random fact in the command.
             """)
     public ResponseEntity<ApiResult<LearningResource>> createRandomFactDynamicLearningResource(Authentication authentication,
-                                                                                               @RequestBody CreateRandomFactDynamicLearningResourceCommand command) {
+                                                                                               @RequestBody CreateDynamicLearningResourceCommand command) {
         return new GenericRequestHandler<LearningResource>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
-                .handle((userId) -> createRandomFactDynamicLearningResourceCommandHandler.handle(
+                .handle((userId) -> createDynamicLearningResourceCommandHandler.handle(
                         command.studentUserId(userId)
                 ));
     }
