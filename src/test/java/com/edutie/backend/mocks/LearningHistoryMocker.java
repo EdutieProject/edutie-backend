@@ -6,6 +6,7 @@ import com.edutie.backend.domain.education.knowledgesubject.identities.Knowledge
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
@@ -107,15 +108,21 @@ public class LearningHistoryMocker {
                 try {
                     return WrapperResult.successWrapper(List.of(
                             createLearningResultWithCreatedOnInThePast(
-                                    SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
+                                    SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                     Feedback.of("Hello"),
-                                    Set.of(Assessment.create(learningRequirement.getId(), Grade.of(1), Feedback.of(""), List.of())),
+                                    Set.of(Assessment.create(learningRequirement.getId(), Grade.of(1), Feedback.of(""), learningRequirement.getElementalRequirements().subList(0,1))),
                                     LocalDateTime.now().minusDays(1)
                             ),
                             createLearningResultWithCreatedOnInThePast(
-                                    SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
+                                    SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
+                                    Feedback.of("Universe"),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), learningRequirement.getElementalRequirements().subList(1,2))),
+                                    LocalDateTime.now().minusDays(1)
+                            ),
+                            createLearningResultWithCreatedOnInThePast(
+                                    SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                     Feedback.of("World"),
-                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                    Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), learningRequirement.getElementalRequirements().subList(0,2))),
                                     LocalDateTime.now().minusDays(2)
                             )));
                 } catch (Throwable throwable) {
