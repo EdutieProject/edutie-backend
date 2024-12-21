@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     private Set<PersonalizationRule<?>> personalizationRules = new HashSet<>();
+    private DefinitionType definitionType;
     private AdditionalInstructions additionalInstructions;
     private PromptFragment dynamicContext;
     @JsonIgnore
@@ -56,6 +57,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
         LearningResourceGenerationSchema generationSchema = new LearningResourceGenerationSchema();
         generationSchema.setLearningResourceDefinition(definition);
         generationSchema.setStudentMetadata(student);
+        generationSchema.setDefinitionType(definition.getDefinitionType());
         if (definition.getDefinitionType().equals(DefinitionType.STATIC))
             generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition((StaticLearningResourceDefinition) definition));
         if (definition.getDefinitionType().equals(DefinitionType.DYNAMIC))
