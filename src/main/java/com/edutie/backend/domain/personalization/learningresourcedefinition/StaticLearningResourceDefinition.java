@@ -27,18 +27,18 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-public class LearningResourceDefinition extends LearningResourceDefinitionBase implements EducatorCreated {
+public class StaticLearningResourceDefinition extends LearningResourceDefinitionBase implements EducatorCreated {
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     private Educator authorEducator;
 
-    public static LearningResourceDefinition create(
+    public static StaticLearningResourceDefinition create(
             Educator educator,
             TheoryDetails theoryDetails,
             ActivityDetails activityDetails,
             Set<LearningRequirement> learningRequirements
     ) {
-        LearningResourceDefinition lrd = new LearningResourceDefinition();
+        StaticLearningResourceDefinition lrd = new StaticLearningResourceDefinition();
         lrd.setId(new LearningResourceDefinitionId());
         lrd.setAuthorEducator(educator);
         lrd.setCreatedBy(educator.getOwnerUserId());
@@ -57,7 +57,7 @@ public class LearningResourceDefinition extends LearningResourceDefinitionBase i
      * @param learningRequirements learning requirements
      * @return new Learning Resource Definition
      */
-    public static LearningResourceDefinition create(
+    public static StaticLearningResourceDefinition create(
             Educator educator,
             PromptFragment theoryDescription,
             PromptFragment exerciseDescription,

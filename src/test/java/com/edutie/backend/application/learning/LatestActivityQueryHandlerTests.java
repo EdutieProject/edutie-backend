@@ -9,7 +9,7 @@ import com.edutie.backend.domain.education.learningrequirement.entities.Elementa
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -72,12 +72,12 @@ public class LatestActivityQueryHandlerTests {
         mockUser.saveToPersistence();
         LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
         learningRequirementPersistence.save(learningRequirement).throwIfFailure();
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.empty(), PromptFragment.empty(),
                 Set.of(learningRequirement)
         );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
 
         Science science = Science.create(mockUser.getEducatorProfile()).getValue();
         sciencePersistence.save(science).throwIfFailure();
@@ -86,7 +86,7 @@ public class LatestActivityQueryHandlerTests {
         Lesson lesson = Lesson.create(mockUser.getEducatorProfile(), course);
         lessonPersistence.save(lesson).throwIfFailure();
         Segment segment = Segment.create(mockUser.getEducatorProfile(), lesson);
-        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+        segment.setLearningResourceDefinitionId(staticLearningResourceDefinition.getId());
         segmentPersistence.save(segment).throwIfFailure();
 
         LearningResource learningResource = LearningResourceMocks.sampleLearningResource(mockUser.getStudentProfile(), mockUser.getEducatorProfile());

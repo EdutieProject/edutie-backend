@@ -8,7 +8,7 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Activ
 import com.edutie.backend.domain.personalization.learningresource.entities.TheoryCard;
 import com.edutie.backend.domain.personalization.learningresource.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
@@ -19,8 +19,8 @@ import java.util.Set;
 
 public class LearningResourceMocks {
 
-    public static LearningResourceDefinition sampleLearningResourceDefinition(Educator educator) {
-        return LearningResourceDefinition.create(educator,
+    public static StaticLearningResourceDefinition sampleLearningResourceDefinition(Educator educator) {
+        return StaticLearningResourceDefinition.create(educator,
                 PromptFragment.of("Sample theory description."),
                 PromptFragment.of("Sample activity educator followups"),
                 Set.of(EducationMocks.independentLearningRequirement(educator))

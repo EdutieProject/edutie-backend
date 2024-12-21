@@ -6,7 +6,7 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
@@ -25,20 +25,20 @@ public class CreateLearningResourceDefinitionCommandHandlerImplementation implem
     private final SegmentPersistence segmentPersistence;
 
     @Override
-    public WrapperResult<LearningResourceDefinition> handle(CreateLearningResourceDefinitionCommand command) {
+    public WrapperResult<StaticLearningResourceDefinition> handle(CreateLearningResourceDefinitionCommand command) {
         Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 educator,
                 PromptFragment.of(command.theoryDescription()),
                 PromptFragment.of(command.exerciseDescription()),
                 command.learningRequirementIds().stream().map(o -> learningRequirementPersistence.getById(o).getValue()).collect(Collectors.toSet())
         );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
         if (command.segmentId() != null) {
             Segment segment = segmentPersistence.getById(command.segmentId()).getValue();
-            segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+            segment.setLearningResourceDefinitionId(staticLearningResourceDefinition.getId());
             segmentPersistence.save(segment).throwIfFailure();
         }
-        return WrapperResult.successWrapper(learningResourceDefinition);
+        return WrapperResult.successWrapper(staticLearningResourceDefinition);
     }
 }
