@@ -37,7 +37,10 @@ public class LearningResourceMocks {
 
     public static LearningResource sampleLearningResource(Student student, Educator educator) {
         LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(educator);
-        DynamicLearningResourceDefinition learningResourceDefinition = DynamicLearningResourceDefinition.createRandomFact("Czy wiesz, że sok z brzozy, zwany bzowiną, jest od wieków wykorzystywany w medycynie naturalnej? Jest bogaty w witaminy i minerały!", Set.of(learningRequirement));
+        DynamicLearningResourceDefinition learningResourceDefinition = DynamicLearningResourceDefinition.create(
+                PromptFragment.of("Czy wiesz, że sok z brzozy, zwany bzowiną, jest od wieków wykorzystywany w medycynie naturalnej? Jest bogaty w witaminy i minerały!"),
+                Set.of(learningRequirement)
+        );
 
         return LearningResource.create(
                 student,

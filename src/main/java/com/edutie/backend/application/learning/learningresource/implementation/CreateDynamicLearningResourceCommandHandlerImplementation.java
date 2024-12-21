@@ -2,6 +2,7 @@ package com.edutie.backend.application.learning.learningresource.implementation;
 
 import com.edutie.backend.application.learning.learningresource.CreateDynamicLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
+import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
@@ -28,8 +29,8 @@ public class CreateDynamicLearningResourceCommandHandlerImplementation implement
     public WrapperResult<LearningResource> handle(CreateDynamicLearningResourceCommand command) {
         log.info("Creating dynamic learning resource for student user of id {} using a random fact:\n\"{}\"", command.studentUserId(), command.context());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-        DynamicLearningResourceDefinition definition = DynamicLearningResourceDefinition.createRandomFact(
-                command.context(),
+        DynamicLearningResourceDefinition definition = DynamicLearningResourceDefinition.create(
+                PromptFragment.of(command.context()),
                 learningRequirementSelectionService.selectRequirementsForStudent(student).getValue()
         );
         LearningResource learningResource = learningResourcePersonalizationService.personalize(definition, student).getValue();
