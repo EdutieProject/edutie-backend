@@ -2,7 +2,7 @@ package com.edutie.backend.infrastructure.persistence.implementation.personaliza
 
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.infrastructure.persistence.PersistenceError;
@@ -29,7 +29,7 @@ public class LearningResourceDefinitionPersistenceImplementation implements Lear
 	 * @return crud jpa repository
 	 */
 	@Override
-	public JpaRepository<LearningResourceDefinition, LearningResourceDefinitionId> getRepository() {
+	public JpaRepository<StaticLearningResourceDefinition, LearningResourceDefinitionId> getRepository() {
 		return learningResourceDefinitionRepository;
 	}
 
@@ -39,13 +39,13 @@ public class LearningResourceDefinitionPersistenceImplementation implements Lear
 	 * @return class of persistence entity
 	 */
 	@Override
-	public Class<LearningResourceDefinition> entityClass() {
-		return LearningResourceDefinition.class;
+	public Class<StaticLearningResourceDefinition> entityClass() {
+		return StaticLearningResourceDefinition.class;
 	}
 
 	@Override
-	public WrapperResult<List<LearningResourceDefinition>> getByAuthorEducator(EducatorId educatorId) {
-		Optional<List<LearningResourceDefinition>> learningResourceDefinitionList = educatorRepository.findById(educatorId).map(learningResourceDefinitionRepository::getByAuthorEducator);
+	public WrapperResult<List<StaticLearningResourceDefinition>> getByAuthorEducator(EducatorId educatorId) {
+		Optional<List<StaticLearningResourceDefinition>> learningResourceDefinitionList = educatorRepository.findById(educatorId).map(learningResourceDefinitionRepository::getByAuthorEducator);
 		return learningResourceDefinitionList.map(WrapperResult::successWrapper).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(Educator.class)));
 	}
 }

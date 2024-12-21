@@ -4,7 +4,7 @@ import com.edutie.backend.application.management.learningresourcedefinition.Crea
 import com.edutie.backend.application.management.learningresourcedefinition.queries.CreatedLearningResourceDefinitionsQuery;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import validation.WrapperResult;
 import org.springframework.stereotype.*;
@@ -19,7 +19,7 @@ public class CreatedLearningResourceDefinitionsQueryHandlerImplementation implem
 	private final EducatorPersistence educatorPersistence;
 
 	@Override
-	public WrapperResult<List<LearningResourceDefinition>> handle(CreatedLearningResourceDefinitionsQuery command) {
+	public WrapperResult<List<StaticLearningResourceDefinition>> handle(CreatedLearningResourceDefinitionsQuery command) {
 		Educator educator = educatorPersistence.getByAuthorizedUserId(command.educatorUserId());
 		return learningResourceDefinitionPersistence.getByAuthorEducator(educator.getId());
 	}

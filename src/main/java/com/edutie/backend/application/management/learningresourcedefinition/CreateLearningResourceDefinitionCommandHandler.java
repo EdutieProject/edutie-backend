@@ -2,7 +2,7 @@ package com.edutie.backend.application.management.learningresourcedefinition;
 
 import com.edutie.backend.application.common.UseCaseHandler;
 import com.edutie.backend.application.management.learningresourcedefinition.commands.CreateLearningResourceDefinitionCommand;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import validation.WrapperResult;
 
-public interface CreateLearningResourceDefinitionCommandHandler extends UseCaseHandler<WrapperResult<LearningResourceDefinition>, CreateLearningResourceDefinitionCommand> { }
+public interface CreateLearningResourceDefinitionCommandHandler extends UseCaseHandler<WrapperResult<StaticLearningResourceDefinition>, CreateLearningResourceDefinitionCommand> { }

@@ -4,6 +4,7 @@ import com.edutie.backend.domain.administration.UserId;
 import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
@@ -26,7 +27,7 @@ public class LearningResultTests {
     @Test
     public void isSuccessfulFalseTest() {
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(student, null, "Report text", 0),
+                SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "Report text", 0),
                 new Feedback("That is a feedback"),
                 Set.of(
                         Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of("Text of the feedback"), List.of()),
@@ -40,7 +41,7 @@ public class LearningResultTests {
     @Test
     public void isSuccessfulTrueTest() {
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(student, null, "Report text", 0),
+                SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "Report text", 0),
                 new Feedback("That is a feedback"),
                 Set.of(
                         Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"), List.of()),

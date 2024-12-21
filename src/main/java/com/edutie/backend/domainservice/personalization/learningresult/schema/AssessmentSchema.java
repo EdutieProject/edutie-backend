@@ -1,13 +1,13 @@
 package com.edutie.backend.domainservice.personalization.learningresult.schema;
 
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
-import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
-import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
+import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
+import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,25 +27,23 @@ public class AssessmentSchema implements PersonalizationSchema {
     private Student student;
     private SolutionSubmission solutionSubmission;
     private LearningResourceDefinitionId learningResourceDefinitionId;
+    private String activityText;
 
     /**
      * Creates assessment schema
      *
+     * @param learningResource   learning resource which is the subject of the assessment
      * @param solutionSubmission solution submission
      * @return new Assessment Schema
      */
-    public static AssessmentSchema create(SolutionSubmission solutionSubmission) {
+    public static AssessmentSchema create(LearningResource learningResource, SolutionSubmission solutionSubmission) {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
         assessmentSchema.setStudent(solutionSubmission.getStudent());
         assessmentSchema.setSolutionSubmission(solutionSubmission);
-        assessmentSchema.setQualifiedRequirements(solutionSubmission.getLearningResource().getQualifiedRequirements());
-        assessmentSchema.setLearningResourceDefinitionId(solutionSubmission.getLearningResource().getDefinitionId());
+        assessmentSchema.setQualifiedRequirements(learningResource.getQualifiedRequirements());
+        assessmentSchema.setLearningResourceDefinitionId(learningResource.getDefinitionId());
+        assessmentSchema.setActivityText(learningResource.getActivity().getActivityText());
         return assessmentSchema;
-    }
-
-    @JsonProperty("activityText")
-    public String getActivityText() {
-        return solutionSubmission.getLearningResource().getActivity().getActivityText();
     }
 
     @Override

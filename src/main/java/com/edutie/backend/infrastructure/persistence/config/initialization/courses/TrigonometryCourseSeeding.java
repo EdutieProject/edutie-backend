@@ -1,7 +1,7 @@
 package com.edutie.backend.infrastructure.persistence.config.initialization.courses;
 
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
@@ -26,14 +26,14 @@ public class TrigonometryCourseSeeding {
         Segment segment = Segment.create(lesson.getAuthorEducator(), lesson);
         segment.setName(details.segmentName());
         segment.setSnippetDescription(details.segmentDescription());
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 lesson.getAuthorEducator(),
                 PromptFragment.of(details.learningResourceDefinitionTheoryOverview()),
                 PromptFragment.of(details.learningResourceDefinitionExerciseOverview()),
                 details.learningRequirements()
         );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+        learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
+        segment.setLearningResourceDefinitionId(staticLearningResourceDefinition.getId());
         segmentPersistence.save(segment).throwIfFailure();
         return segment;
     }
@@ -42,14 +42,14 @@ public class TrigonometryCourseSeeding {
         Segment segment = Segment.create(previousSegment.getAuthorEducator(), previousSegment);
         segment.setName(details.segmentName());
         segment.setSnippetDescription(details.segmentDescription());
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 previousSegment.getAuthorEducator(),
                 PromptFragment.of(details.learningResourceDefinitionTheoryOverview()),
                 PromptFragment.of(details.learningResourceDefinitionExerciseOverview()),
                 details.learningRequirements()
         );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
-        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+        learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
+        segment.setLearningResourceDefinitionId(staticLearningResourceDefinition.getId());
         segmentPersistence.save(segment).throwIfFailure();
         return segment;
     }

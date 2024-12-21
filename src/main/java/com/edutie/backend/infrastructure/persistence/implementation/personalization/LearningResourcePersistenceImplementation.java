@@ -3,7 +3,7 @@ package com.edutie.backend.infrastructure.persistence.implementation.personaliza
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.infrastructure.persistence.PersistenceError;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResourceDefinitionRepository;
@@ -52,8 +52,8 @@ public class LearningResourcePersistenceImplementation implements LearningResour
 	@Override
 	public WrapperResult<List<LearningResource>> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId) {
 		try {
-			Optional<LearningResourceDefinition> definitionOptionalWrapper = learningResourceDefinitionRepository.findById(learningResourceDefinitionId);
-			return definitionOptionalWrapper.map(definition -> WrapperResult.successWrapper(learningResourceRepository.getAllByDefinitionId(learningResourceDefinitionId))).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(LearningResourceDefinition.class)));
+			Optional<StaticLearningResourceDefinition> definitionOptionalWrapper = learningResourceDefinitionRepository.findById(learningResourceDefinitionId);
+			return definitionOptionalWrapper.map(definition -> WrapperResult.successWrapper(learningResourceRepository.getAllByDefinitionId(learningResourceDefinitionId))).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(StaticLearningResourceDefinition.class)));
 		} catch (Exception ex) {
 			return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
 		}

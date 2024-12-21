@@ -11,7 +11,7 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -91,15 +91,15 @@ public class LearningResourceCommandHandlersTests {
     public void createLearningResourceForEmptyLearningHistory() {
         LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
         learningRequirementPersistence.save(learningRequirement).throwIfFailure();
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.of("Theory description from definition"),
                 PromptFragment.of("Exercise description from definition"),
                 Set.of(learningRequirement)
         );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
 
-        CreateLearningResourceCommand command = new CreateLearningResourceCommand().learningResourceDefinitionId(learningResourceDefinition.getId()).studentUserId(mockUser.getUserId());
+        CreateLearningResourceCommand command = new CreateLearningResourceCommand().learningResourceDefinitionId(staticLearningResourceDefinition.getId()).studentUserId(mockUser.getUserId());
         WrapperResult<LearningResource> learningResourceWrapperResult = createLearningResourceCommandHandler.handle(command).throwIfFailure();
 
         Assertions.assertTrue(learningResourceWrapperResult.isSuccess());
@@ -113,7 +113,7 @@ public class LearningResourceCommandHandlersTests {
         // Create a resource definition
         LearningRequirement relatedRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
         learningRequirementPersistence.save(relatedRequirement);
-        LearningResourceDefinition definition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition definition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.of("Theory DESC!"),
                 PromptFragment.of("Exercise DESC!"),

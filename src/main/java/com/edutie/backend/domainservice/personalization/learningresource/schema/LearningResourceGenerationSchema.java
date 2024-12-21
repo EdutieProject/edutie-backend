@@ -35,9 +35,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     @JsonIgnore
     private Student studentMetadata;
     @JsonIgnore
-    private LearningResourceDefinitionId learningResourceDefinitionId;
-    @JsonIgnore
-    private DefinitionType learningResourceDefinitionType;
+    private LearningResourceDefinitionBase learningResourceDefinition;
 
     /**
      * Creation method for learning resource generation schema
@@ -51,15 +49,15 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     public static LearningResourceGenerationSchema create(
             Student student,
             LearningResultPersistence learningResultPersistence,
-            LearningResourceDefinitionBase definition, Set<PersonalizationRule<?>> personalizationRules
+            LearningResourceDefinitionBase definition,
+            Set<PersonalizationRule<?>> personalizationRules
     ) {
         LearningResourceGenerationSchema generationSchema = new LearningResourceGenerationSchema();
-        generationSchema.setLearningResourceDefinitionType(definition.getDefinitionType());
+        generationSchema.setLearningResourceDefinition(definition);
         generationSchema.setStudentMetadata(student);
         generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition(definition));
         generationSchema.qualifyElementalRequirements(definition.getLearningRequirements(), student, learningResultPersistence);
         generationSchema.setPersonalizationRules(personalizationRules);
-        generationSchema.setLearningResourceDefinitionId(definition.getId());
         return generationSchema;
     }
 

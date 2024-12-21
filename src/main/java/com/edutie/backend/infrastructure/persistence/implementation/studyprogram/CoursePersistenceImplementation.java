@@ -2,7 +2,8 @@ package com.edutie.backend.infrastructure.persistence.implementation.studyprogra
 
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.identities.EducatorId;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -28,6 +29,7 @@ public class CoursePersistenceImplementation implements CoursePersistence {
     private final SegmentRepository segmentRepository;
     private final ScienceRepository scienceRepository;
     private final EducatorRepository educatorRepository;
+    private final LearningResourceRepository learningResourceRepository;
 
     /**
      * Override this to provide repository for default methods
@@ -90,15 +92,17 @@ public class CoursePersistenceImplementation implements CoursePersistence {
     /**
      * Finds a course that utilizes the learning resource definition of given id.
      *
-     * @param learningResourceDefinitionId learning resource definition id
+     * @param learningResourceId learning resource definition id
      * @return Wrapper result of Course
      */
     @Override
-    public WrapperResult<Course> getByLearningResourceDefinitionId(LearningResourceDefinitionId learningResourceDefinitionId) {
+    public WrapperResult<Course> findByRelatedLearningResourceId(LearningResourceId learningResourceId) {
         try {
-            return courseRepository.findCourseByLearningResourceDefinitionId(learningResourceDefinitionId)
-                    .map(WrapperResult::successWrapper)
-                    .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Course.class)));
+            Optional<LearningResource> learningResource = learningResourceRepository.findById(learningResourceId);
+            return learningResource.map(resource -> courseRepository.findCourseByLearningResourceDefinitionId(resource.getDefinitionId())
+                            .map(WrapperResult::successWrapper)
+                            .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Course.class))))
+                    .orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(LearningResource.class)));
         } catch (Exception exception) {
             return Result.failureWrapper(PersistenceError.exceptionEncountered(exception));
         }

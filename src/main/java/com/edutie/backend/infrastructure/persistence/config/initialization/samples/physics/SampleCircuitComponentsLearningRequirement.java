@@ -5,13 +5,16 @@ import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SampleCircuitComponentsLearningRequirement {
     private static boolean isSeeded = false;
     private static LearningRequirement requirement = null;
 
     public static void seedInDatabase(Educator educator, LearningRequirementPersistence learningRequirementPersistence) {
         if (learningRequirementPersistence.getRepository().findAll().stream().anyMatch(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME))) {
+            log.info("Learning requirement {} already present in the DB, omitting seeding", LEARNING_REQUIREMENT_NAME);
             requirement = learningRequirementPersistence.getRepository().findAll().stream().filter(o -> o.getName().equals(LEARNING_REQUIREMENT_NAME)).findFirst().get();
             isSeeded = true;
             return;

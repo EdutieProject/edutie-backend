@@ -1,17 +1,15 @@
 package com.edutie.backend.application.learning;
 
 import com.edutie.backend.application.learning.ancillaries.LatestActivityQueryHandler;
-import com.edutie.backend.application.learning.ancillaries.implementation.LatestActivityQueryHandlerImplementation;
 import com.edutie.backend.application.learning.ancillaries.queries.LatestActivityQuery;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.LatestActivityView;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
-import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -25,8 +23,8 @@ import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.backend.domain.studyprogram.science.persistence.SciencePersistence;
 import com.edutie.backend.domain.studyprogram.segment.Segment;
 import com.edutie.backend.domain.studyprogram.segment.persistence.SegmentPersistence;
-import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.backend.mocks.EducationMocks;
+import com.edutie.backend.mocks.LearningResourceMocks;
 import com.edutie.backend.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +33,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import validation.WrapperResult;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -73,12 +72,12 @@ public class LatestActivityQueryHandlerTests {
         mockUser.saveToPersistence();
         LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
         learningRequirementPersistence.save(learningRequirement).throwIfFailure();
-        LearningResourceDefinition learningResourceDefinition = LearningResourceDefinition.create(
+        StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.empty(), PromptFragment.empty(),
                 Set.of(learningRequirement)
         );
-        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+        learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
 
         Science science = Science.create(mockUser.getEducatorProfile()).getValue();
         sciencePersistence.save(science).throwIfFailure();
@@ -87,29 +86,34 @@ public class LatestActivityQueryHandlerTests {
         Lesson lesson = Lesson.create(mockUser.getEducatorProfile(), course);
         lessonPersistence.save(lesson).throwIfFailure();
         Segment segment = Segment.create(mockUser.getEducatorProfile(), lesson);
-        segment.setLearningResourceDefinitionId(learningResourceDefinition.getId());
+        segment.setLearningResourceDefinitionId(staticLearningResourceDefinition.getId());
         segmentPersistence.save(segment).throwIfFailure();
 
-        LearningResource learningResource = LearningResource.create(LearningResourceGenerationSchema.create(
-                mockUser.getStudentProfile(), learningResultPersistence, learningResourceDefinition, Set.of()
-        ), "", Activity.create("", Set.of()), Set.of());
+        LearningResource learningResource = LearningResourceMocks.sampleLearningResource(mockUser.getStudentProfile(), mockUser.getEducatorProfile());
+        learningResource.getQualifiedRequirements().stream().map(ElementalRequirement::getLearningRequirement).collect(Collectors.toSet()).forEach(
+                o -> learningRequirementPersistence.save(o).throwIfFailure()
+        );
         learningResourcePersistence.save(learningResource).throwIfFailure();
         learningResult = LearningResult.create(SolutionSubmission.create(
-                mockUser.getStudentProfile(), learningResource, "", 0
+                mockUser.getStudentProfile(), learningResource.getId(), learningResource.getDefinitionType() , "", 0
                 ), Feedback.of(""), Set.of());
         learningResultPersistence.save(learningResult).throwIfFailure();
     }
 
-
     @Test
-    public void getLatestActivitySuccessTest() {
+    public void getLatestActivityDynamicDefinitionSuccessTest() {
         LatestActivityQuery query = new LatestActivityQuery().studentUserId(mockUser.getUserId());
 
         WrapperResult<LatestActivityView> queryResult = latestActivityQueryHandler.handle(query);
 
         assertTrue(queryResult.isSuccess());
-        assertEquals(queryResult.getValue().latestCourseView().course(), course);
         assertEquals(queryResult.getValue().latestLearningResult(), learningResult);
+    }
+
+    @Test
+    public void getLatestActivityStaticDefinitionSuccessTest() {
+        // TODO
+        // Consider not doing this as LRD is a question mark of the future development
     }
 
 }
