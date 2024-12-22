@@ -6,6 +6,7 @@ import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.valueobjects.DynamicContext;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.persistence.StudentPersistence;
 import com.edutie.backend.domainservice.personalization.learningrequirement.DynamicLearningRequirementSelectionService;
@@ -27,10 +28,10 @@ public class CreateDynamicLearningResourceCommandHandlerImplementation implement
 
     @Override
     public WrapperResult<LearningResource> handle(CreateDynamicLearningResourceCommand command) {
-        log.info("Creating dynamic learning resource for student user of id {} using a random fact:\n\"{}\"", command.studentUserId(), command.context());
+        log.info("Creating dynamic learning resource for student user of id {} using a random fact:\n\"{}\"", command.studentUserId(), command.contextText());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
         DynamicLearningResourceDefinition definition = DynamicLearningResourceDefinition.create(
-                PromptFragment.of(command.context()),
+                new DynamicContext(PromptFragment.of(command.contextText()), command.contextType()),
                 learningRequirementSelectionService.selectRequirementsForStudent(student).getValue()
         );
         LearningResource learningResource = learningResourcePersonalizationService.personalize(definition, student).getValue();

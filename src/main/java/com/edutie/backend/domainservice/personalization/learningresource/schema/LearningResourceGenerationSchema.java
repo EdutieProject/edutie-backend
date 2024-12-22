@@ -1,6 +1,5 @@
 package com.edutie.backend.domainservice.personalization.learningresource.schema;
 
-import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
@@ -9,6 +8,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.Dyna
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.valueobjects.DynamicContext;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -33,7 +33,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private Set<PersonalizationRule<?>> personalizationRules = new HashSet<>();
     private DefinitionType definitionType;
     private AdditionalInstructions additionalInstructions;
-    private PromptFragment dynamicContext;
+    private DynamicContext dynamicContext;
     @JsonIgnore
     private Student studentMetadata;
     @JsonIgnore

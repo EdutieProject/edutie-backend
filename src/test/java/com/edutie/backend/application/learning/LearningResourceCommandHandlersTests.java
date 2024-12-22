@@ -132,7 +132,7 @@ public class LearningResourceCommandHandlersTests {
     public void createRandomFactDynamicLearningResourceTest() {
         CreateDynamicLearningResourceCommand command = new CreateDynamicLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())
-                .context("A tortoise can weigh as much as 100 kilogrammes");
+                .contextText("A tortoise can weigh as much as 100 kilogrammes");
 
         WrapperResult<LearningResource> learningResourceWrapper = createDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
 

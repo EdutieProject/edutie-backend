@@ -9,6 +9,8 @@ import com.edutie.backend.domain.personalization.learningresource.entities.Theor
 import com.edutie.backend.domain.personalization.learningresource.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DynamicContextType;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.valueobjects.DynamicContext;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domainservice.personalization.learningresource.schema.LearningResourceGenerationSchema;
@@ -38,7 +40,7 @@ public class LearningResourceMocks {
     public static LearningResource sampleLearningResource(Student student, Educator educator) {
         LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(educator);
         DynamicLearningResourceDefinition learningResourceDefinition = DynamicLearningResourceDefinition.create(
-                PromptFragment.of("Czy wiesz, że sok z brzozy, zwany bzowiną, jest od wieków wykorzystywany w medycynie naturalnej? Jest bogaty w witaminy i minerały!"),
+                new DynamicContext(PromptFragment.of("Czy wiesz, że sok z brzozy, zwany bzowiną, jest od wieków wykorzystywany w medycynie naturalnej? Jest bogaty w witaminy i minerały!"), DynamicContextType.RANDOM_FACT),
                 Set.of(learningRequirement)
         );
 
