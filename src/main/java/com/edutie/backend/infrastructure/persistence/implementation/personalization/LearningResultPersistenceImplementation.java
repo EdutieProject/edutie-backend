@@ -121,7 +121,7 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
             Optional<Student> student = studentRepository.findById(studentId);
             return student
                     .map(value -> WrapperResult.successWrapper(learningResultRepository
-                            .findLearningResultsBySolutionSubmissionLearningResourceDefinitionIdAndStudent(learningResourceDefinitionId, value)))
+                            .findLearningResultsByDefinitionIdsAndStudent(value, Set.of(learningResourceDefinitionId))))
                     .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
@@ -143,7 +143,7 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
             List<LearningRequirement> learningRequirements = learningRequirementRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
             return WrapperResult.successWrapper(learningRequirements.stream().flatMap(o ->
-                    learningResultRepository.findLearningResultsByLearningRequirement(student.get(), o).stream()
+                    learningResultRepository.findStudentsLearningResultsByLearningRequirement(student.get(), o).stream()
             ).toList());
         } catch (Exception ex) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));

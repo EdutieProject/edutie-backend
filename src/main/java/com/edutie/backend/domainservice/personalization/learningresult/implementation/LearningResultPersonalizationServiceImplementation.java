@@ -1,5 +1,6 @@
 package com.edutie.backend.domainservice.personalization.learningresult.implementation;
 
+import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -14,8 +15,14 @@ import validation.WrapperResult;
 @Component
 public class LearningResultPersonalizationServiceImplementation implements LearningResultPersonalizationService {
     private final LargeLanguageModelService largeLanguageModelService;
+    private final LearningResourcePersistence learningResourcePersistence;
+
     @Override
     public WrapperResult<LearningResult> personalize(SolutionSubmission solutionSubmission, Student student) {
-        return largeLanguageModelService.generateLearningResult(AssessmentSchema.create(solutionSubmission));
+        AssessmentSchema schema = AssessmentSchema.create(
+                learningResourcePersistence.getById(solutionSubmission.getLearningResourceId()).getValue(),
+                solutionSubmission
+        );
+        return largeLanguageModelService.generateLearningResult(schema);
     }
 }

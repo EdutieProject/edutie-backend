@@ -9,9 +9,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.enti
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,20 +23,25 @@ import java.util.Set;
  * the learning requirements are imperative regarding the LR creation.
  */
 @Getter
+@Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
-public class LearningResourceDefinition extends LearningResourceDefinitionBase implements EducatorCreated {
+public class StaticLearningResourceDefinition extends LearningResourceDefinitionBase implements EducatorCreated {
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
     private Educator authorEducator;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    protected ActivityDetails activityDetails;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    protected TheoryDetails theoryDetails;
 
-    public static LearningResourceDefinition create(
+    public static StaticLearningResourceDefinition create(
             Educator educator,
             TheoryDetails theoryDetails,
             ActivityDetails activityDetails,
             Set<LearningRequirement> learningRequirements
     ) {
-        LearningResourceDefinition lrd = new LearningResourceDefinition();
+        StaticLearningResourceDefinition lrd = new StaticLearningResourceDefinition();
         lrd.setId(new LearningResourceDefinitionId());
         lrd.setAuthorEducator(educator);
         lrd.setCreatedBy(educator.getOwnerUserId());
@@ -57,7 +60,7 @@ public class LearningResourceDefinition extends LearningResourceDefinitionBase i
      * @param learningRequirements learning requirements
      * @return new Learning Resource Definition
      */
-    public static LearningResourceDefinition create(
+    public static StaticLearningResourceDefinition create(
             Educator educator,
             PromptFragment theoryDescription,
             PromptFragment exerciseDescription,

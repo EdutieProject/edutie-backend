@@ -4,7 +4,7 @@ import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.management.learningresourcedefinition.CreateLearningResourceDefinitionCommandHandler;
 import com.edutie.backend.application.management.learningresourcedefinition.commands.CreateLearningResourceDefinitionCommand;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.infrastructure.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,8 +26,8 @@ public class LearningResourceDefinitionManagementController {
 
     @PostMapping("/create")
     @Operation(description = "Creates learning resource definition. May be performed only by an educator")
-    public ResponseEntity<ApiResult<LearningResourceDefinition>> createLearningResourceDefinition(Authentication authentication, @RequestBody CreateLearningResourceDefinitionCommand command) {
-        return new GenericRequestHandler<LearningResourceDefinition>()
+    public ResponseEntity<ApiResult<StaticLearningResourceDefinition>> createLearningResourceDefinition(Authentication authentication, @RequestBody CreateLearningResourceDefinitionCommand command) {
+        return new GenericRequestHandler<StaticLearningResourceDefinition>()
                 .authenticate(authentication)
                 .authorize(educatorAuthorization)
                 .handle(userId -> createLearningResourceDefinitionCommandHandler.handle(

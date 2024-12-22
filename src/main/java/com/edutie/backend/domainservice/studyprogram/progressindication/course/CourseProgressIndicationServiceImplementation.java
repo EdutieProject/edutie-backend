@@ -1,5 +1,6 @@
 package com.edutie.backend.domainservice.studyprogram.progressindication.course;
 
+import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -20,7 +21,15 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class CourseProgressIndicationServiceImplementation implements CourseProgressIndicationService {
+    private final LearningResourcePersistence learningResourcePersistence;
     private final LearningResultPersistence learningResultPersistence;
+
+    private boolean resultsContainResultOfSameAssociatedDefinition(List<LearningResult> learningResults, LearningResult consideredResult) {
+        return learningResults.stream().anyMatch(
+                o -> learningResourcePersistence.getById(o.getAssociatedLearningResourceId()).getValue().getDefinitionId()
+                        .equals(learningResourcePersistence.getById(consideredResult.getAssociatedLearningResourceId()).getValue().getDefinitionId()
+                        ));
+    }
 
     @Override
     public WrapperResult<Double> getCourseProgressFactor(Course course, Student student) {
@@ -30,7 +39,7 @@ public class CourseProgressIndicationServiceImplementation implements CourseProg
                 .getLearningResultsOfStudentByLearningResourceDefinitionIds(student.getId(), learningResourceDefinitionIds).getValue();
         List<LearningResult> passedDistinctResults = new ArrayList<>();
         for (LearningResult learningResult : studentsLearningResultsFromCourse) {
-            if (passedDistinctResults.stream().anyMatch(o -> o.getLearningResourceDefinitionId().equals(learningResult.getLearningResourceDefinitionId()))) {
+            if (resultsContainResultOfSameAssociatedDefinition(passedDistinctResults, learningResult)) {
                 continue;
             }
             if (learningResult.isSuccessful())

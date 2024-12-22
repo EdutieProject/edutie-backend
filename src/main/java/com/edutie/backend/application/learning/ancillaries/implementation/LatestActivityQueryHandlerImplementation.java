@@ -3,6 +3,7 @@ package com.edutie.backend.application.learning.ancillaries.implementation;
 import com.edutie.backend.application.learning.ancillaries.LatestActivityQueryHandler;
 import com.edutie.backend.application.learning.ancillaries.queries.LatestActivityQuery;
 import com.edutie.backend.application.learning.ancillaries.viewmodels.LatestActivityView;
+import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
@@ -21,6 +22,7 @@ import validation.WrapperResult;
 @RequiredArgsConstructor
 public class LatestActivityQueryHandlerImplementation implements LatestActivityQueryHandler {
     private final LearningResultPersistence learningResultPersistence;
+    private final LearningResourcePersistence learningResourcePersistence;
     private final StudentPersistence studentPersistence;
     private final CoursePersistence coursePersistence;
     private final CourseProgressIndicationService courseProgressIndicationService;
@@ -30,9 +32,10 @@ public class LatestActivityQueryHandlerImplementation implements LatestActivityQ
         log.info("Retrieving latest activity for student user of id {}", query.studentUserId());
         Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         LearningResult latestResult = student.getLatestLearningResult(learningResultPersistence).getValue();
-        if (latestResult.getLearningResourceDefinitionType().equals(DefinitionType.DYNAMIC))
+        if (learningResourcePersistence.getById(latestResult.getSolutionSubmission().getLearningResourceId()).getValue()
+                .getDefinitionType().equals(DefinitionType.DYNAMIC))
             return WrapperResult.successWrapper(new LatestActivityView(latestResult, null));
-        Course latestCourse = latestResult.getAssociatedCourse(coursePersistence);
+        Course latestCourse = coursePersistence.findByRelatedLearningResourceId(latestResult.getAssociatedLearningResourceId()).getValue();
         double courseProgressIndicator = courseProgressIndicationService.getCourseProgressFactor(latestCourse, student).getValue();
         return WrapperResult.successWrapper(new LatestActivityView(
                 latestResult,

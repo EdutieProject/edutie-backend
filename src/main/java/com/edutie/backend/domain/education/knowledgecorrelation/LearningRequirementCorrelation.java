@@ -2,6 +2,7 @@ package com.edutie.backend.domain.education.knowledgecorrelation;
 
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,10 @@ public class LearningRequirementCorrelation {
     private int correlationFactor;
 
     @JsonCreator
-    public LearningRequirementCorrelation(LearningRequirementId sourceLearningRequirementId, LearningRequirementId correlatedLearningRequirementId, int correlationFactor) {
+    public LearningRequirementCorrelation(
+            @JsonProperty("sourceLearningRequirementId") LearningRequirementId sourceLearningRequirementId,
+            @JsonProperty("correlatedLearningRequirementId") LearningRequirementId correlatedLearningRequirementId,
+            @JsonProperty("correlationFactor") int correlationFactor) {
         this.sourceLearningRequirementId = sourceLearningRequirementId;
         this.correlatedLearningRequirementId = correlatedLearningRequirementId;
         this.correlationFactor = correlationFactor;

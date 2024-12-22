@@ -3,6 +3,7 @@ package com.edutie.backend.domain.personalization;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.strategy.RecommendationStrategy;
+import com.edutie.backend.infrastructure.external.knowledgemap.KnowledgeMapService;
 import com.edutie.backend.mocks.EducationMocks;
 import com.edutie.backend.mocks.ExternalServiceMocks;
 import com.edutie.backend.mocks.LearningHistoryMocker;
@@ -22,6 +23,8 @@ public class RecommendationStrategyTests {
     MockUser mockUser;
     RecommendationStrategy recommendationStrategy;
     LearningRequirement learningRequirement;
+    @Autowired
+    KnowledgeMapService knowledgeMapService;
 
     @BeforeEach
     public void testSetup() {
@@ -31,7 +34,7 @@ public class RecommendationStrategyTests {
     @Test
     public void recommendationStrategyQualifiesTest() {
         recommendationStrategy = new RecommendationStrategy(
-                ExternalServiceMocks.knowledgeMapServiceMock(),
+                knowledgeMapService,
                 LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningRequirement, Grade.of(5))
         );
 

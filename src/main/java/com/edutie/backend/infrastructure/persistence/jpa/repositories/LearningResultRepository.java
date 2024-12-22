@@ -19,21 +19,19 @@ public interface LearningResultRepository extends JpaRepository<LearningResult, 
 
     List<LearningResult> findLearningResultsByStudentAndCreatedOnAfterOrderByCreatedOnDesc(Student student, LocalDateTime localDate, Limit limit);
 
-    List<LearningResult> findLearningResultsBySolutionSubmissionLearningResourceDefinitionIdAndStudent(LearningResourceDefinitionId solutionSubmission_learningResource_definitionId, Student student);
-
     @Query("SELECT lr FROM LearningResult lr " +
             "JOIN lr.solutionSubmission ss " +
-            "JOIN ss.learningResource lrsc " +
+            "JOIN LearningResource lrsc ON lrsc.id = ss.learningResourceId " +
             "JOIN lrsc.qualifiedRequirements elReqs " +
             "JOIN elReqs.learningRequirement lreq " +
             "WHERE lreq = :learningRequirement " +
             "AND lr.student = :student"
     )
-    List<LearningResult> findLearningResultsByLearningRequirement(@Param("student") Student student, @Param("learningRequirement") LearningRequirement learningRequirement);
+    List<LearningResult> findStudentsLearningResultsByLearningRequirement(@Param("student") Student student, @Param("learningRequirement") LearningRequirement learningRequirement);
 
     @Query("SELECT lr FROM LearningResult lr " +
             "JOIN lr.solutionSubmission ss " +
-            "JOIN ss.learningResource lrsc " +
+            "JOIN LearningResource lrsc ON lrsc.id = ss.learningResourceId " +
             "WHERE lrsc.definitionId IN :learningResourceDefinitionIds " +
             "AND lr.student = :student"
     )

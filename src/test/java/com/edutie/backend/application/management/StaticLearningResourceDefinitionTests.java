@@ -7,7 +7,7 @@ import com.edutie.backend.domain.administration.administrator.Administrator;
 import com.edutie.backend.domain.administration.administrator.persistence.AdministratorPersistence;
 import com.edutie.backend.domain.education.educator.Educator;
 import com.edutie.backend.domain.education.educator.persistence.EducatorPersistence;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.LearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import validation.WrapperResult;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 
 @SpringBootTest
-public class LearningResourceDefinitionTests {
+public class StaticLearningResourceDefinitionTests {
 	private final UserId userId = new UserId();
 	private final Administrator administrator = Administrator.create(userId);
 	private final Educator educator = Educator.create(userId, administrator);
@@ -39,11 +39,11 @@ public class LearningResourceDefinitionTests {
 				.exerciseDescription("LRD exercise descriptor")
 				.educatorUserId(userId);
 
-		WrapperResult<LearningResourceDefinition> wrapperResult = createLearningResourceDefinitionCommandHandler.handle(command);
+		WrapperResult<StaticLearningResourceDefinition> wrapperResult = createLearningResourceDefinitionCommandHandler.handle(command);
 
 		assert wrapperResult.isSuccess();
-		LearningResourceDefinition learningResourceDefinition = wrapperResult.getValue();
-		assert learningResourceDefinition.getLearningRequirements().isEmpty();
-		assert learningResourceDefinition.getActivityDetails().getExerciseDescription().text().equals("LRD exercise descriptor");
+		StaticLearningResourceDefinition staticLearningResourceDefinition = wrapperResult.getValue();
+		assert staticLearningResourceDefinition.getLearningRequirements().isEmpty();
+		assert staticLearningResourceDefinition.getActivityDetails().getExerciseDescription().text().equals("LRD exercise descriptor");
 	}
 }
