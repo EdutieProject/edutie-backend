@@ -1,11 +1,11 @@
 package com.edutie.backend.application.learning;
 
 import com.edutie.backend.application.learning.learningresource.CreateLearningResourceCommandHandler;
-import com.edutie.backend.application.learning.learningresource.CreateRandomFactDynamicLearningResourceCommandHandler;
+import com.edutie.backend.application.learning.learningresource.CreateDynamicLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
-import com.edutie.backend.application.learning.learningresource.commands.CreateRandomFactDynamicLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.implementation.CreateLearningResourceCommandHandlerImplementation;
-import com.edutie.backend.application.learning.learningresource.implementation.CreateRandomFactDynamicLearningResourceCommandHandlerImplementation;
+import com.edutie.backend.application.learning.learningresource.implementation.CreateDynamicLearningResourceCommandHandlerImplementation;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
@@ -56,7 +56,7 @@ public class LearningResourceCommandHandlersTests {
     @Autowired
     CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
     @Autowired
-    CreateRandomFactDynamicLearningResourceCommandHandler createRandomFactDynamicLearningResourceCommandHandler;
+    CreateDynamicLearningResourceCommandHandler createDynamicLearningResourceCommandHandler;
 
 
 
@@ -78,7 +78,7 @@ public class LearningResourceCommandHandlersTests {
         // save the learning req for mocking purpose
         LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
         learningRequirementPersistence.save(learningRequirement).throwIfFailure();
-        createRandomFactDynamicLearningResourceCommandHandler = new CreateRandomFactDynamicLearningResourceCommandHandlerImplementation(
+        createDynamicLearningResourceCommandHandler = new CreateDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
                 (Student student) -> WrapperResult.successWrapper(Set.of(learningRequirement)),
                 learningResourcePersonalizationService,
@@ -130,11 +130,11 @@ public class LearningResourceCommandHandlersTests {
 
     @Test
     public void createRandomFactDynamicLearningResourceTest() {
-        CreateRandomFactDynamicLearningResourceCommand command = new CreateRandomFactDynamicLearningResourceCommand()
+        CreateDynamicLearningResourceCommand command = new CreateDynamicLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())
-                .randomFact("A tortoise can weigh as much as 100 kilogrammes");
+                .contextText("A tortoise can weigh as much as 100 kilogrammes");
 
-        WrapperResult<LearningResource> learningResourceWrapper = createRandomFactDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
+        WrapperResult<LearningResource> learningResourceWrapper = createDynamicLearningResourceCommandHandler.handle(command).throwIfFailure();
 
         Assertions.assertTrue(learningResourceWrapper.isSuccess());
         Assertions.assertEquals(DefinitionType.DYNAMIC, learningResourceWrapper.getValue().getDefinitionType());

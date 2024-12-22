@@ -1,35 +1,32 @@
 package com.edutie.backend.domain.personalization.learningresourcedefinition;
 
-import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.TheoryDetails;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.valueobjects.DynamicContext;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
+@Setter(AccessLevel.PRIVATE)
+@Getter
 public class DynamicLearningResourceDefinition extends LearningResourceDefinitionBase {
+    private DynamicContext context;
 
     /**
      * Creates a random-fact dynamic LRD
      *
-     * @param randomFact           random fact as string
+     * @param context              random fact as string
      * @param learningRequirements learning requirement set
      * @return Dynamic Learning Resource Definition
      */
-    public static DynamicLearningResourceDefinition createRandomFact(String randomFact, Set<LearningRequirement> learningRequirements) {
+    public static DynamicLearningResourceDefinition create(DynamicContext context, Set<LearningRequirement> learningRequirements) {
         DynamicLearningResourceDefinition dynamicLearningResourceDefinition = new DynamicLearningResourceDefinition();
         dynamicLearningResourceDefinition.setId(new LearningResourceDefinitionId());
-        dynamicLearningResourceDefinition.setTheoryDetails(TheoryDetails.create(PromptFragment.empty(), PromptFragment.empty()));
-        dynamicLearningResourceDefinition.setActivityDetails(ActivityDetails.create(PromptFragment.of(String.format("""
-                        Exercise must be related to the provided random fact:
-                        <random-fact>%s</random-fact>
-                        Exercise should utilize the provided data and utilize it to create an exercise in a creative way.
-                        All problems in this exercise should refer to the random fact and similar topics.
-                        """, randomFact)),
-                PromptFragment.empty()));
+        dynamicLearningResourceDefinition.setContext(context); // adjust when other dynamic types are introduced
         learningRequirements.forEach(dynamicLearningResourceDefinition::addLearningRequirement);
         return dynamicLearningResourceDefinition;
     }

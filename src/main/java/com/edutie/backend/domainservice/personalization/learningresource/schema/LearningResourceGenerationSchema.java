@@ -4,10 +4,11 @@ import com.edutie.backend.domain.education.learningrequirement.LearningRequireme
 import com.edutie.backend.domain.education.learningrequirement.entities.ElementalRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.common.PersonalizationSchema;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.base.LearningResourceDefinitionBase;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.valueobjects.DynamicContext;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.strategy.base.PersonalizationRule;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -18,7 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +31,9 @@ import java.util.stream.Collectors;
 public class LearningResourceGenerationSchema implements PersonalizationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     private Set<PersonalizationRule<?>> personalizationRules = new HashSet<>();
+    private DefinitionType definitionType;
     private AdditionalInstructions additionalInstructions;
+    private DynamicContext dynamicContext;
     @JsonIgnore
     private Student studentMetadata;
     @JsonIgnore
@@ -55,7 +57,11 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
         LearningResourceGenerationSchema generationSchema = new LearningResourceGenerationSchema();
         generationSchema.setLearningResourceDefinition(definition);
         generationSchema.setStudentMetadata(student);
-        generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition(definition));
+        generationSchema.setDefinitionType(definition.getDefinitionType());
+        if (definition.getDefinitionType().equals(DefinitionType.STATIC))
+            generationSchema.setAdditionalInstructions(AdditionalInstructions.fromDefinition((StaticLearningResourceDefinition) definition));
+        if (definition.getDefinitionType().equals(DefinitionType.DYNAMIC))
+            generationSchema.setDynamicContext(((DynamicLearningResourceDefinition) definition).getContext());
         generationSchema.qualifyElementalRequirements(definition.getLearningRequirements(), student, learningResultPersistence);
         generationSchema.setPersonalizationRules(personalizationRules);
         return generationSchema;

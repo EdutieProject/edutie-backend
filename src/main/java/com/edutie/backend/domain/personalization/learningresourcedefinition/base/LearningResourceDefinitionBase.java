@@ -27,14 +27,10 @@ import java.util.stream.Collectors;
 public abstract class LearningResourceDefinitionBase extends AuditableEntityBase<LearningResourceDefinitionId> implements AbsoluteDefinition {
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     protected final Set<LearningRequirement> learningRequirements = new HashSet<>();
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    protected ActivityDetails activityDetails;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    protected TheoryDetails theoryDetails;
 
     /**
      * Retrieves the definition type.
-     * @return
+     * @return definition type
      */
     @JsonProperty("definitionType")
     public abstract DefinitionType getDefinitionType();
