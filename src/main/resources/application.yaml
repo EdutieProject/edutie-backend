@@ -18,15 +18,22 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${EDUTIE_DB_MODE}
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: ${TOKEN_ISSUER}
+  # ---- flyway ----
+  flyway:
+    enabled: ${EDUTIE_FLYWAY_ENABLE}
+    user: ${EDUTIE_DB_USER}
+    password: ${EDUTIE_DB_PASSWORD}
+    url: jdbc:postgresql://${EDUTIE_DB_HOST}:${EDUTIE_DB_PORT}/${EDUTIE_DB_NAME}
+    baseline-on-migrate: true
+    baseline-version: 0
+    encoding:  UTF-16
+
 
 # ==== AUTH CONFIG ====
 authorization-url: ${AUTHORIZATION_URL}
