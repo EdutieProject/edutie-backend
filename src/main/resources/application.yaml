@@ -31,7 +31,7 @@ spring:
     password: ${EDUTIE_DB_PASSWORD}
     url: jdbc:postgresql://${EDUTIE_DB_HOST}:${EDUTIE_DB_PORT}/${EDUTIE_DB_NAME}
     baseline-on-migrate: true
-    baseline-version: 0.5
+    baseline-version: 0
     encoding:  UTF-16
 
 
