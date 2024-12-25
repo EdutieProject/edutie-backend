@@ -26,6 +26,7 @@ import java.util.Set;
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
+@Table(name = "learning_resource_definition")
 public class StaticLearningResourceDefinition extends LearningResourceDefinitionBase implements EducatorCreated {
     @ManyToOne(targetEntity = Educator.class, fetch = FetchType.EAGER)
     @Setter(AccessLevel.PRIVATE)
