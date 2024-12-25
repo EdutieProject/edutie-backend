@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.edutie</groupId>
     <artifactId>edutie-backend</artifactId>
-    <version>0.2.8-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
     <name>edutie-backend</name>
     <description>edutie-backend</description>
     <properties>
@@ -33,6 +33,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>com.c4-soft.springaddons</groupId>
