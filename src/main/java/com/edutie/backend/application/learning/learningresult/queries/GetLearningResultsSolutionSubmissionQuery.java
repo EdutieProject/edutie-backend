@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.learningresult.queries;
 
 import com.edutie.backend.application.common.actions.StudentAction;
-import com.edutie.backend.domain.personalization.solutionsubmission.identities.SolutionSubmissionId;
+import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -15,12 +15,12 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class GetSolutionSubmissionByIdQuery extends StudentAction<GetSolutionSubmissionByIdQuery> {
+public final class GetLearningResultsSolutionSubmissionQuery extends StudentAction<GetLearningResultsSolutionSubmissionQuery> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull SolutionSubmissionId solutionSubmissionId;
+    private @NonNull LearningResultId learningResultId;
 
     @Override
-    protected GetSolutionSubmissionByIdQuery getThis() {
+    protected GetLearningResultsSolutionSubmissionQuery getThis() {
         return this;
     }
 }

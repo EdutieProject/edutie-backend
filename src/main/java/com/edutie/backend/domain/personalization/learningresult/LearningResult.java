@@ -72,16 +72,6 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
     }
 
     /**
-     * Getter for serialization purposes
-     *
-     * @return solution submission id
-     */
-    @JsonProperty("solutionSubmissionId")
-    public SolutionSubmissionId getSolutionSubmissionId() {
-        return solutionSubmission.getId();
-    }
-
-    /**
      * Indicates whether learning result is successful based on the grade that needs to be met in order
      * to be successful
      *

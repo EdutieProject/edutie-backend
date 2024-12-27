@@ -7,11 +7,10 @@ import com.edutie.backend.application.learning.learningresult.GetLearningResultB
 import com.edutie.backend.application.learning.learningresult.GetSolutionSubmissionByIdQueryHandler;
 import com.edutie.backend.application.learning.learningresult.commands.AssessSolutionCommand;
 import com.edutie.backend.application.learning.learningresult.queries.GetLearningResultByIdQuery;
-import com.edutie.backend.application.learning.learningresult.queries.GetSolutionSubmissionByIdQuery;
+import com.edutie.backend.application.learning.learningresult.queries.GetLearningResultsSolutionSubmissionQuery;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
 import com.edutie.backend.domain.personalization.learningresult.identities.LearningResultId;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
-import com.edutie.backend.domain.personalization.solutionsubmission.identities.SolutionSubmissionId;
 import com.edutie.backend.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,14 +40,14 @@ public class LearningResultController {
                 );
     }
 
-    @GetMapping("/{solutionSubmissionId}")
-    @Operation(description = "Retrieves a learning result by its identifier")
-    public ResponseEntity<ApiResult<SolutionSubmission>> getLearningResultById(Authentication authentication, @PathVariable SolutionSubmissionId solutionSubmissionId) {
+    @GetMapping("/{learningResultId}/solution-submission")
+    @Operation(description = "Retrieves a learning result's solution submission by learning result's identifier")
+    public ResponseEntity<ApiResult<SolutionSubmission>> getLearningResultsSolutionSubmission(Authentication authentication, @PathVariable LearningResultId learningResultId) {
         return new GenericRequestHandler<SolutionSubmission>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId) -> getSolutionSubmissionByIdQueryHandler.handle(
-                        new GetSolutionSubmissionByIdQuery().studentUserId(userId).solutionSubmissionId(solutionSubmissionId)
+                        new GetLearningResultsSolutionSubmissionQuery().studentUserId(userId).learningResultId(learningResultId)
                 ));
     }
 
