@@ -1,6 +1,7 @@
 # Create learning resource flow
 
-This flow creates personalized, dedicated learning resource for a student using a Learning Resource Definition.
+This flow creates personalized, dedicated learning resource for a student using a Learning Resource Definition. This doc
+also briefly mentions the dynamic case scenario.
 
 ## Sequence diagram
 
@@ -26,13 +27,13 @@ sequenceDiagram
     critical Create Learning Resource Schema
         Domain ->> Persistence: Get Learning History for<br/>elemental requirement qualification
         Persistence ->> Domain: Learning Results
-        Domain ->> Domain: Calculate qualified requirements
-        Domain ->> Persistence: Get Learning History for personalization rules
-        Persistence ->> Domain: Learning Results
-        Domain ->> Knowledge Map: Get Knowledge Correlations for personalization rules
-        Knowledge Map ->> Domain: Knowledge Correlations
-        Domain ->> Domain: Compute personalization rules
-        Domain ->> Domain: Map educator's instructions from LRD
+        Domain ->> Domain: Calculate qualified elemental requirements
+        loop Qualify personalization strategies
+            note right of Domain: Personalization strategies usually<br/>utilize Knowledge map & Learning<br/> History on their own
+            Domain --> Persistence: Fetch Learning History if necessary
+            Domain --> Knowledge Map: Fetch knowledge correlations if necessary
+        end
+        Domain ->> Domain: Map educator's instructions from LRD <br/>or context if dynamic
     end
     Domain ->> LLM: Learning Resource Generation Schema
     LLM ->> Domain: Learning Resource
@@ -60,15 +61,12 @@ and student's learning history for personalization purposes.
 2. Load the data - student profile and LR Definition
 3. Create a Personalized Learning Resource:
    1. Create Learning Resource Generation Schema
-      1. Compute qualified learning requirements using recent learning history:
-         - Mathematical function may be used for difficulty stage computing. F: Grade list -> Percentage of L.Req. qualification
+      1. Compute qualified learning requirements using recent learning history
       2. Create personalization rules:
-         - Get the latest Learning Results. Could be up to week ago or sth like that.
-         - Choose personalization types qualified for the LR. Base the choice on meeting the criteria with the latest Learning Result list.
-         - If more than 2 personalization types are qualified, randomize the choice by choosing only 2 of them.
-         - Search for assessments in the latest learning result list that satisfy the personalization type condition. Let the assessments be of strong correlation with the activity learning requirements.
-         - Create a personalization rule using a Feedback and a personalization context from the given strategy.
-      3. Map Educator Instructions to Additional Instructions 
+         - Get the latest Learning Results.
+         - Choose personalization strategies qualified for the LR. Each strategy has their own qualification criteria and priority.
+         - Strategy qualification creates a personalization rule for the personalization schema (LRGS)
+      3. Map relevant additional context to the schema.
    2. Use LLM to generate LR dto from LRGS
    3. Create Learning Resource from the DTO
 4. Save & return the LR.
