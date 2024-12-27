@@ -3,7 +3,6 @@
 This flow creates personalized, dedicated learning resource for a student using a provided context that is referred in
 the learning resource's contents.
 
-*This flow is overlapping with create learning resource flow. Therefore, this doc is mostly similar to the other one.*
 ## Sequence diagram
 
 ```mermaid
@@ -24,24 +23,11 @@ sequenceDiagram
     Rest API ->> Application: Create dynamic learning resource command
     Application ->> Persistence: Fetch entities
     Persistence ->> Application: Persisted entities:<br/>Student profile
-    Application ->> Domain: Dynamically select Learning Requirements for student
+    Application ->> Domain: Select Learning Requirements for student
+    Domain ->> Domain: Dynamically select Learning Requirements for student
     Domain ->> Application: Selected Learning Requirements
     Application ->> Domain: Create personalized Learning Resource using<br/>dynamic LRD for the provided student
-    critical Create Learning Resource Schema
-        Domain ->> Knowledge Map: Get knowledge correlations
-        Knowledge Map ->> Domain: Knowledge correlations
-        Domain ->> Persistence: Get Learning History for<br/>elemental requirement qualification
-        Persistence ->> Domain: Chosen Learning Results
-        Domain ->> Domain: Calculate qualified requirements
-        Domain ->> Domain: Create Personalized Theory & Activity<br/>details
-        Domain ->> Persistence: Get Learning History for personalization rules
-        Persistence ->> Domain: Chosen Learning Results
-        Domain ->> Domain: Compute personalization rules for every personalized details
-    end
-    Domain ->> LLM: Learning Resource Generation Schema
-    LLM ->> Domain: Learning Resource
-    Domain ->> Application: Learning Resource Wrapper Result
-
+    note over Domain: The LR creation process is same as in CreateLearningResource flow
     Application ->> Persistence: Save Learning Resource
     Persistence ->> Application: Save Result
     Application ->> Rest API: Result wrapping Learning Resource

@@ -5,6 +5,7 @@ import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.learningresource.*;
 import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.commands.CreateSimilarLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
@@ -30,6 +31,7 @@ public class LearningResourceController {
     private final GetLearningResourcesByDefinitionIdQueryHandler getLearningResourcesByDefinitionIdQueryHandler;
     private final CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
     private final CreateDynamicLearningResourceCommandHandler createDynamicLearningResourceCommandHandler;
+    private final CreateSimilarLearningResourceCommandHandler createSimilarLearningResourceCommandHandler;
 
     @GetMapping("/{learningResourceId}")
     @Operation(description = "Retrieves a learning resource by its identifier")
@@ -76,6 +78,21 @@ public class LearningResourceController {
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId) -> createDynamicLearningResourceCommandHandler.handle(
+                        command.studentUserId(userId)
+                ));
+    }
+
+    @PostMapping("/create-similar")
+    @Operation(description = """
+            Creates a similar learning resource to the one which identifier is provided in the command. Works only for
+            resources with static definition.
+            """)
+    public ResponseEntity<ApiResult<LearningResource>> createSimilarLearningResource(Authentication authentication,
+                                                                                               @RequestBody CreateSimilarLearningResourceCommand command) {
+        return new GenericRequestHandler<LearningResource>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle((userId) -> createSimilarLearningResourceCommandHandler.handle(
                         command.studentUserId(userId)
                 ));
     }
