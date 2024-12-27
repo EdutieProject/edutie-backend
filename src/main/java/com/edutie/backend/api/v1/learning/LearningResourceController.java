@@ -3,8 +3,10 @@ package com.edutie.backend.api.v1.learning;
 import com.edutie.backend.api.common.ApiResult;
 import com.edutie.backend.api.common.GenericRequestHandler;
 import com.edutie.backend.application.learning.learningresource.*;
-import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.commands.CreateSimilarLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.queries.GetLatestLearningResourcesForStudentQuery;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
@@ -28,8 +30,10 @@ public class LearningResourceController {
     private final StudentAuthorization studentAuthorization;
     private final GetLearningResourceByIdQueryHandler getLearningResourceByIdQueryHandler;
     private final GetLearningResourcesByDefinitionIdQueryHandler getLearningResourcesByDefinitionIdQueryHandler;
+    private final GetLatestLearningResourcesForStudentQueryHandler getLatestLearningResourcesForStudentQueryHandler;
     private final CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
     private final CreateDynamicLearningResourceCommandHandler createDynamicLearningResourceCommandHandler;
+    private final CreateSimilarLearningResourceCommandHandler createSimilarLearningResourceCommandHandler;
 
     @GetMapping("/{learningResourceId}")
     @Operation(description = "Retrieves a learning resource by its identifier")
@@ -50,6 +54,17 @@ public class LearningResourceController {
                 .authorize(studentAuthorization)
                 .handle((userId) -> getLearningResourcesByDefinitionIdQueryHandler.handle(
                         new GetLearningResourcesByDefinitionIdQuery().studentUserId(userId).learningResourceDefinitionId(definitionId)
+                ));
+    }
+
+    @GetMapping("/get-latest")
+    @Operation(description = "Retrieves latest learning resources for student invoking the flow")
+    public ResponseEntity<ApiResult<List<LearningResource>>> getLatestLearningResourcesForStudent(Authentication authentication) {
+        return new GenericRequestHandler<List<LearningResource>>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle((userId) -> getLatestLearningResourcesForStudentQueryHandler.handle(
+                        new GetLatestLearningResourcesForStudentQuery().studentUserId(userId)
                 ));
     }
 
@@ -76,6 +91,21 @@ public class LearningResourceController {
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId) -> createDynamicLearningResourceCommandHandler.handle(
+                        command.studentUserId(userId)
+                ));
+    }
+
+    @PostMapping("/create-similar")
+    @Operation(description = """
+            Creates a similar learning resource to the one which identifier is provided in the command. Works only for
+            resources with static definition.
+            """)
+    public ResponseEntity<ApiResult<LearningResource>> createSimilarLearningResource(Authentication authentication,
+                                                                                     @RequestBody CreateSimilarLearningResourceCommand command) {
+        return new GenericRequestHandler<LearningResource>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle((userId) -> createSimilarLearningResourceCommandHandler.handle(
                         command.studentUserId(userId)
                 ));
     }

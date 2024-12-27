@@ -2,15 +2,21 @@ package com.edutie.backend.application.learning;
 
 import com.edutie.backend.application.learning.learningresource.CreateLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.CreateDynamicLearningResourceCommandHandler;
+import com.edutie.backend.application.learning.learningresource.CreateSimilarLearningResourceCommandHandler;
 import com.edutie.backend.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
+import com.edutie.backend.application.learning.learningresource.commands.CreateSimilarLearningResourceCommand;
 import com.edutie.backend.application.learning.learningresource.implementation.CreateLearningResourceCommandHandlerImplementation;
 import com.edutie.backend.application.learning.learningresource.implementation.CreateDynamicLearningResourceCommandHandlerImplementation;
+import com.edutie.backend.application.learning.learningresource.implementation.CreateSimilarLearningResourceCommandHandlerImplementation;
 import com.edutie.backend.domain.common.generationprompt.PromptFragment;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.persistence.LearningRequirementPersistence;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
+import com.edutie.backend.domain.personalization.learningresource.entities.Activity;
+import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
+import com.edutie.backend.domain.personalization.learningresource.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
@@ -22,6 +28,7 @@ import com.edutie.backend.domainservice.personalization.learningresource.Learnin
 import com.edutie.backend.domainservice.personalization.learningresource.implementation.LearningResourcePersonalizationServiceImplementation;
 import com.edutie.backend.mocks.EducationMocks;
 import com.edutie.backend.mocks.ExternalServiceMocks;
+import com.edutie.backend.mocks.LearningResourceMocks;
 import com.edutie.backend.mocks.MockUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,12 +64,16 @@ public class LearningResourceCommandHandlersTests {
     CreateLearningResourceCommandHandler createLearningResourceCommandHandler;
     @Autowired
     CreateDynamicLearningResourceCommandHandler createDynamicLearningResourceCommandHandler;
-
+    @Autowired
+    CreateSimilarLearningResourceCommandHandler createSimilarLearningResourceCommandHandler;
 
 
     @BeforeEach
     public void testSetup() {
         mockUser.saveToPersistence();
+        // save the learning req for mocking purpose
+        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
         // Remove mocking out the external services to integration test
         learningResourcePersonalizationService = new LearningResourcePersonalizationServiceImplementation(
                 learningResultPersistence,
@@ -75,14 +86,17 @@ public class LearningResourceCommandHandlersTests {
                 learningResourcePersistence,
                 learningResourcePersonalizationService
         );
-        // save the learning req for mocking purpose
-        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
         createDynamicLearningResourceCommandHandler = new CreateDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
                 (Student student) -> WrapperResult.successWrapper(Set.of(learningRequirement)),
                 learningResourcePersonalizationService,
                 learningResourcePersistence
+        );
+        createSimilarLearningResourceCommandHandler = new CreateSimilarLearningResourceCommandHandlerImplementation(
+                learningResourcePersistence,
+                learningResourceDefinitionPersistence,
+                studentPersistence,
+                learningResourcePersonalizationService
         );
     }
 
@@ -139,5 +153,30 @@ public class LearningResourceCommandHandlersTests {
         Assertions.assertTrue(learningResourceWrapper.isSuccess());
         Assertions.assertEquals(DefinitionType.DYNAMIC, learningResourceWrapper.getValue().getDefinitionType());
         Assertions.assertFalse(learningResourceWrapper.getValue().getQualifiedRequirements().isEmpty());
+    }
+
+    @Test
+    public void createSimilarLearningResourceTest() {
+        StaticLearningResourceDefinition learningResourceDefinition = LearningResourceMocks.sampleLearningResourceDefinition(mockUser.getEducatorProfile());
+        learningResourceDefinitionPersistence.save(learningResourceDefinition).throwIfFailure();
+
+        LearningResource learningResource = LearningResource.create(
+                mockUser.getStudentProfile(),
+                learningResourceDefinition,
+                Set.of(),
+                Activity.create("Hello", Set.of()),
+                Set.of(),
+                new Visualisation("graph TD")
+        );
+        learningResourcePersistence.save(learningResource).throwIfFailure();
+
+        CreateSimilarLearningResourceCommand command = new CreateSimilarLearningResourceCommand()
+                .studentUserId(mockUser.getUserId())
+                .learningResourceId(learningResource.getId());
+
+        WrapperResult<LearningResource> learningResourceWrapper = createSimilarLearningResourceCommandHandler.handle(command);
+
+        Assertions.assertTrue(learningResourceWrapper.isSuccess());
+        Assertions.assertEquals(learningResourceDefinition.getId(), learningResourceWrapper.getValue().getDefinitionId());
     }
 }

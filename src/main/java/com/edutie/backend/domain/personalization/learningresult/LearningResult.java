@@ -11,6 +11,7 @@ import com.edutie.backend.domain.personalization.learningresult.identities.Learn
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
 import com.edutie.backend.domain.personalization.solutionsubmission.SolutionSubmission;
+import com.edutie.backend.domain.personalization.solutionsubmission.identities.SolutionSubmissionId;
 import com.edutie.backend.domain.personalization.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
