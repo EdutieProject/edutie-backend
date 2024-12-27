@@ -5,9 +5,12 @@ import com.edutie.backend.domain.personalization.learningresource.identities.Lea
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.backend.domain.personalization.student.Student;
+import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.infrastructure.persistence.PersistenceError;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResourceDefinitionRepository;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResourceRepository;
+import com.edutie.backend.infrastructure.persistence.jpa.repositories.StudentRepository;
 import validation.Result;
 import validation.WrapperResult;
 import org.springframework.data.jpa.repository.*;
@@ -54,6 +57,21 @@ public class LearningResourcePersistenceImplementation implements LearningResour
 		try {
 			Optional<StaticLearningResourceDefinition> definitionOptionalWrapper = learningResourceDefinitionRepository.findById(learningResourceDefinitionId);
 			return definitionOptionalWrapper.map(definition -> WrapperResult.successWrapper(learningResourceRepository.getAllByDefinitionId(learningResourceDefinitionId))).orElseGet(() -> Result.failureWrapper(PersistenceError.notFound(StaticLearningResourceDefinition.class)));
+		} catch (Exception ex) {
+			return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
+		}
+	}
+
+	/**
+	 * Retrieves latest learning resources made for the student.
+	 *
+	 * @param studentId student id
+	 * @return Wrapper result of desired list
+	 */
+	@Override
+	public WrapperResult<List<LearningResource>> getLatestLearningResourcesForStudent(StudentId studentId) {
+		try {
+			return WrapperResult.successWrapper(learningResourceRepository.getAllByStudentId(studentId));
 		} catch (Exception ex) {
 			return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
 		}
