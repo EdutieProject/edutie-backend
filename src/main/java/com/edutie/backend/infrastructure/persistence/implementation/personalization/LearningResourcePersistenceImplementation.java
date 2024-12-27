@@ -5,12 +5,11 @@ import com.edutie.backend.domain.personalization.learningresource.identities.Lea
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.backend.domain.personalization.student.Student;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
 import com.edutie.backend.infrastructure.persistence.PersistenceError;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResourceDefinitionRepository;
 import com.edutie.backend.infrastructure.persistence.jpa.repositories.LearningResourceRepository;
-import com.edutie.backend.infrastructure.persistence.jpa.repositories.StudentRepository;
+import org.springframework.data.domain.Limit;
 import validation.Result;
 import validation.WrapperResult;
 import org.springframework.data.jpa.repository.*;
@@ -71,7 +70,7 @@ public class LearningResourcePersistenceImplementation implements LearningResour
 	@Override
 	public WrapperResult<List<LearningResource>> getLatestLearningResourcesForStudent(StudentId studentId) {
 		try {
-			return WrapperResult.successWrapper(learningResourceRepository.getAllByStudentId(studentId));
+			return WrapperResult.successWrapper(learningResourceRepository.getAllByStudentIdOrderByCreatedOnDesc(studentId, Limit.of(10)));
 		} catch (Exception ex) {
 			return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
 		}

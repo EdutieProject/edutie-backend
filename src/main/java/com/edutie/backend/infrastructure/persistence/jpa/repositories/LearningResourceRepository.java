@@ -4,11 +4,12 @@ import com.edutie.backend.domain.personalization.learningresource.LearningResour
 import com.edutie.backend.domain.personalization.learningresource.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.backend.domain.personalization.student.identities.StudentId;
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 
 public interface LearningResourceRepository extends JpaRepository<LearningResource, LearningResourceId> {
 	List<LearningResource> getAllByDefinitionId(LearningResourceDefinitionId definitionId);
-	List<LearningResource> getAllByStudentId(StudentId studentId);
+	List<LearningResource> getAllByStudentIdOrderByCreatedOnDesc(StudentId studentId, Limit limit);
 }
