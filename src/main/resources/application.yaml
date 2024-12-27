@@ -7,6 +7,7 @@ host-main-url: ${HOST_MAIN_URL}
 # ==== SERVER CONFIG ====
 server:
   port: 8081
+  forward-headers-strategy: framework
 
 # ==== SPRING BOOT CONFIG ====
 spring:
@@ -67,7 +68,8 @@ springdoc:
     groups:
       enabled: true
   swagger-ui:
-    path: /docs
+    path: /docs/
+    disable-swagger-default-url: true
     enabled: true
     oauth:
       client-id: ${CLIENT_ID}
