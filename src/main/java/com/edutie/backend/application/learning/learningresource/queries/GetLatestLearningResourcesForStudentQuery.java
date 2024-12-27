@@ -12,10 +12,10 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class GetLatestLearningResourcesForStudent extends StudentAction<GetLatestLearningResourcesForStudent> {
+public final class GetLatestLearningResourcesForStudentQuery extends StudentAction<GetLatestLearningResourcesForStudentQuery> {
 
     @Override
-    protected GetLatestLearningResourcesForStudent getThis() {
+    protected GetLatestLearningResourcesForStudentQuery getThis() {
         return this;
     }
 }

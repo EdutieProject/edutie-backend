@@ -1,7 +1,7 @@
 package com.edutie.backend.application.learning.learningresource.implementation;
 
 import com.edutie.backend.application.learning.learningresource.GetLatestLearningResourcesForStudentQueryHandler;
-import com.edutie.backend.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
+import com.edutie.backend.application.learning.learningresource.queries.GetLatestLearningResourcesForStudentQuery;
 import com.edutie.backend.domain.personalization.learningresource.LearningResource;
 import com.edutie.backend.domain.personalization.learningresource.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.student.Student;
@@ -21,7 +21,7 @@ public class GetLatestLearningResourcesForStudentQueryHandlerImplementation impl
     private final StudentPersistence studentPersistence;
 
     @Override
-    public WrapperResult<List<LearningResource>> handle(GetLearningResourcesByDefinitionIdQuery query) {
+    public WrapperResult<List<LearningResource>> handle(GetLatestLearningResourcesForStudentQuery query) {
         log.info("Retrieving latest learning resources for student user of id {}", query.studentUserId());
         Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
         return learningResourcePersistence.getLatestLearningResourcesForStudent(student.getId());
