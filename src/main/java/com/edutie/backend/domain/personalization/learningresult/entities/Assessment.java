@@ -19,6 +19,7 @@ import validation.OperationFailureException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Getter
 @Setter
@@ -73,9 +74,9 @@ public class Assessment extends EntityBase<AssessmentId> {
     @JsonProperty("difficultyFactor")
     public double getDifficultyFactor() {
         return (double) Math.round(
-                ((float) this.qualifiedElementalRequirements.stream().mapToInt(ElementalRequirement::getOrdinal)
-                        .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId()))) + 1F
-                        / getCorrespondingLearningRequirement().getElementalRequirements().size() * 100))
+                (this.qualifiedElementalRequirements.stream().mapToInt(ElementalRequirement::getOrdinal)
+                        .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId()))) + 1F)
+                        / getCorrespondingLearningRequirement().getElementalRequirements().size() * 100)
                 / 100;
     }
 

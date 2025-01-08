@@ -66,5 +66,13 @@ public class LearningResultTests {
 
         System.out.println(assessment.getDifficultyFactor());
         Assertions.assertEquals(1D, assessment.getDifficultyFactor());
+
+        LearningRequirement learningRequirement2 = EducationMocks.independentLearningRequirement(educator);
+        Assessment assessment2 = Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"),
+                // get last elemental requirement only from 3 out there
+                learningRequirement2.getElementalRequirements().subList(1,2));
+
+        System.out.println(assessment2.getDifficultyFactor());
+        Assertions.assertEquals(0.67D, assessment2.getDifficultyFactor());
     }
 }
