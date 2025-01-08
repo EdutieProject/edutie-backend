@@ -4,6 +4,7 @@ import com.edutie.backend.domain.common.base.AuditableEntityBase;
 import com.edutie.backend.domain.education.learningrequirement.LearningRequirement;
 import com.edutie.backend.domain.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresult.LearningResult;
+import com.edutie.backend.domain.personalization.learningresult.entities.Assessment;
 import com.edutie.backend.domain.personalization.learningresult.persistence.LearningResultPersistence;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Feedback;
 import com.edutie.backend.domain.personalization.learningresult.valueobjects.Grade;
@@ -42,7 +43,8 @@ public class FeedbackRemediationStrategy implements PersonalizationStrategy<Feed
         List<LearningResult> consideredLearningResults = pastPerformance.stream().filter(o -> o.getLearningRequirementIds().stream().anyMatch(learningRequirementIds::contains)).toList();
         if (consideredLearningResults.isEmpty() || consideredLearningResults.stream().allMatch(o -> o.getAverageGrade().greaterThanOrEqual(Grade.of(3))))
             return Optional.empty();
-        Feedback latestFeedback = consideredLearningResults.stream().max(Comparator.comparing(AuditableEntityBase::getCreatedOn)).get().getFeedback();
+        LearningResult latestResult = consideredLearningResults.stream().max(Comparator.comparing(AuditableEntityBase::getCreatedOn)).get();
+        Feedback latestFeedback = latestResult.getAssessments().stream().min(Comparator.comparing(Assessment::getGrade)).get().getFeedback();
         return Optional.of(new FeedbackRemediationRule(latestFeedback));
     }
 

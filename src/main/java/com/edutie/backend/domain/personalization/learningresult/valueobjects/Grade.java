@@ -5,7 +5,8 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public record Grade(
-        @JsonValue int gradeNumber) {
+        @JsonValue int gradeNumber
+)  implements Comparable<Grade> {
     public static final Grade MAX_GRADE = new Grade(6);
     public static final Grade MIN_GRADE = new Grade(1);
     public static final Grade SUCCESS_GRADE = new Grade(5);
@@ -24,5 +25,10 @@ public record Grade(
 
     public boolean lessThanOrEqual(Grade grade) {
         return this.gradeNumber <= grade.gradeNumber;
+    }
+
+    @Override
+    public int compareTo(Grade o) {
+        return Integer.compare(this.gradeNumber, o.gradeNumber);
     }
 }

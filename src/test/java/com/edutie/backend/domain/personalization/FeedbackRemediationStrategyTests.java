@@ -39,7 +39,7 @@ public class FeedbackRemediationStrategyTests {
                 mockUser.getStudentProfile(), Set.of(learningRequirement));
 
         Assertions.assertTrue(rule.isPresent());
-        Assertions.assertEquals(Feedback.of("Hello"), rule.get().getContext());
+        Assertions.assertEquals(Feedback.of("You need to improve"), rule.get().getContext());
     }
 
     @Test
