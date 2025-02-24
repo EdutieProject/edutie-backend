@@ -21,10 +21,11 @@ Running the app using *docker-compose.yaml* is the default. It runs the edutie-b
 1. `docker-compose build` - this ensures the codebase is refreshed and up-to-date
 2. `docker-compose up` - runs the app with the DB
 
+This is mostly use to build the image, as flows usually require the whole system to be up.
+
 ### Development environment - collective compose
 
-Running the app using *compose-dev.yaml* is the recommended way of running Edutie app. The compose sets up the development
-environment.
+Running the app using *compose-dev.yaml* is the way of running Edutie app in the local environment. 
 
 This way utilizes the convention in which all the sub-system repositories are a sibling folders to the edutie-backend 
 folder. Example:
@@ -42,9 +43,7 @@ docker-compose -f compose-dev.yaml up
 
 ### Production environment
 
-Running the production environment is supported by *compose-prod.yaml*. It behaves in the same way as the dev compose,
-but runs more applications. This setup is prepared for the deployment architecture. Note that the production env has 
-different connection structure. Moreover, it uses different environment .env file.
+Running the production environment is supported by *compose-prod.yaml*. This setup is prepared for the deployment architecture. Note that the app in the deployment architecture is used through a reverse proxy url. Moreover, it uses a different, extended environment .env file.
 
 Run the prod env using:
 
@@ -68,6 +67,3 @@ docker-compose -f compose-prod.yaml build bff
 ```
 
 This will update the BFF app image.
-
-Building the image with the default (standalone) composes should work too, as the image names are unified across 
-environments.
