@@ -1,8 +1,8 @@
 package com.edutie.domain.core.personalization.strategy;
 
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
@@ -27,7 +27,7 @@ public class RefreshStrategy implements PersonalizationStrategy<ElementalRequire
     private static final int MAX_STREAK_COUNT = 3;
 
     @Override
-    public Optional<RefreshRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
+    public Optional<RefreshRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
         List<LearningResult> pastPerformance = student.getLatestLearningResults(learningResultPersistence);
         if (pastPerformance.isEmpty())
             return Optional.empty();
@@ -48,26 +48,26 @@ public class RefreshStrategy implements PersonalizationStrategy<ElementalRequire
             }
             currentStreak.clear();
         }
-        Set<LearningRequirement> learningRequirementsToRefresh = learningStreaks
+        Set<LearningSubject> learningRequirementsToRefreshes = learningStreaks
                 .stream().limit(MAX_STREAK_COUNT)
                 .flatMap(o -> o.stream().filter(x -> x.getAverageGrade().greaterThanOrEqual(Grade.of(3))))
                 .flatMap(o -> o.getAssociatedLearningRequirements().stream())
                 .collect(Collectors.toSet());
-        if (learningRequirementsToRefresh.isEmpty())
+        if (learningRequirementsToRefreshes.isEmpty())
             return Optional.empty();
 
         // measure the correlations of requirements to be refreshed
         Set<LearningRequirementCorrelation> learningRequirementCorrelations = knowledgeMapService
-                .getLearningRequirementCorrelations(learningRequirements, learningRequirementsToRefresh).getValue();
+                .getLearningRequirementCorrelations(learningSubjects, learningRequirementsToRefreshes).getValue();
         LearningRequirementCorrelation mostCorrelatedCorrelation = learningRequirementCorrelations.stream()
                 .max(Comparator.comparing(LearningRequirementCorrelation::getCorrelationFactor)).get();
 
-        LearningRequirement learningRequirementToRefresh = learningRequirementsToRefresh.stream()
+        LearningSubject learningSubjectToRefresh = learningRequirementsToRefreshes.stream()
                 .filter(o -> o.getId().equals(mostCorrelatedCorrelation.getCorrelatedLearningRequirementId()))
                 .toList().getFirst();
 
-        ElementalRequirement elementalRequirementToRefresh = learningRequirementToRefresh.calculateQualifiedElementalRequirements(
-                student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirementToRefresh.getKnowledgeSubjectId()),
+        ElementalRequirement elementalRequirementToRefresh = learningSubjectToRefresh.calculateQualifiedElementalRequirements(
+                student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningSubjectToRefresh.getKnowledgeSubjectId()),
                 1
         ).stream().max(Comparator.comparingInt(ElementalRequirement::getOrdinal)).get();
 

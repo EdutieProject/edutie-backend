@@ -1,6 +1,6 @@
 package com.edutie.domain.service.personalization.learningresult.schema;
 
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.personalization.common.PersonalizationSchema;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;

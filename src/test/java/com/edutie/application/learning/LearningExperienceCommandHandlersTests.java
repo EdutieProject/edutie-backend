@@ -10,8 +10,8 @@ import com.edutie.application.learning.learningresource.implementation.CreateLea
 import com.edutie.application.learning.learningresource.implementation.CreateDynamicLearningResourceCommandHandlerImplementation;
 import com.edutie.application.learning.learningresource.implementation.CreateSimilarLearningResourceCommandHandlerImplementation;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.persistence.LearningRequirementPersistence;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningrequirement.persistence.LearningSubjectPersistence;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
@@ -46,7 +46,7 @@ public class LearningExperienceCommandHandlersTests {
     @Autowired
     StudentPersistence studentPersistence;
     @Autowired
-    LearningRequirementPersistence learningRequirementPersistence;
+    LearningSubjectPersistence learningSubjectPersistence;
     @Autowired
     LearningResultPersistence learningResultPersistence;
     @Autowired
@@ -71,8 +71,8 @@ public class LearningExperienceCommandHandlersTests {
     public void testSetup() {
         mockUser.saveToPersistence();
         // save the learning req for mocking purpose
-        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
+        LearningSubject learningSubject = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningSubjectPersistence.save(learningSubject).throwIfFailure();
         // Remove mocking out the external services to integration test
         learningResourcePersonalizationService = new LearningResourcePersonalizationServiceImplementation(
                 learningResultPersistence,
@@ -87,7 +87,7 @@ public class LearningExperienceCommandHandlersTests {
         );
         createDynamicLearningResourceCommandHandler = new CreateDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
-                (Student student) -> WrapperResult.successWrapper(Set.of(learningRequirement)),
+                (Student student) -> WrapperResult.successWrapper(Set.of(learningSubject)),
                 learningResourcePersonalizationService,
                 learningResourcePersistence
         );
@@ -102,13 +102,13 @@ public class LearningExperienceCommandHandlersTests {
 
     @Test
     public void createLearningResourceForEmptyLearningHistory() {
-        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
+        LearningSubject learningSubject = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningSubjectPersistence.save(learningSubject).throwIfFailure();
         StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.of("Theory description from definition"),
                 PromptFragment.of("Exercise description from definition"),
-                Set.of(learningRequirement)
+                Set.of(learningSubject)
         );
         learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
 
@@ -124,8 +124,8 @@ public class LearningExperienceCommandHandlersTests {
         createLearningResourceForEmptyLearningHistory(); // create learning result for student
 
         // Create a resource definition
-        LearningRequirement relatedRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(relatedRequirement);
+        LearningSubject relatedRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
+        learningSubjectPersistence.save(relatedRequirement);
         StaticLearningResourceDefinition definition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.of("Theory DESC!"),

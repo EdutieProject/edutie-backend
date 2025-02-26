@@ -3,7 +3,7 @@ package com.edutie.infrastructure.external.knowledgemap;
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.infrastructure.external.common.ExternalService;
 import validation.WrapperResult;
 
@@ -17,12 +17,12 @@ public interface KnowledgeMapService extends ExternalService {
      * Retrieves the correlations between the provided learning requirements.
      *
      * @param sourceRequirements           source learning requirements
-     * @param comparedLearningRequirements learning requirements to measure the correlation
+     * @param comparedLearningSubjects learning requirements to measure the correlation
      * @return Result wrapping set of learning req. correlations
      */
     WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(
-            Set<LearningRequirement> sourceRequirements,
-            Set<LearningRequirement> comparedLearningRequirements
+            Set<LearningSubject> sourceRequirements,
+            Set<LearningSubject> comparedLearningSubjects
     );
 
     /**

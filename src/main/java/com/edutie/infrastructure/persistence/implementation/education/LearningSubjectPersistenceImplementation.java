@@ -1,8 +1,8 @@
 package com.edutie.infrastructure.persistence.implementation.education;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.domain.core.education.learningrequirement.persistence.LearningRequirementPersistence;
+import com.edutie.domain.core.education.learningrequirement.persistence.LearningSubjectPersistence;
 import com.edutie.infrastructure.persistence.PersistenceError;
 import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
 import org.springframework.data.jpa.repository.*;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class LearningRequirementPersistenceImplementation implements LearningRequirementPersistence {
+public class LearningSubjectPersistenceImplementation implements LearningSubjectPersistence {
 	private final LearningRequirementRepository learningRequirementRepository;
 
 	/**
@@ -23,7 +23,7 @@ public class LearningRequirementPersistenceImplementation implements LearningReq
 	 * @return crud jpa repository
 	 */
 	@Override
-	public JpaRepository<LearningRequirement, LearningRequirementId> getRepository() {
+	public JpaRepository<LearningSubject, LearningRequirementId> getRepository() {
 		return learningRequirementRepository;
 	}
 
@@ -33,8 +33,8 @@ public class LearningRequirementPersistenceImplementation implements LearningReq
 	 * @return class of persistence entity
 	 */
 	@Override
-	public Class<LearningRequirement> entityClass() {
-		return LearningRequirement.class;
+	public Class<LearningSubject> entityClass() {
+		return LearningSubject.class;
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class LearningRequirementPersistenceImplementation implements LearningReq
 	 * @return
 	 */
 	@Override
-	public WrapperResult<List<LearningRequirement>> getAny(int number) {
+	public WrapperResult<List<LearningSubject>> getAny(int number) {
 		try {
 			return WrapperResult.successWrapper(learningRequirementRepository.findRandom(number));
 		} catch (Exception e) {

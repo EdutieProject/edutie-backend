@@ -2,7 +2,7 @@ package com.edutie.domain.core.personalization.strategy;
 
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
@@ -31,11 +31,11 @@ public class RecommendationStrategy implements PersonalizationStrategy<Knowledge
      * does not apply, the returned optional is empty.
      *
      * @param student              student
-     * @param learningRequirements learning requirements to consider
+     * @param learningSubjects learning requirements to consider
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<RecommendationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
+    public Optional<RecommendationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
         List<LearningResult> pastPerformance = student.getLatestLearningResults(learningResultPersistence);
         List<LearningResult> topResults = pastPerformance.stream()
                 .filter(o -> o.getAverageGrade().greaterThanOrEqual(Grade.of(5)))
@@ -46,12 +46,12 @@ public class RecommendationStrategy implements PersonalizationStrategy<Knowledge
 
         LearningResult randomResult = topResults.get((int) Math.floor(Math.random() * topResults.size()));
 
-        Optional<LearningRequirement> highestCorrelationRequirement = randomResult.getAssociatedLearningRequirements().size() == 1 ?
+        Optional<LearningSubject> highestCorrelationRequirement = randomResult.getAssociatedLearningRequirements().size() == 1 ?
                 randomResult.getAssociatedLearningRequirements().stream().findFirst() :
                 randomResult.getAssociatedLearningRequirements().stream()
                         .max(Comparator.comparing(requirement -> {
                             Set<LearningRequirementCorrelation> learningRequirementsCorrelation = knowledgeMapService
-                                    .getLearningRequirementCorrelations(learningRequirements, Set.of(requirement)).getValue();
+                                    .getLearningRequirementCorrelations(learningSubjects, Set.of(requirement)).getValue();
                             return learningRequirementsCorrelation.stream()
                                     .mapToDouble(LearningRequirementCorrelation::getCorrelationFactor)
                                     .average()

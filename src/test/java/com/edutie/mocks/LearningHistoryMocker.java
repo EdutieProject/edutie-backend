@@ -3,8 +3,8 @@ package com.edutie.mocks;
 import com.edutie.domain.core.common.base.AuditableEntityBase;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
@@ -49,7 +49,7 @@ public class LearningHistoryMocker {
 
     }
 
-    public static LearningResultPersistence learningResultPersistenceForFeedbackRemediationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+    public static LearningResultPersistence learningResultPersistenceForFeedbackRemediationStrategy(Student student, LearningSubject learningSubject, Grade grade) {
         return new MockLearningResultPersistence() {
             @Override
             public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
@@ -58,15 +58,15 @@ public class LearningHistoryMocker {
                                 SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Hello"),
                                 Set.of(
-                                        Assessment.create(learningRequirement.getId(), grade, Feedback.of("You need to improve"), List.of()),
-                                        Assessment.create(learningRequirement.getId(), Grade.of(grade.gradeNumber() + 1), Feedback.of("Its better here"), List.of())
+                                        Assessment.create(learningSubject.getId(), grade, Feedback.of("You need to improve"), List.of()),
+                                        Assessment.create(learningSubject.getId(), Grade.of(grade.gradeNumber() + 1), Feedback.of("Its better here"), List.of())
                                 ),
                                 LocalDateTime.now().minusDays(1)
                         ),
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("World"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of("You need to improve"), List.of())),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of("You need to improve"), List.of())),
                                 LocalDateTime.now().minusDays(2)
                         )
                 ));
@@ -74,7 +74,7 @@ public class LearningHistoryMocker {
         };
     }
 
-    public static LearningResultPersistence learningResultPersistenceForRecommendationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+    public static LearningResultPersistence learningResultPersistenceForRecommendationStrategy(Student student, LearningSubject learningSubject, Grade grade) {
         return new MockLearningResultPersistence() {
             @Override
             public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
@@ -82,14 +82,14 @@ public class LearningHistoryMocker {
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Hello"),
-                                Set.of(Assessment.create(learningRequirement.getId(), Grade.of(1), Feedback.of(""), List.of())),
+                                Set.of(Assessment.create(learningSubject.getId(), Grade.of(1), Feedback.of(""), List.of())),
                                 LocalDateTime.now().minusDays(1)
                         ),
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("World"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""),
-                                        List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""),
+                                        List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                 LocalDateTime.now().minusDays(2)
                         )
                 ));
@@ -97,7 +97,7 @@ public class LearningHistoryMocker {
         };
     }
 
-    public static LearningResultPersistence learningResultPersistenceForFamiliarRemediationStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+    public static LearningResultPersistence learningResultPersistenceForFamiliarRemediationStrategy(Student student, LearningSubject learningSubject, Grade grade) {
         return new MockLearningResultPersistence() {
             @Override
             public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
@@ -105,19 +105,19 @@ public class LearningHistoryMocker {
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Hello"),
-                                Set.of(Assessment.create(learningRequirement.getId(), Grade.of(1), Feedback.of(""), learningRequirement.getElementalRequirements().subList(0, 1))),
+                                Set.of(Assessment.create(learningSubject.getId(), Grade.of(1), Feedback.of(""), learningSubject.getRequirements().subList(0, 1))),
                                 LocalDateTime.now().minusDays(1)
                         ),
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Universe"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), learningRequirement.getElementalRequirements().subList(1, 2))),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), learningSubject.getRequirements().subList(1, 2))),
                                 LocalDateTime.now().minusDays(1)
                         ),
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, new LearningResourceId(), DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("World"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), learningRequirement.getElementalRequirements().subList(0, 2))),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), learningSubject.getRequirements().subList(0, 2))),
                                 LocalDateTime.now().minusDays(2)
                         )
                 ));
@@ -125,7 +125,7 @@ public class LearningHistoryMocker {
         };
     }
 
-    public static LearningResultPersistence learningResultPersistenceForRefreshStrategy(Student student, LearningRequirement learningRequirement, Grade grade) {
+    public static LearningResultPersistence learningResultPersistenceForRefreshStrategy(Student student, LearningSubject learningSubject, Grade grade) {
         return new MockLearningResultPersistence() {
             @Override
             public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
@@ -139,19 +139,19 @@ public class LearningHistoryMocker {
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Hello"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                 LocalDateTime.now().minusDays(2).minusMinutes(1)
                         ),
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Hello"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                 LocalDateTime.now().minusDays(2).minusMinutes(2)
                         ),
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("Hello"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                 LocalDateTime.now().minusDays(2).minusMinutes(3)
                         ),
                         createLearningResultWithCreatedOnInThePast(
@@ -163,7 +163,7 @@ public class LearningHistoryMocker {
                         createLearningResultWithCreatedOnInThePast(
                                 SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                 Feedback.of("World"),
-                                Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of())),
+                                Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of())),
                                 LocalDateTime.now().minusDays(3)
                         )
                 ));
@@ -183,19 +183,19 @@ public class LearningHistoryMocker {
                                 createLearningResultWithCreatedOnInThePast(
                                         SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                         Feedback.of("Hello"),
-                                        Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                        Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                         LocalDateTime.now().minusDays(2).minusMinutes(1)
                                 ),
                                 createLearningResultWithCreatedOnInThePast(
                                         SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                         Feedback.of("Hello"),
-                                        Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                        Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                         LocalDateTime.now().minusDays(2).minusMinutes(2)
                                 ),
                                 createLearningResultWithCreatedOnInThePast(
                                         SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "", 0),
                                         Feedback.of("Hello"),
-                                        Set.of(Assessment.create(learningRequirement.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningRequirement, PromptFragment.empty(), PromptFragment.empty(), 1)))),
+                                        Set.of(Assessment.create(learningSubject.getId(), grade, Feedback.of(""), List.of(ElementalRequirement.create(learningSubject, PromptFragment.empty(), PromptFragment.empty(), 1)))),
                                         LocalDateTime.now().minusDays(2).minusMinutes(3)
                                 )
                         ));

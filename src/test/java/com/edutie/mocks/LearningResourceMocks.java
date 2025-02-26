@@ -2,7 +2,7 @@ package com.edutie.mocks;
 
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
 import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
@@ -38,18 +38,18 @@ public class LearningResourceMocks {
     }
 
     public static LearningExperience sampleLearningResource(Student student, Educator educator) {
-        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(educator);
+        LearningSubject learningSubject = EducationMocks.independentLearningRequirement(educator);
         DynamicLearningResourceDefinition learningResourceDefinition = DynamicLearningResourceDefinition.create(
                 new DynamicContext(PromptFragment.of("Czy wiesz, że sok z brzozy, zwany bzowiną, jest od wieków wykorzystywany w medycynie naturalnej? Jest bogaty w witaminy i minerały!"), DynamicContextType.RANDOM_FACT),
-                Set.of(learningRequirement)
+                Set.of(learningSubject)
         );
 
         return LearningExperience.create(
                 student,
                 learningResourceDefinition,
-                learningRequirement.calculateQualifiedElementalRequirements(List.of(), 2),
+                learningSubject.calculateQualifiedElementalRequirements(List.of(), 2),
                 Activity.create("Wykorzystanie brzozy w gospodarce - analiza rynkowa soku z brzozy. Aktywność...", Set.of()),
-                Set.of(TheoryCard.create(learningRequirement.getId(), "Dzięki temu brzozowa kora była wykorzystywana przez rdzennych mieszkańców Ameryki Północnej do budowy wodoodpornych canoe oraz jako materiał do pisania w Europie i Azji.")),
+                Set.of(TheoryCard.create(learningSubject.getId(), "Dzięki temu brzozowa kora była wykorzystywana przez rdzennych mieszkańców Ameryki Północnej do budowy wodoodpornych canoe oraz jako materiał do pisania w Europie i Azji.")),
                 new Visualisation("graph TD A->B")
         );
     }

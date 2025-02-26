@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
 import com.edutie.domain.core.personalization.strategy.FamiliarRemediationStrategy;
 import com.edutie.infrastructure.external.knowledgemap.KnowledgeMapService;
@@ -22,15 +22,15 @@ public class FamiliarRemediationStrategyTests {
     @Autowired
     MockUser mockUser;
     FamiliarRemediationStrategy familiarRemediationStrategy;
-    LearningRequirement sourceLearningRequirement;
-    LearningRequirement relatedLearningRequirement;
+    LearningSubject sourceLearningSubject;
+    LearningSubject relatedLearningSubject;
     @Autowired
     KnowledgeMapService knowledgeMapService;
 
     @BeforeEach
     public void testSetup() {
-        sourceLearningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
-        relatedLearningRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
+        sourceLearningSubject = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        relatedLearningSubject = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
     }
 
 
@@ -38,11 +38,11 @@ public class FamiliarRemediationStrategyTests {
     public void familiarRemediationStrategyQualifiesTest() {
         familiarRemediationStrategy = new FamiliarRemediationStrategy(
                 knowledgeMapService,
-                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), relatedLearningRequirement, Grade.of(6))
+                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), relatedLearningSubject, Grade.of(6))
         );
 
         Optional<FamiliarRemediationStrategy.FamiliarRemediationRule> rule = familiarRemediationStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(sourceLearningRequirement));
+                mockUser.getStudentProfile(), Set.of(sourceLearningSubject));
 
         Assertions.assertTrue(rule.isPresent());
         Assertions.assertEquals(Feedback.of("World"), rule.get().getContext());
@@ -52,11 +52,11 @@ public class FamiliarRemediationStrategyTests {
     public void familiarRemediationStrategyNoQualificationTest() {
         familiarRemediationStrategy = new FamiliarRemediationStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), relatedLearningRequirement, Grade.of(2))
+                LearningHistoryMocker.learningResultPersistenceForFamiliarRemediationStrategy(mockUser.getStudentProfile(), relatedLearningSubject, Grade.of(2))
         );
 
         Optional<FamiliarRemediationStrategy.FamiliarRemediationRule> rule = familiarRemediationStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(relatedLearningRequirement));
+                mockUser.getStudentProfile(), Set.of(relatedLearningSubject));
 
         Assertions.assertFalse(rule.isPresent());
     }

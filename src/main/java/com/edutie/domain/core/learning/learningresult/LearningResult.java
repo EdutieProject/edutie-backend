@@ -1,8 +1,8 @@
 package com.edutie.domain.core.learning.learningresult;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
@@ -93,7 +93,7 @@ public class LearningResult extends AuditableEntityBase<LearningResultId> {
      *
      * @return Set of learning requirements associated with the L. Resource of the result.
      */
-    public Set<LearningRequirement> getAssociatedLearningRequirements() {
+    public Set<LearningSubject> getAssociatedLearningRequirements() {
         return assessments.stream()
                 .flatMap(o -> o.getQualifiedElementalRequirements().stream())
                 .map(ElementalRequirement::getLearningRequirement)

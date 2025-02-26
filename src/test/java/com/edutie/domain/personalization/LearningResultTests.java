@@ -3,7 +3,7 @@ package com.edutie.domain.personalization;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.domain.core.education.educator.Educator;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
@@ -55,18 +55,18 @@ public class LearningResultTests {
 
     @Test
     public void difficultyFactorTest() {
-        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(educator);
+        LearningSubject learningSubject = EducationMocks.independentLearningRequirement(educator);
         Assessment assessment = Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"),
                 // get last elemental requirement only from 3 out there
-                learningRequirement.getElementalRequirements().subList(2,3));
+                learningSubject.getRequirements().subList(2,3));
 
         System.out.println(assessment.getDifficultyFactor());
         Assertions.assertEquals(1D, assessment.getDifficultyFactor());
 
-        LearningRequirement learningRequirement2 = EducationMocks.independentLearningRequirement(educator);
+        LearningSubject learningSubject2 = EducationMocks.independentLearningRequirement(educator);
         Assessment assessment2 = Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"),
                 // get last elemental requirement only from 3 out there
-                learningRequirement2.getElementalRequirements().subList(1,2));
+                learningSubject2.getRequirements().subList(1,2));
 
         System.out.println(assessment2.getDifficultyFactor());
         Assertions.assertEquals(0.67D, assessment2.getDifficultyFactor());

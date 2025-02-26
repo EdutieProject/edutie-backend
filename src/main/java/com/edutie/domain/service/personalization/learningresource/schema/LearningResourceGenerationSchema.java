@@ -1,7 +1,7 @@
 package com.edutie.domain.service.personalization.learningresource.schema;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.domain.core.personalization.common.PersonalizationSchema;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
@@ -71,11 +71,11 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
      * This function qualifies elemental requirements of given learning requirements.
      * Should only be used for schema creation purposes.
      */
-    private void qualifyElementalRequirements(Set<LearningRequirement> learningRequirements, Student student, LearningResultPersistence learningResultPersistence) {
-        for (LearningRequirement learningRequirement : learningRequirements) {
-            qualifiedRequirements.addAll(learningRequirement.calculateQualifiedElementalRequirements(
-                    student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningRequirement.getKnowledgeSubjectId()),
-                    (int) Math.ceil((double) 2 / learningRequirements.size())
+    private void qualifyElementalRequirements(Set<LearningSubject> learningSubjects, Student student, LearningResultPersistence learningResultPersistence) {
+        for (LearningSubject learningSubject : learningSubjects) {
+            qualifiedRequirements.addAll(learningSubject.calculateQualifiedElementalRequirements(
+                    student.getLearningHistoryByKnowledgeSubject(learningResultPersistence, learningSubject.getKnowledgeSubjectId()),
+                    (int) Math.ceil((double) 2 / learningSubjects.size())
             ));
         }
     }

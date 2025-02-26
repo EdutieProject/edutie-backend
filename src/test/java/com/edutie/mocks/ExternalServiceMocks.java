@@ -5,7 +5,7 @@ import com.edutie.application.learning.ancillaries.viewmodels.RandomFact;
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
@@ -28,10 +28,10 @@ public class ExternalServiceMocks {
     public static KnowledgeMapService knowledgeMapServiceMock() {
         return new KnowledgeMapService() {
             @Override
-            public WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(Set<LearningRequirement> sourceRequirements, Set<LearningRequirement> comparedLearningRequirements) {
+            public WrapperResult<Set<LearningRequirementCorrelation>> getLearningRequirementCorrelations(Set<LearningSubject> sourceRequirements, Set<LearningSubject> comparedLearningSubjects) {
                 return WrapperResult.successWrapper(
                         sourceRequirements.stream().flatMap(
-                                o -> comparedLearningRequirements.stream().map(
+                                o -> comparedLearningSubjects.stream().map(
                                         compared -> new LearningRequirementCorrelation(o.getId(), compared.getId(), (int) Math.floor(Math.random() * 100))
                                 )
                         ).collect(Collectors.toSet()));

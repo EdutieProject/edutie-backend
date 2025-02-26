@@ -3,44 +3,44 @@ package com.edutie.mocks;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 
 public class EducationMocks {
-    public static LearningRequirement independentLearningRequirement(Educator educator) {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator);
-        learningRequirement.setName("Integration by parts");
-        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningRequirement.appendSubRequirement(
+    public static LearningSubject independentLearningRequirement(Educator educator) {
+        LearningSubject learningSubject = LearningSubject.createBlank(educator);
+        learningSubject.setName("Integration by parts");
+        learningSubject.setKnowledgeSubjectId(new KnowledgeSubjectId());
+        learningSubject.appendSubRequirement(
                 "Calculating derivatives and antiderivatives of ingredient functions",
                 PromptFragment.of("")
         );
-        learningRequirement.appendSubRequirement(
+        learningSubject.appendSubRequirement(
                 "Proper formula usage",
                 PromptFragment.of("")
         );
-        learningRequirement.appendSubRequirement(
+        learningSubject.appendSubRequirement(
                 "3rd sub req nfgoiufguoeoeaofsoefe",
                 PromptFragment.of("")
         );
-        return learningRequirement;
+        return learningSubject;
     }
 
-    public static LearningRequirement relatedLearningRequirement(Educator educator) {
-        LearningRequirement learningRequirement = LearningRequirement.create(educator);
-        learningRequirement.setName("Integration by substitution");
-        learningRequirement.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningRequirement.appendSubRequirement(
+    public static LearningSubject relatedLearningRequirement(Educator educator) {
+        LearningSubject learningSubject = LearningSubject.createBlank(educator);
+        learningSubject.setName("Integration by substitution");
+        learningSubject.setKnowledgeSubjectId(new KnowledgeSubjectId());
+        learningSubject.appendSubRequirement(
                 "Substituting an expression with a variable",
                 PromptFragment.of("")
         );
-        learningRequirement.appendSubRequirement(
+        learningSubject.appendSubRequirement(
                 "Correct substituted expression calculation",
                 PromptFragment.of("")
         );
-        learningRequirement.appendSubRequirement(
+        learningSubject.appendSubRequirement(
                 "3rd sub req ...",
                 PromptFragment.of("")
         );
-        return learningRequirement;
+        return learningSubject;
     }
 }

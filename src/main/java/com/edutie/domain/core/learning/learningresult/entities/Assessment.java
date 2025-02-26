@@ -2,8 +2,8 @@ package com.edutie.domain.core.learning.learningresult.entities;
 
 import com.edutie.api.serialization.serializers.IdOnlyCollectionSerializer;
 import com.edutie.domain.core.common.base.EntityBase;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.domain.core.personalization.PersonalizationError;
 import com.edutie.domain.core.learning.learningresult.identities.AssessmentId;
@@ -55,7 +55,7 @@ public class Assessment extends EntityBase<AssessmentId> {
         return assessment;
     }
 
-    protected LearningRequirement getCorrespondingLearningRequirement() {
+    protected LearningSubject getCorrespondingLearningRequirement() {
         return qualifiedElementalRequirements.getFirst().getLearningRequirement();
     }
 
@@ -74,7 +74,7 @@ public class Assessment extends EntityBase<AssessmentId> {
         return (double) Math.round(
                 (this.qualifiedElementalRequirements.stream().mapToInt(ElementalRequirement::getOrdinal)
                         .max().orElseThrow(() -> new OperationFailureException(PersonalizationError.invalidDifficultyCalculation(this.getId()))) + 1F)
-                        / getCorrespondingLearningRequirement().getElementalRequirements().size() * 100)
+                        / getCorrespondingLearningRequirement().getRequirements().size() * 100)
                 / 100;
     }
 

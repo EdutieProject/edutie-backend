@@ -4,9 +4,9 @@ import com.edutie.application.learning.ancillaries.LatestActivityQueryHandler;
 import com.edutie.application.learning.ancillaries.queries.LatestActivityQuery;
 import com.edutie.application.learning.ancillaries.viewmodels.LatestActivityView;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
-import com.edutie.domain.core.education.learningrequirement.persistence.LearningRequirementPersistence;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.persistence.LearningSubjectPersistence;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
@@ -47,7 +47,7 @@ public class LatestActivityQueryHandlerTests {
     @Autowired
     private LatestActivityQueryHandler latestActivityQueryHandler;
     @Autowired
-    private LearningRequirementPersistence learningRequirementPersistence;
+    private LearningSubjectPersistence learningSubjectPersistence;
     @Autowired
     private LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
     @Autowired
@@ -70,12 +70,12 @@ public class LatestActivityQueryHandlerTests {
     @BeforeEach
     public void testSetup() {
         mockUser.saveToPersistence();
-        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
-        learningRequirementPersistence.save(learningRequirement).throwIfFailure();
+        LearningSubject learningSubject = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningSubjectPersistence.save(learningSubject).throwIfFailure();
         StaticLearningResourceDefinition staticLearningResourceDefinition = StaticLearningResourceDefinition.create(
                 mockUser.getEducatorProfile(),
                 PromptFragment.empty(), PromptFragment.empty(),
-                Set.of(learningRequirement)
+                Set.of(learningSubject)
         );
         learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
 
@@ -91,7 +91,7 @@ public class LatestActivityQueryHandlerTests {
 
         LearningExperience learningExperience = LearningResourceMocks.sampleLearningResource(mockUser.getStudentProfile(), mockUser.getEducatorProfile());
         learningExperience.getQualifiedRequirements().stream().map(ElementalRequirement::getLearningRequirement).collect(Collectors.toSet()).forEach(
-                o -> learningRequirementPersistence.save(o).throwIfFailure()
+                o -> learningSubjectPersistence.save(o).throwIfFailure()
         );
         learningResourcePersistence.save(learningExperience).throwIfFailure();
         learningResult = LearningResult.create(SolutionSubmission.create(

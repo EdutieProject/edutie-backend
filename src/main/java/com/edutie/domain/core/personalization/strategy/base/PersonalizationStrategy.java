@@ -1,6 +1,6 @@
 package com.edutie.domain.core.personalization.strategy.base;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.learning.student.Student;
 
 import java.util.Optional;
@@ -22,10 +22,10 @@ public interface PersonalizationStrategy<TPersonalizationContext, TRule extends 
      * student profile only.
      *
      * @param student              student for which we want to qualify the rule
-     * @param learningRequirements learning requirements to consider
+     * @param learningSubjects learning requirements to consider
      * @return Optional Personalization Rule - depending on whether the rule is qualified.
      */
-    Optional<TRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements);
+    Optional<TRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects);
 
     /**
      * Returns the priority level of this strategy.

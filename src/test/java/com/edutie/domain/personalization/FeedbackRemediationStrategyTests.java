@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
 import com.edutie.domain.core.personalization.strategy.FeedbackRemediationStrategy;
 import com.edutie.mocks.EducationMocks;
@@ -20,22 +20,22 @@ public class FeedbackRemediationStrategyTests {
     @Autowired
     MockUser mockUser;
     FeedbackRemediationStrategy feedbackRemediationStrategy;
-    LearningRequirement learningRequirement;
+    LearningSubject learningSubject;
 
     @BeforeEach
     public void testSetup() {
-        learningRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
+        learningSubject = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
     }
 
 
     @Test
     public void feedbackRemediationStrategyQualifiesTest() {
         feedbackRemediationStrategy = new FeedbackRemediationStrategy(
-                LearningHistoryMocker.learningResultPersistenceForFeedbackRemediationStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(2))
+                LearningHistoryMocker.learningResultPersistenceForFeedbackRemediationStrategy(mockUser.getStudentProfile(), learningSubject, new Grade(2))
         );
 
         Optional<FeedbackRemediationStrategy.FeedbackRemediationRule> rule = feedbackRemediationStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(learningRequirement));
+                mockUser.getStudentProfile(), Set.of(learningSubject));
 
         Assertions.assertTrue(rule.isPresent());
         Assertions.assertEquals(Feedback.of("You need to improve"), rule.get().getContext());
@@ -44,11 +44,11 @@ public class FeedbackRemediationStrategyTests {
     @Test
     public void feedbackRemediationStrategyNoQualificationTest() {
         feedbackRemediationStrategy = new FeedbackRemediationStrategy(
-                LearningHistoryMocker.learningResultPersistenceForFeedbackRemediationStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(4))
+                LearningHistoryMocker.learningResultPersistenceForFeedbackRemediationStrategy(mockUser.getStudentProfile(), learningSubject, new Grade(4))
         );
 
         Optional<FeedbackRemediationStrategy.FeedbackRemediationRule> rule = feedbackRemediationStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(learningRequirement));
+                mockUser.getStudentProfile(), Set.of(learningSubject));
 
         Assertions.assertFalse(rule.isPresent());
     }

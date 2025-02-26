@@ -2,7 +2,7 @@ package com.edutie.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
@@ -46,12 +46,12 @@ public class LearningResultPersistenceTests {
     @Autowired
     private LearningResourcePersistence learningResourcePersistence;
 
-    private LearningRequirement learningRequirement;
+    private LearningSubject learningSubject;
 
     @BeforeEach
     public void testSetup() {
         mockUser.saveToPersistence();
-        learningRequirement = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
+        learningSubject = EducationMocks.independentLearningRequirement(mockUser.getEducatorProfile());
     }
 
     private StaticLearningResourceDefinition createAndSaveLearningResourceDefinition() {
@@ -59,7 +59,7 @@ public class LearningResultPersistenceTests {
                 mockUser.getEducatorProfile(),
                 TheoryDetails.create(PromptFragment.empty(), PromptFragment.empty()),
                 ActivityDetails.create(PromptFragment.empty(), PromptFragment.empty()),
-                Set.of(learningRequirement) // Knowledge subject is used for testing
+                Set.of(learningSubject) // Knowledge subject is used for testing
         );
         learningResourceDefinitionPersistence.save(staticLearningResourceDefinition).throwIfFailure();
         return staticLearningResourceDefinition;
@@ -172,7 +172,7 @@ public class LearningResultPersistenceTests {
         learningResultPersistence.save(learningResult).throwIfFailure();
 
         WrapperResult<List<LearningResult>> learningResultsWrapper = learningResultPersistence.getLearningResultsOfStudentByKnowledgeSubjectId(
-                mockUser.getStudentProfile().getId(), learningRequirement.getKnowledgeSubjectId()
+                mockUser.getStudentProfile().getId(), learningSubject.getKnowledgeSubjectId()
         );
         Assertions.assertTrue(learningResultsWrapper.isSuccess());
         Assertions.assertTrue(learningResultsWrapper.getValue().contains(learningResult));

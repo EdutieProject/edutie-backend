@@ -1,7 +1,7 @@
 package com.edutie.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
@@ -141,8 +141,8 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
             Optional<Student> student = studentRepository.findById(studentId);
             if (student.isEmpty())
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
-            List<LearningRequirement> learningRequirements = learningRequirementRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
-            return WrapperResult.successWrapper(learningRequirements.stream().flatMap(o ->
+            List<LearningSubject> learningSubjects = learningRequirementRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
+            return WrapperResult.successWrapper(learningSubjects.stream().flatMap(o ->
                     learningResultRepository.findStudentsLearningResultsByLearningRequirement(student.get(), o).stream()
             ).toList());
         } catch (Exception ex) {

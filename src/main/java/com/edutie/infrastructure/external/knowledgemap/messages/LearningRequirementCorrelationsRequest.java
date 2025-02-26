@@ -1,11 +1,11 @@
 package com.edutie.infrastructure.external.knowledgemap.messages;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 
 import java.util.Set;
 
 public record LearningRequirementCorrelationsRequest(
-        Set<LearningRequirement> sourceRequirements,
-        Set<LearningRequirement> comparedLearningRequirements
+        Set<LearningSubject> sourceRequirements,
+        Set<LearningSubject> comparedLearningSubjects
 ) {
 }

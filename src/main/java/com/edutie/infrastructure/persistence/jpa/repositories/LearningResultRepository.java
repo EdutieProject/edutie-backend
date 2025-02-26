@@ -1,6 +1,6 @@
 package com.edutie.infrastructure.persistence.jpa.repositories;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
@@ -27,7 +27,7 @@ public interface LearningResultRepository extends JpaRepository<LearningResult, 
             "WHERE lreq = :learningRequirement " +
             "AND lr.student = :student"
     )
-    List<LearningResult> findStudentsLearningResultsByLearningRequirement(@Param("student") Student student, @Param("learningRequirement") LearningRequirement learningRequirement);
+    List<LearningResult> findStudentsLearningResultsByLearningRequirement(@Param("student") Student student, @Param("learningRequirement") LearningSubject learningSubject);
 
     @Query("SELECT lr FROM LearningResult lr " +
             "JOIN lr.solutionSubmission ss " +

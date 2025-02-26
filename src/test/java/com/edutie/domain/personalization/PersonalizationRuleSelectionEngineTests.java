@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationStrategy;
 import com.edutie.domain.core.personalization.strategy.selectionengine.PersonalizationRuleSelectionEngine;
@@ -42,8 +42,8 @@ public class PersonalizationRuleSelectionEngineTests {
     PersonalizationRuleSelectionEngine ruleSelectionEngine = new PersonalizationRuleSelectionEngine(List.of(
             new PersonalizationStrategy<Object, MockPersonalizationRule>() {
                 @Override
-                public Optional<MockPersonalizationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
-                    return Optional.of(new MockPersonalizationRule(learningRequirements));
+                public Optional<MockPersonalizationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
+                    return Optional.of(new MockPersonalizationRule(learningSubjects));
                 }
 
                 @Override
@@ -53,8 +53,8 @@ public class PersonalizationRuleSelectionEngineTests {
             },
             new PersonalizationStrategy<Object, AnotherMockPersonalizationRule>() {
                 @Override
-                public Optional<AnotherMockPersonalizationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
-                    return Optional.of(new AnotherMockPersonalizationRule(learningRequirements));
+                public Optional<AnotherMockPersonalizationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
+                    return Optional.of(new AnotherMockPersonalizationRule(learningSubjects));
                 }
 
                 @Override
@@ -64,8 +64,8 @@ public class PersonalizationRuleSelectionEngineTests {
             },
             new PersonalizationStrategy<Object, ThirdMockPersonalizationRule>() {
                 @Override
-                public Optional<ThirdMockPersonalizationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
-                    return Optional.of(new ThirdMockPersonalizationRule(learningRequirements));
+                public Optional<ThirdMockPersonalizationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
+                    return Optional.of(new ThirdMockPersonalizationRule(learningSubjects));
                 }
 
                 @Override

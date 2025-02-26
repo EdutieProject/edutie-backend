@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.personalization.strategy.RefreshStrategy;
 import com.edutie.mocks.EducationMocks;
 import com.edutie.mocks.ExternalServiceMocks;
@@ -20,11 +20,11 @@ public class RefreshStrategyTests {
     @Autowired
     MockUser mockUser;
     RefreshStrategy refreshStrategy;
-    LearningRequirement learningRequirement;
+    LearningSubject learningSubject;
 
     @BeforeEach
     public void testSetup() {
-        learningRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
+        learningSubject = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
     }
     // TODO pomysl: immediate reinforcement strategy - po zmianie LReq powróć na chwilę do starego?
 
@@ -32,11 +32,11 @@ public class RefreshStrategyTests {
     public void refreshStrategyQualifiesTest() {
         refreshStrategy = new RefreshStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForRefreshStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(4))
+                LearningHistoryMocker.learningResultPersistenceForRefreshStrategy(mockUser.getStudentProfile(), learningSubject, new Grade(4))
         );
 
         Optional<RefreshStrategy.RefreshRule> rule = refreshStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(learningRequirement));
+                mockUser.getStudentProfile(), Set.of(learningSubject));
 
         Assertions.assertTrue(rule.isPresent());
     }
@@ -45,11 +45,11 @@ public class RefreshStrategyTests {
     public void refreshStrategyNoQualificationTest() {
         refreshStrategy = new RefreshStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForRefreshStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(1))
+                LearningHistoryMocker.learningResultPersistenceForRefreshStrategy(mockUser.getStudentProfile(), learningSubject, new Grade(1))
         );
 
         Optional<RefreshStrategy.RefreshRule> rule = refreshStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(learningRequirement));
+                mockUser.getStudentProfile(), Set.of(learningSubject));
 
         Assertions.assertFalse(rule.isPresent());
     }

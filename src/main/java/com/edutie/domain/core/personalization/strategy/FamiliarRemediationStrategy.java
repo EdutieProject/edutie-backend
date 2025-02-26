@@ -1,7 +1,7 @@
 package com.edutie.domain.core.personalization.strategy;
 
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
@@ -33,11 +33,11 @@ public class FamiliarRemediationStrategy implements PersonalizationStrategy<Feed
      * does not apply, the returned optional is empty.
      *
      * @param student              student
-     * @param learningRequirements learning requirements to consider
+     * @param learningSubjects learning requirements to consider
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<FamiliarRemediationRule> qualifyRule(Student student, Set<LearningRequirement> learningRequirements) {
+    public Optional<FamiliarRemediationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
         List<LearningResult> pastPerformance = student.getLatestLearningResults(learningResultPersistence);
         if (pastPerformance.isEmpty())
             return Optional.empty();
@@ -48,7 +48,7 @@ public class FamiliarRemediationStrategy implements PersonalizationStrategy<Feed
         Optional<LearningResult> highestCorrelatedResult = topResults.stream()
                 .max(Comparator.comparing(result -> {
                     Set<LearningRequirementCorrelation> learningRequirementsCorrelation = knowledgeMapService
-                            .getLearningRequirementCorrelations(learningRequirements, result.getAssociatedLearningRequirements()).getValue();
+                            .getLearningRequirementCorrelations(learningSubjects, result.getAssociatedLearningRequirements()).getValue();
                     return learningRequirementsCorrelation.stream()
                             .mapToDouble(LearningRequirementCorrelation::getCorrelationFactor)
                             .average()

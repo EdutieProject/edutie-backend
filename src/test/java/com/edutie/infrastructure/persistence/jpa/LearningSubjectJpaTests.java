@@ -3,7 +3,7 @@ package com.edutie.infrastructure.persistence.jpa;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.domain.core.education.educator.Educator;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.infrastructure.persistence.jpa.repositories.AdministratorRepository;
 import com.edutie.infrastructure.persistence.jpa.repositories.EducatorRepository;
@@ -16,11 +16,11 @@ import org.springframework.boot.test.context.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class LearningRequirementJpaTests {
+public class LearningSubjectJpaTests {
 	private final UserId testUserId = new UserId();
 	private final Administrator administrator = Administrator.create(testUserId);
 	private Educator creator;
-	private LearningRequirement learningRequirement;
+	private LearningSubject learningSubject;
 
 
 	@Autowired
@@ -39,44 +39,44 @@ public class LearningRequirementJpaTests {
 		Science science = Science.create(creator).getValue();
 		scienceRepository.save(science);
 
-		learningRequirement = LearningRequirement.create(creator);
+		learningSubject = LearningSubject.createBlank(creator);
 	}
 
 	@Test
 	public void testLearningRequirementCreation() {
 
-		assertNotNull(learningRequirement);
-		assertEquals(creator, learningRequirement.getAuthorEducator());
+		assertNotNull(learningSubject);
+		assertEquals(creator, learningSubject.getAuthorEducator());
 
-		learningRequirementRepository.save(learningRequirement);
+		learningRequirementRepository.save(learningSubject);
 
-		var fetched = learningRequirementRepository.findById(learningRequirement.getId()).orElseThrow();
-		assertNull(learningRequirement);
+		var fetched = learningRequirementRepository.findById(learningSubject.getId()).orElseThrow();
+		assertNull(learningSubject);
 	}
 
 	@Test
 	public void testCourseNameAndDescription() {
-		learningRequirement.setName("TestName");
+		learningSubject.setName("TestName");
 
-		assertEquals("TestName", learningRequirement.getName());
+		assertEquals("TestName", learningSubject.getName());
 	}
 
 	@Test
 	public void testOneToManyRelationship() {
 
-		LearningRequirement learningRequirement1 = LearningRequirement.create(creator);
-		LearningRequirement learningRequirement2 = LearningRequirement.create(creator);
+		LearningSubject learningSubject1 = LearningSubject.createBlank(creator);
+		LearningSubject learningSubject2 = LearningSubject.createBlank(creator);
 
-		learningRequirementRepository.save(learningRequirement);
-		learningRequirementRepository.save(learningRequirement1);
-		learningRequirementRepository.save(learningRequirement2);
+		learningRequirementRepository.save(learningSubject);
+		learningRequirementRepository.save(learningSubject1);
+		learningRequirementRepository.save(learningSubject2);
 
-		var fetched = learningRequirementRepository.findById(learningRequirement.getId()).orElseThrow();
-		var fetched1 = learningRequirementRepository.findById(learningRequirement1.getId()).orElseThrow();
-		var fetched2 = learningRequirementRepository.findById(learningRequirement2.getId()).orElseThrow();
+		var fetched = learningRequirementRepository.findById(learningSubject.getId()).orElseThrow();
+		var fetched1 = learningRequirementRepository.findById(learningSubject1.getId()).orElseThrow();
+		var fetched2 = learningRequirementRepository.findById(learningSubject2.getId()).orElseThrow();
 
-		assertNull(learningRequirement);
-		assertNull(learningRequirement1);
-		assertNull(learningRequirement2);
+		assertNull(learningSubject);
+		assertNull(learningSubject1);
+		assertNull(learningSubject2);
 	}
 }

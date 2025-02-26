@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
 import com.edutie.domain.core.personalization.strategy.RecommendationStrategy;
 import com.edutie.infrastructure.external.knowledgemap.KnowledgeMapService;
 import com.edutie.mocks.EducationMocks;
@@ -21,24 +21,24 @@ public class RecommendationStrategyTests {
     @Autowired
     MockUser mockUser;
     RecommendationStrategy recommendationStrategy;
-    LearningRequirement learningRequirement;
+    LearningSubject learningSubject;
     @Autowired
     KnowledgeMapService knowledgeMapService;
 
     @BeforeEach
     public void testSetup() {
-        learningRequirement = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
+        learningSubject = EducationMocks.relatedLearningRequirement(mockUser.getEducatorProfile());
     }
 
     @Test
     public void recommendationStrategyQualifiesTest() {
         recommendationStrategy = new RecommendationStrategy(
                 knowledgeMapService,
-                LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningRequirement, Grade.of(5))
+                LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningSubject, Grade.of(5))
         );
 
         Optional<RecommendationStrategy.RecommendationRule> rule = recommendationStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(learningRequirement));
+                mockUser.getStudentProfile(), Set.of(learningSubject));
 
         Assertions.assertTrue(rule.isPresent());
     }
@@ -47,11 +47,11 @@ public class RecommendationStrategyTests {
     public void recommendationStrategyNoQualificationTest() {
         recommendationStrategy = new RecommendationStrategy(
                 ExternalServiceMocks.knowledgeMapServiceMock(),
-                LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningRequirement, new Grade(2))
+                LearningHistoryMocker.learningResultPersistenceForRecommendationStrategy(mockUser.getStudentProfile(), learningSubject, new Grade(2))
         );
 
         Optional<RecommendationStrategy.RecommendationRule> rule = recommendationStrategy.qualifyRule(
-                mockUser.getStudentProfile(), Set.of(learningRequirement));
+                mockUser.getStudentProfile(), Set.of(learningSubject));
 
         Assertions.assertFalse(rule.isPresent());
     }

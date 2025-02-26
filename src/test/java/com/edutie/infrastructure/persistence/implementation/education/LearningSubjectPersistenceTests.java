@@ -4,8 +4,8 @@ import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
-import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
-import com.edutie.domain.core.education.learningrequirement.persistence.LearningRequirementPersistence;
+import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningrequirement.persistence.LearningSubjectPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.infrastructure.persistence.jpa.repositories.EducatorRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,13 +15,13 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 
 @SpringBootTest
-public class LearningRequirementPersistenceTests {
+public class LearningSubjectPersistenceTests {
 	private final UserId userId = new UserId();
 	private final Administrator administrator = Administrator.create(userId);
 	private final Educator educator = Educator.create(userId, administrator);
 	private final Science science = Science.create(educator).getValue();
 	@Autowired
-	LearningRequirementPersistence learningRequirementPersistence;
+	LearningSubjectPersistence learningSubjectPersistence;
 	@Autowired
 	EducatorRepository educatorRepository;
 	@Autowired
@@ -35,24 +35,24 @@ public class LearningRequirementPersistenceTests {
 
 	@Test
 	public void defaultSaveTest() {
-		LearningRequirement learningRequirement = LearningRequirement.create(educator);
-		assert learningRequirementPersistence.save(learningRequirement).isSuccess();
+		LearningSubject learningSubject = LearningSubject.createBlank(educator);
+		assert learningSubjectPersistence.save(learningSubject).isSuccess();
 
-		LearningRequirement fetched = learningRequirementPersistence.getById(learningRequirement.getId()).getValue();
-		assert fetched.equals(learningRequirement);
+		LearningSubject fetched = learningSubjectPersistence.getById(learningSubject.getId()).getValue();
+		assert fetched.equals(learningSubject);
 	}
 
 	@Test
 	public void wholeSaveTest() {
-		LearningRequirement learningRequirement = LearningRequirement.create(educator);
-		learningRequirement.appendSubRequirement("hello", PromptFragment.of(""));
-		learningRequirement.appendSubRequirement("universe!", PromptFragment.of(""));
-		Result result = learningRequirementPersistence.save(learningRequirement);
+		LearningSubject learningSubject = LearningSubject.createBlank(educator);
+		learningSubject.appendSubRequirement("hello", PromptFragment.of(""));
+		learningSubject.appendSubRequirement("universe!", PromptFragment.of(""));
+		Result result = learningSubjectPersistence.save(learningSubject);
 		if (result.isFailure())
 			throw new AssertionError(result.getError());
 
-		LearningRequirement fetched = learningRequirementPersistence.getById(learningRequirement.getId()).getValue();
-		assert fetched.equals(learningRequirement);
-		assert fetched.getElementalRequirements().size() == 2;
+		LearningSubject fetched = learningSubjectPersistence.getById(learningSubject.getId()).getValue();
+		assert fetched.equals(learningSubject);
+		assert fetched.getRequirements().size() == 2;
 	}
 }
