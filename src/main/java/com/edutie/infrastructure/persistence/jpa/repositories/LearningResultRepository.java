@@ -1,6 +1,6 @@
 package com.edutie.infrastructure.persistence.jpa.repositories;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;

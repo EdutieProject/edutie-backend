@@ -3,7 +3,7 @@ package com.edutie.mocks;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 
 public class EducationMocks {
     public static LearningSubject independentLearningRequirement(Educator educator) {

@@ -1,6 +1,6 @@
 package com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation;
 
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

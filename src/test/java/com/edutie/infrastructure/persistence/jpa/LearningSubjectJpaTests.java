@@ -3,7 +3,7 @@ package com.edutie.infrastructure.persistence.jpa;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.domain.core.education.educator.Educator;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.infrastructure.persistence.jpa.repositories.AdministratorRepository;
 import com.edutie.infrastructure.persistence.jpa.repositories.EducatorRepository;

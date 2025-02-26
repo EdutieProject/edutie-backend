@@ -1,7 +1,7 @@
 package com.edutie.domain.service.personalization.learningrequirement.implementation;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
-import com.edutie.domain.core.education.learningrequirement.persistence.LearningSubjectPersistence;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.service.personalization.learningrequirement.DynamicLearningRequirementSelectionService;

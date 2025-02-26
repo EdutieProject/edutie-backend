@@ -1,8 +1,8 @@
 package com.edutie.domain.core.personalization.strategy;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;

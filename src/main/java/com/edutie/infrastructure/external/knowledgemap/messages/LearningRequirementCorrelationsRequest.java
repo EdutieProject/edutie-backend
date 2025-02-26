@@ -1,6 +1,6 @@
 package com.edutie.infrastructure.external.knowledgemap.messages;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 
 import java.util.Set;
 

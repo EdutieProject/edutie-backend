@@ -9,15 +9,10 @@ import lombok.Getter;
  */
 @Getter
 public class KnowledgeSubject extends EntityBase<KnowledgeSubjectId> {
-    private String title;
 
-    public static KnowledgeSubject create(
-            KnowledgeSubjectId id,
-            String title
-    ) {
+    public static KnowledgeSubject create(KnowledgeSubjectId id) {
         KnowledgeSubject knowledgeSubject = new KnowledgeSubject();
         knowledgeSubject.setId(id);
-        knowledgeSubject.title = title;
         return knowledgeSubject;
     }
 }

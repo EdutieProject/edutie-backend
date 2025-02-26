@@ -1,8 +1,8 @@
-package com.edutie.domain.core.education.learningrequirement.entities;
+package com.edutie.domain.core.education.learningsubject.entities;
 
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

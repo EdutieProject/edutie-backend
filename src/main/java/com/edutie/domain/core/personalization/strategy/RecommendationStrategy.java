@@ -2,7 +2,7 @@ package com.edutie.domain.core.personalization.strategy;
 
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;

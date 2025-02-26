@@ -2,8 +2,8 @@ package com.edutie.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
 import com.edutie.domain.core.learning.learningexperience.entities.Hint;

@@ -2,9 +2,9 @@ package com.edutie.domain.core.learning.learningresult.entities;
 
 import com.edutie.api.serialization.serializers.IdOnlyCollectionSerializer;
 import com.edutie.domain.core.common.base.EntityBase;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.personalization.PersonalizationError;
 import com.edutie.domain.core.learning.learningresult.identities.AssessmentId;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;

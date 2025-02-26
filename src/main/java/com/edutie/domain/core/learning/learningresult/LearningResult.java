@@ -1,9 +1,9 @@
 package com.edutie.domain.core.learning.learningresult;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;

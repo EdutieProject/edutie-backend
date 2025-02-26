@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationStrategy;
 import com.edutie.domain.core.personalization.strategy.selectionengine.PersonalizationRuleSelectionEngine;

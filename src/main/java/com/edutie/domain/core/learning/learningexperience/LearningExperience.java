@@ -2,7 +2,7 @@ package com.edutie.domain.core.learning.learningexperience;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
 import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
 import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;

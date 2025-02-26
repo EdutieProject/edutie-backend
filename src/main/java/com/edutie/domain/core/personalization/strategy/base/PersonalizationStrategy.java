@@ -1,6 +1,6 @@
 package com.edutie.domain.core.personalization.strategy.base;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.learning.student.Student;
 
 import java.util.Optional;

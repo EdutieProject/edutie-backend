@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.personalization.strategy.RecommendationStrategy;
 import com.edutie.infrastructure.external.knowledgemap.KnowledgeMapService;
 import com.edutie.mocks.EducationMocks;

@@ -1,6 +1,6 @@
 package com.edutie.domain.personalization;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.personalization.strategy.RefreshStrategy;
 import com.edutie.mocks.EducationMocks;
 import com.edutie.mocks.ExternalServiceMocks;

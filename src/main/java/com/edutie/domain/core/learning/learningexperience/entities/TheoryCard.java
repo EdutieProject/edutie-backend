@@ -1,7 +1,7 @@
 package com.edutie.domain.core.learning.learningexperience.entities;
 
 import com.edutie.domain.core.common.base.EntityBase;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.identities.TheoryCardId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

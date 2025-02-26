@@ -3,7 +3,7 @@ package com.edutie.infrastructure.external.knowledgemap.implementation;
 import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.LearningRequirementCorrelation;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.infrastructure.external.common.ExternalInfrastructureHandler;
 import com.edutie.infrastructure.external.knowledgemap.KnowledgeMapService;
 import com.edutie.infrastructure.external.knowledgemap.messages.LearningRequirementCorrelationsRequest;

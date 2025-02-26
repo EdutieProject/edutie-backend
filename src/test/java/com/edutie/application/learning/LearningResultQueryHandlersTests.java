@@ -3,7 +3,7 @@ package com.edutie.application.learning;
 import com.edutie.application.learning.learningresult.GetLearningResultByIdQueryHandler;
 import com.edutie.application.learning.learningresult.queries.GetLearningResultByIdQuery;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
 import com.edutie.domain.core.learning.learningexperience.entities.Hint;

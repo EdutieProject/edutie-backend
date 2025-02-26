@@ -1,8 +1,8 @@
 package com.edutie.infrastructure.persistence.implementation.education;
 
-import com.edutie.domain.core.education.learningrequirement.LearningSubject;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
-import com.edutie.domain.core.education.learningrequirement.persistence.LearningSubjectPersistence;
+import com.edutie.domain.core.education.learningsubject.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.infrastructure.persistence.PersistenceError;
 import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
 import org.springframework.data.jpa.repository.*;

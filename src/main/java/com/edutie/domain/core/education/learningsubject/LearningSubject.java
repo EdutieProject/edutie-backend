@@ -1,13 +1,13 @@
-package com.edutie.domain.core.education.learningrequirement;
+package com.edutie.domain.core.education.learningsubject;
 
 import com.edutie.domain.core.common.DomainErrors;
 import com.edutie.domain.core.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
-import com.edutie.domain.core.education.learningrequirement.entities.KnowledgeOrigin;
-import com.edutie.domain.core.education.learningrequirement.entities.LearningSubjectRequirement;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
+import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

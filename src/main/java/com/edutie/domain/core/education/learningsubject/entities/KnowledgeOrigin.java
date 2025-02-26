@@ -1,4 +1,4 @@
-package com.edutie.domain.core.education.learningrequirement.entities;
+package com.edutie.domain.core.education.learningsubject.entities;
 
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import jakarta.persistence.AttributeOverride;

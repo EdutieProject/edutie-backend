@@ -5,7 +5,7 @@ import com.edutie.application.learning.learningresource.GetLearningResourcesByDe
 import com.edutie.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.Activity;
 import com.edutie.domain.core.learning.learningexperience.entities.Hint;
