@@ -1,0 +1,143 @@
+package com.edutie.domain.core.education.learningrequirement;
+
+import com.edutie.domain.core.common.DomainErrors;
+import com.edutie.domain.core.common.base.EducatorCreatedAuditableEntity;
+import com.edutie.domain.core.common.generationprompt.PromptFragment;
+import com.edutie.domain.core.education.educator.Educator;
+import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.domain.core.education.learningrequirement.entities.ElementalRequirement;
+import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.domain.core.learning.learningresult.LearningResult;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import validation.Result;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * Learning Requirement entity represents the requirements that student exercises to gain knowledge.
+ */
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+public class LearningRequirement extends EducatorCreatedAuditableEntity<LearningRequirementId> {
+    @OneToMany(targetEntity = ElementalRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OrderBy("ordinal")
+    private List<ElementalRequirement> elementalRequirements = new ArrayList<>();
+    private String name;
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_node_id"))
+    private KnowledgeSubjectId knowledgeSubjectId;
+
+    /**
+     * Recommended constructor associating Learning Requirement with an educator and a science
+     *
+     * @param educator creator reference
+     * @return Learning Requirement
+     */
+    public static LearningRequirement create(Educator educator) {
+        LearningRequirement learningRequirement = new LearningRequirement();
+        learningRequirement.setId(new LearningRequirementId());
+        learningRequirement.setCreatedBy(educator.getOwnerUserId());
+        learningRequirement.setAuthorEducator(educator);
+        return learningRequirement;
+    }
+
+    /**
+     * Appends sub requirement at the end of the sub requirement list
+     *
+     * @param requirementText       text of what is required
+     * @param scientificDescription description of the sub requirement
+     */
+    public void appendSubRequirement(String requirementText, PromptFragment scientificDescription) {
+        elementalRequirements.add(ElementalRequirement.create(this, PromptFragment.of(requirementText), scientificDescription, elementalRequirements.size()));
+    }
+
+    /**
+     * Inserts sub requirement into given index, moving all the next sub requirements forward and
+     * updating their ordinal
+     *
+     * @param requirementText                     sub requirement text
+     * @param subRequirementScientificDescription sub requirement descriptor
+     * @param desiredIndex                        desired index
+     * @return Result object
+     */
+    public Result insertSubRequirement(String requirementText, PromptFragment subRequirementScientificDescription, int desiredIndex) {
+        appendSubRequirement(requirementText, subRequirementScientificDescription);
+        return moveSubRequirement(elementalRequirements.size() - 1, desiredIndex);
+    }
+
+    /**
+     * Moves sub requirement in the list to the desired index
+     *
+     * @param currentIndex current sub requirement index
+     * @param desiredIndex desired sub requirement index
+     * @return Result object
+     */
+    public Result moveSubRequirement(int currentIndex, int desiredIndex) {
+        if (currentIndex < 0 || currentIndex >= elementalRequirements.size() || desiredIndex < 0 || desiredIndex >= elementalRequirements.size())
+            return Result.failure(DomainErrors.invalidIndex(ElementalRequirement.class));
+        ElementalRequirement elementalRequirement = elementalRequirements.get(currentIndex);
+        elementalRequirements.remove(elementalRequirement);
+        elementalRequirements.add(desiredIndex, elementalRequirement);
+        for (int i = 0; i < elementalRequirements.size(); i++) {
+            elementalRequirements.get(i).setOrdinal(i);
+        }
+        return Result.success();
+    }
+
+    /**
+     * Removes sub requirement at given index
+     *
+     * @param index index
+     * @return Result object
+     */
+    public Result removeSubRequirement(int index) {
+        if (elementalRequirements.remove(index) == null)
+            return Result.failure(DomainErrors.invalidIndex(ElementalRequirement.class));
+        for (int i = 0; i < elementalRequirements.size(); i++) {
+            elementalRequirements.get(i).setOrdinal(i);
+        }
+        return Result.success();
+    }
+
+    /**
+     * Retrieves sub requirements with respect to their ordinal.
+     *
+     * @param qualifiedOrdinal as end index
+     * @return list of Sub Requirements
+     */
+    public List<ElementalRequirement> getQualifiedSubRequirements(int qualifiedOrdinal) {
+        return elementalRequirements.stream().filter(o -> o.getOrdinal() <= qualifiedOrdinal).toList();
+    }
+
+    /**
+     * Retrieves the qualified elemental requirements based on the past results provided.
+     *
+     * @param pastResults   past results provided as list. Their grading will affect the qualification.
+     * @param desiredAmount amount of the elemental reqs to pick
+     * @return Set of elemental requirements.
+     */
+    public Set<ElementalRequirement> calculateQualifiedElementalRequirements(List<LearningResult> pastResults, int desiredAmount) {
+        // handle no past performance case
+        if (pastResults.isEmpty()) {
+            return elementalRequirements.stream().filter(o -> o.getOrdinal() < desiredAmount).collect(Collectors.toSet());
+        }
+        // calculate qualified requirements based on past performance
+        double meanOverallGrade = pastResults.stream().flatMap(o -> o.getAssessments().stream())
+                .map(o -> o.getGrade().gradeNumber()).mapToInt(Integer::intValue).average().orElse(1d); // TODO: or else should give the value from correlated results
+        double desiredGradeAsPercentage = ((meanOverallGrade + pastResults.getLast().getAverageGradeAsDouble()) / 2) / Grade.MAX_GRADE.gradeNumber();
+        ;
+        int maxQualifiedRequirementOrdinal = (int) Math.ceil(desiredGradeAsPercentage * elementalRequirements.size());
+        return elementalRequirements.stream().filter(o ->
+                o.getOrdinal() <= maxQualifiedRequirementOrdinal &&
+                        o.getOrdinal() > maxQualifiedRequirementOrdinal - desiredAmount
+        ).collect(Collectors.toSet());
+    }
+}

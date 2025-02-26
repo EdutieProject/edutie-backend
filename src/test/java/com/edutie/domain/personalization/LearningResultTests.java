@@ -1,0 +1,74 @@
+package com.edutie.domain.personalization;
+
+import com.edutie.domain.core.administration.UserId;
+import com.edutie.domain.core.administration.administrator.Administrator;
+import com.edutie.domain.core.education.educator.Educator;
+import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.domain.core.education.learningrequirement.identities.LearningRequirementId;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
+import com.edutie.domain.core.learning.learningresult.LearningResult;
+import com.edutie.domain.core.learning.learningresult.entities.Assessment;
+import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
+import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.student.Student;
+import com.edutie.mocks.EducationMocks;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+import java.util.Set;
+
+@SpringBootTest
+public class LearningResultTests {
+    private final UserId userId = new UserId();
+    private final Educator educator = Educator.create(userId, Administrator.create(userId));
+    private final Student student = Student.create(userId);
+
+    @Test
+    public void isSuccessfulFalseTest() {
+        LearningResult learningResult = LearningResult.create(
+                SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "Report text", 0),
+                new Feedback("That is a feedback"),
+                Set.of(
+                        Assessment.create(new LearningRequirementId(), Grade.MIN_GRADE, Feedback.of("Text of the feedback"), List.of()),
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback part 2"), List.of())
+                )
+        );
+
+        Assertions.assertFalse(learningResult.isSuccessful());
+    }
+
+    @Test
+    public void isSuccessfulTrueTest() {
+        LearningResult learningResult = LearningResult.create(
+                SolutionSubmission.create(student, null, DefinitionType.DYNAMIC, "Report text", 0),
+                new Feedback("That is a feedback"),
+                Set.of(
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"), List.of()),
+                        Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback part 2"), List.of())
+                )
+        );
+
+        Assertions.assertTrue(learningResult.isSuccessful());
+    }
+
+    @Test
+    public void difficultyFactorTest() {
+        LearningRequirement learningRequirement = EducationMocks.independentLearningRequirement(educator);
+        Assessment assessment = Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"),
+                // get last elemental requirement only from 3 out there
+                learningRequirement.getElementalRequirements().subList(2,3));
+
+        System.out.println(assessment.getDifficultyFactor());
+        Assertions.assertEquals(1D, assessment.getDifficultyFactor());
+
+        LearningRequirement learningRequirement2 = EducationMocks.independentLearningRequirement(educator);
+        Assessment assessment2 = Assessment.create(new LearningRequirementId(), Grade.MAX_GRADE, Feedback.of("Text of the feedback"),
+                // get last elemental requirement only from 3 out there
+                learningRequirement2.getElementalRequirements().subList(1,2));
+
+        System.out.println(assessment2.getDifficultyFactor());
+        Assertions.assertEquals(0.67D, assessment2.getDifficultyFactor());
+    }
+}

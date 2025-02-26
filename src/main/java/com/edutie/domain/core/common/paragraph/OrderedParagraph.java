@@ -1,0 +1,18 @@
+package com.edutie.domain.core.common.paragraph;
+
+import com.edutie.domain.core.common.base.identity.Identifier;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * A Paragraph but with an ordinal, knowing its order
+ *
+ * @param <TId> Type of paragraph id.
+ */
+@Getter
+@Setter
+@MappedSuperclass
+public abstract class OrderedParagraph<TId extends Identifier<?>> extends Paragraph<TId> {
+    private int ordinal = 0;
+}

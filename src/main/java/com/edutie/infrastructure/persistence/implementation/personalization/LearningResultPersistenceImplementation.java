@@ -1,0 +1,152 @@
+package com.edutie.infrastructure.persistence.implementation.personalization;
+
+import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.domain.core.education.learningrequirement.LearningRequirement;
+import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
+import com.edutie.domain.core.learning.learningresult.LearningResult;
+import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
+import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
+import com.edutie.domain.core.learning.student.Student;
+import com.edutie.domain.core.learning.student.identities.StudentId;
+import com.edutie.infrastructure.persistence.PersistenceError;
+import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
+import com.edutie.infrastructure.persistence.jpa.repositories.LearningResultRepository;
+import com.edutie.infrastructure.persistence.jpa.repositories.StudentRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Limit;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import validation.Result;
+import validation.WrapperResult;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+@Component
+@RequiredArgsConstructor
+public class LearningResultPersistenceImplementation implements LearningResultPersistence {
+    private final LearningResultRepository learningResultRepository;
+    private final StudentRepository studentRepository;
+    private final LearningRequirementRepository learningRequirementRepository;
+
+    /**
+     * Override this to provide repository for default methods
+     *
+     * @return crud jpa repository
+     */
+    @Override
+    public JpaRepository<LearningResult, LearningResultId> getRepository() {
+        return learningResultRepository;
+    }
+
+    /**
+     * Override this to provide entity class for default methods
+     *
+     * @return class of persistence entity
+     */
+    @Override
+    public Class<LearningResult> entityClass() {
+        return LearningResult.class;
+    }
+
+    /**
+     * Retrieves latest results associated with given student. Results are ordered from the latest to the older.
+     * The retrieved amount is supplied as a result
+     *
+     * @param studentId student id
+     * @param amount    learning result amount
+     * @return Wrapper Result of Learning Results
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLatestResultsOfStudent(StudentId studentId, Integer amount, LocalDateTime maxPastDate) {
+        try {
+            Optional<Student> student = studentRepository.findById(studentId);
+            if (student.isEmpty())
+                return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
+            List<LearningResult> learningResults;
+            if (maxPastDate != null)
+                learningResults = learningResultRepository.findLearningResultsByStudentAndCreatedOnAfterOrderByCreatedOnDesc(
+                        student.get(), maxPastDate, amount == null ? Limit.unlimited() : Limit.of(amount)
+                );
+            else
+                learningResults = learningResultRepository.findLearningResultsByStudentOrderByCreatedOnDesc(student.get(), Limit.of(amount));
+            return Result.successWrapper(learningResults);
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
+        }
+
+    }
+
+    /**
+     * Retrieves latest learning result of student, if any.
+     *
+     * @param studentId student id
+     * @return Wrapper Result of Learning Result
+     */
+    @Override
+    public WrapperResult<LearningResult> getSingleLatestResultOfStudent(StudentId studentId) {
+        Optional<Student> student = studentRepository.findById(studentId);
+        return student.map(value -> learningResultRepository.findLearningResultsByStudentOrderByCreatedOnDesc(value, Limit.of(1)).stream().findFirst()
+                .map(WrapperResult::successWrapper)
+                .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)))).orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
+    }
+
+    /**
+     * Provides learning results associated with given learning resource definition ids.
+     *
+     * @param studentId                     student id
+     * @param learningResourceDefinitionIds learning resource definition ids set
+     * @return Wrapper result of Learning Result list
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionIds(StudentId studentId, Set<LearningResourceDefinitionId> learningResourceDefinitionIds) {
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        return studentOptional.map(student -> learningResultRepository.findLearningResultsByDefinitionIdsAndStudent(student, learningResourceDefinitionIds))
+                .map(WrapperResult::successWrapper)
+                .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
+    }
+
+    /**
+     * Provides learning results associated with certain learning resource definition id.
+     *
+     * @param studentId                    student Id
+     * @param learningResourceDefinitionId learning resource definition id
+     * @return Learning Result List Wrapper Result
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByLearningResourceDefinitionId(StudentId studentId, LearningResourceDefinitionId learningResourceDefinitionId) {
+        try {
+            Optional<Student> student = studentRepository.findById(studentId);
+            return student
+                    .map(value -> WrapperResult.successWrapper(learningResultRepository
+                            .findLearningResultsByDefinitionIdsAndStudent(value, Set.of(learningResourceDefinitionId))))
+                    .orElseGet(() -> WrapperResult.failureWrapper(PersistenceError.notFound(Student.class)));
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
+        }
+    }
+
+    /**
+     * Provides learning results associated with the L. requirement of certain knowledge subject id created by given student.
+     *
+     * @param studentId          student id
+     * @param knowledgeSubjectId knowledge subject id
+     * @return Learning Result List Wrapper Result
+     */
+    @Override
+    public WrapperResult<List<LearningResult>> getLearningResultsOfStudentByKnowledgeSubjectId(StudentId studentId, KnowledgeSubjectId knowledgeSubjectId) {
+        try {
+            Optional<Student> student = studentRepository.findById(studentId);
+            if (student.isEmpty())
+                return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
+            List<LearningRequirement> learningRequirements = learningRequirementRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
+            return WrapperResult.successWrapper(learningRequirements.stream().flatMap(o ->
+                    learningResultRepository.findStudentsLearningResultsByLearningRequirement(student.get(), o).stream()
+            ).toList());
+        } catch (Exception ex) {
+            return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(ex));
+        }
+    }
+}
