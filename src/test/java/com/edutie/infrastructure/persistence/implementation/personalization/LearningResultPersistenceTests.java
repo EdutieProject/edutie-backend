@@ -5,10 +5,8 @@ import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSub
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.Activity;
-import com.edutie.domain.core.learning.learningexperience.entities.Hint;
-import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
@@ -44,7 +42,7 @@ public class LearningResultPersistenceTests {
     @Autowired
     private LearningResultPersistence learningResultPersistence;
     @Autowired
-    private LearningResourcePersistence learningResourcePersistence;
+    private LearningExperiencePersistence learningExperiencePersistence;
 
     private LearningSubject learningSubject;
 
@@ -71,11 +69,11 @@ public class LearningResultPersistenceTests {
                 staticLearningResourceDefinition,
                 staticLearningResourceDefinition.getLearningRequirements().stream()
                         .flatMap(o -> o.getElementalRequirements().stream()).filter(o -> o.getOrdinal() < 1).collect(Collectors.toSet()),
-                Activity.create("Activity text", Set.of(Hint.create("aaa"))),
+                ActivityBase.create("Activity text", Set.of(Hint.create("aaa"))),
                 Set.of(TheoryCard.create(new LearningRequirementId(), "dsadas")),
                 new Visualisation("")
         );
-        learningResourcePersistence.save(learningExperience).throwIfFailure();
+        learningExperiencePersistence.save(learningExperience).throwIfFailure();
         return learningExperience;
     }
 
@@ -141,7 +139,7 @@ public class LearningResultPersistenceTests {
         StaticLearningResourceDefinition staticLearningResourceDefinition = createAndSaveLearningResourceDefinition();
         LearningExperience sampleLearningExperience = createAndSaveLearningResource(staticLearningResourceDefinition);
 
-        learningResourcePersistence.save(sampleLearningExperience).throwIfFailure();
+        learningExperiencePersistence.save(sampleLearningExperience).throwIfFailure();
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningExperience.getId(), DefinitionType.DYNAMIC, "My report", 0),
@@ -162,7 +160,7 @@ public class LearningResultPersistenceTests {
         StaticLearningResourceDefinition staticLearningResourceDefinition = createAndSaveLearningResourceDefinition();
         LearningExperience sampleLearningExperience = createAndSaveLearningResource(staticLearningResourceDefinition);
 
-        learningResourcePersistence.save(sampleLearningExperience).throwIfFailure();
+        learningExperiencePersistence.save(sampleLearningExperience).throwIfFailure();
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningExperience.getId(), DefinitionType.DYNAMIC, "My report", 0),
@@ -183,7 +181,7 @@ public class LearningResultPersistenceTests {
         StaticLearningResourceDefinition staticLearningResourceDefinition = createAndSaveLearningResourceDefinition();
         LearningExperience sampleLearningExperience = createAndSaveLearningResource(staticLearningResourceDefinition);
 
-        learningResourcePersistence.save(sampleLearningExperience).throwIfFailure();
+        learningExperiencePersistence.save(sampleLearningExperience).throwIfFailure();
 
         LearningResult learningResult = LearningResult.create(
                 SolutionSubmission.create(mockUser.getStudentProfile(), sampleLearningExperience.getId(), DefinitionType.DYNAMIC, "My report", 0),

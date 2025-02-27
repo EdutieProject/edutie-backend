@@ -13,8 +13,8 @@ import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.Activity;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
@@ -50,7 +50,7 @@ public class LearningExperienceCommandHandlersTests {
     @Autowired
     LearningResultPersistence learningResultPersistence;
     @Autowired
-    LearningResourcePersistence learningResourcePersistence;
+    LearningExperiencePersistence learningExperiencePersistence;
     @Autowired
     LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
     // Service
@@ -82,17 +82,17 @@ public class LearningExperienceCommandHandlersTests {
         createLearningResourceCommandHandler = new CreateLearningResourceCommandHandlerImplementation(
                 studentPersistence,
                 learningResourceDefinitionPersistence,
-                learningResourcePersistence,
+                learningExperiencePersistence,
                 learningResourcePersonalizationService
         );
         createDynamicLearningResourceCommandHandler = new CreateDynamicLearningResourceCommandHandlerImplementation(
                 studentPersistence,
                 (Student student) -> WrapperResult.successWrapper(Set.of(learningSubject)),
                 learningResourcePersonalizationService,
-                learningResourcePersistence
+                learningExperiencePersistence
         );
         createSimilarLearningResourceCommandHandler = new CreateSimilarLearningResourceCommandHandlerImplementation(
-                learningResourcePersistence,
+                learningExperiencePersistence,
                 learningResourceDefinitionPersistence,
                 studentPersistence,
                 learningResourcePersonalizationService
@@ -116,7 +116,7 @@ public class LearningExperienceCommandHandlersTests {
         WrapperResult<LearningExperience> learningResourceWrapperResult = createLearningResourceCommandHandler.handle(command).throwIfFailure();
 
         Assertions.assertTrue(learningResourceWrapperResult.isSuccess());
-        Assertions.assertFalse(learningResourceWrapperResult.getValue().getQualifiedRequirements().isEmpty());
+        Assertions.assertFalse(learningResourceWrapperResult.getValue().getRequirements().isEmpty());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class LearningExperienceCommandHandlersTests {
 
         Assertions.assertTrue(learningResourceWrapper.isSuccess());
         Assertions.assertEquals(DefinitionType.DYNAMIC, learningResourceWrapper.getValue().getDefinitionType());
-        Assertions.assertFalse(learningResourceWrapper.getValue().getQualifiedRequirements().isEmpty());
+        Assertions.assertFalse(learningResourceWrapper.getValue().getRequirements().isEmpty());
     }
 
     @Test
@@ -163,11 +163,11 @@ public class LearningExperienceCommandHandlersTests {
                 mockUser.getStudentProfile(),
                 learningResourceDefinition,
                 Set.of(),
-                Activity.create("Hello", Set.of()),
+                ActivityBase.create("Hello", Set.of()),
                 Set.of(),
                 new Visualisation("graph TD")
         );
-        learningResourcePersistence.save(learningExperience).throwIfFailure();
+        learningExperiencePersistence.save(learningExperience).throwIfFailure();
 
         CreateSimilarLearningResourceCommand command = new CreateSimilarLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())

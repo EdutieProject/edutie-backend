@@ -1,9 +1,7 @@
 package com.edutie.infrastructure.external.llm.dto.learningresource;
 
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.Activity;
-import com.edutie.domain.core.learning.learningexperience.entities.Hint;
-import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.domain.service.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.infrastructure.external.common.dto.ExternalInfrastructureDto;
@@ -34,7 +32,7 @@ public class LearningResourceCreationDto implements ExternalInfrastructureDto<Le
                 schema.getStudentMetadata(),
                 schema.getLearningResourceDefinition(),
                 schema.getQualifiedRequirements(),
-                Activity.create(activityText, hints),
+                ActivityBase.create(activityText, hints),
                 theoryCards,
                 new Visualisation(mermaidGraphString)
         );

@@ -4,7 +4,7 @@ import com.edutie.application.common.HandlerBase;
 import com.edutie.application.learning.learningresource.GetLearningResourcesByDefinitionIdQueryHandler;
 import com.edutie.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import validation.WrapperResult;
 import org.springframework.stereotype.*;
 import lombok.*;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class GetLearningResourcesByDefinitionIdQueryHandlerImplementation extends HandlerBase implements GetLearningResourcesByDefinitionIdQueryHandler {
-	private final LearningResourcePersistence learningResourcePersistence;
+	private final LearningExperiencePersistence learningExperiencePersistence;
 
 	@Override
 	public WrapperResult<List<LearningExperience>> handle(GetLearningResourcesByDefinitionIdQuery query) {
 		log.info("Retrieving learning resources by definition id {} for student user of id {}", query.learningResourceDefinitionId(), query.studentUserId());
-		return learningResourcePersistence.getByLearningResourceDefinitionId(query.learningResourceDefinitionId());
+		return learningExperiencePersistence.getByLearningResourceDefinitionId(query.learningResourceDefinitionId());
 	}
 }

@@ -22,7 +22,7 @@ public interface LearningResultRepository extends JpaRepository<LearningResult, 
     @Query("SELECT lr FROM LearningResult lr " +
             "JOIN lr.solutionSubmission ss " +
             "JOIN LearningExperience lrsc ON lrsc.id = ss.learningResourceId " +
-            "JOIN lrsc.qualifiedRequirements elReqs " +
+            "JOIN lrsc.requirements elReqs " +
             "JOIN elReqs.learningRequirement lreq " +
             "WHERE lreq = :learningRequirement " +
             "AND lr.student = :student"

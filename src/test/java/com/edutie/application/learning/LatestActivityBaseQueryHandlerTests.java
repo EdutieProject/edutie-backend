@@ -8,7 +8,7 @@ import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
-public class LatestActivityQueryHandlerTests {
+public class LatestActivityBaseQueryHandlerTests {
     @Autowired
     MockUser mockUser;
     // Handlers
@@ -53,7 +53,7 @@ public class LatestActivityQueryHandlerTests {
     @Autowired
     private LearningResultPersistence learningResultPersistence;
     @Autowired
-    private LearningResourcePersistence learningResourcePersistence;
+    private LearningExperiencePersistence learningExperiencePersistence;
     @Autowired
     private SegmentPersistence segmentPersistence;
     @Autowired
@@ -90,10 +90,10 @@ public class LatestActivityQueryHandlerTests {
         segmentPersistence.save(segment).throwIfFailure();
 
         LearningExperience learningExperience = LearningResourceMocks.sampleLearningResource(mockUser.getStudentProfile(), mockUser.getEducatorProfile());
-        learningExperience.getQualifiedRequirements().stream().map(ElementalRequirement::getLearningRequirement).collect(Collectors.toSet()).forEach(
+        learningExperience.getRequirements().stream().map(ElementalRequirement::getLearningRequirement).collect(Collectors.toSet()).forEach(
                 o -> learningSubjectPersistence.save(o).throwIfFailure()
         );
-        learningResourcePersistence.save(learningExperience).throwIfFailure();
+        learningExperiencePersistence.save(learningExperience).throwIfFailure();
         learningResult = LearningResult.create(SolutionSubmission.create(
                 mockUser.getStudentProfile(), learningExperience.getId(), learningExperience.getDefinitionType() , "", 0
                 ), Feedback.of(""), Set.of());

@@ -2,7 +2,7 @@ package com.edutie.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.domain.core.learning.student.identities.StudentId;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class LearningResourcePersistenceImplementation implements LearningResourcePersistence {
+public class LearningExperiencePersistenceImplementation implements LearningExperiencePersistence {
 	private final LearningResourceRepository learningResourceRepository;
 	private final LearningResourceDefinitionRepository learningResourceDefinitionRepository;
 

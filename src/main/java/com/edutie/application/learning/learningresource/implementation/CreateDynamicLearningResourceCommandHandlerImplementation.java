@@ -4,7 +4,7 @@ import com.edutie.application.learning.learningresource.CreateDynamicLearningRes
 import com.edutie.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.valueobjects.DynamicContext;
 import com.edutie.domain.core.learning.student.Student;
@@ -23,7 +23,7 @@ public class CreateDynamicLearningResourceCommandHandlerImplementation implement
     private final StudentPersistence studentPersistence;
     private final DynamicLearningRequirementSelectionService learningRequirementSelectionService;
     private final LearningResourcePersonalizationService learningResourcePersonalizationService;
-    private final LearningResourcePersistence learningResourcePersistence;
+    private final LearningExperiencePersistence learningExperiencePersistence;
 
 
     @Override
@@ -35,7 +35,7 @@ public class CreateDynamicLearningResourceCommandHandlerImplementation implement
                 learningRequirementSelectionService.selectRequirementsForStudent(student).getValue()
         );
         LearningExperience learningExperience = learningResourcePersonalizationService.personalize(definition, student).getValue();
-        learningResourcePersistence.save(learningExperience).throwIfFailure();
+        learningExperiencePersistence.save(learningExperience).throwIfFailure();
         return WrapperResult.successWrapper(learningExperience);
     }
 }

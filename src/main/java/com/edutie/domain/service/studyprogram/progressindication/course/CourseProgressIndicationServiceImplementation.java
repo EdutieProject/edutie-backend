@@ -1,6 +1,6 @@
 package com.edutie.domain.service.studyprogram.progressindication.course;
 
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class CourseProgressIndicationServiceImplementation implements CourseProgressIndicationService {
-    private final LearningResourcePersistence learningResourcePersistence;
+    private final LearningExperiencePersistence learningExperiencePersistence;
     private final LearningResultPersistence learningResultPersistence;
 
     private boolean resultsContainResultOfSameAssociatedDefinition(List<LearningResult> learningResults, LearningResult consideredResult) {
         return learningResults.stream().anyMatch(
-                o -> learningResourcePersistence.getById(o.getAssociatedLearningResourceId()).getValue().getDefinitionId()
-                        .equals(learningResourcePersistence.getById(consideredResult.getAssociatedLearningResourceId()).getValue().getDefinitionId()
+                o -> learningExperiencePersistence.getById(o.getAssociatedLearningResourceId()).getValue().getDefinitionId()
+                        .equals(learningExperiencePersistence.getById(consideredResult.getAssociatedLearningResourceId()).getValue().getDefinitionId()
                         ));
     }
 

@@ -4,7 +4,7 @@ import com.edutie.application.common.HandlerBase;
 import com.edutie.application.learning.learningresource.CreateLearningResourceCommandHandler;
 import com.edutie.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.domain.core.learning.student.Student;
@@ -21,7 +21,7 @@ import validation.WrapperResult;
 public class CreateLearningResourceCommandHandlerImplementation extends HandlerBase implements CreateLearningResourceCommandHandler {
     private final StudentPersistence studentPersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
-    private final LearningResourcePersistence learningResourcePersistence;
+    private final LearningExperiencePersistence learningExperiencePersistence;
     private final LearningResourcePersonalizationService learningResourcePersonalizationService;
 
     @Override
@@ -30,7 +30,7 @@ public class CreateLearningResourceCommandHandlerImplementation extends HandlerB
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
         StaticLearningResourceDefinition staticLearningResourceDefinition = learningResourceDefinitionPersistence.getById(command.learningResourceDefinitionId()).getValue();
         LearningExperience learningExperience = learningResourcePersonalizationService.personalize(staticLearningResourceDefinition, student).getValue();
-        learningResourcePersistence.save(learningExperience).throwIfFailure();
+        learningExperiencePersistence.save(learningExperience).throwIfFailure();
         return WrapperResult.successWrapper(learningExperience);
     }
 }

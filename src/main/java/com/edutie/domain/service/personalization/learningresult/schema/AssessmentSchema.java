@@ -40,7 +40,7 @@ public class AssessmentSchema implements PersonalizationSchema {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
         assessmentSchema.setStudent(solutionSubmission.getStudent());
         assessmentSchema.setSolutionSubmission(solutionSubmission);
-        assessmentSchema.setQualifiedRequirements(learningExperience.getQualifiedRequirements());
+        assessmentSchema.setQualifiedRequirements(learningExperience.getRequirements());
         assessmentSchema.setLearningResourceDefinitionId(learningExperience.getDefinitionId());
         assessmentSchema.setActivityText(learningExperience.getActivity().getActivityText());
         return assessmentSchema;

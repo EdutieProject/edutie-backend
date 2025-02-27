@@ -4,8 +4,7 @@ import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.Activity;
-import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
@@ -48,7 +47,7 @@ public class LearningResourceMocks {
                 student,
                 learningResourceDefinition,
                 learningSubject.calculateQualifiedElementalRequirements(List.of(), 2),
-                Activity.create("Wykorzystanie brzozy w gospodarce - analiza rynkowa soku z brzozy. Aktywność...", Set.of()),
+                ActivityBase.create("Wykorzystanie brzozy w gospodarce - analiza rynkowa soku z brzozy. Aktywność...", Set.of()),
                 Set.of(TheoryCard.create(learningSubject.getId(), "Dzięki temu brzozowa kora była wykorzystywana przez rdzennych mieszkańców Ameryki Północnej do budowy wodoodpornych canoe oraz jako materiał do pisania w Europie i Azji.")),
                 new Visualisation("graph TD A->B")
         );

@@ -6,10 +6,8 @@ import com.edutie.application.learning.learningresult.implementation.AssessSolut
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.Activity;
-import com.edutie.domain.core.learning.learningexperience.entities.Hint;
-import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.entities.ActivityDetails;
@@ -45,7 +43,7 @@ public class LearningResultCommandHandlersTests {
     @Autowired
     LearningResultPersistence learningResultPersistence;
     @Autowired
-    LearningResourcePersistence learningResourcePersistence;
+    LearningExperiencePersistence learningExperiencePersistence;
     @Autowired
     SolutionSubmissionPersistence solutionSubmissionPersistence;
     // Handlers
@@ -57,13 +55,13 @@ public class LearningResultCommandHandlersTests {
         mockUser.saveToPersistence();
 
         assessSolutionCommandHandler = new AssessSolutionCommandHandlerImplementation(
-                learningResourcePersistence,
+                learningExperiencePersistence,
                 studentPersistence,
                 solutionSubmissionPersistence,
                 learningResultPersistence,
                 new LearningResultPersonalizationServiceImplementation(
                         ExternalServiceMocks.largeLanguageModelServiceMock(),
-                        learningResourcePersistence
+                        learningExperiencePersistence
                 )
         );
     }
@@ -86,11 +84,11 @@ public class LearningResultCommandHandlersTests {
                 staticLearningResourceDefinition,
                 staticLearningResourceDefinition.getLearningRequirements().stream()
                         .flatMap(o -> o.getElementalRequirements().stream()).filter(o -> o.getOrdinal() < 1).collect(Collectors.toSet()),
-                Activity.create("Activity text", Set.of(Hint.create("aaa"))),
+                ActivityBase.create("Activity text", Set.of(Hint.create("aaa"))),
                 Set.of(TheoryCard.create(new LearningRequirementId(), "dsadas")),
                 new Visualisation("")
         );
-        learningResourcePersistence.save(learningExperience).throwIfFailure();
+        learningExperiencePersistence.save(learningExperience).throwIfFailure();
         return learningExperience;
     }
 

@@ -3,7 +3,7 @@ package com.edutie.application.learning.learningresource.implementation;
 import com.edutie.application.learning.learningresource.CreateSimilarLearningResourceCommandHandler;
 import com.edutie.application.learning.learningresource.commands.CreateSimilarLearningResourceCommand;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.domain.core.learning.student.Student;
@@ -18,7 +18,7 @@ import validation.WrapperResult;
 @Component
 @RequiredArgsConstructor
 public class CreateSimilarLearningResourceCommandHandlerImplementation implements CreateSimilarLearningResourceCommandHandler {
-    private final LearningResourcePersistence learningResourcePersistence;
+    private final LearningExperiencePersistence learningExperiencePersistence;
     private final LearningResourceDefinitionPersistence learningResourceDefinitionPersistence;
     private final StudentPersistence studentPersistence;
     private final LearningResourcePersonalizationService learningResourcePersonalizationService;
@@ -27,10 +27,10 @@ public class CreateSimilarLearningResourceCommandHandlerImplementation implement
     public WrapperResult<LearningExperience> handle(CreateSimilarLearningResourceCommand command) {
         log.info("Creating a similar learning resource for student user of id {} using a LR-Id: {}", command.studentUserId(), command.learningResourceId());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-        LearningExperience learningExperience = learningResourcePersistence.getById(command.learningResourceId()).getValue();
+        LearningExperience learningExperience = learningExperiencePersistence.getById(command.learningResourceId()).getValue();
         StaticLearningResourceDefinition definition = learningResourceDefinitionPersistence.getById(learningExperience.getDefinitionId()).getValue();
         LearningExperience newLearningExperience = learningResourcePersonalizationService.personalize(definition, student).getValue();
-        learningResourcePersistence.save(newLearningExperience).throwIfFailure();
+        learningExperiencePersistence.save(newLearningExperience).throwIfFailure();
         return WrapperResult.successWrapper(newLearningExperience);
     }
 }

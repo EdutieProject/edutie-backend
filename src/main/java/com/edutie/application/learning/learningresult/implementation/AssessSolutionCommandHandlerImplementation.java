@@ -5,7 +5,7 @@ import com.edutie.application.learning.learningresult.AssessSolutionCommandHandl
 import com.edutie.application.learning.learningresult.commands.AssessSolutionCommand;
 import com.edutie.domain.service.personalization.learningresult.LearningResultPersonalizationService;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.persistence.LearningResourcePersistence;
+import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.*;
 @RequiredArgsConstructor
 @Slf4j
 public class AssessSolutionCommandHandlerImplementation extends HandlerBase implements AssessSolutionCommandHandler {
-	private final LearningResourcePersistence learningResourcePersistence;
+	private final LearningExperiencePersistence learningExperiencePersistence;
 	private final StudentPersistence studentPersistence;
 	private final SolutionSubmissionPersistence solutionSubmissionPersistence;
 	private final LearningResultPersistence learningResultPersistence;
@@ -31,7 +31,7 @@ public class AssessSolutionCommandHandlerImplementation extends HandlerBase impl
 	public WrapperResult<LearningResult> handle(AssessSolutionCommand command) {
 		log.info("Handling assessment for student of id {} and learning resource of id {}", command.studentUserId(), command.learningResourceId());
 		Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-		LearningExperience learningExperience = learningResourcePersistence.getById(command.learningResourceId()).getValue();
+		LearningExperience learningExperience = learningExperiencePersistence.getById(command.learningResourceId()).getValue();
 
 		SolutionSubmission solutionSubmission = SolutionSubmission.create(
 				student,

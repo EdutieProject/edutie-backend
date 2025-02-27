@@ -8,9 +8,7 @@ import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSub
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.Activity;
-import com.edutie.domain.core.learning.learningexperience.entities.Hint;
-import com.edutie.domain.core.learning.learningexperience.entities.TheoryCard;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;
@@ -55,7 +53,7 @@ public class ExternalServiceMocks {
                         schema.getStudentMetadata(),
                         schema.getLearningResourceDefinition(),
                         schema.getQualifiedRequirements(),
-                        Activity.create("Hello this is sample activity", Set.of(Hint.create("Only one hint"))),
+                        ActivityBase.create("Hello this is sample activity", Set.of(Hint.create("Only one hint"))),
                         Set.of(TheoryCard.create(new LearningRequirementId(), "One theory card for now")),
                         new Visualisation("")
                 );
