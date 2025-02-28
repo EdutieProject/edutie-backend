@@ -2,7 +2,7 @@ package com.edutie.domain.service.personalization.learningresource.schema;
 
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.personalization.common.PersonalizationSchema;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.DynamicLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
@@ -80,7 +80,7 @@ public class LearningResourceGenerationSchema implements PersonalizationSchema {
         }
     }
 
-    public Set<LearningRequirementId> getLearningRequirementIds() {
+    public Set<LearningSubjectId> getLearningRequirementIds() {
         return qualifiedRequirements.stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
     }
 

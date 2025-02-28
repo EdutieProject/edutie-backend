@@ -25,9 +25,9 @@ public class CreateSimilarLearningResourceCommandHandlerImplementation implement
 
     @Override
     public WrapperResult<LearningExperience> handle(CreateSimilarLearningResourceCommand command) {
-        log.info("Creating a similar learning resource for student user of id {} using a LR-Id: {}", command.studentUserId(), command.learningResourceId());
+        log.info("Creating a similar learning resource for student user of id {} using a LR-Id: {}", command.studentUserId(), command.learningExperienceId());
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-        LearningExperience learningExperience = learningExperiencePersistence.getById(command.learningResourceId()).getValue();
+        LearningExperience learningExperience = learningExperiencePersistence.getById(command.learningExperienceId()).getValue();
         StaticLearningResourceDefinition definition = learningResourceDefinitionPersistence.getById(learningExperience.getDefinitionId()).getValue();
         LearningExperience newLearningExperience = learningResourcePersonalizationService.personalize(definition, student).getValue();
         learningExperiencePersistence.save(newLearningExperience).throwIfFailure();

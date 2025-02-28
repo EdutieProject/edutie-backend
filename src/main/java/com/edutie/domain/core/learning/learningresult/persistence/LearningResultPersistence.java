@@ -2,7 +2,6 @@ package com.edutie.domain.core.learning.learningresult.persistence;
 
 import com.edutie.domain.core.common.persistence.Persistence;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
-import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
 import com.edutie.domain.core.learning.student.identities.StudentId;
@@ -34,7 +33,8 @@ public interface LearningResultPersistence extends Persistence<LearningResult, L
 
     /**
      * Provides learning results associated with given learning resource definition ids.
-     * @param studentId student id
+     *
+     * @param studentId                     student id
      * @param learningResourceDefinitionIds learning resource definition ids set
      * @return Wrapper result of Learning Result list
      */

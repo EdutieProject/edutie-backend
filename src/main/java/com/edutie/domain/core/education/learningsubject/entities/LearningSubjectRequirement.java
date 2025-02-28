@@ -20,7 +20,7 @@ import lombok.Setter;
 public class LearningSubjectRequirement extends ElementalRequirement {
     private String title;
     private Integer ordinal;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "learning_subject_id")
     @JsonIgnore
     private LearningSubject learningSubject;

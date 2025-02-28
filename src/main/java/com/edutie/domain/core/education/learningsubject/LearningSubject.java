@@ -7,7 +7,7 @@ import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
 import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class LearningSubject extends EducatorCreatedAuditableEntity<LearningRequirementId> {
+public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubjectId> {
     private String name;
     @OneToMany(targetEntity = LearningSubjectRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("ordinal")
@@ -40,7 +40,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningRequ
      */
     public static LearningSubject createBlank(Educator educator, String name) {
         LearningSubject learningSubject = new LearningSubject();
-        learningSubject.setId(new LearningRequirementId());
+        learningSubject.setId(new LearningSubjectId());
         learningSubject.setCreatedBy(educator.getOwnerUserId());
         learningSubject.setAuthorEducator(educator);
         learningSubject.setName(name);

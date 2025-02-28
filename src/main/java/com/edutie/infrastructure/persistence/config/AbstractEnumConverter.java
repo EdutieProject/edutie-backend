@@ -1,10 +1,10 @@
 package com.edutie.infrastructure.persistence.config;
 
-import com.edutie.domain.core.common.enums.PersistableEnum;
+import com.edutie.domain.core.common.enums.CodedEnum;
 import jakarta.persistence.*;
 
 @Converter
-public abstract class AbstractEnumConverter<T extends Enum<T> & PersistableEnum<E>, E> implements AttributeConverter<T, E> {
+public abstract class AbstractEnumConverter<T extends Enum<T> & CodedEnum<E>, E> implements AttributeConverter<T, E> {
 	private final Class<T> clazz;
 
 	public AbstractEnumConverter(Class<T> clazz) {

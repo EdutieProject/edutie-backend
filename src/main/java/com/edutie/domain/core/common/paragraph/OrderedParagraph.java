@@ -1,4 +1,4 @@
-package com.edutie.domain.core.learning.common.paragraph;
+package com.edutie.domain.core.common.paragraph;
 
 import com.edutie.domain.core.common.base.identity.Identifier;
 import jakarta.persistence.MappedSuperclass;

@@ -4,7 +4,7 @@ import com.edutie.application.learning.learningresult.GetSolutionSubmissionByIdQ
 import com.edutie.application.learning.learningresult.queries.GetLearningResultsSolutionSubmissionQuery;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class GetSolutionSubmissionByIdQueryHandlerImplementation implements GetS
     private final LearningResultPersistence learningResultPersistence;
 
     @Override
-    public WrapperResult<SolutionSubmission> handle(GetLearningResultsSolutionSubmissionQuery query) {
+    public WrapperResult<SolutionSubmissionBase> handle(GetLearningResultsSolutionSubmissionQuery query) {
         log.info("Retrieving solution submission of learning result of id {} by student user of id {}", query.learningResultId(), query.studentUserId());
         return learningResultPersistence.getById(query.learningResultId()).map(LearningResult::getSolutionSubmission);
     }

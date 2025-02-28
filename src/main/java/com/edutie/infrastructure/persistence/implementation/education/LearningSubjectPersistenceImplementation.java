@@ -1,7 +1,7 @@
 package com.edutie.infrastructure.persistence.implementation.education;
 
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.infrastructure.persistence.PersistenceError;
 import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
@@ -23,7 +23,7 @@ public class LearningSubjectPersistenceImplementation implements LearningSubject
 	 * @return crud jpa repository
 	 */
 	@Override
-	public JpaRepository<LearningSubject, LearningRequirementId> getRepository() {
+	public JpaRepository<LearningSubject, LearningSubjectId> getRepository() {
 		return learningRequirementRepository;
 	}
 

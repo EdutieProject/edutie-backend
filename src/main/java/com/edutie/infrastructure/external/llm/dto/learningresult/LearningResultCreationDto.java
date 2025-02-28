@@ -24,14 +24,14 @@ public class LearningResultCreationDto implements ExternalInfrastructureDto<Lear
     @Override
     public LearningResult intoDomainEntity(AssessmentSchema assessmentSchema) {
         return LearningResult.create(
-                assessmentSchema.getSolutionSubmission(),
+                assessmentSchema.getSolutionSubmissionBase(),
                 new Feedback(feedbackText),
                 assessments.stream().map(o -> Assessment.create(
-                        o.learningRequirementId,
+                        o.learningSubjectId,
                         new Grade(o.gradeNumber),
                         Feedback.of(o.feedbackText),
                         assessmentSchema.getQualifiedRequirements().stream()
-                                .filter(x -> x.getLearningRequirement().getId().equals(o.learningRequirementId)).toList()
+                                .filter(x -> x.getLearningRequirement().getId().equals(o.learningSubjectId)).toList()
                 )).collect(Collectors.toSet()));
     }
 }

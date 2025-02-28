@@ -6,7 +6,7 @@ import com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation.Le
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
@@ -54,7 +54,7 @@ public class ExternalServiceMocks {
                         schema.getLearningResourceDefinition(),
                         schema.getQualifiedRequirements(),
                         ActivityBase.create("Hello this is sample activity", Set.of(Hint.create("Only one hint"))),
-                        Set.of(TheoryCard.create(new LearningRequirementId(), "One theory card for now")),
+                        Set.of(TheoryCard.create(new LearningSubjectId(), "One theory card for now")),
                         new Visualisation("")
                 );
                 return WrapperResult.successWrapper(learningExperience);
@@ -63,11 +63,11 @@ public class ExternalServiceMocks {
 
             @Override
             public WrapperResult<LearningResult> generateLearningResult(AssessmentSchema assessmentSchema) {
-                Set<LearningRequirementId> learningRequirementIds = assessmentSchema.getQualifiedRequirements().stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
+                Set<LearningSubjectId> learningSubjectIds = assessmentSchema.getQualifiedRequirements().stream().map(o -> o.getLearningRequirement().getId()).collect(Collectors.toSet());
                 LearningResult learningResult = LearningResult.create(
-                        assessmentSchema.getSolutionSubmission(),
+                        assessmentSchema.getSolutionSubmissionBase(),
                         new Feedback("Great!"),
-                        learningRequirementIds.stream().map(
+                        learningSubjectIds.stream().map(
                                 o -> Assessment.create(o, new Grade((int) (Math.random() * 6)),
                                         Feedback.of("Thats a feedback for a student"),
                                         assessmentSchema.getQualifiedRequirements().stream().filter(x -> x.getLearningRequirement().getId().equals(o)).toList())

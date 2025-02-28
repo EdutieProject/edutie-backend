@@ -3,7 +3,7 @@ package com.edutie.application.learning;
 import com.edutie.application.learning.learningresult.GetLearningResultByIdQueryHandler;
 import com.edutie.application.learning.learningresult.queries.GetLearningResultByIdQuery;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
@@ -16,7 +16,7 @@ import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.mocks.EducationMocks;
 import com.edutie.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,7 +71,7 @@ public class LearningResultQueryHandlersTests {
                 staticLearningResourceDefinition.getLearningRequirements().stream()
                         .flatMap(o -> o.getElementalRequirements().stream()).filter(o -> o.getOrdinal() < 1).collect(Collectors.toSet()),
                 ActivityBase.create("Activity text", Set.of(Hint.create("aaa"))),
-                Set.of(TheoryCard.create(new LearningRequirementId(), "dsadas")),
+                Set.of(TheoryCard.create(new LearningSubjectId(), "dsadas")),
                 new Visualisation("")
         );
         learningExperiencePersistence.save(learningExperience).throwIfFailure();
@@ -84,7 +84,7 @@ public class LearningResultQueryHandlersTests {
         LearningExperience learningExperience = createAndSaveLearningResource(staticLearningResourceDefinition);
 
         LearningResult learningResult = LearningResult.create(
-                SolutionSubmission.create(mockUser.getStudentProfile(), learningExperience.getId(), learningExperience.getDefinitionType(), "Report", 0),
+                SolutionSubmissionBase.create(mockUser.getStudentProfile(), learningExperience.getId(), learningExperience.getDefinitionType(), "Report", 0),
                 new Feedback("Feedback text"),
                 staticLearningResourceDefinition.getLearningRequirements().stream().map(o -> Assessment.create(o.getId(), new Grade(2), Feedback.of(""), List.of())).collect(Collectors.toSet())
         );

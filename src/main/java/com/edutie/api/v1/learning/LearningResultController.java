@@ -10,7 +10,7 @@ import com.edutie.application.learning.learningresult.queries.GetLearningResultB
 import com.edutie.application.learning.learningresult.queries.GetLearningResultsSolutionSubmissionQuery;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,8 +42,8 @@ public class LearningResultController {
 
     @GetMapping("/{learningResultId}/solution-submission")
     @Operation(description = "Retrieves a learning result's solution submission by learning result's identifier")
-    public ResponseEntity<ApiResult<SolutionSubmission>> getLearningResultsSolutionSubmission(Authentication authentication, @PathVariable LearningResultId learningResultId) {
-        return new GenericRequestHandler<SolutionSubmission>()
+    public ResponseEntity<ApiResult<SolutionSubmissionBase>> getLearningResultsSolutionSubmission(Authentication authentication, @PathVariable LearningResultId learningResultId) {
+        return new GenericRequestHandler<SolutionSubmissionBase>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId) -> getSolutionSubmissionByIdQueryHandler.handle(

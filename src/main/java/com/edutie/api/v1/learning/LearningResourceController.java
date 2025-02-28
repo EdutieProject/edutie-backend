@@ -9,7 +9,7 @@ import com.edutie.application.learning.learningresource.commands.CreateSimilarLe
 import com.edutie.application.learning.learningresource.queries.GetLatestLearningResourcesForStudentQuery;
 import com.edutie.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
+import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,14 +33,14 @@ public class LearningResourceController {
     private final CreateDynamicLearningResourceCommandHandler createDynamicLearningResourceCommandHandler;
     private final CreateSimilarLearningResourceCommandHandler createSimilarLearningResourceCommandHandler;
 
-    @GetMapping("/{learningResourceId}")
+    @GetMapping("/{learningExperienceId}")
     @Operation(description = "Retrieves a learning resource by its identifier")
-    public ResponseEntity<ApiResult<LearningExperience>> getLearningResourceById(Authentication authentication, @PathVariable LearningResourceId learningResourceId) {
+    public ResponseEntity<ApiResult<LearningExperience>> getLearningResourceById(Authentication authentication, @PathVariable LearningExperienceId learningExperienceId) {
         return new GenericRequestHandler<LearningExperience>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId) -> getLearningResourceByIdQueryHandler.handle(
-                        new GetLearningResourceByIdQuery().learningResourceId(learningResourceId).studentUserId(userId)
+                        new GetLearningResourceByIdQuery().learningExperienceId(learningExperienceId).studentUserId(userId)
                 ));
     }
 

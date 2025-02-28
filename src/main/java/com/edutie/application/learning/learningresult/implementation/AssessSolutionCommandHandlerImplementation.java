@@ -8,8 +8,7 @@ import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
-import com.edutie.domain.core.learning.solutionsubmission.persistence.SolutionSubmissionPersistence;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.core.learning.student.persistence.StudentPersistence;
 import validation.WrapperResult;
@@ -29,20 +28,20 @@ public class AssessSolutionCommandHandlerImplementation extends HandlerBase impl
 
 	@Override
 	public WrapperResult<LearningResult> handle(AssessSolutionCommand command) {
-		log.info("Handling assessment for student of id {} and learning resource of id {}", command.studentUserId(), command.learningResourceId());
+		log.info("Handling assessment for student of id {} and learning resource of id {}", command.studentUserId(), command.learningExperienceId());
 		Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
-		LearningExperience learningExperience = learningExperiencePersistence.getById(command.learningResourceId()).getValue();
+		LearningExperience learningExperience = learningExperiencePersistence.getById(command.learningExperienceId()).getValue();
 
-		SolutionSubmission solutionSubmission = SolutionSubmission.create(
+		SolutionSubmissionBase solutionSubmissionBase = SolutionSubmissionBase.create(
 				student,
 				learningExperience.getId(),
 				learningExperience.getDefinitionType(),
 				command.solutionSubmissionText(),
 				command.hintsRevealedCount()
 		);
-		solutionSubmissionPersistence.save(solutionSubmission).throwIfFailure();
+		solutionSubmissionPersistence.save(solutionSubmissionBase).throwIfFailure();
 
-		LearningResult learningResult = learningResultPersonalizationService.personalize(solutionSubmission, student).getValue();
+		LearningResult learningResult = learningResultPersonalizationService.personalize(solutionSubmissionBase, student).getValue();
 		learningResultPersistence.save(learningResult).throwIfFailure();
 		return WrapperResult.successWrapper(learningResult);
 	}

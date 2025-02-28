@@ -1,7 +1,7 @@
 package com.edutie.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
+import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
@@ -30,7 +30,7 @@ public class LearningExperiencePersistenceImplementation implements LearningExpe
 	 * @return crud jpa repository
 	 */
 	@Override
-	public JpaRepository<LearningExperience, LearningResourceId> getRepository() {
+	public JpaRepository<LearningExperience, LearningExperienceId> getRepository() {
 		return learningResourceRepository;
 	}
 

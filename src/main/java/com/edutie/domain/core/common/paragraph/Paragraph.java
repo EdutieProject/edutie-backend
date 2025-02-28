@@ -1,4 +1,4 @@
-package com.edutie.domain.core.learning.common.paragraph;
+package com.edutie.domain.core.common.paragraph;
 
 import com.edutie.domain.core.common.base.EntityBase;
 import com.edutie.domain.core.common.base.identity.Identifier;
@@ -21,7 +21,6 @@ import java.io.Serializable;
 @Setter
 @MappedSuperclass
 public abstract class Paragraph<TParagraphData extends Serializable, TId extends Identifier<?>> extends EntityBase<TId> {
-    private String title;
     @Embedded
     private TParagraphData content;
 }

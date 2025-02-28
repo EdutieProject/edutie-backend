@@ -2,13 +2,13 @@ package com.edutie.infrastructure.persistence.jpa.repositories;
 
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface LearningRequirementRepository extends JpaRepository<LearningSubject, LearningRequirementId> {
+public interface LearningRequirementRepository extends JpaRepository<LearningSubject, LearningSubjectId> {
     List<LearningSubject> findByKnowledgeSubjectId(KnowledgeSubjectId knowledgeSubjectId);
 
     @Query(value = "SELECT lreq FROM LearningSubject lreq ORDER BY FUNCTION('RANDOM') LIMIT :number")

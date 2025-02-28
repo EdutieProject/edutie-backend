@@ -27,7 +27,7 @@ public class LearningResourceCreationDto implements ExternalInfrastructureDto<Le
     @Override
     public LearningExperience intoDomainEntity(LearningResourceGenerationSchema schema) {
         Set<Hint> hints = this.hints.stream().map(Hint::create).collect(Collectors.toSet());
-        Set<TheoryCard> theoryCards = this.theoryCards.stream().map(o -> TheoryCard.create(o.learningRequirementId, o.text)).collect(Collectors.toSet());
+        Set<TheoryCard> theoryCards = this.theoryCards.stream().map(o -> TheoryCard.create(o.learningSubjectId, o.text)).collect(Collectors.toSet());
         return LearningExperience.create(
                 schema.getStudentMetadata(),
                 schema.getLearningResourceDefinition(),

@@ -1,7 +1,7 @@
 package com.edutie.application.learning.learningresource.commands;
 
 import com.edutie.application.common.actions.StudentAction;
-import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
+import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class CreateSimilarLearningResourceCommand extends StudentAction<CreateSimilarLearningResourceCommand> {
 	@Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-	private @NonNull LearningResourceId learningResourceId;
+	private @NonNull LearningExperienceId learningExperienceId;
 
 	@Override
 	protected CreateSimilarLearningResourceCommand getThis() {

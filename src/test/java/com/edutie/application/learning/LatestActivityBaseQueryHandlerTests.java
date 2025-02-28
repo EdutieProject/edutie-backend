@@ -14,7 +14,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.pers
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
@@ -94,7 +94,7 @@ public class LatestActivityBaseQueryHandlerTests {
                 o -> learningSubjectPersistence.save(o).throwIfFailure()
         );
         learningExperiencePersistence.save(learningExperience).throwIfFailure();
-        learningResult = LearningResult.create(SolutionSubmission.create(
+        learningResult = LearningResult.create(SolutionSubmissionBase.create(
                 mockUser.getStudentProfile(), learningExperience.getId(), learningExperience.getDefinitionType() , "", 0
                 ), Feedback.of(""), Set.of());
         learningResultPersistence.save(learningResult).throwIfFailure();

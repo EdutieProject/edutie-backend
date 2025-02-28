@@ -22,7 +22,7 @@ public class DynamicLearningRequirementSelectionServiceImplementation implements
     @Override
     public WrapperResult<Set<LearningSubject>> selectRequirementsForStudent(Student student) {
         List<LearningSubject> latestWeakPerformanceRequirements = student.getLatestAssessmentsByMaxGrade(learningResultPersistence, new Grade(3))
-                .stream().map(o -> learningSubjectPersistence.getById(o.getLearningRequirementId()).getValue()).toList();
+                .stream().map(o -> learningSubjectPersistence.getById(o.getLearningSubjectId()).getValue()).toList();
         // Now let us choose random L-Reqs. In the future, we will replace them with correlated ones.
         List<LearningSubject> randomLearningSubjects = learningSubjectPersistence.getAny(2).getValue();
 

@@ -18,7 +18,7 @@ public class GetLearningResourceByIdQueryHandlerImplementation extends HandlerBa
 
 	@Override
 	public WrapperResult<LearningExperience> handle(GetLearningResourceByIdQuery query) {
-		log.info("Retrieving learning resource of id {} by student user of id {}", query.learningResourceId(), query.studentUserId());
-		return learningExperiencePersistence.getById(query.learningResourceId());
+		log.info("Retrieving learning resource of id {} by student user of id {}", query.learningExperienceId(), query.studentUserId());
+		return learningExperiencePersistence.getById(query.learningExperienceId());
 	}
 }

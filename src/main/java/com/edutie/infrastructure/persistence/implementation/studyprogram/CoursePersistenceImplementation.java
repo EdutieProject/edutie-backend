@@ -3,7 +3,7 @@ package com.edutie.infrastructure.persistence.implementation.studyprogram;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.educator.identities.EducatorId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
+import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.identities.CourseId;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
@@ -92,13 +92,13 @@ public class CoursePersistenceImplementation implements CoursePersistence {
     /**
      * Finds a course that utilizes the learning resource definition of given id.
      *
-     * @param learningResourceId learning resource definition id
+     * @param learningExperienceId learning resource definition id
      * @return Wrapper result of Course
      */
     @Override
-    public WrapperResult<Course> findByRelatedLearningResourceId(LearningResourceId learningResourceId) {
+    public WrapperResult<Course> findByRelatedLearningResourceId(LearningExperienceId learningExperienceId) {
         try {
-            Optional<LearningExperience> learningResource = learningResourceRepository.findById(learningResourceId);
+            Optional<LearningExperience> learningResource = learningResourceRepository.findById(learningExperienceId);
             return learningResource.map(resource -> courseRepository.findCourseByLearningResourceDefinitionId(resource.getDefinitionId())
                             .map(WrapperResult::successWrapper)
                             .orElse(WrapperResult.failureWrapper(PersistenceError.notFound(Course.class))))

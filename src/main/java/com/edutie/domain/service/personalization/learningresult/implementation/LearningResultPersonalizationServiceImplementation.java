@@ -2,7 +2,7 @@ package com.edutie.domain.service.personalization.learningresult.implementation;
 
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.service.personalization.learningresult.LearningResultPersonalizationService;
 import com.edutie.domain.service.personalization.learningresult.schema.AssessmentSchema;
@@ -18,10 +18,10 @@ public class LearningResultPersonalizationServiceImplementation implements Learn
     private final LearningExperiencePersistence learningExperiencePersistence;
 
     @Override
-    public WrapperResult<LearningResult> personalize(SolutionSubmission solutionSubmission, Student student) {
+    public WrapperResult<LearningResult> personalize(SolutionSubmissionBase solutionSubmissionBase, Student student) {
         AssessmentSchema schema = AssessmentSchema.create(
-                learningExperiencePersistence.getById(solutionSubmission.getLearningResourceId()).getValue(),
-                solutionSubmission
+                learningExperiencePersistence.getById(solutionSubmissionBase.getLearningExperienceId()).getValue(),
+                solutionSubmissionBase
         );
         return largeLanguageModelService.generateLearningResult(schema);
     }

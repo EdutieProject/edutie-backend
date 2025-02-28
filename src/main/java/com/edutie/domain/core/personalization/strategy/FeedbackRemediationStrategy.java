@@ -2,7 +2,7 @@ package com.edutie.domain.core.personalization.strategy;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
@@ -38,8 +38,8 @@ public class FeedbackRemediationStrategy implements PersonalizationStrategy<Feed
     @Override
     public Optional<FeedbackRemediationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
         List<LearningResult> pastPerformance = student.getLatestLearningResults(learningResultPersistence);
-        Set<LearningRequirementId> learningRequirementIds = learningSubjects.stream().map(LearningSubject::getId).collect(Collectors.toSet());
-        List<LearningResult> consideredLearningResults = pastPerformance.stream().filter(o -> o.getLearningRequirementIds().stream().anyMatch(learningRequirementIds::contains)).toList();
+        Set<LearningSubjectId> learningSubjectIds = learningSubjects.stream().map(LearningSubject::getId).collect(Collectors.toSet());
+        List<LearningResult> consideredLearningResults = pastPerformance.stream().filter(o -> o.getLearningRequirementIds().stream().anyMatch(learningSubjectIds::contains)).toList();
         if (consideredLearningResults.isEmpty() || consideredLearningResults.stream().allMatch(o -> o.getAverageGrade().greaterThanOrEqual(Grade.of(3))))
             return Optional.empty();
         LearningResult latestResult = consideredLearningResults.stream().max(Comparator.comparing(AuditableEntityBase::getCreatedOn)).get();

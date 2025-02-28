@@ -4,7 +4,7 @@ import com.edutie.domain.core.education.elementalrequirement.ElementalRequiremen
 import com.edutie.domain.core.personalization.common.PersonalizationSchema;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
 import com.edutie.domain.core.learning.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,7 +25,7 @@ public class AssessmentSchema implements PersonalizationSchema {
     private Set<ElementalRequirement> qualifiedRequirements = new HashSet<>();
     @JsonIgnore
     private Student student;
-    private SolutionSubmission solutionSubmission;
+    private SolutionSubmissionBase solutionSubmissionBase;
     private LearningResourceDefinitionId learningResourceDefinitionId;
     private String activityText;
 
@@ -33,13 +33,13 @@ public class AssessmentSchema implements PersonalizationSchema {
      * Creates assessment schema
      *
      * @param learningExperience   learning resource which is the subject of the assessment
-     * @param solutionSubmission solution submission
+     * @param solutionSubmissionBase solution submission
      * @return new Assessment Schema
      */
-    public static AssessmentSchema create(LearningExperience learningExperience, SolutionSubmission solutionSubmission) {
+    public static AssessmentSchema create(LearningExperience learningExperience, SolutionSubmissionBase solutionSubmissionBase) {
         AssessmentSchema assessmentSchema = new AssessmentSchema();
-        assessmentSchema.setStudent(solutionSubmission.getStudent());
-        assessmentSchema.setSolutionSubmission(solutionSubmission);
+        assessmentSchema.setStudent(solutionSubmissionBase.getStudent());
+        assessmentSchema.setSolutionSubmissionBase(solutionSubmissionBase);
         assessmentSchema.setQualifiedRequirements(learningExperience.getRequirements());
         assessmentSchema.setLearningResourceDefinitionId(learningExperience.getDefinitionId());
         assessmentSchema.setActivityText(learningExperience.getActivity().getActivityText());

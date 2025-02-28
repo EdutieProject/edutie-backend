@@ -5,7 +5,7 @@ import com.edutie.application.learning.learningresource.GetLearningResourcesByDe
 import com.edutie.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
@@ -71,7 +71,7 @@ public class LearningExperienceQueryHandlersTests {
                 staticLearningResourceDefinition.getLearningRequirements().stream()
                         .flatMap(o -> o.getElementalRequirements().stream()).filter(o -> o.getOrdinal() < 1).collect(Collectors.toSet()),
                 ActivityBase.create("Activity text", Set.of(Hint.create("aaa"))),
-                Set.of(TheoryCard.create(new LearningRequirementId(), "dsadas")),
+                Set.of(TheoryCard.create(new LearningSubjectId(), "dsadas")),
                 new Visualisation("")
         );
         learningExperiencePersistence.save(learningExperience).throwIfFailure();
@@ -85,7 +85,7 @@ public class LearningExperienceQueryHandlersTests {
 
         GetLearningResourceByIdQuery query = new GetLearningResourceByIdQuery()
                 .studentUserId(mockUser.getUserId())
-                .learningResourceId(learningExperience.getId());
+                .learningExperienceId(learningExperience.getId());
 
         WrapperResult<LearningExperience> queryResult = getLearningResourceByIdQueryHandler.handle(query);
 

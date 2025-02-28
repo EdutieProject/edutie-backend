@@ -1,6 +1,6 @@
 package com.edutie.domain.core.education.educator.enums;
 
-import com.edutie.domain.core.common.enums.PersistableEnum;
+import com.edutie.domain.core.common.enums.CodedEnum;
 import com.edutie.infrastructure.persistence.config.AbstractEnumConverter;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  * @implNote Ordinal matters as the higher the ordinal the highest permission level.
  */
 @Getter
-public enum EducatorType implements PersistableEnum<String> {
+public enum EducatorType implements CodedEnum<String> {
     CONTRIBUTOR("Contributor"), TUTOR("Tutor"), PEDAGOGUE("Pedagogue"), ADMINISTRATOR("Administrator");
 
     final String code;

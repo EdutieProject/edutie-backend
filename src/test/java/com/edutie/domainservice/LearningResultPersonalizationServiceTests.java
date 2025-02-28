@@ -4,9 +4,9 @@ import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.identities.LearningResourceId;
+import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.service.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.mocks.LearningResourceMocks;
@@ -28,16 +28,16 @@ public class LearningResultPersonalizationServiceTests {
     @Test
     public void personalizationSchemaTest() {
         LearningExperience learningExperience = LearningResourceMocks.sampleLearningResource(student, educator);
-        SolutionSubmission solutionSubmission = SolutionSubmission.create(
+        SolutionSubmissionBase solutionSubmissionBase = SolutionSubmissionBase.create(
                 student,
-                new LearningResourceId(),
+                new LearningExperienceId(),
                 DefinitionType.DYNAMIC,
                 "Solution report text",
                 0);
 
-        AssessmentSchema assessmentSchema = AssessmentSchema.create(learningExperience, solutionSubmission);
+        AssessmentSchema assessmentSchema = AssessmentSchema.create(learningExperience, solutionSubmissionBase);
 
-        assertEquals(solutionSubmission.getStudent(), assessmentSchema.getStudent());
+        assertEquals(solutionSubmissionBase.getStudent(), assessmentSchema.getStudent());
     }
 
     @Test

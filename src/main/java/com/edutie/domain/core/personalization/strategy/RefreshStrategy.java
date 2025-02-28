@@ -63,7 +63,7 @@ public class RefreshStrategy implements PersonalizationStrategy<ElementalRequire
                 .max(Comparator.comparing(LearningRequirementCorrelation::getCorrelationFactor)).get();
 
         LearningSubject learningSubjectToRefresh = learningRequirementsToRefreshes.stream()
-                .filter(o -> o.getId().equals(mostCorrelatedCorrelation.getCorrelatedLearningRequirementId()))
+                .filter(o -> o.getId().equals(mostCorrelatedCorrelation.getCorrelatedLearningSubjectId()))
                 .toList().getFirst();
 
         ElementalRequirement elementalRequirementToRefresh = learningSubjectToRefresh.calculateQualifiedElementalRequirements(

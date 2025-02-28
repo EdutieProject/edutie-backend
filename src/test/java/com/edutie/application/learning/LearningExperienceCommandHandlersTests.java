@@ -171,7 +171,7 @@ public class LearningExperienceCommandHandlersTests {
 
         CreateSimilarLearningResourceCommand command = new CreateSimilarLearningResourceCommand()
                 .studentUserId(mockUser.getUserId())
-                .learningResourceId(learningExperience.getId());
+                .learningExperienceId(learningExperience.getId());
 
         WrapperResult<LearningExperience> learningResourceWrapper = createSimilarLearningResourceCommandHandler.handle(command);
 

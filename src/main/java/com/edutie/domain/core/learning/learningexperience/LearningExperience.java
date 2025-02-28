@@ -27,11 +27,11 @@ import java.util.Set;
 public class LearningExperience<TActivity extends Activity> extends AuditableEntityBase<LearningExperienceId> {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<LearningExperienceRequirement> requirements = new HashSet<>();
-    @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
-    private StudentId studentId;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private TActivity activity;
     @OneToOne(targetEntity = LearningNotes.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private LearningNotes notes;
+    @Embedded
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
+    private StudentId studentId;
 }

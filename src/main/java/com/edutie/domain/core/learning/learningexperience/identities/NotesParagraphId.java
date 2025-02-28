@@ -7,13 +7,13 @@ import jakarta.persistence.Embeddable;
 import java.util.UUID;
 
 @Embeddable
-public class LearningNotesParagraphId extends UuidIdentifier {
-    public LearningNotesParagraphId() {
+public class NotesParagraphId extends UuidIdentifier {
+    public NotesParagraphId() {
         super();
     }
 
     @JsonCreator
-    public LearningNotesParagraphId(UUID uuid) {
+    public NotesParagraphId(UUID uuid) {
         super(uuid);
     }
 }

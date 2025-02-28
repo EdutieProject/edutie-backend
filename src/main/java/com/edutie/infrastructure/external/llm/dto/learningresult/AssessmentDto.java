@@ -1,11 +1,11 @@
 package com.edutie.infrastructure.external.llm.dto.learningresult;
 
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AssessmentDto {
     @JsonProperty
-    LearningRequirementId learningRequirementId;
+    LearningSubjectId learningSubjectId;
     @JsonProperty
     int gradeNumber;
     @JsonProperty

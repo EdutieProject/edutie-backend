@@ -1,8 +1,8 @@
 package com.edutie.infrastructure.persistence.implementation.personalization;
 
-import com.edutie.domain.core.learning.solutionsubmission.SolutionSubmission;
-import com.edutie.domain.core.learning.solutionsubmission.identities.SolutionSubmissionId;
-import com.edutie.domain.core.learning.solutionsubmission.persistence.SolutionSubmissionPersistence;
+import com.edutie.domain.core.common.persistence.Persistence;
+import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.identities.SolutionSubmissionId;
 import com.edutie.infrastructure.persistence.jpa.repositories.SolutionSubmissionRepository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
@@ -10,7 +10,7 @@ import lombok.*;
 
 @Component
 @RequiredArgsConstructor
-public class SolutionSubmissionPersistenceImplementation implements SolutionSubmissionPersistence {
+public class SolutionSubmissionPersistenceImplementation implements Persistence<SolutionSubmissionBase, SolutionSubmissionId> {
 	private final SolutionSubmissionRepository solutionSubmissionRepository;
 
 	/**
@@ -19,7 +19,7 @@ public class SolutionSubmissionPersistenceImplementation implements SolutionSubm
 	 * @return crud jpa repository
 	 */
 	@Override
-	public JpaRepository<SolutionSubmission, SolutionSubmissionId> getRepository() {
+	public JpaRepository<SolutionSubmissionBase, SolutionSubmissionId> getRepository() {
 		return solutionSubmissionRepository;
 	}
 
@@ -29,7 +29,7 @@ public class SolutionSubmissionPersistenceImplementation implements SolutionSubm
 	 * @return class of persistence entity
 	 */
 	@Override
-	public Class<SolutionSubmission> entityClass() {
-		return SolutionSubmission.class;
+	public Class<SolutionSubmissionBase> entityClass() {
+		return SolutionSubmissionBase.class;
 	}
 }

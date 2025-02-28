@@ -1,9 +1,9 @@
 package com.edutie.domain.core.learning.learningexperience.valueobjects;
 
-import com.edutie.domain.core.common.enums.PersistableEnum;
+import com.edutie.domain.core.common.enums.CodedEnum;
 import com.edutie.infrastructure.persistence.config.AbstractEnumConverter;
 
-public enum VisualisationType implements PersistableEnum<String> {
+public enum VisualisationType implements CodedEnum<String> {
     MERMAID("Mermaid");
 
     private final String code;

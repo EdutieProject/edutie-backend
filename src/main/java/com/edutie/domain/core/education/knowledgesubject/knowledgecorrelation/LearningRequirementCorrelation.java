@@ -1,6 +1,6 @@
 package com.edutie.domain.core.education.knowledgesubject.knowledgecorrelation;
 
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -12,23 +12,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LearningRequirementCorrelation {
-    private LearningRequirementId sourceLearningRequirementId;
-    private LearningRequirementId correlatedLearningRequirementId;
+    private LearningSubjectId sourceLearningSubjectId;
+    private LearningSubjectId correlatedLearningSubjectId;
     private int correlationFactor;
 
     @JsonCreator
     public LearningRequirementCorrelation(
-            @JsonProperty("sourceLearningRequirementId") LearningRequirementId sourceLearningRequirementId,
-            @JsonProperty("correlatedLearningRequirementId") LearningRequirementId correlatedLearningRequirementId,
+            @JsonProperty("sourceLearningRequirementId") LearningSubjectId sourceLearningSubjectId,
+            @JsonProperty("correlatedLearningRequirementId") LearningSubjectId correlatedLearningSubjectId,
             @JsonProperty("correlationFactor") int correlationFactor) {
-        this.sourceLearningRequirementId = sourceLearningRequirementId;
-        this.correlatedLearningRequirementId = correlatedLearningRequirementId;
+        this.sourceLearningSubjectId = sourceLearningSubjectId;
+        this.correlatedLearningSubjectId = correlatedLearningSubjectId;
         this.correlationFactor = correlationFactor;
     }
 
     @Override
     public String toString() {
         return String.format("[Learning Requirement Correlation: {%s} -> {%s} | Factor: %s]",
-                sourceLearningRequirementId, correlatedLearningRequirementId, correlationFactor);
+                sourceLearningSubjectId, correlatedLearningSubjectId, correlationFactor);
     }
 }

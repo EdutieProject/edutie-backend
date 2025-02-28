@@ -4,7 +4,7 @@ import com.edutie.application.learning.learningresult.AssessSolutionCommandHandl
 import com.edutie.application.learning.learningresult.commands.AssessSolutionCommand;
 import com.edutie.application.learning.learningresult.implementation.AssessSolutionCommandHandlerImplementation;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.learningsubject.identities.LearningRequirementId;
+import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
@@ -15,7 +15,6 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.enti
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
-import com.edutie.domain.core.learning.solutionsubmission.persistence.SolutionSubmissionPersistence;
 import com.edutie.domain.core.learning.student.persistence.StudentPersistence;
 import com.edutie.domain.service.personalization.learningresult.implementation.LearningResultPersonalizationServiceImplementation;
 import com.edutie.mocks.EducationMocks;
@@ -85,7 +84,7 @@ public class LearningResultCommandHandlersTests {
                 staticLearningResourceDefinition.getLearningRequirements().stream()
                         .flatMap(o -> o.getElementalRequirements().stream()).filter(o -> o.getOrdinal() < 1).collect(Collectors.toSet()),
                 ActivityBase.create("Activity text", Set.of(Hint.create("aaa"))),
-                Set.of(TheoryCard.create(new LearningRequirementId(), "dsadas")),
+                Set.of(TheoryCard.create(new LearningSubjectId(), "dsadas")),
                 new Visualisation("")
         );
         learningExperiencePersistence.save(learningExperience).throwIfFailure();
@@ -98,7 +97,7 @@ public class LearningResultCommandHandlersTests {
         LearningExperience learningExperience = createAndSaveLearningResource(staticLearningResourceDefinition);
 
         AssessSolutionCommand command = new AssessSolutionCommand()
-                .learningResourceId(learningExperience.getId())
+                .learningExperienceId(learningExperience.getId())
                 .studentUserId(mockUser.getUserId())
                 .solutionSubmissionText("Hello world")
                 .hintsRevealedCount(0);
