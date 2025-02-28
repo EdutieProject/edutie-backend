@@ -5,5 +5,5 @@ import com.edutie.domain.core.learning.learningexperience.identities.ActivityId;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class ActivityBase extends EntityBase<ActivityId> {
+public abstract class ActivityBase extends EntityBase<ActivityId> implements Activity {
 }
