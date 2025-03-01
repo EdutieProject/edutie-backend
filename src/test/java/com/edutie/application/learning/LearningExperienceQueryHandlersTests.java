@@ -1,7 +1,5 @@
 package com.edutie.application.learning;
 
-import com.edutie.application.learning.learningresource.GetLearningResourceByIdQueryHandler;
-import com.edutie.application.learning.learningresource.GetLearningResourcesByDefinitionIdQueryHandler;
 import com.edutie.application.learning.learningresource.queries.GetLearningResourceByIdQuery;
 import com.edutie.application.learning.learningresource.queries.GetLearningResourcesByDefinitionIdQuery;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;

@@ -1,4 +1,4 @@
-package com.edutie.application.learning.learningresult.queries;
+package com.edutie.application.learning.learningresult.query;
 
 import com.edutie.application.common.actions.StudentAction;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
@@ -15,12 +15,13 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class GetLearningResultsSolutionSubmissionQuery extends StudentAction<GetLearningResultsSolutionSubmissionQuery> {
+public final class GetLearningResultByIdQuery extends StudentAction<GetLearningResultByIdQuery> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull LearningResultId learningResultId;
+    private @NonNull LearningResultId learningExperienceId;
 
     @Override
-    protected GetLearningResultsSolutionSubmissionQuery getThis() {
+    protected GetLearningResultByIdQuery getThis() {
         return this;
     }
+
 }

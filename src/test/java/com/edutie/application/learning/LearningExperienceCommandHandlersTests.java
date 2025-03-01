@@ -1,8 +1,5 @@
 package com.edutie.application.learning;
 
-import com.edutie.application.learning.learningresource.CreateLearningResourceCommandHandler;
-import com.edutie.application.learning.learningresource.CreateDynamicLearningResourceCommandHandler;
-import com.edutie.application.learning.learningresource.CreateSimilarLearningResourceCommandHandler;
 import com.edutie.application.learning.learningresource.commands.CreateLearningResourceCommand;
 import com.edutie.application.learning.learningresource.commands.CreateDynamicLearningResourceCommand;
 import com.edutie.application.learning.learningresource.commands.CreateSimilarLearningResourceCommand;
