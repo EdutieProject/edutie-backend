@@ -3,19 +3,15 @@ package com.edutie.infrastructure.persistence.implementation.education;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
-import com.edutie.infrastructure.persistence.PersistenceError;
-import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
+import com.edutie.infrastructure.persistence.jpa.repositories.LearningSubjectRepository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
 import lombok.*;
-import validation.WrapperResult;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class LearningSubjectPersistenceImplementation implements LearningSubjectPersistence {
-	private final LearningRequirementRepository learningRequirementRepository;
+	private final LearningSubjectRepository learningSubjectRepository;
 
 	/**
 	 * Override this to provide repository for default methods
@@ -24,7 +20,7 @@ public class LearningSubjectPersistenceImplementation implements LearningSubject
 	 */
 	@Override
 	public JpaRepository<LearningSubject, LearningSubjectId> getRepository() {
-		return learningRequirementRepository;
+		return learningSubjectRepository;
 	}
 
 	/**
@@ -37,20 +33,4 @@ public class LearningSubjectPersistenceImplementation implements LearningSubject
 		return LearningSubject.class;
 	}
 
-	/**
-	 * Retrieves a number of learning requirements. If the returned list does not contain the specified number
-	 * of requirements, that means there is not enough of them in the persistence.
-	 *
-	 * @param number number of l.reqs to retrieve
-	 * @return
-	 */
-	@Override
-	public WrapperResult<List<LearningSubject>> getAny(int number) {
-		try {
-			return WrapperResult.successWrapper(learningRequirementRepository.findRandom(number));
-		} catch (Exception e) {
-			return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(e));
-		}
-
-	}
 }

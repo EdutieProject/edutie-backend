@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.implementation.personalization;
+package com.edutie.infrastructure.persistence.implementation.learning;
 
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.educator.identities.EducatorId;

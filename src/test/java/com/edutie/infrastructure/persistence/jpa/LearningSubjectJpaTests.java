@@ -7,7 +7,7 @@ import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.backend.domain.studyprogram.science.Science;
 import com.edutie.infrastructure.persistence.jpa.repositories.AdministratorRepository;
 import com.edutie.infrastructure.persistence.jpa.repositories.EducatorRepository;
-import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
+import com.edutie.infrastructure.persistence.jpa.repositories.LearningSubjectRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.*;
@@ -26,7 +26,7 @@ public class LearningSubjectJpaTests {
 	@Autowired
 	private EducatorRepository educatorRepository;
 	@Autowired
-	private LearningRequirementRepository learningRequirementRepository;
+	private LearningSubjectRepository learningSubjectRepository;
 	@Autowired
 	private ScienceRepository scienceRepository;
 	@Autowired
@@ -48,9 +48,9 @@ public class LearningSubjectJpaTests {
 		assertNotNull(learningSubject);
 		assertEquals(creator, learningSubject.getAuthorEducator());
 
-		learningRequirementRepository.save(learningSubject);
+		learningSubjectRepository.save(learningSubject);
 
-		var fetched = learningRequirementRepository.findById(learningSubject.getId()).orElseThrow();
+		var fetched = learningSubjectRepository.findById(learningSubject.getId()).orElseThrow();
 		assertNull(learningSubject);
 	}
 
@@ -67,13 +67,13 @@ public class LearningSubjectJpaTests {
 		LearningSubject learningSubject1 = LearningSubject.createBlank(creator);
 		LearningSubject learningSubject2 = LearningSubject.createBlank(creator);
 
-		learningRequirementRepository.save(learningSubject);
-		learningRequirementRepository.save(learningSubject1);
-		learningRequirementRepository.save(learningSubject2);
+		learningSubjectRepository.save(learningSubject);
+		learningSubjectRepository.save(learningSubject1);
+		learningSubjectRepository.save(learningSubject2);
 
-		var fetched = learningRequirementRepository.findById(learningSubject.getId()).orElseThrow();
-		var fetched1 = learningRequirementRepository.findById(learningSubject1.getId()).orElseThrow();
-		var fetched2 = learningRequirementRepository.findById(learningSubject2.getId()).orElseThrow();
+		var fetched = learningSubjectRepository.findById(learningSubject.getId()).orElseThrow();
+		var fetched1 = learningSubjectRepository.findById(learningSubject1.getId()).orElseThrow();
+		var fetched2 = learningSubjectRepository.findById(learningSubject2.getId()).orElseThrow();
 
 		assertNull(learningSubject);
 		assertNull(learningSubject1);

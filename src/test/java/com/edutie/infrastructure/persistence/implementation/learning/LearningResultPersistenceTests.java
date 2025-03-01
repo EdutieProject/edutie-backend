@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.implementation.personalization;
+package com.edutie.infrastructure.persistence.implementation.learning;
 
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;

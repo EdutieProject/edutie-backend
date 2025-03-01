@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.implementation.personalization;
+package com.edutie.infrastructure.persistence.implementation.learning;
 
 import com.edutie.backend.domain.personalization.learningresourcedefinition.StaticLearningResourceDefinition;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.persistence.LearningResourceDefinitionPersistence;

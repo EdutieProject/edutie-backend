@@ -8,11 +8,13 @@ import com.edutie.domain.core.education.elementalrequirement.identitites.Element
 import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
+import com.edutie.domain.core.education.learningsubject.service.StudentObjectiveInferringService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import validation.Result;
+import validation.WrapperResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,20 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
     }
 
     /**
+     * Infer the requirement objective using provided service and insert it into the given ordinal.
+     *
+     * @param title            title of the requirement
+     * @param ordinal          desired ordinal
+     * @param inferringService inferring service
+     * @return Result of the operation
+     */
+    public WrapperResult<LearningSubject> inferAndInsertRequirement(String title, int ordinal, StudentObjectiveInferringService inferringService) {
+        PromptFragment studentObjective = inferringService.getStudentObjective(title, knowledgeOrigin).getValue();
+        insertRequirement(title, studentObjective, ordinal).throwIfFailure();
+        return WrapperResult.successWrapper(this);
+    }
+
+    /**
      * Appends requirement at the end of the requirement list
      *
      * @param title                 title of learning subject
@@ -75,7 +91,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @param desiredIndex     desired index
      * @return Result object
      */
-    public Result insertSubRequirement(String title, PromptFragment studentObjective, int desiredIndex) {
+    public Result insertRequirement(String title, PromptFragment studentObjective, int desiredIndex) {
         this.appendSubRequirement(title, studentObjective);
         return moveSubRequirement(requirements.size() - 1, desiredIndex);
     }

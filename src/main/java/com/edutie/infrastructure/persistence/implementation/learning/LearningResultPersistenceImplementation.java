@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.implementation.personalization;
+package com.edutie.infrastructure.persistence.implementation.learning;
 
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
@@ -9,7 +9,7 @@ import com.edutie.domain.core.learning.learningresult.persistence.LearningResult
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.core.learning.student.identities.StudentId;
 import com.edutie.infrastructure.persistence.PersistenceError;
-import com.edutie.infrastructure.persistence.jpa.repositories.LearningRequirementRepository;
+import com.edutie.infrastructure.persistence.jpa.repositories.LearningSubjectRepository;
 import com.edutie.infrastructure.persistence.jpa.repositories.LearningResultRepository;
 import com.edutie.infrastructure.persistence.jpa.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.Set;
 public class LearningResultPersistenceImplementation implements LearningResultPersistence {
     private final LearningResultRepository learningResultRepository;
     private final StudentRepository studentRepository;
-    private final LearningRequirementRepository learningRequirementRepository;
+    private final LearningSubjectRepository learningSubjectRepository;
 
     /**
      * Override this to provide repository for default methods
@@ -141,7 +141,7 @@ public class LearningResultPersistenceImplementation implements LearningResultPe
             Optional<Student> student = studentRepository.findById(studentId);
             if (student.isEmpty())
                 return WrapperResult.failureWrapper(PersistenceError.notFound(Student.class));
-            List<LearningSubject> learningSubjects = learningRequirementRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
+            List<LearningSubject> learningSubjects = learningSubjectRepository.findByKnowledgeSubjectId(knowledgeSubjectId);
             return WrapperResult.successWrapper(learningSubjects.stream().flatMap(o ->
                     learningResultRepository.findStudentsLearningResultsByLearningRequirement(student.get(), o).stream()
             ).toList());

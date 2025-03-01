@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.implementation.personalization;
+package com.edutie.infrastructure.persistence.implementation.learning;
 
 import com.edutie.domain.core.common.persistence.Persistence;
 import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;

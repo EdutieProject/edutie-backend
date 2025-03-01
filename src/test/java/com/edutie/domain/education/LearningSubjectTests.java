@@ -38,7 +38,7 @@ public class LearningSubjectTests {
 		learningSubject.appendSubRequirement("R1", PromptFragment.of(""));
 		learningSubject.appendSubRequirement("R2", PromptFragment.of(""));
 		learningSubject.appendSubRequirement("R3", PromptFragment.of(""));
-		assert learningSubject.insertSubRequirement("Hello!", PromptFragment.of(""), 1).isSuccess();
+		assert learningSubject.insertRequirement("Hello!", PromptFragment.of(""), 1).isSuccess();
 
 		assert learningSubject.getRequirements().get(1).getStudentObjective().text().equals("Hello!");
 	}
