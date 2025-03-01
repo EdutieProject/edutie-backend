@@ -1,7 +1,5 @@
 package com.edutie.infrastructure.external.llm;
 
-import com.edutie.application.learning.ancillaries.schemas.RandomFactGenerationSchema;
-import com.edutie.application.learning.ancillaries.viewmodels.RandomFact;
 import com.edutie.domain.service.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.service.personalization.learningresource.schema.LearningResourceGenerationSchema;

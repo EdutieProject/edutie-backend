@@ -15,4 +15,8 @@ public class KnowledgeOrigin {
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "knowledge_subject_id"))
     private KnowledgeSubjectId knowledgeSubjectId;
+
+    public boolean isEmpty() {
+        return knowledgeSubjectId == null;
+    }
 }

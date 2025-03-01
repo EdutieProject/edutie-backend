@@ -55,7 +55,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @return true/false
      */
     public boolean isKnowledgeOriginEmpty() {
-        return this.knowledgeOrigin.getKnowledgeSubjectId() == null;
+        return knowledgeOrigin.isEmpty();
     }
 
     /**
