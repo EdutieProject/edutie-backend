@@ -7,10 +7,7 @@ import com.edutie.domain.core.learning.learningexperience.entities.notes.Learnin
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.domain.core.learning.student.identities.StudentId;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter(AccessLevel.PRIVATE)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public class LearningExperience<TActivity extends Activity> extends AuditableEntityBase<LearningExperienceId> {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

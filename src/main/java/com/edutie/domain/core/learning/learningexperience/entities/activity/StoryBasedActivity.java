@@ -6,10 +6,12 @@ import com.edutie.domain.core.learning.learningexperience.entities.activity.comm
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 
 import java.net.URL;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @JsonIgnoreProperties({"answerOptionOne", "answerOptionTwo", "answerOptionThree", "answerOptionFour"})
 public class StoryBasedActivity extends ActivityBase {

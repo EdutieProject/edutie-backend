@@ -7,10 +7,12 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 public class LearningEvaluation extends EntityBase<LearningEvaluationId> {
     @OneToMany(targetEntity = Assessment.class, fetch = FetchType.EAGER)
