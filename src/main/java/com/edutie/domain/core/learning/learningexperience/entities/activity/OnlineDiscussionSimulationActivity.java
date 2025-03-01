@@ -1,7 +1,7 @@
 package com.edutie.domain.core.learning.learningexperience.entities.activity;
 
 import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
-import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityType;
+import com.edutie.domain.core.learning.common.LearningObjectiveType;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -10,7 +10,7 @@ public class OnlineDiscussionSimulationActivity extends ActivityBase {
     private String secondComment;
 
     @Override
-    public ActivityType getActivityType() {
-        return ActivityType.ANALYZING_ACTIVITY;
+    public LearningObjectiveType getActivityType() {
+        return LearningObjectiveType.ANALYZE;
     }
 }

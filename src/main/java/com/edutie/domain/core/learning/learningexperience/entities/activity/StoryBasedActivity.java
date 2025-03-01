@@ -1,7 +1,7 @@
 package com.edutie.domain.core.learning.learningexperience.entities.activity;
 
 import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
-import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityType;
+import com.edutie.domain.core.learning.common.LearningObjectiveType;
 import com.edutie.domain.core.learning.learningexperience.entities.activity.common.AnswerOption;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -48,7 +48,7 @@ public class StoryBasedActivity extends ActivityBase {
     }
 
     @Override
-    public ActivityType getActivityType() {
-        return ActivityType.UNDERSTANDING_ACTIVITY;
+    public LearningObjectiveType getActivityType() {
+        return LearningObjectiveType.UNDERSTAND;
     }
 }

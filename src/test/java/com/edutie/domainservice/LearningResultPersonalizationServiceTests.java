@@ -6,7 +6,7 @@ import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.enums.DefinitionType;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.service.personalization.learningresult.schema.AssessmentSchema;
 import com.edutie.mocks.LearningResourceMocks;

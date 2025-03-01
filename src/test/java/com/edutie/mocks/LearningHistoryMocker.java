@@ -14,7 +14,7 @@ import com.edutie.domain.core.learning.learningresult.entities.Assessment;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.core.learning.student.identities.StudentId;
 import org.springframework.data.jpa.repository.JpaRepository;

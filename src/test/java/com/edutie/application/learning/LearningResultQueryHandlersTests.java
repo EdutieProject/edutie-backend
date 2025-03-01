@@ -16,7 +16,7 @@ import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.mocks.EducationMocks;
 import com.edutie.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;

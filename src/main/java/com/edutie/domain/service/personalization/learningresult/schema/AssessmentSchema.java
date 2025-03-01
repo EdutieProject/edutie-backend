@@ -4,7 +4,7 @@ import com.edutie.domain.core.education.elementalrequirement.ElementalRequiremen
 import com.edutie.domain.core.personalization.common.PersonalizationSchema;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.backend.domain.personalization.learningresourcedefinition.identities.LearningResourceDefinitionId;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
 import com.edutie.domain.core.learning.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;

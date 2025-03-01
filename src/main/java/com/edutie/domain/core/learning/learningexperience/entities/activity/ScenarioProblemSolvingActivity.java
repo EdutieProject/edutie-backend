@@ -1,7 +1,7 @@
 package com.edutie.domain.core.learning.learningexperience.entities.activity;
 
 import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
-import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityType;
+import com.edutie.domain.core.learning.common.LearningObjectiveType;
 import jakarta.persistence.Entity;
 
 import java.net.URL;
@@ -12,7 +12,7 @@ public class ScenarioProblemSolvingActivity extends ActivityBase {
     private URL imageURL;
 
     @Override
-    public ActivityType getActivityType() {
-        return ActivityType.APPLYING_ACTIVITY;
+    public LearningObjectiveType getActivityType() {
+        return LearningObjectiveType.APPLY;
     }
 }

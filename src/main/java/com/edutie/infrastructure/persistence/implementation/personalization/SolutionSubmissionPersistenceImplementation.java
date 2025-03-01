@@ -1,7 +1,7 @@
 package com.edutie.infrastructure.persistence.implementation.personalization;
 
 import com.edutie.domain.core.common.persistence.Persistence;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.learningresult.identities.SolutionSubmissionId;
 import com.edutie.infrastructure.persistence.jpa.repositories.SolutionSubmissionRepository;
 import org.springframework.data.jpa.repository.*;

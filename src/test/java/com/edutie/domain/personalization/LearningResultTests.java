@@ -9,7 +9,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.enum
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.Assessment;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.mocks.EducationMocks;
 import org.junit.jupiter.api.Assertions;

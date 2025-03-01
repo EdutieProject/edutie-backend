@@ -1,7 +1,7 @@
 package com.edutie.domain.core.learning.learningexperience.entities.activity;
 
 import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
-import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityType;
+import com.edutie.domain.core.learning.common.LearningObjectiveType;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -10,7 +10,7 @@ public class SimpleProblemActivity extends ActivityBase {
     private String problemText;
 
     @Override
-    public ActivityType getActivityType() {
-        return ActivityType.REMEMBERING_ACTIVITY;
+    public LearningObjectiveType getActivityType() {
+        return LearningObjectiveType.REMEMBER;
     }
 }

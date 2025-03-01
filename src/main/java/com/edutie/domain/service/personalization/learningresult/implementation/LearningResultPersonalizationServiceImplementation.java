@@ -2,7 +2,7 @@ package com.edutie.domain.service.personalization.learningresult.implementation;
 
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.service.personalization.learningresult.LearningResultPersonalizationService;
 import com.edutie.domain.service.personalization.learningresult.schema.AssessmentSchema;

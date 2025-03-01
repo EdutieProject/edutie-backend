@@ -14,7 +14,7 @@ import com.edutie.backend.domain.personalization.learningresourcedefinition.pers
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.course.persistence.CoursePersistence;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;

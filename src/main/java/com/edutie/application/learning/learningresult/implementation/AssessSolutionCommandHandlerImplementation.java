@@ -8,7 +8,7 @@ import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.domain.core.learning.student.persistence.StudentPersistence;
 import validation.WrapperResult;

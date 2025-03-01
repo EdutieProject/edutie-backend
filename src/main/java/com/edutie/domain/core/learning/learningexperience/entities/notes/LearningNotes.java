@@ -19,7 +19,7 @@ import java.util.List;
 public class LearningNotes extends EntityBase<LearningNotesId> {
     @OneToMany(targetEntity = NotesTextParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
-    private List<NotesTextParagraph> simpleParagraphs;
+    private List<NotesTextParagraph> textParagraphs;
     @OneToMany(targetEntity = NotesVisualisationParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<NotesVisualisationParagraph> visualisationParagraphs;
@@ -27,7 +27,7 @@ public class LearningNotes extends EntityBase<LearningNotesId> {
     @JsonProperty
     public List<? extends OrderedParagraph<?, ?>> getParagraphs() {
         List<OrderedParagraph<?, ?>> allParagraphs = new ArrayList<>();
-        allParagraphs.addAll(simpleParagraphs);
+        allParagraphs.addAll(textParagraphs);
         allParagraphs.addAll(visualisationParagraphs);
         allParagraphs.sort(Comparator.comparingInt(OrderedParagraph::getOrdinal));
         return allParagraphs;

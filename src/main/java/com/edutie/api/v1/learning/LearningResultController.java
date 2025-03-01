@@ -10,7 +10,7 @@ import com.edutie.application.learning.learningresult.queries.GetLearningResultB
 import com.edutie.application.learning.learningresult.queries.GetLearningResultsSolutionSubmissionQuery;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmissionBase;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

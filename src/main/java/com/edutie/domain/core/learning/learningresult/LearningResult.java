@@ -3,7 +3,7 @@ package com.edutie.domain.core.learning.learningresult;
 import com.edutie.domain.core.common.base.AuditableEntityBase;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.domain.core.learning.learningresult.entities.LearningEvaluation;
-import com.edutie.domain.core.learning.learningresult.entities.submission.common.SolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmission;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
 import com.edutie.domain.core.learning.student.identities.StudentId;
 import jakarta.persistence.*;
@@ -21,8 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@MappedSuperclass
 public class LearningResult<TSolutionSubmission extends SolutionSubmission> extends AuditableEntityBase<LearningResultId> {
     @OneToOne(targetEntity = LearningEvaluation.class, fetch = FetchType.EAGER)
     private LearningEvaluation learningEvaluation = new LearningEvaluation();
