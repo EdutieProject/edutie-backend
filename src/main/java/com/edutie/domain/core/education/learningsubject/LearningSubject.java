@@ -5,6 +5,7 @@ import com.edutie.domain.core.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
+import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
@@ -56,6 +57,15 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      */
     public boolean isKnowledgeOriginEmpty() {
         return knowledgeOrigin.isEmpty();
+    }
+
+    /**
+     * Sets knowledge origin's knowledge subject id
+     *
+     * @param knowledgeSubjectId knowledge subject id
+     */
+    public void setRelatedKnowledgeSubjectId(KnowledgeSubjectId knowledgeSubjectId) {
+        knowledgeOrigin.setKnowledgeSubjectId(knowledgeSubjectId);
     }
 
     /**
