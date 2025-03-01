@@ -29,7 +29,7 @@ import java.util.List;
 @Entity
 public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubjectId> {
     private String name;
-    @OneToMany(targetEntity = LearningSubjectRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = LearningSubjectRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordinal")
     private List<LearningSubjectRequirement> requirements = new ArrayList<>();
     @Embedded
