@@ -2,7 +2,7 @@ package com.edutie.domain.core.learning.learningexperience;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
 import com.edutie.domain.core.learning.learningexperience.entities.LearningExperienceRequirement;
-import com.edutie.domain.core.learning.learningexperience.entities.activity.common.Activity;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.base.Activity;
 import com.edutie.domain.core.learning.learningexperience.entities.notes.LearningNotes;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.domain.core.learning.student.identities.StudentId;

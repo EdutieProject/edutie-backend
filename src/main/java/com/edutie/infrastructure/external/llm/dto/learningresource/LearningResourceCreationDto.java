@@ -1,7 +1,7 @@
 package com.edutie.infrastructure.external.llm.dto.learningresource;
 
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.entities.activity.common.ActivityBase;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.edutie.domain.service.personalization.learningresource.schema.LearningResourceGenerationSchema;
 import com.edutie.infrastructure.external.common.dto.ExternalInfrastructureDto;

@@ -1,4 +1,4 @@
-package com.edutie.domain.core.learning.learningexperience.entities.activity.common;
+package com.edutie.domain.core.learning.learningexperience.entities.activity.base;
 
 import com.edutie.domain.core.common.base.EntityBase;
 import com.edutie.domain.core.learning.learningexperience.identities.ActivityId;
