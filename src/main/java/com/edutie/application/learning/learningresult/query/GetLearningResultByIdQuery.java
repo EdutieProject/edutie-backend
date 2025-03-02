@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class GetLearningResultByIdQuery extends StudentAction<GetLearningResultByIdQuery> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-    private @NonNull LearningResultId learningExperienceId;
+    private @NonNull LearningResultId learningResultId;
 
     @Override
     protected GetLearningResultByIdQuery getThis() {

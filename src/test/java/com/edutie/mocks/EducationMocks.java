@@ -10,15 +10,15 @@ public class EducationMocks {
         LearningSubject learningSubject = LearningSubject.createBlank(educator);
         learningSubject.setName("Integration by parts");
         learningSubject.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningSubject.appendSubRequirement(
+        learningSubject.appendRequirement(
                 "Calculating derivatives and antiderivatives of ingredient functions",
                 PromptFragment.of("")
         );
-        learningSubject.appendSubRequirement(
+        learningSubject.appendRequirement(
                 "Proper formula usage",
                 PromptFragment.of("")
         );
-        learningSubject.appendSubRequirement(
+        learningSubject.appendRequirement(
                 "3rd sub req nfgoiufguoeoeaofsoefe",
                 PromptFragment.of("")
         );
@@ -29,15 +29,15 @@ public class EducationMocks {
         LearningSubject learningSubject = LearningSubject.createBlank(educator);
         learningSubject.setName("Integration by substitution");
         learningSubject.setKnowledgeSubjectId(new KnowledgeSubjectId());
-        learningSubject.appendSubRequirement(
+        learningSubject.appendRequirement(
                 "Substituting an expression with a variable",
                 PromptFragment.of("")
         );
-        learningSubject.appendSubRequirement(
+        learningSubject.appendRequirement(
                 "Correct substituted expression calculation",
                 PromptFragment.of("")
         );
-        learningSubject.appendSubRequirement(
+        learningSubject.appendRequirement(
                 "3rd sub req ...",
                 PromptFragment.of("")
         );

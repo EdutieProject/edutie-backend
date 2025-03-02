@@ -88,7 +88,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @param title                 title of learning subject
      * @param scientificDescription description of the sub requirement
      */
-    public void appendSubRequirement(String title, PromptFragment scientificDescription) {
+    public void appendRequirement(String title, PromptFragment scientificDescription) {
         requirements.add(LearningSubjectRequirement.create(this, title, scientificDescription, requirements.size()));
     }
 
@@ -102,8 +102,8 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @return Result object
      */
     public Result insertRequirement(String title, PromptFragment studentObjective, int desiredIndex) {
-        this.appendSubRequirement(title, studentObjective);
-        return moveSubRequirement(requirements.size() - 1, desiredIndex);
+        this.appendRequirement(title, studentObjective);
+        return moveRequirement(requirements.size() - 1, desiredIndex);
     }
 
     /**
@@ -113,7 +113,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @param desiredIndex desired sub requirement index
      * @return Result object
      */
-    public Result moveSubRequirement(int currentIndex, int desiredIndex) {
+    public Result moveRequirement(int currentIndex, int desiredIndex) {
         if (currentIndex < 0 || currentIndex >= requirements.size() || desiredIndex < 0 || desiredIndex >= requirements.size())
             return Result.failure(DomainErrors.invalidIndex(LearningSubjectRequirement.class));
         LearningSubjectRequirement requirement = requirements.get(currentIndex);

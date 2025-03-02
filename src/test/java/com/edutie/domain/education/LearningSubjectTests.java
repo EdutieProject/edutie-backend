@@ -24,9 +24,9 @@ public class LearningSubjectTests {
 	@Test
 	public void subRequirementsAppendTest() {
 		LearningSubject learningSubject = LearningSubject.createBlank(educator);
-		learningSubject.appendSubRequirement("R1", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("R2", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("R3", PromptFragment.of(""));
+		learningSubject.appendRequirement("R1", PromptFragment.of(""));
+		learningSubject.appendRequirement("R2", PromptFragment.of(""));
+		learningSubject.appendRequirement("R3", PromptFragment.of(""));
 
 		assert learningSubject.getRequirements().get(0).getStudentObjective().text().equals("R1");
 		assert learningSubject.getRequirements().get(2).getStudentObjective().text().equals("R3");
@@ -35,9 +35,9 @@ public class LearningSubjectTests {
 	@Test
 	public void subRequirementsInsertTest() {
 		LearningSubject learningSubject = LearningSubject.createBlank(educator);
-		learningSubject.appendSubRequirement("R1", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("R2", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("R3", PromptFragment.of(""));
+		learningSubject.appendRequirement("R1", PromptFragment.of(""));
+		learningSubject.appendRequirement("R2", PromptFragment.of(""));
+		learningSubject.appendRequirement("R3", PromptFragment.of(""));
 		assert learningSubject.insertRequirement("Hello!", PromptFragment.of(""), 1).isSuccess();
 
 		assert learningSubject.getRequirements().get(1).getStudentObjective().text().equals("Hello!");
@@ -46,9 +46,9 @@ public class LearningSubjectTests {
 	@Test
 	public void subRequirementDeleteTest() {
 		LearningSubject learningSubject = LearningSubject.createBlank(educator);
-		learningSubject.appendSubRequirement("R1", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("R2", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("R3", PromptFragment.of(""));
+		learningSubject.appendRequirement("R1", PromptFragment.of(""));
+		learningSubject.appendRequirement("R2", PromptFragment.of(""));
+		learningSubject.appendRequirement("R3", PromptFragment.of(""));
 		assert learningSubject.getRequirements().size() == 3;
 
 		assert learningSubject.removeRequirement(0).isSuccess();

@@ -45,8 +45,8 @@ public class LearningSubjectPersistenceTests {
 	@Test
 	public void wholeSaveTest() {
 		LearningSubject learningSubject = LearningSubject.createBlank(educator);
-		learningSubject.appendSubRequirement("hello", PromptFragment.of(""));
-		learningSubject.appendSubRequirement("universe!", PromptFragment.of(""));
+		learningSubject.appendRequirement("hello", PromptFragment.of(""));
+		learningSubject.appendRequirement("universe!", PromptFragment.of(""));
 		Result result = learningSubjectPersistence.save(learningSubject);
 		if (result.isFailure())
 			throw new AssertionError(result.getError());
