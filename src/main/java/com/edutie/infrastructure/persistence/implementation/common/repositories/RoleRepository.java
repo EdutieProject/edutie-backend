@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.jpa.repositories.common;
+package com.edutie.infrastructure.persistence.implementation.common.repositories;
 
 import com.edutie.domain.core.administration.Role;
 import com.edutie.domain.core.administration.UserId;

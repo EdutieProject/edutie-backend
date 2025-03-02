@@ -4,7 +4,7 @@ import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.learning.student.Student;
 import com.edutie.infrastructure.authorization.AuthorizationError;
 import com.edutie.infrastructure.authorization.student.StudentAuthorization;
-import com.edutie.infrastructure.persistence.jpa.repositories.StudentRepository;
+import com.edutie.infrastructure.persistence.implementation.profiles.repositories.StudentRepository;
 import validation.Result;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.server.resource.authentication.*;

@@ -4,7 +4,7 @@ import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.infrastructure.authorization.AuthorizationError;
 import com.edutie.infrastructure.authorization.administrator.AdministratorAuthorization;
-import com.edutie.infrastructure.persistence.jpa.repositories.AdministratorRepository;
+import com.edutie.infrastructure.persistence.implementation.profiles.repositories.AdministratorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import validation.Result;

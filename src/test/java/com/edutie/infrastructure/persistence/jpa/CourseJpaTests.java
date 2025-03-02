@@ -6,8 +6,8 @@ import com.edutie.domain.core.administration.administrator.identities.Administra
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.infrastructure.persistence.jpa.repositories.AdministratorRepository;
-import com.edutie.infrastructure.persistence.jpa.repositories.EducatorRepository;
+import com.edutie.infrastructure.persistence.implementation.profiles.repositories.AdministratorRepository;
+import com.edutie.infrastructure.persistence.implementation.profiles.repositories.EducatorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.*;

@@ -1,4 +1,4 @@
-package com.edutie.infrastructure.persistence.jpa.repositories;
+package com.edutie.infrastructure.persistence.implementation.education.repositories;
 
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;

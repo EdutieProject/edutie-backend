@@ -72,7 +72,7 @@ public class GenericRequestHandler<TResponseBody> {
 	}
 
 	public <U extends Result> ResponseEntity<ApiResult<TResponseBody>> handle(Supplier<U> resultSupplier) {
-		return handle((_) -> resultSupplier.get());
+		return handle((ignored) -> resultSupplier.get());
 	}
 
 	private ResponseEntity<ApiResult<TResponseBody>> translateWrapper(WrapperResult<TResponseBody> wrapperResult) {

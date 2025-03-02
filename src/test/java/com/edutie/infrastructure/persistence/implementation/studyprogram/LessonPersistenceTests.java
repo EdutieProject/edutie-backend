@@ -7,7 +7,7 @@ import com.edutie.backend.domain.studyprogram.course.Course;
 import com.edutie.backend.domain.studyprogram.lesson.Lesson;
 import com.edutie.backend.domain.studyprogram.lesson.persistence.LessonPersistence;
 import com.edutie.backend.domain.studyprogram.science.Science;
-import com.edutie.infrastructure.persistence.jpa.repositories.EducatorRepository;
+import com.edutie.infrastructure.persistence.implementation.profiles.repositories.EducatorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import validation.Result;

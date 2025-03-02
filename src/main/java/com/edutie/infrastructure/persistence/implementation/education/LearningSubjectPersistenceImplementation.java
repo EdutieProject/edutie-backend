@@ -3,14 +3,16 @@ package com.edutie.infrastructure.persistence.implementation.education;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
-import com.edutie.infrastructure.persistence.jpa.repositories.LearningSubjectRepository;
+import com.edutie.infrastructure.persistence.base.DefaultPersistence;
+import com.edutie.infrastructure.persistence.implementation.education.repositories.LearningSubjectRepository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
 import lombok.*;
 
 @Component
 @RequiredArgsConstructor
-public class LearningSubjectPersistenceImplementation implements LearningSubjectPersistence {
+public class LearningSubjectPersistenceImplementation
+		extends DefaultPersistence<LearningSubject,LearningSubjectId> implements LearningSubjectPersistence {
 	private final LearningSubjectRepository learningSubjectRepository;
 
 	/**
