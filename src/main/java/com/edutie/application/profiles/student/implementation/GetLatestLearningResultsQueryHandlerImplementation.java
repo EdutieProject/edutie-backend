@@ -19,11 +19,13 @@ import java.util.List;
 public class GetLatestLearningResultsQueryHandlerImplementation implements GetLatestLearningResultsQueryHandler {
     private final LearningResultPersistence learningResultPersistence;
     private final StudentPersistence studentPersistence;
+
     @Override
     public WrapperResult<List<LearningResult>> handle(GetLatestLearningResultsQuery query) {
         log.info("Retrieving latest learning results for student user of id {}, amount: {}, maxDate: {}",
                 query.studentUserId(), query.amount(), query.maxDate());
         Student student = studentPersistence.getByAuthorizedUserId(query.studentUserId());
-        return learningResultPersistence.getLatestResultsOfStudent(student.getId(), query.amount(), query.maxDate());
+        //TODO
+        return WrapperResult.successWrapper(List.of());
     }
 }

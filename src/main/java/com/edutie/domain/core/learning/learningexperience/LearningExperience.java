@@ -22,6 +22,7 @@ import java.util.Set;
 @Setter(AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class LearningExperience<TActivity extends Activity> extends AuditableEntityBase<LearningExperienceId> {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<LearningExperienceRequirement> requirements = new HashSet<>();

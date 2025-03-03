@@ -32,8 +32,6 @@ import java.util.stream.Collectors;
 @Getter
 @Entity
 public class Student extends Role<StudentId> {
-    @OneToMany(targetEntity = LearningResult.class, fetch = FetchType.LAZY, mappedBy = "student")
-    private final List<LearningResult> learningHistory = new ArrayList<>();
 
     public static Student create(UserId userId) {
         Student student = new Student();
@@ -46,51 +44,4 @@ public class Student extends Role<StudentId> {
         return LocalDateTime.now().minusDays(7);
     }
 
-    /**
-     * Retrieves Learning Results of student associated with learning requirements linked to a given knowledge subject.
-     *
-     * @param persistence        persistence of learning results
-     * @param knowledgeSubjectId knowledge subject id
-     * @return list of learning results.
-     */
-    public List<LearningResult> getLearningHistoryByKnowledgeSubject(LearningResultPersistence persistence, KnowledgeSubjectId knowledgeSubjectId) {
-        return persistence.getLearningResultsOfStudentByKnowledgeSubjectId(this.getId(), knowledgeSubjectId).getValue();
-    }
-
-    /**
-     * Retrieves latest assessments filtering them by maximal grade
-     *
-     * @param persistence persistence of learning results
-     * @param maxGrade    max grade
-     * @return list of assessments
-     */
-    public List<Assessment> getLatestAssessmentsByMaxGrade(LearningResultPersistence persistence, Grade maxGrade) {
-        return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue()
-                .stream().flatMap(o -> o.getAssessments().stream())
-                .filter(o -> o.getGrade().lessThanOrEqual(maxGrade))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Retrieves latest learning results in the chronological order. Where the results gathering moment begin is
-     * defined by a <code>getLatestResultsDateThreshold</code> function
-     *
-     * @param persistence persistence of learning results
-     * @return list of learning results
-     * @see #getLatestResultsDateThreshold() date treshold getter
-     */
-    public List<LearningResult> getLatestLearningResults(LearningResultPersistence persistence) {
-        return persistence.getLatestResultsOfStudent(this.getId(), 20, getLatestResultsDateThreshold()).getValue()
-                .stream().sorted(Comparator.comparing(AuditableEntityBase::getCreatedOn)).collect(Collectors.toList());
-    }
-
-    /**
-     * Returns latest learning result, if any. Otherwise, returns a domain error of no available content to be returned.
-     *
-     * @param learningResultPersistence persistence to be used
-     * @return Wrapper result of Learning Result
-     */
-    public WrapperResult<LearningResult> getLatestLearningResult(LearningResultPersistence learningResultPersistence) {
-        return learningResultPersistence.getSingleLatestResultOfStudent(this.getId()).ofOtherError(DomainErrors.noContent(LearningResult.class));
-    }
 }
