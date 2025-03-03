@@ -3,7 +3,7 @@ package com.edutie.domain.core.education.educator;
 import com.edutie.domain.core.administration.RestrictedRole;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.administration.administrator.Administrator;
-import com.edutie.domain.core.common.base.EducatorCreatedAuditableEntity;
+import com.edutie.domain.core.common.base.EducatorCreated;
 import com.edutie.domain.core.education.EducationError;
 import com.edutie.domain.core.education.educator.enums.EducatorType;
 import com.edutie.domain.core.education.educator.identities.EducatorId;
@@ -43,7 +43,7 @@ public class Educator extends RestrictedRole<EducatorId> {
         return this.type.ordinal() >= educatorType.ordinal();
     }
 
-    public Result isAuthorOf(EducatorCreatedAuditableEntity<?> entity) {
+    public Result isAuthorOf(EducatorCreated entity) {
         return entity.getAuthorEducator().equals(this) ? Result.success() : Result.failure(EducationError.unprivilegedEducator(this));
     }
 }
