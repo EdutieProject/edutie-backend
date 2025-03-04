@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Setter;
 
 /**
@@ -14,6 +15,7 @@ import lombok.Setter;
  * @param <TId>
  */
 @Setter(AccessLevel.PROTECTED)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class RestrictedRole<TId extends Identifier<?>> extends Role<TId> {
     @ManyToOne(targetEntity = Administrator.class, fetch = FetchType.EAGER)

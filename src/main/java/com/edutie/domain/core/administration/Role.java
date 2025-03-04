@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  */
 @Setter(AccessLevel.PROTECTED)
 @Getter
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class Role<TId extends Identifier<?>> extends EntityBase<TId> {
     protected final LocalDateTime assignedOn = LocalDateTime.now();

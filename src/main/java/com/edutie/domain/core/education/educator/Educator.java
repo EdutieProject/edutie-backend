@@ -9,6 +9,7 @@ import com.edutie.domain.core.education.educator.enums.EducatorType;
 import com.edutie.domain.core.education.educator.identities.EducatorId;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import validation.Result;
@@ -16,6 +17,7 @@ import validation.Result;
 /**
  * Educator profile
  */
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Getter
 @Setter
