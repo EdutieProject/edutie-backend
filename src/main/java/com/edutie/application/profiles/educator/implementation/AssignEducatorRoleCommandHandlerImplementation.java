@@ -20,7 +20,7 @@ public class AssignEducatorRoleCommandHandlerImplementation extends HandlerBase 
 	@Override
 	public WrapperResult<Educator> handle(AssignEducatorRoleCommand command) {
 		Administrator administrator = administratorPersistence.getByAuthorizedUserId(command.adminUserId());
-		Educator educator = Educator.create(command.userToBeEducatorId(), administrator);
+		Educator educator = Educator.create(command.userToBeEducatorId());
 		educatorPersistence.save(educator);
 		return WrapperResult.successWrapper(educator);
 	}

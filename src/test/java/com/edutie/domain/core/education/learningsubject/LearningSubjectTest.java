@@ -17,7 +17,7 @@ import validation.WrapperResult;
 class LearningSubjectTest {
     private final UserId userId = new UserId();
     private final Administrator administrator = Administrator.create(new UserId());
-    private final Educator educator = Educator.create(userId, administrator);
+    private final Educator educator = Educator.create(userId);
 
     @BeforeEach
     public void testSetup() {

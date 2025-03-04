@@ -8,8 +8,6 @@ import com.edutie.domain.core.education.educator.enums.EducatorType;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.lang.reflect.Field;
-
 @SpringBootTest
 class EducatorTest {
     private final UserId userId = new UserId();
@@ -17,13 +15,13 @@ class EducatorTest {
 
     @Test
     public void administratorEducatorCreationTest() {
-        Educator educator = Educator.create(userId, Administrator.create(userId));
+        Educator educator = Educator.create(userId);
         assert educator.getType().equals(EducatorType.ADMINISTRATOR);
     }
 
     @Test
     public void hasPermissionsOfTest() {
-        Educator educator = Educator.create(userId, administrator);
+        Educator educator = Educator.create(userId);
         educator.setType(EducatorType.TUTOR);
         assert educator.hasPermissionsOf(EducatorType.CONTRIBUTOR);
         assert educator.hasPermissionsOf(EducatorType.TUTOR);
@@ -32,9 +30,9 @@ class EducatorTest {
 
     @Test
     public void isAuthorOfTest() {
-        Educator educator = Educator.create(userId, administrator);
+        Educator educator = Educator.create(userId);
         EducatorCreated createdEntity = () -> educator;
-        EducatorCreated createdEntity2 = () -> Educator.create(new UserId(), administrator);
+        EducatorCreated createdEntity2 = () -> Educator.create(new UserId());
 
         assert educator.isAuthorOf(createdEntity).isSuccess();
         assert educator.isAuthorOf(createdEntity2).isFailure();
@@ -42,9 +40,9 @@ class EducatorTest {
 
     @Test
     void testEquals() throws Throwable {
-        Educator educator1 = Educator.create(userId, administrator);
-        Educator educator2 = Educator.create(userId, administrator);
-        Educator educator3 = Educator.create(userId, administrator);
+        Educator educator1 = Educator.create(userId);
+        Educator educator2 = Educator.create(userId);
+        Educator educator3 = Educator.create(userId);
 
         TestUtils.setPrivateField(educator2, "id", educator1.getId());
 

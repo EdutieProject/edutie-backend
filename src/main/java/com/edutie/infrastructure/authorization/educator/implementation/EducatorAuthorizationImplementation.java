@@ -44,7 +44,7 @@ public class EducatorAuthorizationImplementation implements EducatorAuthorizatio
 		if (adminRoleIsInToken && adminProfileDoesNotExist) {
 			log.info("Injecting administrator & educator role for user {}", userId);
 			Administrator administrator = administratorRepository.save(Administrator.create(userId));
-			Educator educator = Educator.create(userId, administrator);
+			Educator educator = Educator.create(userId);
 			educator.setType(EducatorType.ADMINISTRATOR);
 			educatorRepository.save(educator);
 		}

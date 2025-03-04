@@ -2,7 +2,6 @@ package com.edutie.domain.core.education.educator;
 
 import com.edutie.domain.core.administration.RestrictedRole;
 import com.edutie.domain.core.administration.UserId;
-import com.edutie.domain.core.administration.administrator.Administrator;
 import com.edutie.domain.core.common.base.EducatorCreated;
 import com.edutie.domain.core.education.EducationError;
 import com.edutie.domain.core.education.educator.enums.EducatorType;
@@ -23,15 +22,12 @@ import validation.Result;
 @Setter
 public class Educator extends RestrictedRole<EducatorId> {
     @Convert(converter = EducatorType.Converter.class)
-    EducatorType type = EducatorType.CONTRIBUTOR;
+    private EducatorType type = EducatorType.CONTRIBUTOR;
 
-    public static Educator create(UserId userId, Administrator administrator) {
+    public static Educator create(UserId userId) {
         Educator educator = new Educator();
         educator.setId(new EducatorId());
         educator.setOwnerUserId(userId);
-        educator.setAssignedBy(administrator);
-        if (userId == administrator.getOwnerUserId())
-            educator.setType(EducatorType.ADMINISTRATOR);
         return educator;
     }
 

@@ -24,7 +24,7 @@ public class MockUser {
     @Getter
     private final Administrator administratorProfile = Administrator.create(userId);
     @Getter
-    private final Educator educatorProfile = Educator.create(userId, administratorProfile);
+    private final Educator educatorProfile = Educator.create(userId);
     @Getter
     private final Student studentProfile = Student.create(userId);
 
