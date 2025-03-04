@@ -1,18 +1,13 @@
 package com.edutie.application.management.learningsubject.implementation;
 
-import com.edutie.application.management.learningsubject.AddLearningSubjectRequirementCommandHandler;
 import com.edutie.application.management.learningsubject.SetLearningSubjectKnowledgeSubjectCommandHandler;
-import com.edutie.application.management.learningsubject.command.AddLearningSubjectRequirementCommand;
 import com.edutie.application.management.learningsubject.command.SetLearningSubjectKnowledgeSubjectCommand;
 import com.edutie.domain.core.administration.UserId;
-import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.educator.persistence.EducatorPersistence;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
-import com.edutie.domain.core.education.learningsubject.service.StudentObjectiveInferringService;
 import com.edutie.infrastructure.persistence.implementation.education.repositories.LearningSubjectRepository;
 import com.edutie.mocks.MockUser;
 import org.junit.jupiter.api.BeforeEach;

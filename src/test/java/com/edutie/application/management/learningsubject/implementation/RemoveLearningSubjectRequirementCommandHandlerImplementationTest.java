@@ -1,16 +1,12 @@
 package com.edutie.application.management.learningsubject.implementation;
 
 import com.edutie.application.management.learningsubject.RemoveLearningSubjectRequirementCommandHandler;
-import com.edutie.application.management.learningsubject.SetLearningSubjectKnowledgeSubjectCommandHandler;
 import com.edutie.application.management.learningsubject.command.RemoveLearningSubjectRequirementCommand;
-import com.edutie.application.management.learningsubject.command.SetLearningSubjectKnowledgeSubjectCommand;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.educator.persistence.EducatorPersistence;
-import com.edutie.domain.core.education.elementalrequirement.ElementalRequirement;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
-import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
