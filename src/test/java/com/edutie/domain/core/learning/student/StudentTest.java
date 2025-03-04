@@ -5,6 +5,9 @@ import com.edutie.domain.core.administration.UserId;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
