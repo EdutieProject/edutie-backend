@@ -8,6 +8,8 @@ import com.edutie.domain.core.learning.learningexperience.identities.LearningExp
 import com.edutie.domain.core.learning.student.identities.StudentId;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +24,7 @@ import java.util.Set;
 @Setter(AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@EntityScan("com.edutie.domain.core.learning.learningexperience.implementations")
 public class LearningExperience<TActivity extends Activity> extends AuditableEntityBase<LearningExperienceId> {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<LearningExperienceRequirement> requirements = new HashSet<>();

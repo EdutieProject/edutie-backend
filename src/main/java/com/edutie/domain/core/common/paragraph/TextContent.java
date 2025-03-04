@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Embeddable
 public record TextContent(
-        @Convert(converter = TextContentType.class) TextContentType textContentType,
+        @Convert(converter = TextContentType.Converter.class) TextContentType textContentType,
         @JsonValue @Column(columnDefinition = "TEXT") String text
 ) implements Serializable {
 }

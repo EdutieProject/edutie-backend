@@ -23,7 +23,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class LearningResult<TSolutionSubmission extends SolutionSubmission> extends AuditableEntityBase<LearningResultId> {
     @OneToOne(targetEntity = LearningEvaluation.class, fetch = FetchType.EAGER)
     private LearningEvaluation learningEvaluation = new LearningEvaluation();
