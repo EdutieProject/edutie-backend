@@ -33,7 +33,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
     @OrderBy("ordinal")
     private List<LearningSubjectRequirement> requirements = new ArrayList<>();
     @Embedded
-    private KnowledgeOrigin knowledgeOrigin = new KnowledgeOrigin();
+    private KnowledgeOrigin knowledgeOrigin;
 
     /**
      * Recommended constructor associating Learning Requirement with an educator and a science
@@ -47,6 +47,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
         learningSubject.setCreatedBy(educator.getOwnerUserId());
         learningSubject.setAuthorEducator(educator);
         learningSubject.setName(name);
+        learningSubject.setKnowledgeOrigin(new KnowledgeOrigin());
         return learningSubject;
     }
 
@@ -56,7 +57,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @return true/false
      */
     public boolean isKnowledgeOriginEmpty() {
-        return knowledgeOrigin.isEmpty();
+        return knowledgeOrigin == null || knowledgeOrigin.isEmpty();
     }
 
     /**
@@ -65,6 +66,9 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
      * @param knowledgeSubjectId knowledge subject id
      */
     public void setRelatedKnowledgeSubjectId(KnowledgeSubjectId knowledgeSubjectId) {
+        if (knowledgeOrigin == null) {
+            knowledgeOrigin = new KnowledgeOrigin();
+        }
         knowledgeOrigin.setKnowledgeSubjectId(knowledgeSubjectId);
     }
 

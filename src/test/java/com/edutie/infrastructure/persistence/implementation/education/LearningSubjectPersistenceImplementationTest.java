@@ -1,7 +1,9 @@
 package com.edutie.infrastructure.persistence.implementation.education;
 
 import com.edutie.TestUtils;
+import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
+import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.infrastructure.persistence.implementation.education.repositories.LearningSubjectRepository;
@@ -47,6 +49,20 @@ class LearningSubjectPersistenceImplementationTest {
 
         Optional<LearningSubject> optionalLearningSubject = learningSubjectRepository.findById(learningSubject.getId());
         assertTrue(optionalLearningSubject.isPresent());
+    }
+
+    @Test
+    void saveWithKnowledgeOrigin() throws Throwable {
+        LearningSubject learningSubject = new LearningSubject();
+        TestUtils.setPrivateField(learningSubject, "id", new LearningSubjectId());
+        KnowledgeOrigin knowledgeOrigin = new KnowledgeOrigin();
+        knowledgeOrigin.setKnowledgeSubjectId(new KnowledgeSubjectId());
+        learningSubject.setKnowledgeOrigin(knowledgeOrigin);
+        learningSubjectPersistence.save(learningSubject).throwIfFailure();
+
+        Optional<LearningSubject> optionalLearningSubject = learningSubjectRepository.findById(learningSubject.getId());
+        assertTrue(optionalLearningSubject.isPresent());
+        assertNotNull(optionalLearningSubject.get().getKnowledgeOrigin());
     }
 
     @Test
