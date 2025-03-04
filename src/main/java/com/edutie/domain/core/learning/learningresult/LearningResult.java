@@ -24,8 +24,8 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public class LearningResult<TSolutionSubmission extends SolutionSubmission> extends AuditableEntityBase<LearningResultId> {
-    @OneToOne(targetEntity = LearningEvaluation.class, fetch = FetchType.EAGER)
-    private LearningEvaluation learningEvaluation = new LearningEvaluation();
+    @OneToOne(targetEntity = LearningEvaluation.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private LearningEvaluation learningEvaluation;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private TSolutionSubmission solutionSubmission;
     @Embedded

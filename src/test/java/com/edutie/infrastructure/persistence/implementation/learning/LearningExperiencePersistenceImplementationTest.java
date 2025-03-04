@@ -20,10 +20,9 @@ class LearningExperiencePersistenceImplementationTest {
     private SimpleProblemActivityLearningExperienceRepository simpleProblemActivityLearningExperienceRepository;
 
     @Test
-    @Transactional
     void getById() {
-        LearningExperience<?> learningExperience = SimpleProblemActivityLearningExperience.create();
-        learningExperiencePersistence.save(learningExperience).throwIfFailure();
+        SimpleProblemActivityLearningExperience learningExperience = SimpleProblemActivityLearningExperience.create();
+        simpleProblemActivityLearningExperienceRepository.save(learningExperience);
 
         WrapperResult<LearningExperience<?>> wrapperResult = learningExperiencePersistence.getById(learningExperience.getId());
 
