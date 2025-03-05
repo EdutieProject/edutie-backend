@@ -22,9 +22,9 @@ class EducatorTest {
     @Test
     public void hasPermissionsOfTest() {
         Educator educator = Educator.create(userId);
-        educator.setType(EducatorType.TUTOR);
-        assert educator.hasPermissionsOf(EducatorType.CONTRIBUTOR);
-        assert educator.hasPermissionsOf(EducatorType.TUTOR);
+        educator.setType(EducatorType.VERIFIED);
+        assert educator.hasPermissionsOf(EducatorType.COMMUNITY);
+        assert educator.hasPermissionsOf(EducatorType.VERIFIED);
         assert !educator.hasPermissionsOf(EducatorType.PEDAGOGUE);
     }
 

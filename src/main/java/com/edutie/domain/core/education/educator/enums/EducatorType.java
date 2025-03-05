@@ -11,7 +11,9 @@ import lombok.Getter;
  */
 @Getter
 public enum EducatorType implements CodedEnum<String> {
-    CONTRIBUTOR("Contributor"), TUTOR("Tutor"), PEDAGOGUE("Pedagogue"), ADMINISTRATOR("Administrator");
+    COMMUNITY("Community"),
+    VERIFIED("Verified"),
+    ADMINISTRATOR("Administrator");
 
     final String code;
 

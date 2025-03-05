@@ -22,7 +22,7 @@ import validation.Result;
 @Setter
 public class Educator extends RestrictedRole<EducatorId> {
     @Convert(converter = EducatorType.Converter.class)
-    private EducatorType type = EducatorType.CONTRIBUTOR;
+    private EducatorType type = EducatorType.COMMUNITY;
 
     public static Educator create(UserId userId) {
         Educator educator = new Educator();
