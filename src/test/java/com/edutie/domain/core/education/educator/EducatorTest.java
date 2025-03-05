@@ -11,13 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class EducatorTest {
     private final UserId userId = new UserId();
-    private final Administrator administrator = Administrator.create(new UserId());
-
-    @Test
-    public void administratorEducatorCreationTest() {
-        Educator educator = Educator.create(userId);
-        assert educator.getType().equals(EducatorType.ADMINISTRATOR);
-    }
 
     @Test
     public void hasPermissionsOfTest() {
@@ -25,7 +18,7 @@ class EducatorTest {
         educator.setType(EducatorType.VERIFIED);
         assert educator.hasPermissionsOf(EducatorType.COMMUNITY);
         assert educator.hasPermissionsOf(EducatorType.VERIFIED);
-        assert !educator.hasPermissionsOf(EducatorType.PEDAGOGUE);
+        assert !educator.hasPermissionsOf(EducatorType.ADMINISTRATOR);
     }
 
     @Test
