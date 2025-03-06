@@ -1,7 +1,7 @@
-package com.edutie.application.management.learningsubject.implementation;
+package com.edutie.application.management.knowledgesubject.implementation;
 
-import com.edutie.application.management.learningsubject.SearchKnowledgeSubjectsQueryHandler;
-import com.edutie.application.management.learningsubject.query.SearchKnowledgeSubjectsQuery;
+import com.edutie.application.management.knowledgesubject.SearchKnowledgeSubjectsQueryHandler;
+import com.edutie.application.management.knowledgesubject.query.SearchKnowledgeSubjectsQuery;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
 import com.edutie.infrastructure.knowledgemap.knowledgesubject.KnowledgeSubjectSearchService;
 import com.edutie.infrastructure.knowledgemap.knowledgesubject.schema.KnowledgeSubjectSearchSchema;

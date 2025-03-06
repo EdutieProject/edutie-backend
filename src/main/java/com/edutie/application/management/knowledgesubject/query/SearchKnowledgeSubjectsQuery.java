@@ -1,4 +1,4 @@
-package com.edutie.application.management.learningsubject.query;
+package com.edutie.application.management.knowledgesubject.query;
 
 import com.edutie.application.common.actions.EducatorAction;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;

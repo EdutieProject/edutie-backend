@@ -32,9 +32,9 @@ public class LearningSubjectController {
 
     @GetMapping("/{learningSubjectId}")
     @Operation(description = """
-            Creates a blank learning subject assigning its name.
+            Retrieve learning subject by id.
             """)
-    public ResponseEntity<ApiResult<LearningSubject>> createBlankLearningSubject(Authentication authentication,
+    public ResponseEntity<ApiResult<LearningSubject>> getLearningSubjectById(Authentication authentication,
                                                                                  @PathVariable LearningSubjectId learningSubjectId) {
         return new GenericRequestHandler<LearningSubject>()
                 .authenticate(authentication)

@@ -1,7 +1,7 @@
-package com.edutie.application.management.learningsubject;
+package com.edutie.application.management.knowledgesubject;
 
 import com.edutie.application.common.UseCaseHandler;
-import com.edutie.application.management.learningsubject.query.SearchKnowledgeSubjectsQuery;
+import com.edutie.application.management.knowledgesubject.query.SearchKnowledgeSubjectsQuery;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
 import validation.WrapperResult;
 
