@@ -12,8 +12,8 @@ import validation.WrapperResult;
 @RequiredArgsConstructor
 @Component
 public class StudentObjectiveGenerationServiceImplementation implements StudentObjectiveGenerationService {
-    @Value("${llm-service-url}")
-    private String LLM_SERVICE_URL;
+    @Value("${knowledge-map-url}")
+    private String KNOWLEDGE_MAP_URL;
 
     @Override
     public WrapperResult<String> generateContext(StudentObjectiveGenerationSchema generationSchema) {
