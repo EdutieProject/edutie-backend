@@ -1,6 +1,6 @@
 package com.edutie.domain.core.personalization.strategy;
 
-import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
+import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.domain.core.learning.student.Student;
@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @Component
 @RequiredArgsConstructor
-public class RecommendationStrategy implements PersonalizationStrategy<KnowledgeSubject, RecommendationStrategy.RecommendationRule> {
+public class RecommendationStrategy implements PersonalizationStrategy<KnowledgeSubjectReference, RecommendationStrategy.RecommendationRule> {
     private final LearningResultPersistence learningResultPersistence;
 
     /**
@@ -33,8 +33,8 @@ public class RecommendationStrategy implements PersonalizationStrategy<Knowledge
         return Optional.empty();
     }
 
-    public static class RecommendationRule extends PersonalizationRule<KnowledgeSubject> {
-        public RecommendationRule(KnowledgeSubject context) {
+    public static class RecommendationRule extends PersonalizationRule<KnowledgeSubjectReference> {
+        public RecommendationRule(KnowledgeSubjectReference context) {
             super(context);
         }
     }

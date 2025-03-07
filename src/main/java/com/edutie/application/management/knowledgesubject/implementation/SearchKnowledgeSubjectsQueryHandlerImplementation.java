@@ -2,7 +2,7 @@ package com.edutie.application.management.knowledgesubject.implementation;
 
 import com.edutie.application.management.knowledgesubject.SearchKnowledgeSubjectsQueryHandler;
 import com.edutie.application.management.knowledgesubject.query.SearchKnowledgeSubjectsQuery;
-import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubject;
+import com.edutie.application.management.knowledgesubject.view.KnowledgeSubjectSearchView;
 import com.edutie.infrastructure.knowledgemap.knowledgesubject.KnowledgeSubjectSearchService;
 import com.edutie.infrastructure.knowledgemap.knowledgesubject.schema.KnowledgeSubjectSearchSchema;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class SearchKnowledgeSubjectsQueryHandlerImplementation implements Search
     private final KnowledgeSubjectSearchService knowledgeSubjectSearchService;
 
     @Override
-    public WrapperResult<List<KnowledgeSubject>> handle(SearchKnowledgeSubjectsQuery query) {
+    public WrapperResult<List<KnowledgeSubjectSearchView>> handle(SearchKnowledgeSubjectsQuery query) {
         log.info("Searching knowledge subjects using name: {} by user of id {}", query.knowledgeSubjectSearchName(), query.educatorUserId());
         return query.knowledgeSubjectSearchName() == null ?
                 WrapperResult.successWrapper(List.of())

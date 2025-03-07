@@ -1,5 +1,5 @@
 package com.edutie.infrastructure.common;
 
-public abstract class ExternalServiceDto<TDomainEntity, TExternalServiceRequest> {
-    public abstract TDomainEntity intoDomainEntity(TExternalServiceRequest externalServiceRequest);
+public  interface ExternalServiceDto<TDomainEntity, TExternalServiceRequest> {
+     TDomainEntity intoDomainEntity(TExternalServiceRequest externalServiceRequest);
 }
