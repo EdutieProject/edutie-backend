@@ -9,6 +9,7 @@ import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSub
 import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
+import com.edutie.domain.core.education.learningsubject.service.DynamicRequirementSelectionService;
 import com.edutie.domain.core.education.learningsubject.service.StudentObjectiveInferringService;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -49,6 +50,21 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
         learningSubject.setName(name);
         learningSubject.setKnowledgeOrigin(new KnowledgeOrigin());
         return learningSubject;
+    }
+
+    /**
+     * Choose elemental requirement. If there is an elemental requirement id specified, returns corresponding. When null,
+     * the elemental requirement is chosen dynamically using service.
+     *
+     * @param elementalRequirementId             elemental req id
+     * @param dynamicRequirementSelectionService dynamic selection service
+     * @return chosen Learning Subject Requirement
+     */
+    public LearningSubjectRequirement chooseLearningSubjectRequirement(ElementalRequirementId elementalRequirementId, DynamicRequirementSelectionService dynamicRequirementSelectionService) {
+        if (elementalRequirementId != null) {
+            return requirements.stream().filter(o -> o.getId().equals(elementalRequirementId)).findFirst().orElseThrow();
+        }
+        return dynamicRequirementSelectionService.chooseRequirement(this).getValue();
     }
 
     /**

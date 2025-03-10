@@ -8,6 +8,10 @@ import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.educator.enums.EducatorType;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.domain.core.education.learningsubject.entities.LearningSubjectRequirement;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +20,6 @@ import validation.WrapperResult;
 @SpringBootTest
 class LearningSubjectTest {
     private final UserId userId = new UserId();
-    private final Administrator administrator = Administrator.create(new UserId());
     private final Educator educator = Educator.create(userId);
 
     @BeforeEach
@@ -25,14 +28,16 @@ class LearningSubjectTest {
     }
 
     @Test
-    public void appendRequirement() {
+    public void appendRequirement() throws JsonProcessingException {
         LearningSubject learningSubject = LearningSubject.createBlank(educator, "Hey Hey Hey!");
         learningSubject.appendRequirement("R1", PromptFragment.of(""));
         learningSubject.appendRequirement("R2", PromptFragment.of(""));
         learningSubject.appendRequirement("R3", PromptFragment.of(""));
 
-        assert learningSubject.getRequirements().get(0).getStudentObjective().text().equals("R1");
-        assert learningSubject.getRequirements().get(2).getStudentObjective().text().equals("R3");
+        System.out.println(new ObjectMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).writeValueAsString(learningSubject.getRequirements()));
+
+        assert learningSubject.getRequirements().get(0).getTitle().equals("R1");
+        assert learningSubject.getRequirements().get(2).getTitle().equals("R3");
     }
 
     @Test
@@ -43,7 +48,7 @@ class LearningSubjectTest {
         learningSubject.appendRequirement("R3", PromptFragment.of(""));
         assert learningSubject.insertRequirement("Hello!", PromptFragment.of(""), 1).isSuccess();
 
-        assert learningSubject.getRequirements().get(1).getStudentObjective().text().equals("Hello!");
+        assert learningSubject.getRequirements().get(1).getTitle().equals("Hello!");
     }
 
     @Test
@@ -56,7 +61,7 @@ class LearningSubjectTest {
 
         ElementalRequirementId requirementId = learningSubject.getRequirements().get(0).getId();
         learningSubject.removeRequirement(requirementId);
-        assert learningSubject.getRequirements().getFirst().getStudentObjective().text().equals("R2");
+        assert learningSubject.getRequirements().getFirst().getTitle().equals("R2");
     }
 
     @Test
@@ -104,6 +109,7 @@ class LearningSubjectTest {
         );
 
         assert !learningSubject.getRequirements().isEmpty();
+        assert learningSubject.getRequirements().getFirst().getTitle().equals("a");
         assert learningSubject.getRequirements().getFirst().getStudentObjective().equals(PromptFragment.empty());
     }
 
@@ -117,7 +123,33 @@ class LearningSubjectTest {
         assert learningSubject.getRequirements().size() == 3;
 
         learningSubject.moveRequirement(0, 1);
-        assert learningSubject.getRequirements().getFirst().getStudentObjective().text().equals("R2");
+        assert learningSubject.getRequirements().getFirst().getTitle().equals("R2");
+    }
+
+    @Test
+    public void chooseRequirementStatic() {
+        LearningSubject learningSubject = LearningSubject.createBlank(educator, "Hey Hey Hey!");
+        learningSubject.appendRequirement("R1", PromptFragment.of(""));
+        LearningSubjectRequirement learningSubjectRequirement = learningSubject.getRequirements().getFirst();
+
+        LearningSubjectRequirement requirement = learningSubject.chooseLearningSubjectRequirement(
+                learningSubjectRequirement.getId(),
+                (a) -> WrapperResult.successWrapper(LearningSubjectRequirement.create(learningSubject, "Abc", PromptFragment.empty(), 0))
+        );
+
+        assert requirement.equals(learningSubjectRequirement);
+    }
+
+    @Test
+    public void chooseRequirementDynamic() {
+        LearningSubject learningSubject = LearningSubject.createBlank(educator, "Hey Hey Hey!");
+
+        LearningSubjectRequirement requirement = learningSubject.chooseLearningSubjectRequirement(
+                null,
+                (a) -> WrapperResult.successWrapper(LearningSubjectRequirement.create(learningSubject, "Abc", PromptFragment.empty(), 0))
+        );
+
+        assert requirement.getTitle().equals("Abc");
     }
 
 
