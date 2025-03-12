@@ -4,6 +4,7 @@ import com.edutie.api.common.ApiResult;
 import com.edutie.api.common.GenericRequestHandler;
 import com.edutie.application.management.knowledgesubject.SearchKnowledgeSubjectsQueryHandler;
 import com.edutie.application.management.knowledgesubject.query.SearchKnowledgeSubjectsQuery;
+import com.edutie.application.management.knowledgesubject.view.KnowledgeSubjectSearchView;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.infrastructure.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/knowledge-subject")
@@ -28,9 +31,9 @@ public class KnowledgeSubjectController {
     @Operation(description = """
             Searches knowledge subjects by provided parameters
             """)
-    public ResponseEntity<ApiResult<LearningSubject>> searchKnowledgeSubjects(Authentication authentication,
+    public ResponseEntity<ApiResult<List<KnowledgeSubjectSearchView>>> searchKnowledgeSubjects(Authentication authentication,
                                                                               @RequestParam String searchName) {
-        return new GenericRequestHandler<LearningSubject>()
+        return new GenericRequestHandler<List<KnowledgeSubjectSearchView>>()
                 .authenticate(authentication)
                 .authorize(educatorAuthorization)
                 .handle((userId) -> searchKnowledgeSubjectsQueryHandler.handle(
