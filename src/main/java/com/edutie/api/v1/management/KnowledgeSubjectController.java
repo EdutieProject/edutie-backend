@@ -4,8 +4,7 @@ import com.edutie.api.common.ApiResult;
 import com.edutie.api.common.GenericRequestHandler;
 import com.edutie.application.management.knowledgesubject.SearchKnowledgeSubjectsQueryHandler;
 import com.edutie.application.management.knowledgesubject.query.SearchKnowledgeSubjectsQuery;
-import com.edutie.application.management.knowledgesubject.view.KnowledgeSubjectSearchView;
-import com.edutie.domain.core.education.learningsubject.LearningSubject;
+import com.edutie.domain.core.education.knowledgesubject.view.KnowledgeSubjectDetailsView;
 import com.edutie.infrastructure.authorization.educator.EducatorAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,9 +30,9 @@ public class KnowledgeSubjectController {
     @Operation(description = """
             Searches knowledge subjects by provided parameters
             """)
-    public ResponseEntity<ApiResult<List<KnowledgeSubjectSearchView>>> searchKnowledgeSubjects(Authentication authentication,
-                                                                              @RequestParam String searchName) {
-        return new GenericRequestHandler<List<KnowledgeSubjectSearchView>>()
+    public ResponseEntity<ApiResult<List<KnowledgeSubjectDetailsView>>> searchKnowledgeSubjects(Authentication authentication,
+                                                                                                @RequestParam String searchName) {
+        return new GenericRequestHandler<List<KnowledgeSubjectDetailsView>>()
                 .authenticate(authentication)
                 .authorize(educatorAuthorization)
                 .handle((userId) -> searchKnowledgeSubjectsQueryHandler.handle(

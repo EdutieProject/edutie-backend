@@ -8,6 +8,7 @@ import com.edutie.application.management.learningsubject.command.CreateBlankLear
 import com.edutie.application.management.learningsubject.command.RemoveLearningSubjectRequirementCommand;
 import com.edutie.application.management.learningsubject.command.SetLearningSubjectKnowledgeSubjectCommand;
 import com.edutie.application.management.learningsubject.query.GetLearningSubjectByIdQuery;
+import com.edutie.application.management.learningsubject.view.LearningSubjectManagementView;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.infrastructure.authorization.educator.EducatorAuthorization;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Learning Subject Controller", description = "Provides operations regarding learning subjects in the management context")
 public class LearningSubjectController {
     private final EducatorAuthorization educatorAuthorization;
-    private final GetLearningSubjectByIdQueryHandler getLearningSubjectByIdQueryHandler;
+    private final GetLearningSubjectManagementViewByIdQueryHandler getLearningSubjectManagementViewByIdQueryHandler;
     private final CreateBlankLearningSubjectCommandHandler createBlankLearningSubjectCommandHandler;
     private final AddLearningSubjectRequirementCommandHandler addLearningSubjectRequirementCommandHandler;
     private final RemoveLearningSubjectRequirementCommandHandler removeLearningSubjectRequirementCommandHandler;
@@ -34,12 +35,12 @@ public class LearningSubjectController {
     @Operation(description = """
             Retrieve learning subject by id.
             """)
-    public ResponseEntity<ApiResult<LearningSubject>> getLearningSubjectById(Authentication authentication,
-                                                                                 @PathVariable LearningSubjectId learningSubjectId) {
-        return new GenericRequestHandler<LearningSubject>()
+    public ResponseEntity<ApiResult<LearningSubjectManagementView>> getLearningSubjectById(Authentication authentication,
+                                                                                           @PathVariable LearningSubjectId learningSubjectId) {
+        return new GenericRequestHandler<LearningSubjectManagementView>()
                 .authenticate(authentication)
                 .authorize(educatorAuthorization)
-                .handle((userId) -> getLearningSubjectByIdQueryHandler.handle(
+                .handle((userId) -> getLearningSubjectManagementViewByIdQueryHandler.handle(
                         new GetLearningSubjectByIdQuery()
                                 .educatorUserId(userId)
                                 .learningSubjectId(learningSubjectId)

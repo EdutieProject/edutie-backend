@@ -1,8 +1,9 @@
 package com.edutie.application.management.learningsubject.implementation;
 
 import com.edutie.TestUtils;
-import com.edutie.application.management.learningsubject.GetLearningSubjectByIdQueryHandler;
+import com.edutie.application.management.learningsubject.GetLearningSubjectManagementViewByIdQueryHandler;
 import com.edutie.application.management.learningsubject.query.GetLearningSubjectByIdQuery;
+import com.edutie.application.management.learningsubject.view.LearningSubjectManagementView;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
@@ -15,9 +16,9 @@ import validation.WrapperResult;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class GetLearningSubjectByIdQueryHandlerImplementationTest {
+class GetLearningSubjectManagementViewByIdQueryHandlerImplementationTest {
     @Autowired
-    private GetLearningSubjectByIdQueryHandler getLearningSubjectByIdQueryHandler;
+    private GetLearningSubjectManagementViewByIdQueryHandler getLearningSubjectManagementViewByIdQueryHandler;
     @Autowired
     private LearningSubjectRepository learningSubjectRepository;
 
@@ -31,9 +32,9 @@ class GetLearningSubjectByIdQueryHandlerImplementationTest {
                 .educatorUserId(new UserId()) // user id doesnt matter
                 .learningSubjectId(learningSubject.getId());
 
-        WrapperResult<LearningSubject> result = getLearningSubjectByIdQueryHandler.handle(query);
+        WrapperResult<LearningSubjectManagementView> result = getLearningSubjectManagementViewByIdQueryHandler.handle(query);
 
         assertTrue(result.isSuccess());
-        assertEquals(learningSubject, result.getValue());
+        assertEquals(learningSubject, result.getValue().learningSubject());
     }
 }

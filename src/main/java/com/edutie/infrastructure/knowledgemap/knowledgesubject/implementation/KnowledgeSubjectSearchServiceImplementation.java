@@ -1,6 +1,6 @@
 package com.edutie.infrastructure.knowledgemap.knowledgesubject.implementation;
 
-import com.edutie.application.management.knowledgesubject.view.KnowledgeSubjectSearchView;
+import com.edutie.domain.core.education.knowledgesubject.view.KnowledgeSubjectDetailsView;
 import com.edutie.infrastructure.common.ExternalInfrastructureHandler;
 import com.edutie.infrastructure.common.ExternalService;
 import com.edutie.infrastructure.knowledgemap.knowledgesubject.KnowledgeSubjectSearchService;
@@ -22,10 +22,10 @@ public class KnowledgeSubjectSearchServiceImplementation extends ExternalService
     private String KNOWLEDGE_MAP_URL;
 
     @Override
-    public WrapperResult<List<KnowledgeSubjectSearchView>> search(KnowledgeSubjectSearchSchema schema) {
+    public WrapperResult<List<KnowledgeSubjectDetailsView>> search(KnowledgeSubjectSearchSchema schema) {
         log.info("Searching knowledge subjects by search schema: {}", schema);
         final String knowledgeSubjectSearchUrl = KNOWLEDGE_MAP_URL + "/knowledge-subjects/search";
-        return new ExternalInfrastructureHandler<List<KnowledgeSubjectSearchView>, KnowledgeSubjectSearchSchema, KnowledgeSubjectSearchResultsDto>(this.getClass())
+        return new ExternalInfrastructureHandler<List<KnowledgeSubjectDetailsView>, KnowledgeSubjectSearchSchema, KnowledgeSubjectSearchResultsDto>(this.getClass())
                 .setActionUrl(knowledgeSubjectSearchUrl)
                 .handle(schema, KnowledgeSubjectSearchResultsDto.class);
     }

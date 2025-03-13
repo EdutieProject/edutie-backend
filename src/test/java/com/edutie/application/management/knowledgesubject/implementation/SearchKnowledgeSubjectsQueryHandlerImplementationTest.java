@@ -2,7 +2,7 @@ package com.edutie.application.management.knowledgesubject.implementation;
 
 import com.edutie.application.management.knowledgesubject.SearchKnowledgeSubjectsQueryHandler;
 import com.edutie.application.management.knowledgesubject.query.SearchKnowledgeSubjectsQuery;
-import com.edutie.application.management.knowledgesubject.view.KnowledgeSubjectSearchView;
+import com.edutie.domain.core.education.knowledgesubject.view.KnowledgeSubjectDetailsView;
 import com.edutie.domain.core.administration.UserId;
 import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
@@ -24,9 +24,9 @@ class SearchKnowledgeSubjectsQueryHandlerImplementationTest {
     public void handle() {
         handler = new SearchKnowledgeSubjectsQueryHandlerImplementation(
                 schema -> WrapperResult.successWrapper(List.of(
-                        new KnowledgeSubjectSearchView(KnowledgeSubjectReference.create(new KnowledgeSubjectId()), "Blue banana", "Area in Europe"),
-                        new KnowledgeSubjectSearchView(KnowledgeSubjectReference.create(new KnowledgeSubjectId()), "Us Dollar", "A currency"),
-                        new KnowledgeSubjectSearchView(KnowledgeSubjectReference.create(new KnowledgeSubjectId()), "Banana", "Fruit")
+                        new KnowledgeSubjectDetailsView(KnowledgeSubjectReference.create(new KnowledgeSubjectId()), "Blue banana", "Area in Europe"),
+                        new KnowledgeSubjectDetailsView(KnowledgeSubjectReference.create(new KnowledgeSubjectId()), "Us Dollar", "A currency"),
+                        new KnowledgeSubjectDetailsView(KnowledgeSubjectReference.create(new KnowledgeSubjectId()), "Banana", "Fruit")
                 ))
         );
 
@@ -34,7 +34,7 @@ class SearchKnowledgeSubjectsQueryHandlerImplementationTest {
                 .educatorUserId(new UserId())
                 .knowledgeSubjectSearchName("Blue");
 
-        WrapperResult<List<KnowledgeSubjectSearchView>> result = handler.handle(query);
+        WrapperResult<List<KnowledgeSubjectDetailsView>> result = handler.handle(query);
 
         assertTrue(result.isSuccess());
         assertEquals(3, result.getValue().size());
