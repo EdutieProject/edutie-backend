@@ -7,6 +7,7 @@ import com.edutie.application.management.learningsubject.command.AddLearningSubj
 import com.edutie.application.management.learningsubject.command.CreateBlankLearningSubjectCommand;
 import com.edutie.application.management.learningsubject.command.RemoveLearningSubjectRequirementCommand;
 import com.edutie.application.management.learningsubject.command.SetLearningSubjectKnowledgeSubjectCommand;
+import com.edutie.application.management.learningsubject.query.GetCreatedLearningSubjectsQuery;
 import com.edutie.application.management.learningsubject.query.GetLearningSubjectByIdQuery;
 import com.edutie.application.management.learningsubject.view.LearningSubjectManagementView;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class LearningSubjectController {
     private final EducatorAuthorization educatorAuthorization;
     private final GetLearningSubjectManagementViewByIdQueryHandler getLearningSubjectManagementViewByIdQueryHandler;
+    private final GetCreatedLearningSubjectsQueryHandler getCreatedLearningSubjectsQueryHandler;
     private final CreateBlankLearningSubjectCommandHandler createBlankLearningSubjectCommandHandler;
     private final AddLearningSubjectRequirementCommandHandler addLearningSubjectRequirementCommandHandler;
     private final RemoveLearningSubjectRequirementCommandHandler removeLearningSubjectRequirementCommandHandler;
@@ -44,6 +46,20 @@ public class LearningSubjectController {
                         new GetLearningSubjectByIdQuery()
                                 .educatorUserId(userId)
                                 .learningSubjectId(learningSubjectId)
+                ));
+    }
+
+    @GetMapping("/created")
+    @Operation(description = """
+            Retrieve created learning subjects.
+            """)
+    public ResponseEntity<ApiResult<LearningSubjectManagementView>> getCreatedLearningSubjects(Authentication authentication) {
+        return new GenericRequestHandler<LearningSubjectManagementView>()
+                .authenticate(authentication)
+                .authorize(educatorAuthorization)
+                .handle((userId) -> getCreatedLearningSubjectsQueryHandler.handle(
+                        new GetCreatedLearningSubjectsQuery()
+                                .educatorUserId(userId)
                 ));
     }
 
