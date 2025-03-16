@@ -1,4 +1,4 @@
-package com.edutie.domain.core.personalization.strategy.base;
+package com.edutie.domain.core.personalization.common;
 
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.learning.student.Student;

@@ -1,11 +1,11 @@
-package com.edutie.domain.core.personalization.strategy;
+package com.edutie.domain.core.personalization.learningexperience.contentadjustment;
 
+import com.edutie.domain.core.education.knowledgesubject.KnowledgeSubjectReference;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
-import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
 import com.edutie.domain.core.learning.student.Student;
-import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
-import com.edutie.domain.core.personalization.strategy.base.PersonalizationStrategy;
+import com.edutie.domain.core.personalization.common.PersonalizationRuleBase;
+import com.edutie.domain.core.personalization.learningexperience.contentadjustment.base.ContentAdjustmentStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +13,11 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Remediation personalization strategy for remediating the content based on the previous feedback.
+ * A personalization strategy for recommending additional learning requirements.
  */
 @Component
 @RequiredArgsConstructor
-public class FeedbackRemediationStrategy implements PersonalizationStrategy<Feedback, FeedbackRemediationStrategy.FeedbackRemediationRule> {
+public class RecommendationStrategy implements ContentAdjustmentStrategy<KnowledgeSubjectReference, RecommendationStrategy.RecommendationRuleBase> {
     private final LearningResultPersistence learningResultPersistence;
 
     /**
@@ -29,14 +29,15 @@ public class FeedbackRemediationStrategy implements PersonalizationStrategy<Feed
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<FeedbackRemediationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
+    public Optional<RecommendationRuleBase> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
         return Optional.empty();
     }
 
-    public static class FeedbackRemediationRule extends PersonalizationRule<Feedback> {
-
-        public FeedbackRemediationRule(Feedback context) {
+    public static class RecommendationRuleBase extends PersonalizationRuleBase<KnowledgeSubjectReference> {
+        public RecommendationRuleBase(KnowledgeSubjectReference context) {
             super(context);
         }
     }
 }
+
+

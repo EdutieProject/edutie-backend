@@ -1,10 +1,10 @@
-package com.edutie.domain.core.personalization.strategy;
+package com.edutie.domain.core.personalization.learningexperience.activitytypechoice;
 
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.learning.learningresult.valueobjects.Feedback;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.SimpleProblemActivity;
 import com.edutie.domain.core.learning.student.Student;
-import com.edutie.domain.core.personalization.strategy.base.PersonalizationRule;
-import com.edutie.domain.core.personalization.strategy.base.PersonalizationStrategy;
+import com.edutie.domain.core.personalization.common.PersonalizationRuleBase;
+import com.edutie.domain.core.personalization.learningexperience.activitytypechoice.base.LearningExperienceActivityTypeChoiceStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,8 @@ import java.util.Set;
  */
 @Component
 @RequiredArgsConstructor
-public class FamiliarRemediationStrategy implements PersonalizationStrategy<Feedback, FamiliarRemediationStrategy.FamiliarRemediationRule> {
+public class SimpleProblemActivityChoiceStrategy
+        implements LearningExperienceActivityTypeChoiceStrategy<Class<SimpleProblemActivity>, SimpleProblemActivityChoiceStrategy.Rule> {
 
     /**
      * Function qualifying the rule of the personalization strategy. When the personalization strategy
@@ -28,13 +29,13 @@ public class FamiliarRemediationStrategy implements PersonalizationStrategy<Feed
      * @return Optional Personalization Rule
      */
     @Override
-    public Optional<FamiliarRemediationRule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
+    public Optional<Rule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
         return Optional.empty();
     }
 
-    public static class FamiliarRemediationRule extends PersonalizationRule<Feedback> {
+    public static class Rule extends PersonalizationRuleBase<Class<SimpleProblemActivity>> {
 
-        public FamiliarRemediationRule(Feedback context) {
+        public Rule(Class<SimpleProblemActivity> context) {
             super(context);
         }
     }
