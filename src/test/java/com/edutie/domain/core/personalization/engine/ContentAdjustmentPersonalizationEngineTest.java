@@ -18,7 +18,7 @@ import java.util.Set;
 @SpringBootTest
 class ContentAdjustmentPersonalizationEngineTest {
 
-    private static List<ContentAdjustmentStrategy<?, ?>> strategies = List.of(
+    private static final List<ContentAdjustmentStrategy<?, ?>> strategies = List.of(
             new ContentAdjustmentStrategy<Feedback, PersonalizationRule<Feedback>>() {
                 @Override
                 public Optional<PersonalizationRule<Feedback>> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
