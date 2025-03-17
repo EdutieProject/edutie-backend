@@ -46,16 +46,16 @@ public class ActivityTypeChoicePersonalizationEngineTest {
                 public Optional<PersonalizationRule<Class<MockActivity>>> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
                     return Optional.of(() -> MockActivity.class);
                 }
-
-                @Override
-                public int getPriority() {
-                    return 2;
-                }
             },
             new LearningExperienceActivityTypeChoiceStrategy<Class<AnotherMockActivity>, PersonalizationRule<Class<AnotherMockActivity>>>() {
                 @Override
                 public Optional<PersonalizationRule<Class<AnotherMockActivity>>> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
                     return Optional.of(() -> AnotherMockActivity.class);
+                }
+
+                @Override
+                public int getPriority() {
+                    return 2;
                 }
             }
     );
@@ -65,6 +65,6 @@ public class ActivityTypeChoicePersonalizationEngineTest {
         ActivityTypeChoicePersonalizationEngine engine = new ActivityTypeChoicePersonalizationEngine(strategies);
         PersonalizationRule<?> selectedRule = engine.chooseRule(Student.create(new UserId()), Set.of());
 
-        Assertions.assertEquals(MockActivity.class, selectedRule.getPersonalizationContext());
+        Assertions.assertEquals(AnotherMockActivity.class, selectedRule.getPersonalizationContext());
     }
 }
