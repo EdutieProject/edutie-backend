@@ -21,7 +21,7 @@ import java.util.Set;
  */
 @NoArgsConstructor
 @Getter
-@Setter(AccessLevel.PRIVATE)
+@Setter(AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 @EntityScan("com.edutie.domain.core.learning.learningexperience.implementations")

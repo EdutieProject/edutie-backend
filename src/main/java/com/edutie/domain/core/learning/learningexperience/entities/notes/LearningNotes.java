@@ -2,9 +2,11 @@ package com.edutie.domain.core.learning.learningexperience.entities.notes;
 
 import com.edutie.domain.core.common.base.EntityBase;
 import com.edutie.domain.core.common.paragraph.OrderedParagraph;
+import com.edutie.domain.core.common.paragraph.TextContent;
 import com.edutie.domain.core.learning.learningexperience.entities.paragraphs.NotesTextParagraph;
 import com.edutie.domain.core.learning.learningexperience.entities.paragraphs.NotesVisualisationParagraph;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningNotesId;
+import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
@@ -21,10 +23,10 @@ import java.util.List;
 public class LearningNotes extends EntityBase<LearningNotesId> {
     @OneToMany(targetEntity = NotesTextParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
-    private List<NotesTextParagraph> textParagraphs;
+    private final List<NotesTextParagraph> textParagraphs = new ArrayList<>();
     @OneToMany(targetEntity = NotesVisualisationParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
-    private List<NotesVisualisationParagraph> visualisationParagraphs;
+    private final List<NotesVisualisationParagraph> visualisationParagraphs = new ArrayList<>();
 
     @JsonProperty
     public List<? extends OrderedParagraph<?, ?>> getParagraphs() {
@@ -33,5 +35,19 @@ public class LearningNotes extends EntityBase<LearningNotesId> {
         allParagraphs.addAll(visualisationParagraphs);
         allParagraphs.sort(Comparator.comparingInt(OrderedParagraph::getOrdinal));
         return allParagraphs;
+    }
+
+    public static LearningNotes create(TextContent content, Visualisation visualisation) {
+        LearningNotes notes = new LearningNotes();
+        notes.setId(new LearningNotesId());
+        NotesTextParagraph textParagraph = new NotesTextParagraph();
+        textParagraph.setOrdinal(0);
+        textParagraph.setContent(content);
+        notes.textParagraphs.add(textParagraph);
+        NotesVisualisationParagraph visualisationParagraph = new NotesVisualisationParagraph();
+        visualisationParagraph.setOrdinal(1);
+        visualisationParagraph.setContent(visualisation);
+        notes.visualisationParagraphs.add(visualisationParagraph);
+        return notes;
     }
 }

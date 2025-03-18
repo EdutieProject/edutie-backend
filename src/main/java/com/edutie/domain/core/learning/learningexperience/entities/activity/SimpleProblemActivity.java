@@ -1,7 +1,7 @@
 package com.edutie.domain.core.learning.learningexperience.entities.activity;
 
-import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
 import com.edutie.domain.core.learning.common.LearningObjectiveType;
+import com.edutie.domain.core.learning.learningexperience.entities.activity.base.ActivityBase;
 import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 
@@ -14,5 +14,14 @@ public class SimpleProblemActivity extends ActivityBase {
     @Override
     public LearningObjectiveType getActivityType() {
         return LearningObjectiveType.REMEMBER;
+    }
+
+    public static SimpleProblemActivity create(
+            String introductionText, String problemText
+    ) {
+        SimpleProblemActivity simpleProblemActivity = new SimpleProblemActivity();
+        simpleProblemActivity.introductionText = introductionText;
+        simpleProblemActivity.problemText = problemText;
+        return simpleProblemActivity;
     }
 }

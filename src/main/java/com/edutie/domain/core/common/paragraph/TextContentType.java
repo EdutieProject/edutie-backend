@@ -5,7 +5,8 @@ import com.edutie.infrastructure.persistence.config.AbstractEnumConverter;
 
 public enum TextContentType implements CodedEnum<String> {
     SIMPLE_TEXT("SimpleText"),
-    HEADING("Heading");
+    HEADING("Heading"),
+    MARKDOWN("Markdown");
 
     private final String code;
 

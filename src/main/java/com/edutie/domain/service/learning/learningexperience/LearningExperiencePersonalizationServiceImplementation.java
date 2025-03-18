@@ -34,7 +34,7 @@ public class LearningExperiencePersonalizationServiceImplementation implements L
         ).getValue();
         Class<? extends Activity> activityClass = activityTypeChoiceEngine.chooseRule(student, Set.of()).getPersonalizationContext();
         LearningExperienceGenerationSchema schema = new LearningExperienceGenerationSchema(
-                knowledgeContext, activityClass, elementalRequirement, Set.of()
+                student, knowledgeContext, activityClass, elementalRequirement, Set.of()
         );
         return learningExperienceGenerationService.generate(schema);
     }
