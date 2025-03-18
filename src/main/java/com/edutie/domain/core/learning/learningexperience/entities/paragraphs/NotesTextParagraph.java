@@ -9,4 +9,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 public class NotesTextParagraph extends OrderedParagraph<TextContent, NotesParagraphId> {
+    public static NotesTextParagraph create(TextContent textContent, int ordinal) {
+        NotesTextParagraph paragraph = new NotesTextParagraph();
+        paragraph.setId(new NotesParagraphId());
+        paragraph.setContent(textContent);
+        paragraph.setOrdinal(ordinal);
+        return paragraph;
+    }
 }

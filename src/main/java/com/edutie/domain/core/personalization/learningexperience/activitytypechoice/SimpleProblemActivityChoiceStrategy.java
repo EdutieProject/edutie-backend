@@ -30,7 +30,7 @@ public class SimpleProblemActivityChoiceStrategy
      */
     @Override
     public Optional<Rule> qualifyRule(Student student, Set<LearningSubject> learningSubjects) {
-        return Optional.empty();
+        return Optional.of(new Rule(SimpleProblemActivity.class));
     }
 
     public static class Rule extends PersonalizationRuleBase<Class<SimpleProblemActivity>> {

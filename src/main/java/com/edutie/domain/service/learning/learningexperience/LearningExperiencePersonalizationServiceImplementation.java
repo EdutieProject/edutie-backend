@@ -30,7 +30,7 @@ public class LearningExperiencePersonalizationServiceImplementation implements L
     @Override
     public WrapperResult<LearningExperience<?>> createPersonalized(Student student, KnowledgeOrigin knowledgeOrigin, ElementalRequirement elementalRequirement) {
         PromptFragment knowledgeContext = knowledgeContextService.getContext(
-                new GetKnowledgeContextSchema(knowledgeOrigin.getKnowledgeSubjectId(), elementalRequirement.getStudentObjective())
+                new GetKnowledgeContextSchema(knowledgeOrigin, elementalRequirement.getStudentObjective())
         ).getValue();
         Class<? extends Activity> activityClass = activityTypeChoiceEngine.chooseRule(student, Set.of()).getPersonalizationContext();
         LearningExperienceGenerationSchema schema = new LearningExperienceGenerationSchema(

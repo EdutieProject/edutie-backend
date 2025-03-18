@@ -1,10 +1,10 @@
 package com.edutie.infrastructure.knowledgemap.knowledgesubject.schema;
 
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
-import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
+import com.edutie.domain.core.education.learningsubject.entities.KnowledgeOrigin;
 
 public record GetKnowledgeContextSchema(
-        KnowledgeSubjectId knowledgeSubjectId,
-        PromptFragment promptFragment
+        KnowledgeOrigin knowledgeOrigin,
+        PromptFragment studentObjective
 ) {
 }

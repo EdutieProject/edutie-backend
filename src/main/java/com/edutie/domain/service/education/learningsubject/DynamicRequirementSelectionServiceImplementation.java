@@ -15,6 +15,6 @@ public class DynamicRequirementSelectionServiceImplementation implements Dynamic
     @Override
     public WrapperResult<LearningSubjectRequirement> chooseRequirement(LearningSubject learningSubject) {
         //TODO
-        return null;
+        return WrapperResult.successWrapper(learningSubject.getRequirements().getFirst());
     }
 }

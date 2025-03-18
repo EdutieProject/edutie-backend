@@ -9,6 +9,7 @@ import com.edutie.domain.core.learning.learningexperience.identities.LearningNot
 import com.edutie.domain.core.learning.learningexperience.valueobjects.Visualisation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -21,10 +22,10 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 public class LearningNotes extends EntityBase<LearningNotesId> {
-    @OneToMany(targetEntity = NotesTextParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(targetEntity = NotesTextParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonIgnore
     private final List<NotesTextParagraph> textParagraphs = new ArrayList<>();
-    @OneToMany(targetEntity = NotesVisualisationParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(targetEntity = NotesVisualisationParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonIgnore
     private final List<NotesVisualisationParagraph> visualisationParagraphs = new ArrayList<>();
 
@@ -40,14 +41,8 @@ public class LearningNotes extends EntityBase<LearningNotesId> {
     public static LearningNotes create(TextContent content, Visualisation visualisation) {
         LearningNotes notes = new LearningNotes();
         notes.setId(new LearningNotesId());
-        NotesTextParagraph textParagraph = new NotesTextParagraph();
-        textParagraph.setOrdinal(0);
-        textParagraph.setContent(content);
-        notes.textParagraphs.add(textParagraph);
-        NotesVisualisationParagraph visualisationParagraph = new NotesVisualisationParagraph();
-        visualisationParagraph.setOrdinal(1);
-        visualisationParagraph.setContent(visualisation);
-        notes.visualisationParagraphs.add(visualisationParagraph);
+        notes.textParagraphs.add(NotesTextParagraph.create(content, 0));
+        notes.visualisationParagraphs.add(NotesVisualisationParagraph.create(visualisation, 1));
         return notes;
     }
 }

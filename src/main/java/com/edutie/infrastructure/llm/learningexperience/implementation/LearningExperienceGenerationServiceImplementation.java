@@ -24,7 +24,7 @@ public class LearningExperienceGenerationServiceImplementation extends ExternalS
     public WrapperResult<LearningExperience<?>> generate(LearningExperienceGenerationSchema schema) {
         log.info("Generating learning experience using LLM service using schema: {}", schema);
         //TODO: generation conditional ??? but first do it for simple problem activity
-        final String simpleActivityLearningExperiencePath = LLM_SERVICE_URL + "/learning-experience/simple-activity";
+        final String simpleActivityLearningExperiencePath = LLM_SERVICE_URL + "/learning-experience/simple-problem";
         LearningExperience<?> learningExperience = new ExternalInfrastructureHandler<
                 SimpleProblemActivityLearningExperience, LearningExperienceGenerationSchema, SimpleProblemActivityLearningExperienceDto
                 >(this.getClass())
