@@ -4,21 +4,19 @@ import com.edutie.application.learning.learningexperience.CreateLearningExperien
 import com.edutie.application.learning.learningexperience.command.CreateLearningExperienceCommand;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
 import com.edutie.domain.core.education.learningsubject.LearningSubject;
-import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.education.learningsubject.persistence.LearningSubjectPersistence;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
-import com.edutie.domain.core.learning.learningexperience.implementations.SimpleProblemActivityLearningExperience;
 import com.edutie.domain.core.learning.learningexperience.persistence.LearningExperiencePersistence;
 import com.edutie.domain.core.learning.student.persistence.StudentPersistence;
 import com.edutie.mocks.MockUser;
-import org.junit.jupiter.api.BeforeAll;
+import com.edutie.mocks.learningexperience.SampleLearningExperience;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import validation.WrapperResult;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class CreateLearningExperienceCommandHandlerImplementationTest {
@@ -52,7 +50,7 @@ class CreateLearningExperienceCommandHandlerImplementationTest {
                 learningSubjectPersistence,
                 studentPersistence,
                 (o) -> WrapperResult.successWrapper(o.getRequirements().getFirst()),
-                (s,k,req) -> WrapperResult.successWrapper(SimpleProblemActivityLearningExperience.create())
+                (s, k, req) -> WrapperResult.successWrapper(SampleLearningExperience.create())
         );
 
         CreateLearningExperienceCommand command = new CreateLearningExperienceCommand()
