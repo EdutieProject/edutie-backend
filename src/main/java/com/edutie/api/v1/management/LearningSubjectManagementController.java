@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/learning-subject")
 @RequiredArgsConstructor
-@Tag(name = "Learning Subject Controller", description = "Provides operations regarding learning subjects in the management context")
-public class LearningSubjectController {
+@Tag(name = "Learning Subject Management Controller", description = "Provides operations regarding learning subjects in the management context")
+public class LearningSubjectManagementController {
     private final EducatorAuthorization educatorAuthorization;
     private final GetLearningSubjectManagementViewByIdQueryHandler getLearningSubjectManagementViewByIdQueryHandler;
     private final GetCreatedLearningSubjectsQueryHandler getCreatedLearningSubjectsQueryHandler;
@@ -33,7 +33,7 @@ public class LearningSubjectController {
     private final RemoveLearningSubjectRequirementCommandHandler removeLearningSubjectRequirementCommandHandler;
     private final SetLearningSubjectKnowledgeSubjectCommandHandler setLearningSubjectKnowledgeSubjectCommandHandler;
 
-    @GetMapping("/{learningSubjectId}")
+    @GetMapping("/{learningSubjectId}/management")
     @Operation(description = """
             Retrieve learning subject by id.
             """)
