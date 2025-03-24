@@ -4,19 +4,19 @@ import com.edutie.api.common.ApiResult;
 import com.edutie.api.common.GenericRequestHandler;
 import com.edutie.application.learning.learningexperience.CreateLearningExperienceCommandHandler;
 import com.edutie.application.learning.learningexperience.CreateSimilarLearningExperienceCommandHandler;
+import com.edutie.application.learning.learningexperience.GetLearningExperienceByIdQueryHandler;
 import com.edutie.application.learning.learningexperience.command.CreateLearningExperienceCommand;
 import com.edutie.application.learning.learningexperience.command.CreateSimilarLearningExperienceCommand;
+import com.edutie.application.learning.learningexperience.query.GetLearningExperienceByIdQuery;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
+import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.infrastructure.authorization.student.StudentAuthorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/learning-experience")
@@ -26,6 +26,7 @@ public class LearningExperienceController {
     private final StudentAuthorization studentAuthorization;
     private final CreateSimilarLearningExperienceCommandHandler createSimilarLearningExperienceCommandHandler;
     private final CreateLearningExperienceCommandHandler createLearningExperienceCommandHandler;
+    private final GetLearningExperienceByIdQueryHandler getLearningExperienceByIdQueryHandler;
 
     @PostMapping("/create")
     @Operation(description = """
@@ -38,6 +39,22 @@ public class LearningExperienceController {
                 .authorize(studentAuthorization)
                 .handle((userId) -> createLearningExperienceCommandHandler.handle(
                         command.studentUserId(userId)
+                ));
+    }
+
+    @GetMapping("/{learningExperienceId}")
+    @Operation(description = """
+            Retrieves a learning experience by its unique identifier.
+            """)
+    public ResponseEntity<ApiResult<LearningExperience<?>>> getLearningExperienceById(Authentication authentication,
+                                                                                      @PathVariable LearningExperienceId learningExperienceId) {
+        return new GenericRequestHandler<LearningExperience<?>>()
+                .authenticate(authentication)
+                .authorize(studentAuthorization)
+                .handle((userId) -> getLearningExperienceByIdQueryHandler.handle(
+                        new GetLearningExperienceByIdQuery()
+                                .studentUserId(userId)
+                                .learningExperienceId(learningExperienceId)
                 ));
     }
 
