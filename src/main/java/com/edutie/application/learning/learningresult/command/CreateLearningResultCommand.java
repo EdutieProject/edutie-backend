@@ -1,9 +1,8 @@
 package com.edutie.application.learning.learningresult.command;
 
 import com.edutie.application.common.actions.StudentAction;
-import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
-import com.edutie.domain.core.education.learningsubject.identities.LearningSubjectId;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
+import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmission;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -17,12 +16,13 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class CreateLearningResultCommand extends StudentAction<CreateLearningResultCommand> {
+public final class CreateLearningResultCommand<T extends SolutionSubmission> extends StudentAction<CreateLearningResultCommand<T>> {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
     private @NonNull LearningExperienceId learningExperienceId;
+    private @NonNull T solutionSubmission;
 
     @Override
-    protected CreateLearningResultCommand getThis() {
+    protected CreateLearningResultCommand<T> getThis() {
         return this;
     }
 }
