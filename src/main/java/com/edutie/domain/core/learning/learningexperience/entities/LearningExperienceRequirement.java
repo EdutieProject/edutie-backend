@@ -7,6 +7,7 @@ import com.edutie.domain.core.learning.learningexperience.identities.LearningExp
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -16,6 +17,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @Entity
 @Setter(AccessLevel.PRIVATE)
+@Getter
 public class LearningExperienceRequirement extends EntityBase<LearningExperienceRequirementId> {
     private ElementalRequirementId elementalRequirementId;
 

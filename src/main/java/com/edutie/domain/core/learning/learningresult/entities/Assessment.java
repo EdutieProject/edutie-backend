@@ -21,9 +21,18 @@ import lombok.Setter;
 public class Assessment extends EntityBase<AssessmentId> {
     int masteryPointsAmount = -1;
     @Embedded
-    @AttributeOverride(name = "identifierValue", column = @Column(name = "learning_requirement_id"))
-    private ElementalRequirementId learningSubjectId;
+    @AttributeOverride(name = "identifierValue", column = @Column(name = "elemental_requirement_id"))
+    //todo: elemental requirement snapshot - to contain requirement name at the moment of assessment creation
+    private ElementalRequirementId elementalRequirementId;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(columnDefinition = "TEXT", name = "feedback_text"))
     private Feedback feedback;
+
+    public static Assessment create(Feedback feedback, ElementalRequirementId elementalRequirementId, int masteryPointsAmount) {
+        Assessment assessment = new Assessment();
+        assessment.elementalRequirementId = elementalRequirementId;
+        assessment.masteryPointsAmount = masteryPointsAmount;
+        assessment.feedback = feedback;
+        return assessment;
+    }
 }

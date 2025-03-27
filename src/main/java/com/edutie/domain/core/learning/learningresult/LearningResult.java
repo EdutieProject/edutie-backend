@@ -1,6 +1,7 @@
 package com.edutie.domain.core.learning.learningresult;
 
 import com.edutie.domain.core.common.base.AuditableEntityBase;
+import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.domain.core.learning.learningresult.entities.LearningEvaluation;
 import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmission;
@@ -34,4 +35,15 @@ public class LearningResult<TSolutionSubmission extends SolutionSubmission> exte
     @Embedded
     @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
     private StudentId studentId;
+
+    public static <TSolutionSubmission extends SolutionSubmission> LearningResult<TSolutionSubmission> create(
+            LearningExperience<?> learningExperience, TSolutionSubmission solutionSubmission, LearningEvaluation learningEvaluation) {
+        LearningResult<TSolutionSubmission> learningResult = new LearningResult<>();
+        learningResult.setId(new LearningResultId());
+        learningResult.setLearningExperienceId(learningExperience.getId());
+        learningResult.setStudentId(learningExperience.getStudentId());
+        learningResult.setLearningEvaluation(learningEvaluation);
+        learningResult.setSolutionSubmission(solutionSubmission);
+        return learningResult;
+    }
 }
