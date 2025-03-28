@@ -18,6 +18,8 @@ public class MockUser {
     private final AdministratorPersistence administratorPersistence;
     private final StudentPersistence studentPersistence;
     private final EducatorPersistence educatorPersistence;
+    @Getter
+    private boolean saved = false;
 
     @Getter
     private final UserId userId = new UserId();
@@ -32,5 +34,6 @@ public class MockUser {
         administratorPersistence.save(administratorProfile).throwIfFailure();
         educatorPersistence.save(educatorProfile).throwIfFailure();
         studentPersistence.save(studentProfile).throwIfFailure();
+        saved = true;
     }
 }
