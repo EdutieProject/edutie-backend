@@ -1,6 +1,8 @@
 package com.edutie.infrastructure.persistence.implementation.learning;
 
+import com.edutie.TestUtils;
 import com.edutie.domain.core.learning.learningresult.LearningResult;
+import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
 import com.edutie.domain.core.learning.learningresult.implementations.SimpleProblemActivityLearningResult;
 import com.edutie.domain.core.learning.learningresult.persistence.LearningResultPersistence;
 import com.edutie.infrastructure.persistence.implementation.learning.repositories.learningresult.SimpleProblemActivityLearningResultRepository;
@@ -20,8 +22,9 @@ class LearningResultPersistenceImplementationTest {
 
 
     @Test
-    void getById() {
-        SimpleProblemActivityLearningResult learningResult = SimpleProblemActivityLearningResult.create();
+    void getById() throws Throwable {
+        SimpleProblemActivityLearningResult learningResult = new SimpleProblemActivityLearningResult();
+        TestUtils.setPrivateField(learningResult, "id", new LearningResultId());
         simpleProblemActivityLearningResultRepository.save(learningResult);
 
         WrapperResult<LearningResult<?>> wrapperResult = learningResultPersistence.getById(learningResult.getId());
@@ -31,24 +34,26 @@ class LearningResultPersistenceImplementationTest {
     }
 
     @Test
-    void save() {
-        LearningResult<?> learningExperience = SimpleProblemActivityLearningResult.create();
-        System.out.println(learningExperience.getId());
-        learningResultPersistence.save(learningExperience).throwIfFailure();
+    void save() throws Throwable {
+        LearningResult<?> learningResult = new SimpleProblemActivityLearningResult();
+        TestUtils.setPrivateField(learningResult, "id", new LearningResultId());
+        System.out.println(learningResult.getId());
+        learningResultPersistence.save(learningResult).throwIfFailure();
 
-        assertTrue(simpleProblemActivityLearningResultRepository.findById(learningExperience.getId()).isPresent());
+        assertTrue(simpleProblemActivityLearningResultRepository.findById(learningResult.getId()).isPresent());
     }
 
     @Test
-    void removeById() {
-        SimpleProblemActivityLearningResult learningExperience = SimpleProblemActivityLearningResult.create();
-        simpleProblemActivityLearningResultRepository.save(learningExperience);
+    void removeById() throws Throwable {
+        SimpleProblemActivityLearningResult learningResult = new SimpleProblemActivityLearningResult();
+        TestUtils.setPrivateField(learningResult, "id", new LearningResultId());
+        simpleProblemActivityLearningResultRepository.save(learningResult);
 
-        assertTrue(simpleProblemActivityLearningResultRepository.findById(learningExperience.getId()).isPresent());
+        assertTrue(simpleProblemActivityLearningResultRepository.findById(learningResult.getId()).isPresent());
 
-        learningResultPersistence.removeById(learningExperience.getId()).throwIfFailure();
+        learningResultPersistence.removeById(learningResult.getId()).throwIfFailure();
 
-        assertFalse(simpleProblemActivityLearningResultRepository.findById(learningExperience.getId()).isPresent());
+        assertFalse(simpleProblemActivityLearningResultRepository.findById(learningResult.getId()).isPresent());
     }
 
 }
