@@ -11,4 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class SolutionSubmissionBase extends EntityBase<SolutionSubmissionId> implements SolutionSubmission {
+    public SolutionSubmissionBase() {
+        this.setId(new SolutionSubmissionId());
+    }
 }

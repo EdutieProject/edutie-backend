@@ -20,4 +20,9 @@ public class SimpleProblemActivitySolutionSubmission
         extends SolutionSubmissionBase implements RememberingActivitySolutionSubmission {
     @OneToMany(targetEntity = ActivitySolutionParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ActivitySolutionParagraph> solutionParagraphs = new ArrayList<>();
+
+    public SimpleProblemActivitySolutionSubmission() {
+        super();
+    }
+
 }

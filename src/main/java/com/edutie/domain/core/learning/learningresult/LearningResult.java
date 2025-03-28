@@ -4,8 +4,12 @@ import com.edutie.domain.core.common.base.AuditableEntityBase;
 import com.edutie.domain.core.learning.learningexperience.LearningExperience;
 import com.edutie.domain.core.learning.learningexperience.identities.LearningExperienceId;
 import com.edutie.domain.core.learning.learningresult.entities.LearningEvaluation;
+import com.edutie.domain.core.learning.learningresult.entities.submission.SimpleProblemActivitySolutionSubmission;
+import com.edutie.domain.core.learning.learningresult.entities.submission.StoryBasedActivitySolutionSubmission;
 import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmission;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
+import com.edutie.domain.core.learning.learningresult.implementations.SimpleProblemActivityLearningResult;
+import com.edutie.domain.core.learning.learningresult.implementations.StoryBasedActivityLearningResult;
 import com.edutie.domain.core.learning.student.identities.StudentId;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -36,9 +40,13 @@ public class LearningResult<TSolutionSubmission extends SolutionSubmission> exte
     @AttributeOverride(name = "identifierValue", column = @Column(name = "student_id"))
     private StudentId studentId;
 
-    public static <TSolutionSubmission extends SolutionSubmission> LearningResult<TSolutionSubmission> create(
+    public static <TSolutionSubmission extends SolutionSubmission> LearningResult<?> create(
             LearningExperience<?> learningExperience, TSolutionSubmission solutionSubmission, LearningEvaluation learningEvaluation) {
-        LearningResult<TSolutionSubmission> learningResult = new LearningResult<>();
+        LearningResult<TSolutionSubmission> learningResult = switch (solutionSubmission) {
+            case SimpleProblemActivitySolutionSubmission submission -> (LearningResult<TSolutionSubmission>) new SimpleProblemActivityLearningResult();
+            case StoryBasedActivitySolutionSubmission submission -> (LearningResult<TSolutionSubmission>) new StoryBasedActivityLearningResult();
+            default -> throw new IllegalStateException("Unexpected value: " + solutionSubmission);
+        };
         learningResult.setId(new LearningResultId());
         learningResult.setLearningExperienceId(learningExperience.getId());
         learningResult.setStudentId(learningExperience.getStudentId());
