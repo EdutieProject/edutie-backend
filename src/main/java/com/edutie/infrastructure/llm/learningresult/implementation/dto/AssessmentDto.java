@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 public class AssessmentDto {
     @JsonProperty
-    private String feedbackString;
+    private String feedbackText;
     @JsonProperty
     private int masteryPoints;
     @JsonProperty
