@@ -49,7 +49,7 @@ public abstract class GenericMultipleRepositoryPersistence<T extends EntityBase<
                 if (optionalEntity.isPresent()) {
                     return WrapperResult.successWrapper(optionalEntity.get());
                 }
-            }
+            } //TODO: FIX that shit!
             return WrapperResult.failureWrapper(PersistenceError.notFound(SimpleProblemActivityLearningExperience.class));
         } catch (Exception exception) {
             return WrapperResult.failureWrapper(PersistenceError.exceptionEncountered(exception));

@@ -40,11 +40,12 @@ public class LearningResultController {
     //todo: consider adding simple problem activity solution details entity
     @PostMapping("/create/simple-problem-activity")
     @Operation(description = "Creates a learning result using a simple problem activity solution submission")
-    public ResponseEntity<ApiResult<LearningResult<SimpleProblemActivitySolutionSubmission>>> createSimpleProblemActivityLearningResult(Authentication authentication,
-                                                                                                                                        @RequestBody CreateLearningResultCommand<SimpleProblemActivitySolutionSubmission> command) {
+    public ResponseEntity<ApiResult<LearningResult<SimpleProblemActivitySolutionSubmission>>> createSimpleProblemActivityLearningResult(
+            Authentication authentication,
+            @RequestBody CreateLearningResultCommand<SimpleProblemActivitySolutionSubmission> command) {
         return new GenericRequestHandler<LearningResult<SimpleProblemActivitySolutionSubmission>>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
-                .handle((userId) -> createLearningResultCommandHandler.handle(command));
+                .handle((userId) -> createLearningResultCommandHandler.handle(command.studentUserId(userId)));
     }
 }
