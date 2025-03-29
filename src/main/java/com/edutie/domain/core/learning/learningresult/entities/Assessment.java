@@ -30,6 +30,7 @@ public class Assessment extends EntityBase<AssessmentId> {
 
     public static Assessment create(Feedback feedback, ElementalRequirementId elementalRequirementId, int masteryPointsAmount) {
         Assessment assessment = new Assessment();
+        assessment.setId(new AssessmentId());
         assessment.elementalRequirementId = elementalRequirementId;
         assessment.masteryPointsAmount = masteryPointsAmount;
         assessment.feedback = feedback;

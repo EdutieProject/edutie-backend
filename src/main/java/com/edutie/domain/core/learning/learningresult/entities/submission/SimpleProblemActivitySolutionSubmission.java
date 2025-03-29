@@ -4,6 +4,7 @@ import com.edutie.domain.core.learning.learningresult.entities.submission.base.R
 import com.edutie.domain.core.learning.learningresult.entities.submission.base.SolutionSubmissionBase;
 import com.edutie.domain.core.learning.learningresult.entities.submission.common.ActivitySolutionParagraph;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -21,7 +22,7 @@ import java.util.List;
 @Getter
 public class SimpleProblemActivitySolutionSubmission
         extends SolutionSubmissionBase implements RememberingActivitySolutionSubmission {
-    @OneToMany(targetEntity = ActivitySolutionParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(targetEntity = ActivitySolutionParagraph.class, fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonProperty
     private List<ActivitySolutionParagraph> solutionParagraphs = new ArrayList<>();
 
