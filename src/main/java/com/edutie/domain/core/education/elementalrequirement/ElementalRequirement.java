@@ -18,6 +18,7 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @MappedSuperclass
 public abstract class ElementalRequirement extends EntityBase<ElementalRequirementId> {
+    protected String title;
     @Embedded
     @AttributeOverride(name = "text", column = @Column(name = "student_objective", columnDefinition = "TEXT"))
     protected PromptFragment studentObjective;

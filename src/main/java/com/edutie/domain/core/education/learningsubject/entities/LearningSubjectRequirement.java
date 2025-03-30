@@ -20,7 +20,6 @@ import lombok.Setter;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class LearningSubjectRequirement extends ElementalRequirement {
-    private String title;
     private Integer ordinal;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "learning_subject_id")
