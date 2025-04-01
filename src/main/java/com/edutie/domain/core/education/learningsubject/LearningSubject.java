@@ -77,6 +77,14 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
     }
 
     /**
+     * Returns whether learning subject is eligible for learning.
+     * @return true/false
+     */
+    public boolean isLearningEligible() {
+        return !isKnowledgeOriginEmpty() && !requirements.isEmpty();
+    }
+
+    /**
      * Sets knowledge origin's knowledge subject id
      *
      * @param knowledgeSubjectId knowledge subject id
