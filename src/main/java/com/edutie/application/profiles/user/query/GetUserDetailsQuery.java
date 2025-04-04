@@ -13,6 +13,6 @@ import org.springframework.security.core.Authentication;
 @Setter
 @Accessors(fluent = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class UserDetailsQuery {
+public final class GetUserDetailsQuery {
     private @NonNull Authentication authentication;
 }

@@ -2,8 +2,8 @@ package com.edutie.api.v1.profiles;
 
 import com.edutie.api.common.ApiResult;
 import com.edutie.api.common.GenericRequestHandler;
-import com.edutie.application.profiles.user.UserDetailsQueryHandler;
-import com.edutie.application.profiles.user.query.UserDetailsQuery;
+import com.edutie.application.profiles.user.GetUserDetailsQueryHandler;
+import com.edutie.application.profiles.user.query.GetUserDetailsQuery;
 import com.edutie.application.profiles.user.viewmodels.UserDetails;
 import com.edutie.domain.core.administration.UserId;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ import validation.Result;
         for the sake of convention it uses the profiles API path.
         """)
 public class UserController {
-    private final UserDetailsQueryHandler userDetailsQueryHandler;
+    private final GetUserDetailsQueryHandler getUserDetailsQueryHandler;
 
     @GetMapping("/details")
     @Operation(description = "Retrieves user details. For instance user's name or email.")
@@ -38,8 +38,8 @@ public class UserController {
             );
         return new GenericRequestHandler<UserDetails>()
                 .authenticate(authentication)
-                .handle(() -> userDetailsQueryHandler.handle(
-                        new UserDetailsQuery().authentication(authentication)
+                .handle(() -> getUserDetailsQueryHandler.handle(
+                        new GetUserDetailsQuery().authentication(authentication)
                 ));
     }
 }
