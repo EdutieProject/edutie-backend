@@ -22,7 +22,7 @@ import validation.WrapperResult;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class CreateLearningResultCommandHandlerImplementation implements CreateLearningResultCommandHandler {
+public class CreateLearningResultCommandHandlerImplementation<T extends SolutionSubmission> implements CreateLearningResultCommandHandler<T> {
     private final StudentPersistence studentPersistence;
     private final LearningExperiencePersistence learningExperiencePersistence;
     private final LearningResultPersistence learningResultPersistence;
@@ -30,15 +30,15 @@ public class CreateLearningResultCommandHandlerImplementation implements CreateL
     private final LearningSubjectPersistence learningSubjectPersistence;
 
     @Override
-    public WrapperResult<LearningResultView> handle(CreateLearningResultCommand<?> command) {
+    public WrapperResult<LearningResultView<T>> handle(CreateLearningResultCommand<T> command) {
         Student student = studentPersistence.getByAuthorizedUserId(command.studentUserId());
         LearningExperience<?> learningExperience = learningExperiencePersistence.getById(command.learningExperienceId()).getValue();
-        SolutionSubmission solutionSubmission = command.solutionSubmission();
-        LearningResult<?> learningResult = learningResultPersonalizationService.createPersonalized(student, learningExperience, solutionSubmission).getValue();
+        T solutionSubmission = command.solutionSubmission();
+        LearningResult<T> learningResult = learningResultPersonalizationService.createPersonalized(student, learningExperience, solutionSubmission).getValue();
         learningResultPersistence.save(learningResult).throwIfFailure();
         ElementalRequirementId elementalRequirementId = learningExperience.getRequirements().stream().findFirst().get().getElementalRequirementId();
         LearningSubject learningSubject = learningSubjectPersistence.getLearningSubjectByElementalRequirementId(elementalRequirementId).getValue();
-        return WrapperResult.successWrapper(new LearningResultView(
+        return WrapperResult.successWrapper(new LearningResultView<>(
                 learningResult,
                 learningSubject.getId(),
                 learningSubject.getName()

@@ -21,14 +21,14 @@ public class GetLearningResultByIdQueryHandlerImplementation implements GetLearn
     private final LearningSubjectPersistence learningSubjectPersistence;
 
     @Override
-    public WrapperResult<LearningResultView> handle(GetLearningResultByIdQuery query) {
+    public WrapperResult<LearningResultView<?>> handle(GetLearningResultByIdQuery query) {
         log.info("Retrieving learning result by id {} for user of id {}", query.learningResultId(), query.studentUserId());
         LearningResult<?> learningResult = learningResultPersistence.getById(query.learningResultId()).getValue();
         ElementalRequirementId elementalRequirementId = learningResult.getLearningEvaluation()
                 .getAssessments().stream().findFirst().get().getElementalRequirementSnapshot().getElementalRequirementId();
         LearningSubject learningSubject = learningSubjectPersistence.getLearningSubjectByElementalRequirementId(elementalRequirementId).getValue();
         return WrapperResult.successWrapper(
-                new LearningResultView(learningResult, learningSubject.getId(), learningSubject.getName())
+                new LearningResultView<>(learningResult, learningSubject.getId(), learningSubject.getName())
         );
     }
 }

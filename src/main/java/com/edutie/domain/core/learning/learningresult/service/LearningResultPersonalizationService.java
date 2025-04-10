@@ -7,5 +7,5 @@ import com.edutie.domain.core.learning.student.Student;
 import validation.WrapperResult;
 
 public interface LearningResultPersonalizationService {
-    <T extends SolutionSubmission> WrapperResult<LearningResult<?>> createPersonalized(Student student, LearningExperience<?> learningExperience, T solutionSubmission);
+    <T extends SolutionSubmission> WrapperResult<LearningResult<T>> createPersonalized(Student student, LearningExperience<?> learningExperience, T solutionSubmission);
 }

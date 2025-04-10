@@ -35,15 +35,15 @@ public class LearningResultPersonalizationServiceImplementation implements Learn
      */
     //TODO: FIX & REFACTOR THAT SHIT
     @Override
-    public <T extends SolutionSubmission> WrapperResult<LearningResult<?>> createPersonalized(Student student, LearningExperience<?> learningExperience, T solutionSubmission) {
+    public <T extends SolutionSubmission> WrapperResult<LearningResult<T>> createPersonalized(Student student, LearningExperience<?> learningExperience, T solutionSubmission) {
         ElementalRequirementId elementalRequirementId = learningExperience.getRequirements().stream().findFirst().get().getElementalRequirementId(); //TODO fix - optional and works for single lsub
         LearningSubject learningSubject = learningSubjectPersistence.getLearningSubjectByElementalRequirementId(elementalRequirementId).getValue();
-        ElementalRequirement elementalRequirement = learningSubject.getRequirements().stream().filter(o -> o.getId().equals(elementalRequirementId)).findFirst().get();
+        ElementalRequirement<?> elementalRequirement = learningSubject.getRequirements().stream().filter(o -> o.getId().equals(elementalRequirementId)).findFirst().get();
         PromptFragment knowledgeContext = getKnowledgeContextService.getContext(new GetKnowledgeContextSchema(learningSubject.getKnowledgeOrigin(), elementalRequirement)).getValue();
         LearningEvaluationGenerationSchema<?> generationSchema = new LearningEvaluationGenerationSchema<>(solutionSubmission, knowledgeContext,
                 learningSubject.getRequirements().stream().filter(o -> o.getId().equals(elementalRequirementId)).collect(Collectors.toSet()));
         LearningEvaluation learningEvaluation = learningEvaluationGenerationService.generate(generationSchema).getValue();
         LearningResult<?> learningResult = LearningResult.create(learningExperience, solutionSubmission, learningEvaluation);
-        return WrapperResult.successWrapper(learningResult);
+        return WrapperResult.successWrapper((LearningResult<T>) learningResult);
     }
 }

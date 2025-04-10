@@ -41,21 +41,21 @@ class CreateLearningResultCommandHandlerImplementationTest {
 
     private final LearningResultPersonalizationService learningResultPersonalizationService = new LearningResultPersonalizationService() {
         @Override
-        public <T extends SolutionSubmission> WrapperResult<LearningResult<?>> createPersonalized(Student student, LearningExperience<?> learningExperience, T solutionSubmission) {
-            return WrapperResult.successWrapper(LearningResult.create(learningExperience, solutionSubmission, LearningEvaluation.create(Set.of())));
+        public <T extends SolutionSubmission> WrapperResult<LearningResult<T>> createPersonalized(Student student, LearningExperience<?> learningExperience, T solutionSubmission) {
+            return WrapperResult.successWrapper((LearningResult<T>) LearningResult.create(learningExperience, solutionSubmission, LearningEvaluation.create(Set.of())));
         }
     };
 
     @Autowired
     private MockUser mockUser;
 
-    private CreateLearningResultCommandHandler createLearningResultCommandHandler;
+    private CreateLearningResultCommandHandler<SimpleProblemActivitySolutionSubmission> createLearningResultCommandHandler;
 
     @BeforeEach
     void setUp() {
         mockUser.saveToPersistence();
 
-        createLearningResultCommandHandler = new CreateLearningResultCommandHandlerImplementation(
+        createLearningResultCommandHandler = new CreateLearningResultCommandHandlerImplementation<>(
                 studentPersistence,
                 learningExperiencePersistence,
                 learningResultPersistence,
@@ -66,14 +66,14 @@ class CreateLearningResultCommandHandlerImplementationTest {
 
     @Test
     void handle() {
-        SolutionSubmission solutionSubmission = new SimpleProblemActivitySolutionSubmission();
+        SimpleProblemActivitySolutionSubmission solutionSubmission = new SimpleProblemActivitySolutionSubmission();
 
-        CreateLearningResultCommand<?> command = new CreateLearningResultCommand<>()
+        CreateLearningResultCommand<SimpleProblemActivitySolutionSubmission> command = new CreateLearningResultCommand<SimpleProblemActivitySolutionSubmission>()
                 .studentUserId(mockUser.getUserId())
                 .learningExperienceId(new LearningExperienceId())
                 .solutionSubmission(solutionSubmission);
 
-        WrapperResult<LearningResultView> result = createLearningResultCommandHandler.handle(command);
+        WrapperResult<LearningResultView<SimpleProblemActivitySolutionSubmission>> result = createLearningResultCommandHandler.handle(command);
 
         assertTrue(result.isSuccess());
         assertEquals(solutionSubmission, result.getValue().learningResult().getSolutionSubmission());

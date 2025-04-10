@@ -47,7 +47,7 @@ class LearningResultPersonalizationServiceImplementationTest {
 
     @Test
     void createPersonalized() {
-        WrapperResult<LearningResult<?>> result = learningResultPersonalizationService.createPersonalized(
+        WrapperResult<LearningResult<SimpleProblemActivitySolutionSubmission>> result = learningResultPersonalizationService.createPersonalized(
                 mockUser.getStudentProfile(), learningExperience, new SimpleProblemActivitySolutionSubmission()
         );
 
