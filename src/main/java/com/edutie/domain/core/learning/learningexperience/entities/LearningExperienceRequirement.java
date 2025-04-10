@@ -21,7 +21,7 @@ import lombok.Setter;
 public class LearningExperienceRequirement extends EntityBase<LearningExperienceRequirementId> {
     private ElementalRequirementId elementalRequirementId;
 
-    public static LearningExperienceRequirement from(ElementalRequirement elementalRequirement) {
+    public static LearningExperienceRequirement from(ElementalRequirement<?> elementalRequirement) {
         LearningExperienceRequirement learningExperienceRequirement = new LearningExperienceRequirement();
         learningExperienceRequirement.setId(new LearningExperienceRequirementId());
         learningExperienceRequirement.setElementalRequirementId(elementalRequirement.getId());

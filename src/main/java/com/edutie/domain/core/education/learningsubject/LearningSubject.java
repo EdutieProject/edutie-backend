@@ -3,6 +3,7 @@ package com.edutie.domain.core.education.learningsubject;
 import com.edutie.domain.core.common.DomainErrors;
 import com.edutie.domain.core.common.base.EducatorCreatedAuditableEntity;
 import com.edutie.domain.core.common.generationprompt.PromptFragment;
+import com.edutie.domain.core.education.KnowledgeProvider;
 import com.edutie.domain.core.education.educator.Educator;
 import com.edutie.domain.core.education.elementalrequirement.identitites.ElementalRequirementId;
 import com.edutie.domain.core.education.knowledgesubject.identities.KnowledgeSubjectId;
@@ -28,7 +29,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubjectId> {
+public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubjectId>
+        implements KnowledgeProvider<KnowledgeOrigin> {
     private String name;
     @OneToMany(targetEntity = LearningSubjectRequirement.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordinal")
@@ -78,6 +80,7 @@ public class LearningSubject extends EducatorCreatedAuditableEntity<LearningSubj
 
     /**
      * Returns whether learning subject is eligible for learning.
+     *
      * @return true/false
      */
     public boolean isLearningEligible() {

@@ -18,7 +18,7 @@ public class ElementalRequirementSnapshot {
     private ElementalRequirementId elementalRequirementId;
     private String title;
 
-    public static ElementalRequirementSnapshot from(ElementalRequirement elementalRequirement) {
+    public static ElementalRequirementSnapshot from(ElementalRequirement<?> elementalRequirement) {
         ElementalRequirementSnapshot elementalRequirementSnapshot = new ElementalRequirementSnapshot();
         elementalRequirementSnapshot.elementalRequirementId = elementalRequirement.getId();
         elementalRequirementSnapshot.title = elementalRequirement.getTitle();
