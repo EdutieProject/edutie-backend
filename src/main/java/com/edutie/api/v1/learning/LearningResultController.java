@@ -7,6 +7,7 @@ import com.edutie.application.learning.learningresult.GetLearningResultByIdQuery
 import com.edutie.application.learning.learningresult.command.CreateLearningResultCommand;
 import com.edutie.application.learning.learningresult.query.GetLearningResultByIdQuery;
 import com.edutie.application.learning.learningresult.view.LearningResultView;
+import com.edutie.domain.core.learning.learningresult.LearningResult;
 import com.edutie.domain.core.learning.learningresult.entities.submission.SimpleProblemActivitySolutionSubmission;
 import com.edutie.domain.core.learning.learningresult.identities.LearningResultId;
 import com.edutie.infrastructure.authorization.student.StudentAuthorization;
@@ -41,10 +42,10 @@ public class LearningResultController {
     //todo: consider adding simple problem activity solution details entity
     @PostMapping("/create/simple-problem-activity")
     @Operation(description = "Creates a learning result using a simple problem activity solution submission")
-    public ResponseEntity<ApiResult<LearningResultView<SimpleProblemActivitySolutionSubmission>>> createSimpleProblemActivityLearningResult(
+    public ResponseEntity<ApiResult<LearningResult<SimpleProblemActivitySolutionSubmission>>> createSimpleProblemActivityLearningResult(
             Authentication authentication,
             @RequestBody CreateLearningResultCommand<SimpleProblemActivitySolutionSubmission> command) {
-        return new GenericRequestHandler<LearningResultView<SimpleProblemActivitySolutionSubmission>>()
+        return new GenericRequestHandler<LearningResult<SimpleProblemActivitySolutionSubmission>>()
                 .authenticate(authentication)
                 .authorize(studentAuthorization)
                 .handle((userId) -> createLearningResultCommandHandler.handle(command.studentUserId(userId)));
