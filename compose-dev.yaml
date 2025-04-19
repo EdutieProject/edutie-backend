@@ -69,6 +69,7 @@ services:
       - "8080:8080"
     volumes:
       - ../edutie-authorization-server/import/:/opt/keycloak/data/import/
+      - ../edutie-authorization-server/theme/:/opt/keycloak/themes/
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
