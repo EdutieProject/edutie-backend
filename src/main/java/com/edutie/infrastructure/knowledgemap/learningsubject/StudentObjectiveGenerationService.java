@@ -1,0 +1,7 @@
+package com.edutie.infrastructure.knowledgemap.learningsubject;
+
+import com.edutie.infrastructure.knowledgemap.common.generative.GenerativeKnowledgeMapService;
+import com.edutie.infrastructure.knowledgemap.learningsubject.schema.StudentObjectiveGenerationSchema;
+
+public interface StudentObjectiveGenerationService extends GenerativeKnowledgeMapService<String, StudentObjectiveGenerationSchema> {
+}

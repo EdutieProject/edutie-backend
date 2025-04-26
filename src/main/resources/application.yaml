@@ -80,16 +80,16 @@ springdoc:
   group-configs:
     - group: Learning
       packages-to-scan:
-        - com.edutie.backend.api.v1.learning
+        - com.edutie.api.v1.learning
     - group: Management
       packages-to-scan:
-        - com.edutie.backend.api.v1.management
+        - com.edutie.api.v1.management
     - group: Profiles
       packages-to-scan:
-        - com.edutie.backend.api.v1.profiles
+        - com.edutie.api.v1.profiles
     - group: Inspection
       packages-to-scan:
-        - com.edutie.backend.api.v1.inspection
+        - com.edutie.api.v1.inspection
   show-actuator: true
   show-login-endpoint: true
   show-oauth2-endpoints: true

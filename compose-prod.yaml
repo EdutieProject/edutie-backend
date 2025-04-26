@@ -115,8 +115,8 @@ services:
     container_name: db-identity
     image: postgres:latest
     environment:
-      POSTGRES_PASSWORD: ${IDENTITY_DB_PASSWORD}
-      POSTGRES_USER: ${IDENTITY_DB_USER}
+      POSTGRES_PASSWORD: ${KC_DB_PASSWORD}
+      POSTGRES_USER: ${KC_DB_USERNAME}
       POSTGRES_DB: ${IDENTITY_DB_NAME}
       POSTGRES_HOST: ${IDENTITY_DB_HOST}
       POSTGRES_PORT: ${IDENTITY_DB_PORT}

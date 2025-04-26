@@ -1,7 +1,0 @@
-package com.edutie.backend.infrastructure.persistence.jpa.repositories;
-
-import com.edutie.backend.domain.studyprogram.course.tag.CourseTag;
-import com.edutie.backend.domain.studyprogram.course.tag.indentities.CourseTagId;
-import org.springframework.data.jpa.repository.*;
-
-public interface CourseTagRepository extends JpaRepository<CourseTag, CourseTagId> { }
